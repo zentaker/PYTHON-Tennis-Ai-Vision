@@ -2,6 +2,7 @@
 
 __all__ = [
     "environment",
+    "court_calibration",
     "frame_sampler",
     "friction",
     "lab_notebook",

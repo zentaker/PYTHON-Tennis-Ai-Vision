@@ -8,10 +8,10 @@
 
 ## Input video
 
-- Detected default video path: `C:\Users\MSI\Desktop\TennisAiVision\tennis-ai-vision\samples\video_01.mov`
-- Selected video path: `C:\Users\MSI\Desktop\TennisAiVision\tennis-ai-vision\samples\video_01.mov`
+- Detected default video path: `C:\Users\MSI\Desktop\TennisAiVision\samples\video_01.mov`
+- Selected video path: `C:\Users\MSI\Desktop\TennisAiVision\samples\video_01.mov`
 - Video source: auto_detected
-- Path: `C:\Users\MSI\Desktop\TennisAiVision\tennis-ai-vision\samples\video_01.mov`
+- Path: `C:\Users\MSI\Desktop\TennisAiVision\samples\video_01.mov`
 - File extension: .mov
 - File size: 107.675 MB
 - Resolution: 3840x2160
@@ -26,8 +26,8 @@
 - Interval: 30
 - Max frames: 25
 - Frames saved: 25
-- Output folder: `C:\Users\MSI\Desktop\TennisAiVision\tennis-ai-vision\outputs\frames\stage_1_20260512T170453Z`
-- Time taken: 14.677 seconds
+- Output folder: `C:\Users\MSI\Desktop\TennisAiVision\outputs\frames\stage_1_20260512T212617Z`
+- Time taken: 27.623 seconds
 
 ## Video read errors
 

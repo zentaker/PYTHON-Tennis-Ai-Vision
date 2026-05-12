@@ -30,32 +30,32 @@
   },
   "input_selection": {
     "checked_paths": [
-      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\samples\\video_01.mov"
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\samples\\video_01.mov"
     ],
     "detection_method": "preferred_default",
-    "path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\samples\\video_01.mov",
+    "path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\samples\\video_01.mov",
     "source": "auto_detected",
     "warnings": []
   },
-  "input_video_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\samples\\video_01.mov",
+  "input_video_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\samples\\video_01.mov",
   "interval": 60,
-  "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\reports\\stage_2_yolo_cpu_baseline_report.json",
-  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\logs\\stage_2_yolo_cpu_baseline_20260512T171953Z.log",
-  "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\reports\\stage_2_yolo_cpu_baseline_report.md",
+  "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_2_yolo_cpu_baseline_report.json",
+  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_2_yolo_cpu_baseline_20260512T212657Z.log",
+  "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_2_yolo_cpu_baseline_report.md",
   "max_frames": 10,
   "model_name": "yolo11n.pt",
   "recommended_fixes": [],
   "recommended_next_step": "Proceed to Stage 3: Court Calibration Probe.",
   "resize_width": 1280,
   "stage": "stage_2_yolo_cpu_baseline",
-  "timestamp": "2026-05-12T17:19:53+00:00",
+  "timestamp": "2026-05-12T21:26:57+00:00",
   "video_metadata": {
     "codec": "h264",
     "duration_seconds": 14.833,
     "errors": [],
     "exists": true,
     "file_extension": ".mov",
-    "file_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\samples\\video_01.mov",
+    "file_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\samples\\video_01.mov",
     "file_size_mb": 107.675,
     "fps": 60.0,
     "frame_count": 890,
@@ -68,19 +68,19 @@
   "warnings": [],
   "yolo_result": {
     "annotated_files": [
-      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\annotated\\stage_2_yolo_cpu\\20260512T171940Z\\yolo_frame_000001.jpg",
-      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\annotated\\stage_2_yolo_cpu\\20260512T171940Z\\yolo_frame_000060.jpg",
-      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\annotated\\stage_2_yolo_cpu\\20260512T171940Z\\yolo_frame_000120.jpg",
-      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\annotated\\stage_2_yolo_cpu\\20260512T171940Z\\yolo_frame_000180.jpg",
-      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\annotated\\stage_2_yolo_cpu\\20260512T171940Z\\yolo_frame_000240.jpg",
-      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\annotated\\stage_2_yolo_cpu\\20260512T171940Z\\yolo_frame_000300.jpg",
-      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\annotated\\stage_2_yolo_cpu\\20260512T171940Z\\yolo_frame_000360.jpg",
-      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\annotated\\stage_2_yolo_cpu\\20260512T171940Z\\yolo_frame_000420.jpg",
-      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\annotated\\stage_2_yolo_cpu\\20260512T171940Z\\yolo_frame_000480.jpg",
-      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\annotated\\stage_2_yolo_cpu\\20260512T171940Z\\yolo_frame_000540.jpg"
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\annotated\\stage_2_yolo_cpu\\20260512T212617Z\\yolo_frame_000001.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\annotated\\stage_2_yolo_cpu\\20260512T212617Z\\yolo_frame_000060.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\annotated\\stage_2_yolo_cpu\\20260512T212617Z\\yolo_frame_000120.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\annotated\\stage_2_yolo_cpu\\20260512T212617Z\\yolo_frame_000180.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\annotated\\stage_2_yolo_cpu\\20260512T212617Z\\yolo_frame_000240.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\annotated\\stage_2_yolo_cpu\\20260512T212617Z\\yolo_frame_000300.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\annotated\\stage_2_yolo_cpu\\20260512T212617Z\\yolo_frame_000360.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\annotated\\stage_2_yolo_cpu\\20260512T212617Z\\yolo_frame_000420.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\annotated\\stage_2_yolo_cpu\\20260512T212617Z\\yolo_frame_000480.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\annotated\\stage_2_yolo_cpu\\20260512T212617Z\\yolo_frame_000540.jpg"
     ],
     "annotated_frames_saved": 10,
-    "average_inference_time_seconds": 0.056,
+    "average_inference_time_seconds": 1.085,
     "confidence_stats": {
       "count": 92,
       "max": 0.8139,
@@ -107,8 +107,8 @@
       "ultralytics_missing": false,
       "warnings": []
     },
-    "output_folder": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\annotated\\stage_2_yolo_cpu\\20260512T171940Z",
-    "total_runtime_seconds": 13.312,
+    "output_folder": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\annotated\\stage_2_yolo_cpu\\20260512T212617Z",
+    "total_runtime_seconds": 39.027,
     "warnings": []
   }
 }

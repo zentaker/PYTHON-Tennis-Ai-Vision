@@ -41,6 +41,8 @@ outputs/annotated/
 outputs/videos/
 outputs/tmp/
 outputs/cache/
+outputs/calibration/
+outputs/ball_tracking/
 
 # ML artifacts and model weights
 *.pt

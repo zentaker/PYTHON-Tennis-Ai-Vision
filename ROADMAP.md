@@ -10,19 +10,29 @@ Load a local sample video, read metadata, extract frames into `outputs/frames/`,
 
 ## Stage 2: YOLO CPU Baseline
 
-Current stage. Add a small local CPU object detection baseline after Stage 1 proves video loading and frame extraction work. Keep the run limited, save annotated frames, and document runtime friction.
+Add a small local CPU object detection baseline after Stage 1 proves video loading and frame extraction work. Keep the run limited, save annotated frames, and document runtime friction.
 
 ## Stage 3: Court Calibration Probe
 
-Experiment with local court line and geometry calibration from extracted frames. Stage 3 focuses on court calibration/court probing, not ball tracking yet.
+Generate a manual court calibration reference frame, point overlay, optional homography, and normalized mini-court preview. Stage 3 focuses on court calibration/court probing, not ball tracking yet.
+The calibration baseline is the doubles court outer boundary; singles-line and service-box geometry are later calibration layers.
+
+## Stage 3.1: Court Point Selection Helper
+
+Generate a coordinate grid and provide a local OpenCV click selector so the user can fill court point coordinates without a frontend.
+The helper validates left/right ordering and crossed polygons so inverted corner selections are documented instead of silently accepted.
+
+## Stage 3 Rerun: Homography Check
+
+After Stage 3.1 saves valid points, rerun Stage 3 to compute and validate the court homography.
 
 ## Stage 4: Ball Tracking Probe
 
-Test local ball detection and tracking approaches on short sample clips.
+Current stage. Test local ball candidate detection and tracking approaches on short sample clips only after court calibration has a stable reference. This is a probe, not production-quality tracking.
 
-## Stage 5: Friction Scoring System
+## Stage 5: Ball Candidate Filtering And Court Projection
 
-Expand friction scoring to cover runtime performance, video quality, detection reliability, and manual intervention.
+Filter noisy ball candidates and project candidate coordinates into the calibrated court plane.
 
 ## Stage 6: Local MVP Pipeline
 

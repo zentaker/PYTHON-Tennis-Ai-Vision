@@ -1,0 +1,238 @@
+{
+  "calibration_basis": "doubles court outer boundary",
+  "calibration_result": {
+    "config": {
+      "frame_index": 120,
+      "notes": "Court point coordinates were updated by the Stage 3.1 point selector.",
+      "points": {
+        "far_left_corner": [
+          1566,
+          528
+        ],
+        "far_right_corner": [
+          2781,
+          549
+        ],
+        "near_left_corner": [
+          1008,
+          1719
+        ],
+        "near_right_corner": [
+          3312,
+          1770
+        ]
+      },
+      "video": "samples/video_01.mov"
+    },
+    "errors": [],
+    "frame_index": 120,
+    "homography": {
+      "computed": true,
+      "error": null,
+      "matrix": [
+        [
+          0.47601459174428556,
+          0.22301943089278875,
+          -863.1931101829438
+        ],
+        [
+          -0.03424362336427942,
+          1.9812382089333003,
+          -992.4682601283207
+        ],
+        [
+          -1.425583541874966e-05,
+          0.0012007362335857653,
+          1.0
+        ]
+      ],
+      "target_size": [
+        360,
+        780
+      ]
+    },
+    "mini_court_preview_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\calibration\\stage_3_court_probe\\mini_court_preview.jpg",
+    "overlay_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\calibration\\stage_3_court_probe\\court_points_overlay.jpg",
+    "points_status": {
+      "calibration_basis": "doubles court outer boundary",
+      "geometry": {
+        "order_checks": {
+          "far_left_before_far_right": true,
+          "near_left_before_near_right": true
+        },
+        "point_order_valid": true,
+        "polygon_self_intersects": false,
+        "required_points_available": true,
+        "valid": true,
+        "warnings": []
+      },
+      "has_invalid": false,
+      "has_missing": false,
+      "has_placeholders": false,
+      "homography_ready": true,
+      "point_labels": {
+        "far_left_corner": "top-left doubles court corner",
+        "far_right_corner": "top-right doubles court corner",
+        "near_left_corner": "bottom-left doubles court corner",
+        "near_right_corner": "bottom-right doubles court corner"
+      },
+      "points": {
+        "far_left_corner": {
+          "status": "usable",
+          "x": 1566.0,
+          "y": 528.0
+        },
+        "far_right_corner": {
+          "status": "usable",
+          "x": 2781.0,
+          "y": 549.0
+        },
+        "near_left_corner": {
+          "status": "usable",
+          "x": 1008.0,
+          "y": 1719.0
+        },
+        "near_right_corner": {
+          "status": "usable",
+          "x": 3312.0,
+          "y": 1770.0
+        }
+      },
+      "usable_count": 4
+    },
+    "reference_frame_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\calibration\\stage_3_court_probe\\calibration_reference_frame.jpg",
+    "video_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\samples\\video_01.mov",
+    "warnings": []
+  },
+  "config_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\configs\\court_calibration_sample.json",
+  "errors": [],
+  "final_verdict": "ready_for_stage_4",
+  "flags": {
+    "calibration_points_missing": false,
+    "config_missing": false,
+    "frame_load_failed": false,
+    "geometrically_invalid": false,
+    "homography_failed": false,
+    "invalid_points": false,
+    "placeholder_points_detected": false,
+    "point_order_suspicious": false,
+    "polygon_self_intersects": false,
+    "video_missing": false
+  },
+  "frame_index": 120,
+  "friction": {
+    "band": "low friction",
+    "inputs": {
+      "calibration_points_missing": false,
+      "config_missing": false,
+      "errors_count": 0,
+      "frame_load_failed": false,
+      "geometrically_invalid": false,
+      "homography_failed": false,
+      "invalid_points": false,
+      "placeholder_points_detected": false,
+      "point_order_suspicious": false,
+      "polygon_self_intersects": false,
+      "video_missing": false,
+      "warnings_count": 0
+    },
+    "score": 0
+  },
+  "homography_status": {
+    "computed": true,
+    "error": null,
+    "matrix": [
+      [
+        0.47601459174428556,
+        0.22301943089278875,
+        -863.1931101829438
+      ],
+      [
+        -0.03424362336427942,
+        1.9812382089333003,
+        -992.4682601283207
+      ],
+      [
+        -1.425583541874966e-05,
+        0.0012007362335857653,
+        1.0
+      ]
+    ],
+    "target_size": [
+      360,
+      780
+    ]
+  },
+  "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_3_court_calibration_probe_report.json",
+  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_3_court_calibration_probe_20260512T234914Z.log",
+  "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_3_court_calibration_probe_report.md",
+  "mini_court_preview_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\calibration\\stage_3_court_probe\\mini_court_preview.jpg",
+  "overlay_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\calibration\\stage_3_court_probe\\court_points_overlay.jpg",
+  "point_order_validation_status": {
+    "order_checks": {
+      "far_left_before_far_right": true,
+      "near_left_before_near_right": true
+    },
+    "point_order_valid": true,
+    "polygon_self_intersects": false,
+    "required_points_available": true,
+    "valid": true,
+    "warnings": []
+  },
+  "points_status": {
+    "calibration_basis": "doubles court outer boundary",
+    "geometry": {
+      "order_checks": {
+        "far_left_before_far_right": true,
+        "near_left_before_near_right": true
+      },
+      "point_order_valid": true,
+      "polygon_self_intersects": false,
+      "required_points_available": true,
+      "valid": true,
+      "warnings": []
+    },
+    "has_invalid": false,
+    "has_missing": false,
+    "has_placeholders": false,
+    "homography_ready": true,
+    "point_labels": {
+      "far_left_corner": "top-left doubles court corner",
+      "far_right_corner": "top-right doubles court corner",
+      "near_left_corner": "bottom-left doubles court corner",
+      "near_right_corner": "bottom-right doubles court corner"
+    },
+    "points": {
+      "far_left_corner": {
+        "status": "usable",
+        "x": 1566.0,
+        "y": 528.0
+      },
+      "far_right_corner": {
+        "status": "usable",
+        "x": 2781.0,
+        "y": 549.0
+      },
+      "near_left_corner": {
+        "status": "usable",
+        "x": 1008.0,
+        "y": 1719.0
+      },
+      "near_right_corner": {
+        "status": "usable",
+        "x": 3312.0,
+        "y": 1770.0
+      }
+    },
+    "usable_count": 4
+  },
+  "points_status_summary": "homography_ready",
+  "polygon_self_intersection_status": false,
+  "recommended_fixes": [],
+  "recommended_next_step": "Proceed to Stage 4: Ball Tracking Probe.",
+  "reference_frame_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\calibration\\stage_3_court_probe\\calibration_reference_frame.jpg",
+  "stage": "stage_3_court_calibration_probe",
+  "timestamp": "2026-05-12T23:49:14+00:00",
+  "video_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\samples\\video_01.mov",
+  "warnings": []
+}

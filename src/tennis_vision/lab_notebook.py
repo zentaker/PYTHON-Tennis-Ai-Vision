@@ -14,6 +14,9 @@ STAGE_NOTEBOOK_FILES = {
     "stage_0": "stage_0_environment.md",
     "stage_1": "stage_1_video_probe.md",
     "stage_2": "stage_2_yolo_cpu_baseline.md",
+    "stage_3": "stage_3_court_calibration_probe.md",
+    "stage_3_1": "stage_3_1_court_point_selector.md",
+    "stage_4": "stage_4_ball_tracking_probe.md",
 }
 
 
@@ -126,6 +129,45 @@ def stage_2_next_step(report: dict[str, Any]) -> str:
     if report.get("final_verdict") == "blocked":
         return "Fix YOLO CPU baseline blockers, then rerun Stage 2."
     return "Proceed to Stage 3 court calibration probe."
+
+
+def stage_3_next_step(report: dict[str, Any]) -> str:
+    """Return Stage 3 next-step text."""
+    next_step = report.get("recommended_next_step")
+    if next_step:
+        return str(next_step)
+    verdict = report.get("final_verdict")
+    if verdict == "ready_for_stage_4":
+        return "Proceed to Stage 4 ball tracking probe."
+    if verdict == "ready_for_manual_point_selection":
+        return "Fill manual court point coordinates, then rerun Stage 3."
+    return "Fix Stage 3 calibration blockers, then rerun the probe."
+
+
+def stage_3_1_next_step(report: dict[str, Any]) -> str:
+    """Return Stage 3.1 next-step text."""
+    next_step = report.get("recommended_next_step")
+    if next_step:
+        return str(next_step)
+    verdict = report.get("final_verdict")
+    if verdict == "ready_to_rerun_stage_3":
+        return "Rerun Stage 3 to compute homography from the saved point coordinates."
+    if verdict == "ready_with_grid_only":
+        return "Use the grid image or interactive selector to fill court point coordinates."
+    return "Regenerate the Stage 3 reference frame, then rerun Stage 3.1."
+
+
+def stage_4_next_step(report: dict[str, Any]) -> str:
+    """Return Stage 4 next-step text."""
+    next_step = report.get("recommended_next_step")
+    if next_step:
+        return str(next_step)
+    verdict = report.get("final_verdict")
+    if verdict in {"ready_for_stage_5", "ready_with_warnings"}:
+        return "Proceed to Stage 5 ball candidate filtering and court projection."
+    if verdict == "needs_better_ball_model":
+        return "Research a specialized tennis ball tracker or GPU-based detector later."
+    return "Fix Stage 4 video loading or sampling blockers, then rerun the probe."
 
 
 def build_stage_0_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
@@ -359,6 +401,242 @@ def top_detection_classes(counts: Any) -> str:
     return ", ".join(f"{name}: {count}" for name, count in pairs)
 
 
+def build_stage_3_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
+    """Build Stage 3 notebook content."""
+    json_path = report_path(project_root, "stage_3_court_calibration_probe_report.json")
+    markdown_path = report_path(project_root, "stage_3_court_calibration_probe_report.md")
+    next_step = stage_3_next_step(report)
+    friction = report.get("friction", {})
+    result = report.get("calibration_result", {})
+    homography = report.get("homography_status", {})
+    geometry = nested_get(report, ("points_status", "geometry"), {})
+
+    summary = markdown_table(
+        [
+            ("Stage", "Stage 3 - Court calibration probe"),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction score", friction.get("score")),
+            ("Friction level", friction.get("band")),
+            ("Timestamp", report.get("timestamp")),
+            ("Recommended next step", next_step),
+        ]
+    )
+    input_table = markdown_table(
+        [
+            ("Config path", report.get("config_path")),
+            ("Video path", report.get("video_path")),
+            ("Frame index", report.get("frame_index")),
+            ("Calibration basis", report.get("calibration_basis")),
+            ("Calibration points status", report.get("points_status_summary")),
+            ("Point order valid", geometry.get("point_order_valid") if isinstance(geometry, dict) else None),
+            ("Polygon self-intersects", geometry.get("polygon_self_intersects") if isinstance(geometry, dict) else None),
+        ]
+    )
+    output_table = markdown_table(
+        [
+            ("JSON report path", json_path),
+            ("Markdown report path", markdown_path),
+            ("Log", latest_log_for_prefix(project_root, "stage_3_court_calibration_probe_")),
+            ("Reference frame", result.get("reference_frame_path")),
+            ("Points overlay", result.get("overlay_path")),
+            ("Mini-court preview", result.get("mini_court_preview_path")),
+        ]
+    )
+    console_table = markdown_table(
+        [
+            ("Stage name", "Stage 3 court calibration probe"),
+            ("Config", report.get("config_path")),
+            ("Input video", report.get("video_path")),
+            ("Frame index", report.get("frame_index")),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction", f"{not_available(friction.get('score'))} ({not_available(friction.get('band'))})"),
+            ("Reference frame", result.get("reference_frame_path")),
+            ("Overlay", result.get("overlay_path")),
+            ("Homography", "computed" if homography.get("computed") else "not computed"),
+            ("Point order valid", geometry.get("point_order_valid") if isinstance(geometry, dict) else None),
+            ("Polygon self-intersects", geometry.get("polygon_self_intersects") if isinstance(geometry, dict) else None),
+            ("Recommended next step", next_step),
+        ]
+    )
+    interpretation = (
+        "The calibration reference frame and overlay are ready for manual point selection. "
+        "The placeholder, inverted, or crossed config should be updated with real pixel coordinates before Stage 4."
+        if report.get("final_verdict") == "ready_for_manual_point_selection"
+        else "Court homography is available, so the project is ready to proceed to ball tracking probes."
+        if report.get("final_verdict") == "ready_for_stage_4"
+        else "Stage 3 needs attention before court calibration can be trusted."
+    )
+
+    body = stage_document(
+        title="Stage 3 - Court Calibration Probe",
+        summary=summary,
+        input_section=input_table,
+        output_section=output_table,
+        console_table=console_table,
+        warnings=bullet_list(report.get("warnings"), "No warnings."),
+        errors=bullet_list(report.get("errors"), "No errors."),
+        interpretation=interpretation,
+        next_step=next_step,
+    )
+    entry = history_entry(report, "Stage 3 - Court Calibration Probe", summary, next_step)
+    return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
+
+
+def build_stage_3_1_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
+    """Build Stage 3.1 notebook content."""
+    json_path = report_path(project_root, "stage_3_1_court_point_selector_report.json")
+    markdown_path = report_path(project_root, "stage_3_1_court_point_selector_report.md")
+    next_step = stage_3_1_next_step(report)
+    friction = report.get("friction", {})
+    selected_status = report.get("selected_points_status", {})
+    geometry = selected_status.get("geometry", {}) if isinstance(selected_status, dict) else {}
+
+    summary = markdown_table(
+        [
+            ("Stage", "Stage 3.1 - Court point selection helper"),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction score", friction.get("score")),
+            ("Friction level", friction.get("band")),
+            ("Timestamp", report.get("timestamp")),
+            ("Recommended next step", next_step),
+        ]
+    )
+    input_table = markdown_table(
+        [
+            ("Reference image", report.get("image_path")),
+            ("Config path", report.get("config_path")),
+            ("Calibration basis", report.get("calibration_basis")),
+            ("Grid step", report.get("grid_step")),
+            ("Interactive attempted", report.get("interactive_attempted")),
+            ("Interactive completed", report.get("interactive_completed")),
+            ("Point order valid", geometry.get("point_order_valid") if isinstance(geometry, dict) else None),
+            ("Polygon self-intersects", geometry.get("polygon_self_intersects") if isinstance(geometry, dict) else None),
+        ]
+    )
+    output_table = markdown_table(
+        [
+            ("JSON report path", json_path),
+            ("Markdown report path", markdown_path),
+            ("Log", latest_log_for_prefix(project_root, "stage_3_1_court_point_selector_")),
+            ("Grid image", report.get("grid_image_path")),
+            ("Config updated", nested_get(report, ("config_update", "updated"))),
+            ("Valid selected points", selected_status.get("valid_count")),
+            ("Point order valid", geometry.get("point_order_valid") if isinstance(geometry, dict) else None),
+            ("Polygon self-intersects", geometry.get("polygon_self_intersects") if isinstance(geometry, dict) else None),
+        ]
+    )
+    console_table = markdown_table(
+        [
+            ("Stage name", "Stage 3.1 court point selection helper"),
+            ("Reference image", report.get("image_path")),
+            ("Grid image", report.get("grid_image_path")),
+            ("Grid step", report.get("grid_step")),
+            ("Interactive completed", report.get("interactive_completed")),
+            ("Points valid", report.get("points_valid")),
+            ("Config updated", nested_get(report, ("config_update", "updated"))),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction", f"{not_available(friction.get('score'))} ({not_available(friction.get('band'))})"),
+            ("Recommended next step", next_step),
+        ]
+    )
+    interpretation = (
+        "The coordinate grid is available, so manual coordinate reading is easier. "
+        "No saved point set is required for this helper to be useful."
+        if report.get("final_verdict") == "ready_with_grid_only"
+        else "Four valid court points were saved to the calibration config. Stage 3 can be rerun to compute homography."
+        if report.get("final_verdict") == "ready_to_rerun_stage_3"
+        else "The point selection helper is blocked until the Stage 3 reference frame is available."
+    )
+
+    body = stage_document(
+        title="Stage 3.1 - Court Point Selection Helper",
+        summary=summary,
+        input_section=input_table,
+        output_section=output_table,
+        console_table=console_table,
+        warnings=bullet_list(report.get("warnings"), "No warnings."),
+        errors=bullet_list(report.get("errors"), "No errors."),
+        interpretation=interpretation,
+        next_step=next_step,
+    )
+    entry = history_entry(report, "Stage 3.1 - Court Point Selection Helper", summary, next_step)
+    return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
+
+
+def build_stage_4_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
+    """Build Stage 4 notebook content."""
+    json_path = report_path(project_root, "stage_4_ball_tracking_probe_report.json")
+    markdown_path = report_path(project_root, "stage_4_ball_tracking_probe_report.md")
+    next_step = stage_4_next_step(report)
+    friction = report.get("friction", {})
+    result = report.get("ball_tracking_result", {})
+
+    summary = markdown_table(
+        [
+            ("Stage", "Stage 4 - Ball tracking probe"),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction score", friction.get("score")),
+            ("Friction level", friction.get("band")),
+            ("Timestamp", report.get("timestamp")),
+            ("Recommended next step", next_step),
+        ]
+    )
+    input_table = markdown_table(
+        [
+            ("Video path", report.get("video_path")),
+            ("Max frames", report.get("max_frames")),
+            ("Interval", report.get("interval")),
+            ("Resize width", report.get("resize_width")),
+            ("YOLO enabled", report.get("yolo_enabled")),
+            ("Stage 3 spatially useful", nested_get(report, ("stage_3_spatial_status", "spatially_useful"))),
+        ]
+    )
+    output_table = markdown_table(
+        [
+            ("JSON report path", json_path),
+            ("Markdown report path", markdown_path),
+            ("Log", latest_log_for_prefix(project_root, "stage_4_ball_tracking_probe_")),
+            ("Overlay folder", result.get("overlay_folder")),
+            ("Candidate CSV", result.get("csv_path")),
+            ("Trajectory preview", result.get("trajectory_preview_path")),
+        ]
+    )
+    console_table = markdown_table(
+        [
+            ("Stage name", "Stage 4 ball tracking probe"),
+            ("Input video", report.get("video_path")),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction", f"{not_available(friction.get('score'))} ({not_available(friction.get('band'))})"),
+            ("Frames processed", result.get("frames_processed")),
+            ("Ball candidates", result.get("candidate_count")),
+            ("Frames with candidates", result.get("frames_with_candidates")),
+            ("Average candidates/frame", result.get("average_candidates_per_frame")),
+            ("YOLO enabled", report.get("yolo_enabled")),
+            ("Recommended next step", next_step),
+        ]
+    )
+    interpretation = (
+        "The local OpenCV heuristic found ball-like candidates. The results are exploratory and likely noisy, "
+        "but they provide a useful baseline for Stage 5 filtering and court projection."
+        if (result.get("candidate_count") or 0) > 0
+        else "The local OpenCV heuristic did not find ball candidates in the sampled frames. A specialized tennis ball model may be needed later."
+    )
+
+    body = stage_document(
+        title="Stage 4 - Ball Tracking Probe",
+        summary=summary,
+        input_section=input_table,
+        output_section=output_table,
+        console_table=console_table,
+        warnings=bullet_list(report.get("warnings"), "No warnings."),
+        errors=bullet_list(report.get("errors"), "No errors."),
+        interpretation=interpretation,
+        next_step=next_step,
+    )
+    entry = history_entry(report, "Stage 4 - Ball Tracking Probe", summary, next_step)
+    return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
+
+
 def stage_document(
     *,
     title: str,
@@ -558,6 +836,75 @@ def update_lab_notebook(project_root: Path) -> list[Path]:
                 "friction": f"{not_available(nested_get(stage_2_report, ('friction', 'score')))} {not_available(nested_get(stage_2_report, ('friction', 'band')))}",
                 "main_output": "outputs/reports/stage_2_yolo_cpu_baseline_report.md",
                 "next_step": stage_2_next_step(stage_2_report),
+            }
+        )
+
+    stage_3_report = read_json_report(report_path(project_root, "stage_3_court_calibration_probe_report.json"))
+    if stage_3_report is not None:
+        document = build_stage_3_document(stage_3_report, project_root)
+        stage_path = notebook_dir / "stage_3_court_calibration_probe.md"
+        written.append(
+            write_stage_notebook(
+                stage_path,
+                document["body"],
+                document["entry"],
+                document["entry_id"],
+            )
+        )
+        stage_summaries.append(
+            {
+                "stage": "Stage 3",
+                "name": "Court Calibration Probe",
+                "verdict": not_available(stage_3_report.get("final_verdict")),
+                "friction": f"{not_available(nested_get(stage_3_report, ('friction', 'score')))} {not_available(nested_get(stage_3_report, ('friction', 'band')))}",
+                "main_output": "outputs/reports/stage_3_court_calibration_probe_report.md",
+                "next_step": stage_3_next_step(stage_3_report),
+            }
+        )
+
+    stage_3_1_report = read_json_report(report_path(project_root, "stage_3_1_court_point_selector_report.json"))
+    if stage_3_1_report is not None:
+        document = build_stage_3_1_document(stage_3_1_report, project_root)
+        stage_path = notebook_dir / "stage_3_1_court_point_selector.md"
+        written.append(
+            write_stage_notebook(
+                stage_path,
+                document["body"],
+                document["entry"],
+                document["entry_id"],
+            )
+        )
+        stage_summaries.append(
+            {
+                "stage": "Stage 3.1",
+                "name": "Court Point Selection Helper",
+                "verdict": not_available(stage_3_1_report.get("final_verdict")),
+                "friction": f"{not_available(nested_get(stage_3_1_report, ('friction', 'score')))} {not_available(nested_get(stage_3_1_report, ('friction', 'band')))}",
+                "main_output": "outputs/reports/stage_3_1_court_point_selector_report.md",
+                "next_step": stage_3_1_next_step(stage_3_1_report),
+            }
+        )
+
+    stage_4_report = read_json_report(report_path(project_root, "stage_4_ball_tracking_probe_report.json"))
+    if stage_4_report is not None:
+        document = build_stage_4_document(stage_4_report, project_root)
+        stage_path = notebook_dir / "stage_4_ball_tracking_probe.md"
+        written.append(
+            write_stage_notebook(
+                stage_path,
+                document["body"],
+                document["entry"],
+                document["entry_id"],
+            )
+        )
+        stage_summaries.append(
+            {
+                "stage": "Stage 4",
+                "name": "Ball Tracking Probe",
+                "verdict": not_available(stage_4_report.get("final_verdict")),
+                "friction": f"{not_available(nested_get(stage_4_report, ('friction', 'score')))} {not_available(nested_get(stage_4_report, ('friction', 'band')))}",
+                "main_output": "outputs/reports/stage_4_ball_tracking_probe_report.md",
+                "next_step": stage_4_next_step(stage_4_report),
             }
         )
 

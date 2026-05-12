@@ -8,14 +8,14 @@
 | Verdict | ready_for_stage_2 |
 | Friction score | 0 |
 | Friction level | low friction |
-| Timestamp | 2026-05-12T17:05:08+00:00 |
+| Timestamp | 2026-05-12T21:26:45+00:00 |
 | Recommended next step | Proceed to Stage 2 YOLO CPU baseline. |
 
 ## Input
 
 | Field | Value |
 |---|---|
-| Video path | C:\Users\MSI\Desktop\TennisAiVision\tennis-ai-vision\samples\video_01.mov |
+| Video path | C:\Users\MSI\Desktop\TennisAiVision\samples\video_01.mov |
 | Video source | auto_detected |
 | File extension | .mov |
 | Resolution | 3840x2160 |
@@ -28,10 +28,10 @@
 
 | Field | Value |
 |---|---|
-| JSON report path | C:\Users\MSI\Desktop\TennisAiVision\tennis-ai-vision\outputs\reports\stage_1_video_probe_report.json |
-| Markdown report path | C:\Users\MSI\Desktop\TennisAiVision\tennis-ai-vision\outputs\reports\stage_1_video_probe_report.md |
-| Log | C:\Users\MSI\Desktop\TennisAiVision\tennis-ai-vision\outputs\logs\stage_1_video_probe_20260512T170508Z.log |
-| Frames folder | C:\Users\MSI\Desktop\TennisAiVision\tennis-ai-vision\outputs\frames\stage_1_20260512T170453Z |
+| JSON report path | C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\stage_1_video_probe_report.json |
+| Markdown report path | C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\stage_1_video_probe_report.md |
+| Log | C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\stage_1_video_probe_20260512T212645Z.log |
+| Frames folder | C:\Users\MSI\Desktop\TennisAiVision\outputs\frames\stage_1_20260512T212617Z |
 | Frames saved | 25 |
 
 ## Console-equivalent table
@@ -39,7 +39,7 @@
 | Field | Value |
 |---|---|
 | Stage name | Stage 1 video probe |
-| Input video | C:\Users\MSI\Desktop\TennisAiVision\tennis-ai-vision\samples\video_01.mov |
+| Input video | C:\Users\MSI\Desktop\TennisAiVision\samples\video_01.mov |
 | Video source | auto_detected |
 | Verdict | ready_for_stage_2 |
 | Friction | 0 (low friction) |
@@ -106,6 +106,18 @@ Proceed to Stage 2 YOLO CPU baseline.
 <!-- lab-entry:2026-05-12T17:05:08+00:00 -->
 
 ### 2026-05-12T17:05:08+00:00
+
+| Field | Value |
+|---|---|
+| Stage | Stage 1 — Video Probe |
+| Verdict | ready_for_stage_2 |
+| Friction score | 0 |
+| Friction level | low friction |
+| Next step | Proceed to Stage 2 YOLO CPU baseline. |
+
+<!-- lab-entry:2026-05-12T21:26:45+00:00 -->
+
+### 2026-05-12T21:26:45+00:00
 
 | Field | Value |
 |---|---|

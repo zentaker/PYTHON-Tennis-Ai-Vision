@@ -24,13 +24,25 @@ Reports and lab notebook files are okay to commit because they are lightweight e
 - `outputs/reports/*.md`
 - `docs/lab-notebook/`
 
+The normal user workflow is intentionally simple after Git hygiene has been verified:
+
+```powershell
+git status
+git add .
+git status
+git commit -m "your message"
+git push
+```
+
 Before committing, verify the staged file list:
 
 ```powershell
 git diff --cached --name-only
 ```
 
-Do not use `git add .` until `.gitignore` and artifact rules have been verified. Prefer intentional staging of source code, scripts, docs, requirements, lightweight reports, and lab notebook files.
+`git add .` should be safe because `.gitignore` excludes heavy/generated/local artifacts. If a heavy file appears in `git diff --cached --name-only`, the agent must fix `.gitignore` or remove the file from Git tracking before the user commits.
+
+The user should not need long manual staging commands for normal commits. Prefer the simple workflow above once repository hygiene is confirmed.
 
 ## Untracking files already added to Git
 
@@ -57,12 +69,7 @@ git rm --cached --ignore-unmatch *.pt *.pth *.onnx
 After untracking, add the hygiene files and inspect the result:
 
 ```powershell
-git add .gitignore docs/git-hygiene.md samples/.gitkeep
+git add .
 git status
-```
-
-If you want to preserve lightweight reports as experiment evidence, add them explicitly:
-
-```powershell
-git add outputs/reports/*.json outputs/reports/*.md
+git diff --cached --name-only
 ```

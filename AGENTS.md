@@ -27,6 +27,11 @@ This repository is a local-first research project for tennis video analysis.
 - Avoid unnecessary rewrites, duplicate prompts, redundant runs, dependency bloat, and cloud escalation.
 - Prefer minimal high-signal iterations to reduce compute waste and project friction.
 - Stage 2 validates local YOLO inference on CPU. It must stay small, avoid full-video processing by default, and document runtime friction honestly.
+- Stage 3 must not attempt automatic court detection as the primary path. Manual calibration is the low-friction baseline. Automatic court detection can be explored later.
+- Manual point selection should be supported by local tools. The user should not have to guess pixel coordinates from an image without a grid or selector.
+- Stage 3 calibration uses the doubles court outer boundary. Do not confuse doubles boundary calibration with singles-line or service-box calibration; those can be derived or added in later layers.
+- Stage 3 and Stage 3.1 must validate point order and reject crossed court polygons without silently auto-swapping user-selected points.
+- Stage 4 is a probe, not a production tracker. Do not overclaim ball tracking accuracy. Record false positives, missed detections, and runtime friction honestly.
 
 ## Repository hygiene rules
 
@@ -36,8 +41,9 @@ This repository is a local-first research project for tennis video analysis.
 - Do not commit videos, model weights, generated frames, annotated outputs, logs, caches, virtual environments, or datasets.
 - Commit source code, scripts, docs, requirements, lightweight reports, and lab notebook files.
 - Before any Git commit, verify staged files with `git diff --cached --name-only`.
-- Avoid `git add .` when heavy artifacts may be present.
-- Prefer intentional staging.
+- Normal user workflow should be `git add .` after Git hygiene is verified.
+- The user should not need long manual staging commands for normal commits.
+- If a heavy file appears in `git diff --cached --name-only`, Codex must fix `.gitignore` or remove it from Git tracking before commit.
 - Repository structure problems count as development friction and must be documented.
 - Codex must not commit heavy artifacts.
 - Codex must verify staged files before every commit.

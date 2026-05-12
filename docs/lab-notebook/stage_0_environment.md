@@ -8,7 +8,7 @@
 | Verdict | ready_with_warnings |
 | Friction score | 15 |
 | Friction level | low friction |
-| Timestamp | 2026-05-12T17:04:54+00:00 |
+| Timestamp | 2026-05-12T23:48:59+00:00 |
 | Recommended next step | Proceed to Stage 1 video loading and frame extraction. |
 
 ## Input
@@ -17,7 +17,7 @@
 |---|---|
 | Local environment | Windows-11-10.0.26200-SP0 |
 | Python | 3.14.4 |
-| Python executable | C:\Users\MSI\Desktop\TennisAiVision\tennis-ai-vision\.venv\Scripts\python.exe |
+| Python executable | C:\Users\MSI\Desktop\TennisAiVision\.venv\Scripts\python.exe |
 | Folders missing | 0 |
 | Packages missing | 0 |
 | ffmpeg available | no |
@@ -27,9 +27,9 @@
 
 | Field | Value |
 |---|---|
-| JSON report path | C:\Users\MSI\Desktop\TennisAiVision\tennis-ai-vision\outputs\reports\environment_report.json |
-| Markdown report path | C:\Users\MSI\Desktop\TennisAiVision\tennis-ai-vision\outputs\reports\environment_report.md |
-| Log | C:\Users\MSI\Desktop\TennisAiVision\tennis-ai-vision\outputs\logs\doctor_20260512T170454Z.log |
+| JSON report path | C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\environment_report.json |
+| Markdown report path | C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\environment_report.md |
+| Log | C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\doctor_20260512T234859Z.log |
 
 ## Console-equivalent table
 
@@ -100,6 +100,30 @@ Proceed to Stage 1 video loading and frame extraction.
 <!-- lab-entry:2026-05-12T17:04:54+00:00 -->
 
 ### 2026-05-12T17:04:54+00:00
+
+| Field | Value |
+|---|---|
+| Stage | Stage 0 — Environment |
+| Verdict | ready_with_warnings |
+| Friction score | 15 |
+| Friction level | low friction |
+| Next step | Proceed to Stage 1 video loading and frame extraction. |
+
+<!-- lab-entry:2026-05-12T21:26:18+00:00 -->
+
+### 2026-05-12T21:26:18+00:00
+
+| Field | Value |
+|---|---|
+| Stage | Stage 0 — Environment |
+| Verdict | ready_with_warnings |
+| Friction score | 15 |
+| Friction level | low friction |
+| Next step | Proceed to Stage 1 video loading and frame extraction. |
+
+<!-- lab-entry:2026-05-12T23:48:59+00:00 -->
+
+### 2026-05-12T23:48:59+00:00
 
 | Field | Value |
 |---|---|

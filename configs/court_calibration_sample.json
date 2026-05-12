@@ -1,0 +1,23 @@
+{
+  "video": "samples/video_01.mov",
+  "frame_index": 120,
+  "points": {
+    "near_left_corner": [
+      1008,
+      1719
+    ],
+    "near_right_corner": [
+      3312,
+      1770
+    ],
+    "far_left_corner": [
+      1566,
+      528
+    ],
+    "far_right_corner": [
+      2781,
+      549
+    ]
+  },
+  "notes": "Court point coordinates were updated by the Stage 3.1 point selector."
+}

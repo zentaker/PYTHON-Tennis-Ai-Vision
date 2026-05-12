@@ -1,0 +1,121 @@
+{
+  "calibration_basis": "doubles court outer boundary",
+  "config_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\configs\\court_calibration_sample.json",
+  "config_update": {
+    "config_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\configs\\court_calibration_sample.json",
+    "errors": [],
+    "updated": true,
+    "warnings": []
+  },
+  "errors": [],
+  "final_verdict": "ready_to_rerun_stage_3",
+  "flags": {
+    "config_update_failed": false,
+    "grid_generation_failed": false,
+    "image_missing": false,
+    "interactive_unavailable": false,
+    "invalid_points": false,
+    "no_points_selected": false,
+    "point_order_suspicious": false,
+    "polygon_self_intersects": false
+  },
+  "friction": {
+    "band": "low friction",
+    "inputs": {
+      "config_update_failed": false,
+      "errors_count": 0,
+      "grid_generation_failed": false,
+      "image_missing": false,
+      "interactive_unavailable": false,
+      "invalid_points": false,
+      "no_points_selected": false,
+      "point_order_suspicious": false,
+      "polygon_self_intersects": false,
+      "warnings_count": 0
+    },
+    "score": 0
+  },
+  "grid_image_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\calibration\\stage_3_court_probe\\calibration_reference_grid.jpg",
+  "grid_step": 200,
+  "image_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\calibration\\stage_3_court_probe\\calibration_reference_frame.jpg",
+  "interactive_attempted": true,
+  "interactive_completed": true,
+  "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_3_1_court_point_selector_report.json",
+  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_3_1_court_point_selector_20260512T234241Z.log",
+  "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_3_1_court_point_selector_report.md",
+  "point_order_validation_status": {
+    "order_checks": {
+      "far_left_before_far_right": true,
+      "near_left_before_near_right": true
+    },
+    "point_order_valid": true,
+    "polygon_self_intersects": false,
+    "required_points_available": true,
+    "valid": true,
+    "warnings": []
+  },
+  "points_valid": true,
+  "polygon_self_intersection_status": false,
+  "recommended_fixes": [],
+  "recommended_next_step": "Rerun Stage 3 to compute the court homography from the saved point coordinates.",
+  "selected_points": {
+    "far_left_corner": [
+      1566,
+      528
+    ],
+    "far_right_corner": [
+      2781,
+      549
+    ],
+    "near_left_corner": [
+      1008,
+      1719
+    ],
+    "near_right_corner": [
+      3312,
+      1770
+    ]
+  },
+  "selected_points_status": {
+    "calibration_basis": "doubles court outer boundary",
+    "geometry": {
+      "order_checks": {
+        "far_left_before_far_right": true,
+        "near_left_before_near_right": true
+      },
+      "point_order_valid": true,
+      "polygon_self_intersects": false,
+      "required_points_available": true,
+      "valid": true,
+      "warnings": []
+    },
+    "points": {
+      "far_left_corner": {
+        "status": "valid",
+        "x": 1566,
+        "y": 528
+      },
+      "far_right_corner": {
+        "status": "valid",
+        "x": 2781,
+        "y": 549
+      },
+      "near_left_corner": {
+        "status": "valid",
+        "x": 1008,
+        "y": 1719
+      },
+      "near_right_corner": {
+        "status": "valid",
+        "x": 3312,
+        "y": 1770
+      }
+    },
+    "points_valid": true,
+    "required_count": 4,
+    "valid_count": 4
+  },
+  "stage": "stage_3_1_court_point_selector",
+  "timestamp": "2026-05-12T23:42:41+00:00",
+  "warnings": []
+}

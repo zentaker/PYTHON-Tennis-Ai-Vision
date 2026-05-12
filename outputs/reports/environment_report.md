@@ -2,7 +2,7 @@
 
 ## Summary
 
-- Timestamp: 2026-05-12T17:04:54+00:00
+- Timestamp: 2026-05-12T23:48:59+00:00
 - Final verdict: ready_with_warnings
 - Friction score: 15 (low friction)
 
@@ -10,8 +10,8 @@
 
 - OS: Windows-11-10.0.26200-SP0
 - Python: 3.14.4
-- Python executable: `C:\Users\MSI\Desktop\TennisAiVision\tennis-ai-vision\.venv\Scripts\python.exe`
-- Working directory: `C:\Users\MSI\Desktop\TennisAiVision\tennis-ai-vision`
+- Python executable: `C:\Users\MSI\Desktop\TennisAiVision\.venv\Scripts\python.exe`
+- Working directory: `C:\Users\MSI\Desktop\TennisAiVision`
 
 ## Package Import Status
 

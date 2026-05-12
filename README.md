@@ -4,9 +4,9 @@ Tennis AI Vision is a local-first Python research project for building toward Sw
 
 ## Current Stage
 
-Stage 2: YOLO CPU baseline.
+Stage 4: ball tracking probe.
 
-Stage 0 checks the local Python environment, required folders, required package imports, and whether `ffmpeg` is available from the terminal. Stage 1 loads a local sample video with OpenCV, reads metadata, extracts frames, and writes reports. Stage 2 runs a small local YOLO CPU baseline on sampled frames and saves annotated output.
+Stage 0 checks the local Python environment, required folders, required package imports, and whether `ffmpeg` is available from the terminal. Stage 1 loads a local sample video with OpenCV, reads metadata, extracts frames, and writes reports. Stage 2 runs a small local YOLO CPU baseline on sampled frames and saves annotated output. Stage 3 creates a manual court calibration reference frame and point overlay. Stage 3.1 helps read or select the court point pixel coordinates needed to rerun Stage 3 with homography. Stage 4 probes simple local ball candidate detection.
 
 ## Local Setup
 
@@ -138,6 +138,122 @@ Expected outputs:
 - Automatic lab notebook update under `docs/lab-notebook/`.
 
 CPU inference may be slow on 4K video, so Stage 2 resizes sampled frames before inference by default. Ball tracking and court reasoning are later stages.
+
+## Stage 3 - Court Calibration Probe
+
+Stage 3 creates a low-friction manual court calibration workflow. It loads one representative video frame, saves a reference image, reads court corner points from a JSON config, draws an overlay, and computes a homography only after real court point coordinates are available.
+
+Stage 3 uses the doubles court outer boundary as the calibration baseline. Tennis courts include singles lines and doubles lines; singles-line and service-box geometry will be derived later from court geometry or selected in a future calibration layer.
+
+The sample config lives at:
+
+```text
+configs/court_calibration_sample.json
+```
+
+The reference frame and overlay are generated under:
+
+```text
+outputs/calibration/stage_3_court_probe/
+```
+
+Run the probe:
+
+```powershell
+python scripts\run_stage_3_court_calibration_probe.py
+```
+
+Run with a specific frame:
+
+```powershell
+python scripts\run_stage_3_court_calibration_probe.py --frame-index 180
+```
+
+If the config still contains placeholder points like `[0, 0]`, the next task is to fill pixel coordinates from `calibration_reference_frame.jpg` and rerun Stage 3.
+
+Corner meanings:
+
+- `near_left_corner` = bottom-left doubles court corner.
+- `near_right_corner` = bottom-right doubles court corner.
+- `far_left_corner` = top-left doubles court corner.
+- `far_right_corner` = top-right doubles court corner.
+
+## Stage 3.1 - Court Point Selection Helper
+
+Stage 3.1 exists because Stage 3 needs real pixel coordinates for the court corners. It generates a coordinate grid over the calibration reference frame and can optionally open a local OpenCV click selector.
+
+Generate only the coordinate grid:
+
+```powershell
+python scripts\run_stage_3_1_court_point_selector.py --no-interactive
+```
+
+Run the interactive selector:
+
+```powershell
+python scripts\run_stage_3_1_court_point_selector.py --interactive
+```
+
+In the interactive selector, click the four points in order:
+
+```text
+1. near_left_corner = bottom-left doubles court corner
+2. near_right_corner = bottom-right doubles court corner
+3. far_left_corner = top-left doubles court corner
+4. far_right_corner = top-right doubles court corner
+```
+
+Use `u` to undo, `s` to save, and `q` to quit without saving. Saved points update:
+
+```text
+configs/court_calibration_sample.json
+```
+
+After points are saved, rerun Stage 3:
+
+```powershell
+python scripts\run_stage_3_court_calibration_probe.py
+```
+
+Expected outputs:
+
+- Grid image at `outputs/calibration/stage_3_court_probe/calibration_reference_grid.jpg`.
+- JSON report at `outputs/reports/stage_3_1_court_point_selector_report.json`.
+- Markdown report at `outputs/reports/stage_3_1_court_point_selector_report.md`.
+- Automatic lab notebook update under `docs/lab-notebook/`.
+
+## Stage 4 - Ball Tracking Probe
+
+Stage 4 is an exploratory local ball candidate detector. It does not solve production ball tracking. It samples a small number of frames, runs simple OpenCV HSV color and blob heuristics, saves candidate overlays, and documents false-positive or missed-detection friction.
+
+YOLO is optional and off by default. The default run avoids full-video processing.
+
+Run the probe:
+
+```powershell
+python scripts\run_stage_4_ball_tracking_probe.py
+```
+
+Optional lighter run:
+
+```powershell
+python scripts\run_stage_4_ball_tracking_probe.py --max-frames 10 --interval 30 --resize-width 960
+```
+
+Optional YOLO reference pass:
+
+```powershell
+python scripts\run_stage_4_ball_tracking_probe.py --use-yolo --max-frames 5
+```
+
+Expected outputs:
+
+- Candidate overlays under `outputs/ball_tracking/stage_4_ball_probe/ball_candidates_overlay/`.
+- Candidate CSV at `outputs/ball_tracking/stage_4_ball_probe/ball_candidates.csv`.
+- Optional trajectory preview at `outputs/ball_tracking/stage_4_ball_probe/trajectory_preview.jpg`.
+- JSON report at `outputs/reports/stage_4_ball_tracking_probe_report.json`.
+- Markdown report at `outputs/reports/stage_4_ball_tracking_probe_report.md`.
+- Automatic lab notebook update under `docs/lab-notebook/`.
 
 ## Lab Notebook
 
