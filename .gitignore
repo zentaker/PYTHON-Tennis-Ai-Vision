@@ -1,0 +1,74 @@
+# Python environments
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.env
+
+# IDE/system
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+outputs/logs/
+
+# Local media samples
+samples/*.mp4
+samples/*.MP4
+samples/*.mov
+samples/*.MOV
+samples/*.avi
+samples/*.mkv
+samples/*.m4v
+samples/*.webm
+videos/
+
+# Generated outputs
+outputs/frames/
+outputs/annotated/
+outputs/videos/
+outputs/tmp/
+outputs/cache/
+
+# ML artifacts and model weights
+*.pt
+*.pth
+*.onnx
+*.engine
+*.bin
+*.safetensors
+yolo*.pt
+models/
+weights/
+runs/
+ultralytics/
+
+# Datasets
+data/raw/
+data/interim/
+data/processed/
+datasets/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Keep lightweight generated evidence trackable
+!outputs/
+!outputs/reports/
+!outputs/reports/*.json
+!outputs/reports/*.md
+!outputs/reports/.gitkeep

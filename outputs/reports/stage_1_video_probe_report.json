@@ -1,0 +1,97 @@
+{
+  "errors": [],
+  "final_verdict": "ready_for_stage_2",
+  "frame_extraction": {
+    "errors": [],
+    "extraction_interval": 30,
+    "extraction_time_seconds": 14.677,
+    "frames_attempted": 25,
+    "frames_saved": 25,
+    "max_frames": 25,
+    "output_folder": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\frames\\stage_1_20260512T170453Z",
+    "saved_files": [
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\frames\\stage_1_20260512T170453Z\\frame_000001.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\frames\\stage_1_20260512T170453Z\\frame_000030.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\frames\\stage_1_20260512T170453Z\\frame_000060.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\frames\\stage_1_20260512T170453Z\\frame_000090.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\frames\\stage_1_20260512T170453Z\\frame_000120.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\frames\\stage_1_20260512T170453Z\\frame_000150.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\frames\\stage_1_20260512T170453Z\\frame_000180.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\frames\\stage_1_20260512T170453Z\\frame_000210.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\frames\\stage_1_20260512T170453Z\\frame_000240.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\frames\\stage_1_20260512T170453Z\\frame_000270.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\frames\\stage_1_20260512T170453Z\\frame_000300.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\frames\\stage_1_20260512T170453Z\\frame_000330.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\frames\\stage_1_20260512T170453Z\\frame_000360.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\frames\\stage_1_20260512T170453Z\\frame_000390.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\frames\\stage_1_20260512T170453Z\\frame_000420.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\frames\\stage_1_20260512T170453Z\\frame_000450.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\frames\\stage_1_20260512T170453Z\\frame_000480.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\frames\\stage_1_20260512T170453Z\\frame_000510.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\frames\\stage_1_20260512T170453Z\\frame_000540.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\frames\\stage_1_20260512T170453Z\\frame_000570.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\frames\\stage_1_20260512T170453Z\\frame_000600.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\frames\\stage_1_20260512T170453Z\\frame_000630.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\frames\\stage_1_20260512T170453Z\\frame_000660.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\frames\\stage_1_20260512T170453Z\\frame_000690.jpg",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\frames\\stage_1_20260512T170453Z\\frame_000720.jpg"
+    ],
+    "total_frames_read": 720,
+    "warnings": []
+  },
+  "friction": {
+    "band": "low friction",
+    "inputs": {
+      "errors_count": 0,
+      "frames_not_saved": false,
+      "manual_action_required": false,
+      "metadata_read_failed": false,
+      "video_missing": false,
+      "video_open_failed": false,
+      "warnings_count": 0,
+      "zero_frames_detected": false
+    },
+    "score": 0
+  },
+  "input_selection": {
+    "auto_detected": true,
+    "checked_paths": [
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\samples\\video_01.mov"
+    ],
+    "detected_default_video_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\samples\\video_01.mov",
+    "detection_method": "preferred_default",
+    "provided_by_cli": false,
+    "selected_video_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\samples\\video_01.mov",
+    "source": "auto_detected",
+    "supported_extensions": [
+      ".mov",
+      ".MOV",
+      ".mp4",
+      ".MP4",
+      ".avi",
+      ".mkv",
+      ".m4v"
+    ]
+  },
+  "metadata": {
+    "codec": "h264",
+    "duration_seconds": 14.833,
+    "errors": [],
+    "exists": true,
+    "file_extension": ".mov",
+    "file_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\samples\\video_01.mov",
+    "file_size_mb": 107.675,
+    "fps": 60.0,
+    "frame_count": 890,
+    "height": 2160,
+    "metadata_readable": true,
+    "opened": true,
+    "warnings": [],
+    "width": 3840
+  },
+  "project_root": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision",
+  "recommended_fixes": [],
+  "stage": "stage_1_video_loading_and_frame_extraction",
+  "timestamp": "2026-05-12T17:05:08+00:00",
+  "warnings": []
+}

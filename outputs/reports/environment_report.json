@@ -1,0 +1,127 @@
+{
+  "cwd": {
+    "path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision"
+  },
+  "errors": [],
+  "ffmpeg": {
+    "available": false,
+    "error": "ffmpeg command was not found in PATH.",
+    "path": null,
+    "version": null
+  },
+  "final_verdict": "ready_with_warnings",
+  "folders": {
+    "outputs": {
+      "exists": true,
+      "path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs"
+    },
+    "outputs/annotated": {
+      "exists": true,
+      "path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\annotated"
+    },
+    "outputs/frames": {
+      "exists": true,
+      "path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\frames"
+    },
+    "outputs/logs": {
+      "exists": true,
+      "path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\logs"
+    },
+    "outputs/reports": {
+      "exists": true,
+      "path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\reports"
+    },
+    "samples": {
+      "exists": true,
+      "path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\samples"
+    },
+    "scripts": {
+      "exists": true,
+      "path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\scripts"
+    },
+    "src": {
+      "exists": true,
+      "path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\src"
+    },
+    "src/tennis_vision": {
+      "exists": true,
+      "path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\src\\tennis_vision"
+    }
+  },
+  "friction": {
+    "band": "low friction",
+    "inputs": {
+      "errors_count": 0,
+      "ffmpeg_missing": true,
+      "manual_action_required": false,
+      "missing_folders": [],
+      "missing_packages": []
+    },
+    "score": 15
+  },
+  "missing_folders": [],
+  "missing_packages": [],
+  "os": {
+    "machine": "AMD64",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "release": "11",
+    "system": "Windows",
+    "version": "10.0.26200"
+  },
+  "packages": {
+    "numpy": {
+      "available": true,
+      "error": null,
+      "import_name": "numpy",
+      "origin": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\.venv\\Lib\\site-packages\\numpy\\__init__.py"
+    },
+    "opencv-python": {
+      "available": true,
+      "error": null,
+      "import_name": "cv2",
+      "origin": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\.venv\\Lib\\site-packages\\cv2\\__init__.py"
+    },
+    "pandas": {
+      "available": true,
+      "error": null,
+      "import_name": "pandas",
+      "origin": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\.venv\\Lib\\site-packages\\pandas\\__init__.py"
+    },
+    "pydantic": {
+      "available": true,
+      "error": null,
+      "import_name": "pydantic",
+      "origin": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\.venv\\Lib\\site-packages\\pydantic\\__init__.py"
+    },
+    "rich": {
+      "available": true,
+      "error": null,
+      "import_name": "rich",
+      "origin": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\.venv\\Lib\\site-packages\\rich\\__init__.py"
+    }
+  },
+  "project_root": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision",
+  "python": {
+    "executable": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\.venv\\Scripts\\python.exe",
+    "major": 3,
+    "micro": 4,
+    "minor": 14,
+    "supported": true,
+    "version": "3.14.4"
+  },
+  "recommended_fixes": [
+    "Install ffmpeg locally and confirm that `ffmpeg -version` works in a new terminal."
+  ],
+  "reports_folder": {
+    "exists": true,
+    "path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\outputs\\reports"
+  },
+  "samples": {
+    "exists": true,
+    "path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\tennis-ai-vision\\samples"
+  },
+  "timestamp": "2026-05-12T17:04:54+00:00",
+  "warnings": [
+    "ffmpeg is not available from the terminal."
+  ]
+}
