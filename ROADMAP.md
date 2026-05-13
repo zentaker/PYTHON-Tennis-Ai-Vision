@@ -53,13 +53,27 @@ If handcrafted candidate generation remains weak, research and benchmark special
 
 ## Stage 6: Trajectory Smoothing And Event/Rally Segmentation Probe
 
-Current stage. Smooth the improved candidate trajectory and generate hypothesis-only event/rally segmentation markers.
+Smooth the improved candidate trajectory and generate hypothesis-only event/rally segmentation markers.
 
 Possible next paths:
 
 - Stage 7: player tracking and ball-player interaction if trajectory smoothing is viable.
 - Stage 6.1: expand manual labels if too few trajectory points exist.
 - Stage 5.2: specialized ball model research if candidate quality collapses.
+
+## Stage 7: Player Tracking And Ball-Player Interaction Probe
+
+Detect players in sampled trajectory frames, create approximate player tracks, and associate ball positions with nearby players as hypothesis-only interaction windows.
+
+## Stage 7.1: Court-Aware Player Filtering And Identity Stabilization
+
+Current stage. Filter irrelevant people detections, keep the main tennis players, and stabilize player identity using track continuity and appearance cues while keeping near/far side as a mutable state.
+
+Possible next paths:
+
+- Stage 8: shot/event timeline and rally segmentation prototype.
+- Stage 7.2: manual player identity labeling helper if identity remains unreliable.
+- Stage 7.3: improve player tracking if person detections or track IDs are unstable.
 
 ## Stage 6.x: Local MVP Pipeline
 

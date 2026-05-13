@@ -1,0 +1,2 @@
+player_id_a,player_id_b,appearance_distance,likely_same_identity,notes
+player_a,player_b,1.1652,False,Clothing-color heuristic only; not biometric re-identification.

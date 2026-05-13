@@ -369,6 +369,57 @@ Expected outputs:
 
 If too few points exist, the next step is Stage 6.1 to expand manual labels. If candidate quality collapses, return to Stage 5.2 model research.
 
+## Stage 7 - Player Tracking and Ball-Player Interaction Probe
+
+Stage 6 generated trajectory and event hypotheses. Stage 7 adds local CPU player detection so player positions can help interpret possible ball-player interactions.
+
+Player-ball interactions are hypotheses only. This stage does not confirm hits, scoring, line calls, or rally events.
+
+Run:
+
+```powershell
+python scripts\run_stage_7_player_interaction_probe.py
+```
+
+Optional lighter run:
+
+```powershell
+python scripts\run_stage_7_player_interaction_probe.py --max-frames 10 --resize-width 960
+```
+
+Expected outputs:
+
+- Player detections at `outputs/player_tracking/stage_7_player_interaction/player_detections.csv`.
+- Approximate tracks at `outputs/player_tracking/stage_7_player_interaction/player_tracks.csv`.
+- Ball-player distances at `outputs/player_tracking/stage_7_player_interaction/ball_player_distances.csv`.
+- Interaction hypotheses at `outputs/player_tracking/stage_7_player_interaction/ball_player_interactions.csv`.
+- Player and interaction overlays under `outputs/player_tracking/stage_7_player_interaction/`.
+- JSON report at `outputs/reports/stage_7_player_interaction_probe_report.json`.
+- Markdown report at `outputs/reports/stage_7_player_interaction_probe_report.md`.
+- Automatic lab notebook update under `docs/lab-notebook/`.
+
+## Stage 7.1 - Court-Aware Player Filtering and Identity Stabilization
+
+Stage 7 detected too many people. Stage 7.1 filters irrelevant detections, keeps the likely main tennis players, and creates stable `player_a` / `player_b` identities.
+
+Player identity is not permanently tied to near/far court side. Near/far is a side state that can change. Lightweight clothing/color appearance profiles help preserve identity when possible, but this is not robust biometric re-identification.
+
+Run:
+
+```powershell
+python scripts\run_stage_7_1_player_filtering.py
+```
+
+Expected outputs:
+
+- Filtered detections at `outputs/player_tracking/stage_7_1_player_filtering/filtered_player_detections.csv`.
+- Filtered tracks at `outputs/player_tracking/stage_7_1_player_filtering/filtered_player_tracks.csv`.
+- Main player summary at `outputs/player_tracking/stage_7_1_player_filtering/main_players.csv`.
+- Identity profiles at `outputs/player_tracking/stage_7_1_player_filtering/player_identity_profiles.json`.
+- Player side states at `outputs/player_tracking/stage_7_1_player_filtering/player_side_states.csv`.
+- JSON report at `outputs/reports/stage_7_1_player_filtering_report.json`.
+- Markdown report at `outputs/reports/stage_7_1_player_filtering_report.md`.
+
 ## Lab Notebook
 
 The lab notebook turns generated reports into persistent project documentation. It records each stage's inputs, outputs, verdict, friction score, warnings, errors, interpretation, and next step.

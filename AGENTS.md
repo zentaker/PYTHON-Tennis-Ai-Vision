@@ -36,6 +36,8 @@ This repository is a local-first research project for tennis video analysis.
 - When automatic candidates are noisy, compare against manual labels before tuning blindly. Do not overclaim tracking. Document candidate-to-label distance and projection quality.
 - Before adding trajectory smoothing, validate candidate quality against manual labels. If nearest-candidate distances remain high, do not advance to event/rally logic; recommend model improvement instead.
 - Trajectory smoothing must not be used to hide poor detections. If too few points exist, recommend collecting more manual labels instead of overclaiming event segmentation.
+- Player-ball interactions must be labeled as hypotheses until validated. Do not infer confirmed hits from trajectory alone. Use player proximity and trajectory changes as supporting evidence, not proof.
+- Player identity must be separated from court side. Near/far is a state, not a stable identity. If players switch sides, identity should persist based on track continuity and appearance cues when possible.
 
 ## Repository hygiene rules
 

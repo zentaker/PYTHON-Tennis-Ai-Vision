@@ -1,0 +1,67 @@
+{
+  "detections_kept": 40,
+  "detections_rejected": 181,
+  "errors": [],
+  "final_verdict": "ready_with_warnings",
+  "flags": {
+    "calibration_missing": false,
+    "detections_missing": false,
+    "identity_profiles_failed": false,
+    "no_main_players_selected": false,
+    "refined_association_failed": false,
+    "too_many_unknown_tracks": true,
+    "tracks_missing": false,
+    "video_missing": false,
+    "visualization_failed": false
+  },
+  "friction": {
+    "band": "low friction",
+    "inputs": {
+      "calibration_missing": false,
+      "detections_missing": false,
+      "errors_count": 0,
+      "identity_profiles_failed": false,
+      "no_main_players_selected": false,
+      "refined_association_failed": false,
+      "too_many_unknown_tracks": true,
+      "tracks_missing": false,
+      "video_missing": false,
+      "visualization_failed": false,
+      "warnings_count": 1
+    },
+    "score": 15
+  },
+  "homography_available": true,
+  "input_detections_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_player_interaction\\player_detections.csv",
+  "input_tracks_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_player_interaction\\player_tracks.csv",
+  "input_video_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\samples\\video_01.mov",
+  "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_7_1_player_filtering_report.json",
+  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_7_1_player_filtering_20260513T184229Z.log",
+  "main_players_selected": 2,
+  "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_7_1_player_filtering_report.md",
+  "output_paths": {
+    "filtered_player_detections": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_1_player_filtering\\filtered_player_detections.csv",
+    "filtered_player_overlays": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_1_player_filtering\\filtered_player_overlays",
+    "filtered_player_tracks": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_1_player_filtering\\filtered_player_tracks.csv",
+    "main_players": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_1_player_filtering\\main_players.csv",
+    "player_identity_matches": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_1_player_filtering\\player_identity_matches.csv",
+    "player_identity_preview": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_1_player_filtering\\player_identity_preview.jpg",
+    "player_identity_profiles": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_1_player_filtering\\player_identity_profiles.json",
+    "player_side_states": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_1_player_filtering\\player_side_states.csv",
+    "refined_ball_player_distances": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_1_player_filtering\\refined_ball_player_distances.csv",
+    "rejected_detection_debug": null
+  },
+  "player_identities_created": 2,
+  "recommended_next_step": "Review filtered identities; proceed to Stage 8 cautiously or Stage 7.2 if identity confidence is not sufficient.",
+  "refined_average_distance_px": 490.912,
+  "refined_ball_player_associations_count": 5,
+  "side_states_generated": 40,
+  "stage": "stage_7_1_player_filtering",
+  "timestamp": "2026-05-13T18:42:29+00:00",
+  "total_detections_input": 221,
+  "total_tracks_input": 14,
+  "tracks_kept": 2,
+  "warnings": [
+    "Many non-main tracks remain after filtering; Stage 7.2 may improve identity handling."
+  ]
+}

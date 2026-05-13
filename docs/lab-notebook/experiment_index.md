@@ -12,3 +12,5 @@
 | Stage 5 | Ball Candidate Filtering | ready_with_warnings | 21 medium friction | outputs/reports/stage_5_ball_candidate_filtering_report.md | Review Stage 5 warnings, then decide between Stage 6 smoothing or Stage 5.1 detector improvement. |
 | Stage 5.1 | Candidate Improvement | ready_for_stage_6 | 0 low friction | outputs/reports/stage_5_1_candidate_improvement_report.md | Proceed to Stage 6: trajectory smoothing and rally/event segmentation probe. |
 | Stage 6 | Trajectory Smoothing | ready_for_stage_7 | 3 low friction | outputs/reports/stage_6_trajectory_smoothing_report.md | Proceed to Stage 7: player tracking and ball-player interaction probe. |
+| Stage 7 | Player Interaction Probe | ready_with_warnings | 21 medium friction | outputs/reports/stage_7_player_interaction_probe_report.md | Review hypotheses, then choose Stage 7.1 for more labels or Stage 8 for a cautious timeline prototype. |
+| Stage 7.1 | Player Filtering | ready_with_warnings | 15 low friction | outputs/reports/stage_7_1_player_filtering_report.md | Review filtered identities; proceed to Stage 8 cautiously or Stage 7.2 if identity confidence is not sufficient. |

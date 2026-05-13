@@ -431,3 +431,96 @@ def calculate_stage_6_friction_score(
             "warnings_count": warnings_count,
         },
     }
+
+
+def calculate_stage_7_friction_score(
+    *,
+    smoothed_trajectory_missing: bool = False,
+    video_missing: bool = False,
+    yolo_model_load_failed: bool = False,
+    no_player_detections: bool = False,
+    tracking_unreliable: bool = False,
+    no_ball_player_associations: bool = False,
+    too_few_ball_points: bool = False,
+    visualization_failed: bool = False,
+    errors_count: int = 0,
+    warnings_count: int = 0,
+) -> dict[str, Any]:
+    """Calculate Stage 7 player interaction friction."""
+    score = 0
+    score += 45 if smoothed_trajectory_missing else 0
+    score += 35 if video_missing else 0
+    score += 35 if yolo_model_load_failed else 0
+    score += 30 if no_player_detections else 0
+    score += 15 if tracking_unreliable else 0
+    score += 25 if no_ball_player_associations else 0
+    score += 18 if too_few_ball_points else 0
+    score += 8 if visualization_failed else 0
+    score += min(errors_count * 10, 30)
+    score += min(warnings_count * 3, 15)
+    score = max(0, min(score, 100))
+
+    return {
+        "score": score,
+        "band": friction_band(score),
+        "inputs": {
+            "smoothed_trajectory_missing": smoothed_trajectory_missing,
+            "video_missing": video_missing,
+            "yolo_model_load_failed": yolo_model_load_failed,
+            "no_player_detections": no_player_detections,
+            "tracking_unreliable": tracking_unreliable,
+            "no_ball_player_associations": no_ball_player_associations,
+            "too_few_ball_points": too_few_ball_points,
+            "visualization_failed": visualization_failed,
+            "errors_count": errors_count,
+            "warnings_count": warnings_count,
+        },
+    }
+
+
+def calculate_stage_7_1_friction_score(
+    *,
+    detections_missing: bool = False,
+    tracks_missing: bool = False,
+    video_missing: bool = False,
+    calibration_missing: bool = False,
+    no_main_players_selected: bool = False,
+    too_many_unknown_tracks: bool = False,
+    identity_profiles_failed: bool = False,
+    refined_association_failed: bool = False,
+    visualization_failed: bool = False,
+    errors_count: int = 0,
+    warnings_count: int = 0,
+) -> dict[str, Any]:
+    """Calculate Stage 7.1 filtering and identity friction."""
+    score = 0
+    score += 35 if detections_missing else 0
+    score += 45 if tracks_missing else 0
+    score += 35 if video_missing else 0
+    score += 10 if calibration_missing else 0
+    score += 40 if no_main_players_selected else 0
+    score += 12 if too_many_unknown_tracks else 0
+    score += 18 if identity_profiles_failed else 0
+    score += 15 if refined_association_failed else 0
+    score += 8 if visualization_failed else 0
+    score += min(errors_count * 10, 30)
+    score += min(warnings_count * 3, 15)
+    score = max(0, min(score, 100))
+
+    return {
+        "score": score,
+        "band": friction_band(score),
+        "inputs": {
+            "detections_missing": detections_missing,
+            "tracks_missing": tracks_missing,
+            "video_missing": video_missing,
+            "calibration_missing": calibration_missing,
+            "no_main_players_selected": no_main_players_selected,
+            "too_many_unknown_tracks": too_many_unknown_tracks,
+            "identity_profiles_failed": identity_profiles_failed,
+            "refined_association_failed": refined_association_failed,
+            "visualization_failed": visualization_failed,
+            "errors_count": errors_count,
+            "warnings_count": warnings_count,
+        },
+    }

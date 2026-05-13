@@ -8,7 +8,7 @@
 | Verdict | ready_for_stage_7 |
 | Friction score | 3 |
 | Friction level | low friction |
-| Timestamp | 2026-05-13T08:33:29+00:00 |
+| Timestamp | 2026-05-13T17:38:47+00:00 |
 | Recommended next step | Proceed to Stage 7: player tracking and ball-player interaction probe. |
 
 ## Input
@@ -26,7 +26,7 @@
 |---|---|
 | JSON report path | C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\stage_6_trajectory_smoothing_report.json |
 | Markdown report path | C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\stage_6_trajectory_smoothing_report.md |
-| Log | C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\stage_6_trajectory_smoothing_20260513T083329Z.log |
+| Log | C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\stage_6_trajectory_smoothing_20260513T173847Z.log |
 | Raw trajectory CSV | C:\Users\MSI\Desktop\TennisAiVision\outputs\ball_tracking\stage_6_trajectory_smoothing\raw_trajectory.csv |
 | Smoothed trajectory CSV | C:\Users\MSI\Desktop\TennisAiVision\outputs\ball_tracking\stage_6_trajectory_smoothing\smoothed_trajectory.csv |
 | Events CSV | C:\Users\MSI\Desktop\TennisAiVision\outputs\ball_tracking\stage_6_trajectory_smoothing\trajectory_events.csv |
@@ -67,6 +67,18 @@ Proceed to Stage 7: player tracking and ball-player interaction probe.
 <!-- lab-entry:2026-05-13T08:33:29+00:00 -->
 
 ### 2026-05-13T08:33:29+00:00
+
+| Field | Value |
+|---|---|
+| Stage | Stage 6 - Trajectory Smoothing |
+| Verdict | ready_for_stage_7 |
+| Friction score | 3 |
+| Friction level | low friction |
+| Next step | Proceed to Stage 7: player tracking and ball-player interaction probe. |
+
+<!-- lab-entry:2026-05-13T17:38:47+00:00 -->
+
+### 2026-05-13T17:38:47+00:00
 
 | Field | Value |
 |---|---|

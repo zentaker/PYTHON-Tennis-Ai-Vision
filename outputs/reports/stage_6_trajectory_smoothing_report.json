@@ -40,7 +40,7 @@
   "input_projected_candidates_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_5_1_candidate_improvement\\projected_improved_candidates.csv",
   "interpolated_points_count": 56,
   "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_6_trajectory_smoothing_report.json",
-  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_6_trajectory_smoothing_20260513T083329Z.log",
+  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_6_trajectory_smoothing_20260513T173847Z.log",
   "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_6_trajectory_smoothing_report.md",
   "overlay_folder": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_6_trajectory_smoothing\\overlays",
   "projected_candidates_available": true,
@@ -49,7 +49,7 @@
   "smoothed_trajectory_csv_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_6_trajectory_smoothing\\smoothed_trajectory.csv",
   "smoothing_method": "moving_average_3",
   "stage": "stage_6_trajectory_smoothing",
-  "timestamp": "2026-05-13T08:33:29+00:00",
+  "timestamp": "2026-05-13T17:38:47+00:00",
   "trajectory_points_count": 5,
   "warnings": [
     "Only a small number of trajectory points are available; event hypotheses are preliminary."

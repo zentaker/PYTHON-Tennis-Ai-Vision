@@ -1,0 +1,8 @@
+frame_index,interaction_type,confidence_like_score,reason,nearest_track_id,image_distance_px,projected_distance,related_stage_6_event
+120,ball_near_player,0.774,Ball is near the expanded player bbox or close to player center.,player_2,114.183,63.189,
+135,ball_near_player,0.263,Ball is near the expanded player bbox or close to player center.,player_2,374.859,227.167,speed_spike
+135,possible_hit_window,0.45,Stage 6 event `speed_spike` occurs near a player.,player_2,374.859,227.167,speed_spike
+135,ball_leaving_player,0.35,Ball-player distance increased between trajectory points.,player_2,374.859,227.167,speed_spike
+150,ball_leaving_player,0.35,Ball-player distance increased between trajectory points.,player_2,780.098,501.269,speed_drop
+165,ball_approaching_player,0.35,Ball-player distance decreased between trajectory points.,player_1,672.597,299.34,possible_hit
+180,ball_approaching_player,0.35,Ball-player distance decreased between trajectory points.,player_1,512.824,248.623,

@@ -1,0 +1,6 @@
+frame_index,ball_x,ball_y,nearest_player_id,nearest_source_track_id,image_distance_px,side_state,identity_confidence,interaction_score,notes
+120,2170.45,500.9,player_a,player_2,114.183,far_side,0.8453,0.7738,mapped to stabilized identity
+135,2038.6,761.7,player_a,player_2,374.859,far_side,0.8453,0.2626,mapped to stabilized identity
+150,1906.9,1139.2,player_a,player_2,780.098,far_side,0.8453,0.06,mapped to stabilized identity
+165,1792.333,1164.067,player_b,player_1,672.597,near_side,0.853,0.1137,mapped to stabilized identity
+180,1675.05,1245.15,player_b,player_1,512.824,near_side,0.853,0.1936,mapped to stabilized identity

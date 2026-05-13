@@ -1,0 +1,6 @@
+frame_index,ball_x,ball_y,ball_projected_x,ball_projected_y,nearest_track_id,nearest_player_center_x,nearest_player_center_y,image_distance_px,projected_distance,near_player_bbox,interaction_score,interaction_reason,related_stage_6_event
+120,2170.45,500.9,179.582,-49.31,player_2,2282.138,477.16,114.183,63.189,True,0.7738,ball is inside or near expanded player bbox,
+135,2038.6,761.7,147.187,234.301,player_2,2278.997,474.074,374.859,227.167,False,0.2626,nearest player within frame tolerance,speed_spike
+150,1906.9,1139.2,127.651,511.119,player_2,2299.122,464.875,780.098,501.269,False,0.06,nearest player within frame tolerance,speed_drop
+165,1792.333,1164.067,105.24,527.924,player_1,1347.282,1668.365,672.597,299.34,False,0.1137,nearest player within frame tolerance,possible_hit
+180,1675.05,1245.15,85.753,573.381,player_1,1374.874,1660.942,512.824,248.623,False,0.1936,nearest player within frame tolerance,

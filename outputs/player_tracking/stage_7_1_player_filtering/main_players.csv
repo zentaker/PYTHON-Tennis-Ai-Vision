@@ -1,0 +1,3 @@
+player_id,source_track_ids,frames_seen,dominant_colors_summary,average_confidence,average_court_score,initial_side_state,notes
+player_a,player_2,20,"upper #b46445, #b46344; lower #bc794e, #bb734d",0.7196,0.975,far_side,Identity is appearance/track based; side is a mutable state.
+player_b,player_1,20,"upper #aa6a4a, #ac6c4a; lower #ad5e37, #ae5e37",0.6964,0.48,near_side,Identity is appearance/track based; side is a mutable state.

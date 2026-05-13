@@ -1,0 +1,92 @@
+{
+  "average_ball_player_distance_px": 490.912,
+  "ball_points_associated_count": 5,
+  "confidence_threshold": 0.25,
+  "device": "cpu",
+  "errors": [],
+  "final_verdict": "ready_with_warnings",
+  "flags": {
+    "no_ball_player_associations": false,
+    "no_player_detections": false,
+    "smoothed_trajectory_missing": false,
+    "too_few_ball_points": false,
+    "tracking_unreliable": true,
+    "video_missing": false,
+    "visualization_failed": false,
+    "yolo_model_load_failed": false
+  },
+  "frame_tolerance": 5,
+  "frames_analyzed": [
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127,
+    128,
+    129,
+    130,
+    131,
+    132,
+    133,
+    134,
+    135,
+    136,
+    150,
+    165,
+    180
+  ],
+  "friction": {
+    "band": "medium friction",
+    "inputs": {
+      "errors_count": 0,
+      "no_ball_player_associations": false,
+      "no_player_detections": false,
+      "smoothed_trajectory_missing": false,
+      "too_few_ball_points": false,
+      "tracking_unreliable": true,
+      "video_missing": false,
+      "visualization_failed": false,
+      "warnings_count": 2,
+      "yolo_model_load_failed": false
+    },
+    "score": 21
+  },
+  "homography_available": true,
+  "input_manual_labels_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_4_1_manual_labels\\manual_ball_labels.csv",
+  "input_smoothed_trajectory_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_6_trajectory_smoothing\\smoothed_trajectory.csv",
+  "input_video_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\samples\\video_01.mov",
+  "interaction_hypotheses_count": 7,
+  "interactions_by_type": {
+    "ball_approaching_player": 2,
+    "ball_leaving_player": 2,
+    "ball_near_player": 2,
+    "possible_hit_window": 1
+  },
+  "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_7_player_interaction_probe_report.json",
+  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_7_player_interaction_probe_20260513T180149Z.log",
+  "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_7_player_interaction_probe_report.md",
+  "minimum_ball_player_distance_px": 114.183,
+  "output_paths": {
+    "ball_player_distances_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_player_interaction\\ball_player_distances.csv",
+    "ball_player_interactions_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_player_interaction\\ball_player_interactions.csv",
+    "interaction_overlays": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_player_interaction\\interaction_overlays",
+    "player_detection_overlays": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_player_interaction\\player_detection_overlays",
+    "player_detections_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_player_interaction\\player_detections.csv",
+    "player_tracks_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_player_interaction\\player_tracks.csv",
+    "summary_preview": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_player_interaction\\player_interaction_preview.jpg"
+  },
+  "player_detections_count": 221,
+  "player_tracks_count": 14,
+  "recommended_next_step": "Review hypotheses, then choose Stage 7.1 for more labels or Stage 8 for a cautious timeline prototype.",
+  "stage": "stage_7_player_interaction_probe",
+  "timestamp": "2026-05-13T18:01:49+00:00",
+  "trajectory_points_count": 5,
+  "warnings": [
+    "Player tracking is approximate and produced several temporary track IDs.",
+    "Ball trajectory is sparse; player-ball interactions are hypotheses only."
+  ],
+  "yolo_model": "yolo11n.pt"
+}

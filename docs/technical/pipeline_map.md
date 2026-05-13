@@ -15,6 +15,9 @@
 | Stage 5.1 | Improve candidate generation and compare strategies against labels | `scripts/run_stage_5_1_candidate_improvement.py` | `ball_candidate_improvement.py`, `court_projection.py` | sample video, Stage 4.1 labels, Stage 3 homography, Stage 5 baseline | `outputs/ball_tracking/stage_5_1_candidate_improvement/`, Stage 5.1 reports | Implemented |
 | Stage 5.2 | Research specialized ball model if handcrafted candidates remain weak | Not implemented | Planned | Stage 5.1 report and strategy comparison | Planned | Planned |
 | Stage 6 | Smooth trajectory and probe event/rally segmentation hypotheses | `scripts/run_stage_6_trajectory_smoothing.py` | `trajectory_smoothing.py`, `event_segmentation.py` | Stage 5.1 improved/projected candidates, manual labels | `outputs/ball_tracking/stage_6_trajectory_smoothing/`, Stage 6 reports | Implemented |
+| Stage 7 | Detect players and create ball-player interaction hypotheses | `scripts/run_stage_7_player_interaction_probe.py` | `player_tracking.py`, `ball_player_interaction.py` | sample video, Stage 6 trajectory/events, Stage 3 homography | `outputs/player_tracking/stage_7_player_interaction/`, Stage 7 reports | Implemented |
+| Stage 7.1 | Filter player tracks and stabilize identity | `scripts/run_stage_7_1_player_filtering.py` | `player_filtering.py`, `player_identity.py` | Stage 7 detections/tracks, sample video, Stage 3 calibration | `outputs/player_tracking/stage_7_1_player_filtering/`, Stage 7.1 reports | Implemented |
+| Stage 7.2 | Manual player identity labeling helper if identity is unreliable | Not implemented | Planned | Stage 7.1 report, filtered tracks | Planned | Planned |
 
 ## Flow
 
@@ -31,6 +34,8 @@ Stage 0 Environment Doctor
   -> Stage 5.1 Candidate Generation Improvement
   -> Stage 6 Trajectory Smoothing and Event/Rally Segmentation
   -> Stage 7 Player Tracking and Ball-Player Interaction
+  -> Stage 7.1 Court-Aware Player Filtering and Identity Stabilization
+  -> Stage 8 Shot/Event Timeline and Rally Segmentation Prototype
 ```
 
 ## Architecture Notes
