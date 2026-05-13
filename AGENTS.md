@@ -38,6 +38,8 @@ This repository is a local-first research project for tennis video analysis.
 - Trajectory smoothing must not be used to hide poor detections. If too few points exist, recommend collecting more manual labels instead of overclaiming event segmentation.
 - Player-ball interactions must be labeled as hypotheses until validated. Do not infer confirmed hits from trajectory alone. Use player proximity and trajectory changes as supporting evidence, not proof.
 - Player identity must be separated from court side. Near/far is a state, not a stable identity. If players switch sides, identity should persist based on track continuity and appearance cues when possible.
+- Timeline and rally segmentation must preserve uncertainty. Use `possible_*` labels until validated, and do not transform hypotheses into confirmed tennis events without manual validation or stronger evidence.
+- Before tactical metrics, timeline events must be validated against expanded ball labels. If label coverage is sparse, recommend collecting more labels rather than overclaiming timeline accuracy.
 
 ## Repository hygiene rules
 

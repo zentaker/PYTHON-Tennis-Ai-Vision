@@ -23,6 +23,8 @@ STAGE_NOTEBOOK_FILES = {
     "stage_6": "stage_6_trajectory_smoothing.md",
     "stage_7": "stage_7_player_interaction_probe.md",
     "stage_7_1": "stage_7_1_player_filtering.md",
+    "stage_8": "stage_8_event_timeline.md",
+    "stage_8_1": "stage_8_1_timeline_validation.md",
 }
 
 
@@ -250,6 +252,36 @@ def stage_7_1_next_step(report: dict[str, Any]) -> str:
     if report.get("final_verdict") == "ready_for_stage_8":
         return "Proceed to Stage 8 shot/event timeline and rally segmentation prototype."
     return "Proceed to Stage 7.2 manual player identity labeling helper."
+
+
+def stage_8_next_step(report: dict[str, Any]) -> str:
+    """Return Stage 8 next-step text."""
+    next_step = report.get("recommended_next_step")
+    if next_step:
+        return str(next_step)
+    verdict = report.get("final_verdict")
+    if verdict == "ready_for_stage_9":
+        return "Proceed to Stage 9 tactical metrics and shot zone prototype."
+    if verdict == "needs_more_labels":
+        return "Proceed to Stage 8.1 expand labels and timeline validation."
+    if verdict == "needs_better_event_validation":
+        return "Proceed to Stage 8.2 event validation and manual event labeling helper."
+    return "Review Stage 8 warnings and rerun after fixing missing inputs."
+
+
+def stage_8_1_next_step(report: dict[str, Any]) -> str:
+    """Return Stage 8.1 next-step text."""
+    next_step = report.get("recommended_next_step")
+    if next_step:
+        return str(next_step)
+    verdict = report.get("final_verdict")
+    if verdict == "ready_for_stage_9":
+        return "Proceed to Stage 9 tactical metrics and shot zone prototype."
+    if verdict == "needs_event_labeling":
+        return "Proceed to Stage 8.2 manual event labeling helper."
+    if verdict == "needs_better_candidate_generation":
+        return "Improve candidate generation before timeline validation."
+    return "Run Stage 8.1 interactively with more frames, then rerun validation."
 
 
 def build_stage_0_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
@@ -1142,6 +1174,150 @@ def build_stage_7_1_document(report: dict[str, Any], project_root: Path) -> dict
     return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
 
 
+def build_stage_8_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
+    """Build Stage 8 notebook content."""
+    json_path = report_path(project_root, "stage_8_event_timeline_report.json")
+    markdown_path = report_path(project_root, "stage_8_event_timeline_report.md")
+    next_step = stage_8_next_step(report)
+    friction = report.get("friction", {})
+    outputs = report.get("output_paths", {})
+
+    summary = markdown_table(
+        [
+            ("Stage", "Stage 8 - Event timeline"),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction score", friction.get("score")),
+            ("Friction level", friction.get("band")),
+            ("Timestamp", report.get("timestamp")),
+            ("Recommended next step", next_step),
+        ]
+    )
+    input_table = markdown_table(
+        [
+            ("Trajectory points", report.get("trajectory_points_count")),
+            ("Source events", report.get("source_event_count")),
+            ("Merge window", report.get("merge_window")),
+            ("Inputs used", report.get("inputs_used")),
+        ]
+    )
+    output_table = markdown_table(
+        [
+            ("JSON report path", json_path),
+            ("Markdown report path", markdown_path),
+            ("Log", latest_log_for_prefix(project_root, "stage_8_event_timeline_")),
+            ("Event timeline CSV", outputs.get("event_timeline_csv")),
+            ("Event timeline JSON", outputs.get("event_timeline_json")),
+            ("Rally segments CSV", outputs.get("rally_segments_csv")),
+            ("Player attribution CSV", outputs.get("player_event_attribution_csv")),
+            ("Timeline preview", outputs.get("timeline_preview")),
+            ("Court timeline preview", outputs.get("court_timeline_preview")),
+        ]
+    )
+    console_table = markdown_table(
+        [
+            ("Trajectory points", report.get("trajectory_points_count")),
+            ("Source events", report.get("source_event_count")),
+            ("Merged timeline events", report.get("merged_timeline_event_count")),
+            ("Rally segments", report.get("rally_segments_count")),
+            ("Player-attributed events", report.get("player_attributed_events_count")),
+            ("Events by type", report.get("events_by_type")),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction", f"{not_available(friction.get('score'))} ({not_available(friction.get('band'))})"),
+        ]
+    )
+    interpretation = (
+        "Stage 8 combines trajectory anchors, event hypotheses, player interactions, and stabilized player identities "
+        "into a first event timeline. The timeline preserves uncertainty with possible_* labels and should be treated "
+        "as a prototype, not confirmed rally understanding."
+    )
+    body = stage_document(
+        title="Stage 8 - Event Timeline",
+        summary=summary,
+        input_section=input_table,
+        output_section=output_table,
+        console_table=console_table,
+        warnings=bullet_list(report.get("warnings"), "No warnings."),
+        errors=bullet_list(report.get("errors"), "No errors."),
+        interpretation=interpretation,
+        next_step=next_step,
+    )
+    entry = history_entry(report, "Stage 8 - Event Timeline", summary, next_step)
+    return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
+
+
+def build_stage_8_1_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
+    """Build Stage 8.1 notebook content."""
+    json_path = report_path(project_root, "stage_8_1_timeline_validation_report.json")
+    markdown_path = report_path(project_root, "stage_8_1_timeline_validation_report.md")
+    next_step = stage_8_1_next_step(report)
+    friction = report.get("friction", {})
+    outputs = report.get("output_paths", {})
+
+    summary = markdown_table(
+        [
+            ("Stage", "Stage 8.1 - Timeline validation"),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction score", friction.get("score")),
+            ("Friction level", friction.get("band")),
+            ("Timestamp", report.get("timestamp")),
+            ("Recommended next step", next_step),
+        ]
+    )
+    input_table = markdown_table(
+        [
+            ("Mode", report.get("mode")),
+            ("Existing labels", report.get("existing_labels_count")),
+            ("New labels", report.get("new_labels_count")),
+            ("Merged labels", report.get("merged_labels_count")),
+            ("Visible labels", report.get("visible_labels_count")),
+            ("Label frame range", report.get("label_frame_range")),
+        ]
+    )
+    output_table = markdown_table(
+        [
+            ("JSON report path", json_path),
+            ("Markdown report path", markdown_path),
+            ("Log", latest_log_for_prefix(project_root, "stage_8_1_timeline_validation_")),
+            ("Expanded labels", outputs.get("expanded_labels_csv")),
+            ("Candidate validation", outputs.get("expanded_candidate_validation")),
+            ("Timeline validation", outputs.get("timeline_event_validation")),
+            ("Validated timeline", outputs.get("validated_event_timeline_csv")),
+        ]
+    )
+    console_table = markdown_table(
+        [
+            ("Existing labels", report.get("existing_labels_count")),
+            ("New labels", report.get("new_labels_count")),
+            ("Visible labels", report.get("visible_labels_count")),
+            ("Average label gap", report.get("average_label_gap")),
+            ("Maximum label gap", report.get("maximum_label_gap")),
+            ("Candidate average distance", report.get("average_candidate_distance")),
+            ("Timeline events validated", report.get("timeline_events_validated")),
+            ("Supported events", report.get("supported_events_count")),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction", f"{not_available(friction.get('score'))} ({not_available(friction.get('band'))})"),
+        ]
+    )
+    interpretation = (
+        "Stage 8.1 checks whether the Stage 8 timeline is backed by enough ball-label evidence. "
+        "It can run non-interactively using current labels, but sparse coverage should trigger more manual labeling "
+        "before tactical metrics."
+    )
+    body = stage_document(
+        title="Stage 8.1 - Timeline Validation",
+        summary=summary,
+        input_section=input_table,
+        output_section=output_table,
+        console_table=console_table,
+        warnings=bullet_list(report.get("warnings"), "No warnings."),
+        errors=bullet_list(report.get("errors"), "No errors."),
+        interpretation=interpretation,
+        next_step=next_step,
+    )
+    entry = history_entry(report, "Stage 8.1 - Timeline Validation", summary, next_step)
+    return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
+
+
 def stage_document(
     *,
     title: str,
@@ -1541,6 +1717,38 @@ def update_lab_notebook(project_root: Path) -> list[Path]:
                 "friction": f"{not_available(nested_get(stage_7_1_report, ('friction', 'score')))} {not_available(nested_get(stage_7_1_report, ('friction', 'band')))}",
                 "main_output": "outputs/reports/stage_7_1_player_filtering_report.md",
                 "next_step": stage_7_1_next_step(stage_7_1_report),
+            }
+        )
+
+    stage_8_report = read_json_report(report_path(project_root, "stage_8_event_timeline_report.json"))
+    if stage_8_report is not None:
+        document = build_stage_8_document(stage_8_report, project_root)
+        stage_path = notebook_dir / "stage_8_event_timeline.md"
+        written.append(write_stage_notebook(stage_path, document["body"], document["entry"], document["entry_id"]))
+        stage_summaries.append(
+            {
+                "stage": "Stage 8",
+                "name": "Event Timeline",
+                "verdict": not_available(stage_8_report.get("final_verdict")),
+                "friction": f"{not_available(nested_get(stage_8_report, ('friction', 'score')))} {not_available(nested_get(stage_8_report, ('friction', 'band')))}",
+                "main_output": "outputs/reports/stage_8_event_timeline_report.md",
+                "next_step": stage_8_next_step(stage_8_report),
+            }
+        )
+
+    stage_8_1_report = read_json_report(report_path(project_root, "stage_8_1_timeline_validation_report.json"))
+    if stage_8_1_report is not None:
+        document = build_stage_8_1_document(stage_8_1_report, project_root)
+        stage_path = notebook_dir / "stage_8_1_timeline_validation.md"
+        written.append(write_stage_notebook(stage_path, document["body"], document["entry"], document["entry_id"]))
+        stage_summaries.append(
+            {
+                "stage": "Stage 8.1",
+                "name": "Timeline Validation",
+                "verdict": not_available(stage_8_1_report.get("final_verdict")),
+                "friction": f"{not_available(nested_get(stage_8_1_report, ('friction', 'score')))} {not_available(nested_get(stage_8_1_report, ('friction', 'band')))}",
+                "main_output": "outputs/reports/stage_8_1_timeline_validation_report.md",
+                "next_step": stage_8_1_next_step(stage_8_1_report),
             }
         )
 

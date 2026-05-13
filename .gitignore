@@ -43,6 +43,7 @@ outputs/tmp/
 outputs/cache/
 outputs/calibration/
 outputs/ball_tracking/
+outputs/timeline/
 
 # ML artifacts and model weights
 *.pt

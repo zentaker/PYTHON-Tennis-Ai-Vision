@@ -67,13 +67,37 @@ Detect players in sampled trajectory frames, create approximate player tracks, a
 
 ## Stage 7.1: Court-Aware Player Filtering And Identity Stabilization
 
-Current stage. Filter irrelevant people detections, keep the main tennis players, and stabilize player identity using track continuity and appearance cues while keeping near/far side as a mutable state.
+Filter irrelevant people detections, keep the main tennis players, and stabilize player identity using track continuity and appearance cues while keeping near/far side as a mutable state.
 
 Possible next paths:
 
 - Stage 8: shot/event timeline and rally segmentation prototype.
 - Stage 7.2: manual player identity labeling helper if identity remains unreliable.
 - Stage 7.3: improve player tracking if person detections or track IDs are unstable.
+
+## Stage 8: Shot/Event Timeline And Rally Segmentation Prototype
+
+Combine trajectory anchors, event hypotheses, player-ball interactions, and stabilized player identities into a first timeline and conservative rally segment prototype.
+
+Possible next paths:
+
+- Stage 9: tactical metrics and shot zone prototype if timeline evidence is strong enough.
+- Stage 8.1: expand labels and timeline validation if the timeline is too sparse.
+- Stage 8.2: manual event validation helper if event confidence is weak.
+
+## Stage 8.1: Expanded Ball Labels And Timeline Validation
+
+Current stage. Expand or reuse manual ball labels, validate improved candidates against those labels, and check whether Stage 8 timeline events have enough label support.
+
+Possible next paths:
+
+- Stage 9: tactical metrics and shot zones if label coverage and event support are strong enough.
+- Stage 8.2: manual event labeling helper if event hypotheses need direct validation.
+- Stage 8.1 repeat: collect more labels if coverage remains sparse.
+
+## Stage 9: Tactical Metrics And Shot Zone Prototype
+
+Planned. Use validated timeline, court projection, and player identities to start lightweight tactical metrics and shot-zone summaries without official scoring or line calling.
 
 ## Stage 6.x: Local MVP Pipeline
 

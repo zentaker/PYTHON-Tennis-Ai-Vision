@@ -8,7 +8,7 @@
 | Verdict | ready_with_warnings |
 | Friction score | 15 |
 | Friction level | low friction |
-| Timestamp | 2026-05-13T18:21:08+00:00 |
+| Timestamp | 2026-05-13T19:25:39+00:00 |
 | Recommended next step | Proceed to Stage 1 video loading and frame extraction. |
 
 ## Input
@@ -29,7 +29,7 @@
 |---|---|
 | JSON report path | C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\environment_report.json |
 | Markdown report path | C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\environment_report.md |
-| Log | C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\doctor_20260513T182108Z.log |
+| Log | C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\doctor_20260513T192539Z.log |
 
 ## Console-equivalent table
 
@@ -184,6 +184,30 @@ Proceed to Stage 1 video loading and frame extraction.
 <!-- lab-entry:2026-05-13T18:21:08+00:00 -->
 
 ### 2026-05-13T18:21:08+00:00
+
+| Field | Value |
+|---|---|
+| Stage | Stage 0 — Environment |
+| Verdict | ready_with_warnings |
+| Friction score | 15 |
+| Friction level | low friction |
+| Next step | Proceed to Stage 1 video loading and frame extraction. |
+
+<!-- lab-entry:2026-05-13T19:04:36+00:00 -->
+
+### 2026-05-13T19:04:36+00:00
+
+| Field | Value |
+|---|---|
+| Stage | Stage 0 — Environment |
+| Verdict | ready_with_warnings |
+| Friction score | 15 |
+| Friction level | low friction |
+| Next step | Proceed to Stage 1 video loading and frame extraction. |
+
+<!-- lab-entry:2026-05-13T19:25:39+00:00 -->
+
+### 2026-05-13T19:25:39+00:00
 
 | Field | Value |
 |---|---|

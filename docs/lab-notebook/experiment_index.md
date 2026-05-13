@@ -14,3 +14,5 @@
 | Stage 6 | Trajectory Smoothing | ready_for_stage_7 | 3 low friction | outputs/reports/stage_6_trajectory_smoothing_report.md | Proceed to Stage 7: player tracking and ball-player interaction probe. |
 | Stage 7 | Player Interaction Probe | ready_with_warnings | 21 medium friction | outputs/reports/stage_7_player_interaction_probe_report.md | Review hypotheses, then choose Stage 7.1 for more labels or Stage 8 for a cautious timeline prototype. |
 | Stage 7.1 | Player Filtering | ready_with_warnings | 15 low friction | outputs/reports/stage_7_1_player_filtering_report.md | Review filtered identities; proceed to Stage 8 cautiously or Stage 7.2 if identity confidence is not sufficient. |
+| Stage 8 | Event Timeline | ready_with_warnings | 15 low friction | outputs/reports/stage_8_event_timeline_report.md | Proceed to Stage 8.1: expand labels and timeline validation before tactical metrics. |
+| Stage 8.1 | Timeline Validation | needs_more_labels | 32 medium friction | outputs/reports/stage_8_1_timeline_validation_report.md | Run Stage 8.1 interactively across more frames, then rerun timeline validation. |

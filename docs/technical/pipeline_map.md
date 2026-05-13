@@ -18,6 +18,10 @@
 | Stage 7 | Detect players and create ball-player interaction hypotheses | `scripts/run_stage_7_player_interaction_probe.py` | `player_tracking.py`, `ball_player_interaction.py` | sample video, Stage 6 trajectory/events, Stage 3 homography | `outputs/player_tracking/stage_7_player_interaction/`, Stage 7 reports | Implemented |
 | Stage 7.1 | Filter player tracks and stabilize identity | `scripts/run_stage_7_1_player_filtering.py` | `player_filtering.py`, `player_identity.py` | Stage 7 detections/tracks, sample video, Stage 3 calibration | `outputs/player_tracking/stage_7_1_player_filtering/`, Stage 7.1 reports | Implemented |
 | Stage 7.2 | Manual player identity labeling helper if identity is unreliable | Not implemented | Planned | Stage 7.1 report, filtered tracks | Planned | Planned |
+| Stage 8 | Build shot/event timeline and rally segmentation prototype | `scripts/run_stage_8_event_timeline.py` | `event_timeline.py`, `rally_segmentation.py` | Stage 6 trajectory/events, Stage 7 interactions, Stage 7.1 identities | `outputs/timeline/stage_8_event_timeline/`, Stage 8 reports | Implemented |
+| Stage 8.1 | Expand labels and validate timeline | `scripts/run_stage_8_1_expand_labels.py` | `label_expansion.py`, `timeline_validation.py` | Stage 4.1 labels, Stage 5.1 candidates, Stage 8 timeline | `outputs/timeline/stage_8_1_timeline_validation/`, Stage 8.1 reports | Implemented |
+| Stage 8.2 | Manual event validation helper | Not implemented | Planned | Stage 8 timeline and visuals | Planned | Planned |
+| Stage 9 | Tactical metrics and shot zone prototype | Not implemented | Planned | Stage 8 timeline, calibrated court, player identities | Planned | Planned |
 
 ## Flow
 
@@ -36,6 +40,8 @@ Stage 0 Environment Doctor
   -> Stage 7 Player Tracking and Ball-Player Interaction
   -> Stage 7.1 Court-Aware Player Filtering and Identity Stabilization
   -> Stage 8 Shot/Event Timeline and Rally Segmentation Prototype
+  -> Stage 8.1 Expanded Labels and Timeline Validation
+  -> Stage 9 Tactical Metrics and Shot Zone Prototype
 ```
 
 ## Architecture Notes

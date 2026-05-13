@@ -524,3 +524,87 @@ def calculate_stage_7_1_friction_score(
             "warnings_count": warnings_count,
         },
     }
+
+
+def calculate_stage_8_friction_score(
+    *,
+    trajectory_missing: bool = False,
+    source_events_missing: bool = False,
+    player_identity_missing: bool = False,
+    no_timeline_events: bool = False,
+    no_rally_segments: bool = False,
+    player_attribution_failed: bool = False,
+    visual_generation_failed: bool = False,
+    too_few_points: bool = False,
+    errors_count: int = 0,
+    warnings_count: int = 0,
+) -> dict[str, Any]:
+    """Calculate Stage 8 event timeline and rally segmentation friction."""
+    score = 0
+    score += 45 if trajectory_missing else 0
+    score += 10 if source_events_missing else 0
+    score += 10 if player_identity_missing else 0
+    score += 40 if no_timeline_events else 0
+    score += 30 if no_rally_segments else 0
+    score += 12 if player_attribution_failed else 0
+    score += 8 if visual_generation_failed else 0
+    score += 12 if too_few_points else 0
+    score += min(errors_count * 10, 30)
+    score += min(warnings_count * 3, 15)
+    score = max(0, min(score, 100))
+
+    return {
+        "score": score,
+        "band": friction_band(score),
+        "inputs": {
+            "trajectory_missing": trajectory_missing,
+            "source_events_missing": source_events_missing,
+            "player_identity_missing": player_identity_missing,
+            "no_timeline_events": no_timeline_events,
+            "no_rally_segments": no_rally_segments,
+            "player_attribution_failed": player_attribution_failed,
+            "visual_generation_failed": visual_generation_failed,
+            "too_few_points": too_few_points,
+            "errors_count": errors_count,
+            "warnings_count": warnings_count,
+        },
+    }
+
+
+def calculate_stage_8_1_friction_score(
+    *,
+    labels_missing: bool = False,
+    timeline_missing: bool = False,
+    candidate_validation_failed: bool = False,
+    sparse_label_coverage: bool = False,
+    event_validation_unsupported: bool = False,
+    manual_action_required: bool = False,
+    errors_count: int = 0,
+    warnings_count: int = 0,
+) -> dict[str, Any]:
+    """Calculate Stage 8.1 label expansion and timeline validation friction."""
+    score = 0
+    score += 45 if labels_missing else 0
+    score += 45 if timeline_missing else 0
+    score += 25 if candidate_validation_failed else 0
+    score += 18 if sparse_label_coverage else 0
+    score += 18 if event_validation_unsupported else 0
+    score += 8 if manual_action_required else 0
+    score += min(errors_count * 10, 30)
+    score += min(warnings_count * 3, 15)
+    score = max(0, min(score, 100))
+
+    return {
+        "score": score,
+        "band": friction_band(score),
+        "inputs": {
+            "labels_missing": labels_missing,
+            "timeline_missing": timeline_missing,
+            "candidate_validation_failed": candidate_validation_failed,
+            "sparse_label_coverage": sparse_label_coverage,
+            "event_validation_unsupported": event_validation_unsupported,
+            "manual_action_required": manual_action_required,
+            "errors_count": errors_count,
+            "warnings_count": warnings_count,
+        },
+    }

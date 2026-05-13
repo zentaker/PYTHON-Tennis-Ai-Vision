@@ -1,0 +1,82 @@
+{
+  "errors": [],
+  "events_by_type": {
+    "ball_near_player": 2,
+    "possible_hit": 3
+  },
+  "final_verdict": "ready_with_warnings",
+  "flags": {
+    "no_rally_segments": false,
+    "no_timeline_events": false,
+    "player_attribution_failed": false,
+    "player_identity_missing": false,
+    "source_events_missing": false,
+    "too_few_points": true,
+    "trajectory_missing": false,
+    "visual_generation_failed": false
+  },
+  "friction": {
+    "band": "low friction",
+    "inputs": {
+      "errors_count": 0,
+      "no_rally_segments": false,
+      "no_timeline_events": false,
+      "player_attribution_failed": false,
+      "player_identity_missing": false,
+      "source_events_missing": false,
+      "too_few_points": true,
+      "trajectory_missing": false,
+      "visual_generation_failed": false,
+      "warnings_count": 1
+    },
+    "score": 15
+  },
+  "inputs_used": {
+    "Stage 6 smoothed trajectory": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_6_trajectory_smoothing\\smoothed_trajectory.csv",
+    "Stage 6 trajectory events": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_6_trajectory_smoothing\\trajectory_events.csv",
+    "Stage 7 interactions": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_player_interaction\\ball_player_interactions.csv",
+    "Stage 7.1 main players": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_1_player_filtering\\main_players.csv",
+    "Stage 7.1 refined distances": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_1_player_filtering\\refined_ball_player_distances.csv",
+    "Stage 7.1 side states": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_1_player_filtering\\player_side_states.csv"
+  },
+  "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_8_event_timeline_report.json",
+  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_8_event_timeline_20260513T191354Z.log",
+  "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_8_event_timeline_report.md",
+  "merge_window": 5,
+  "merged_timeline_event_count": 5,
+  "output_paths": {
+    "court_timeline_preview": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_event_timeline\\court_timeline_preview.jpg",
+    "event_timeline_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_event_timeline\\event_timeline.csv",
+    "event_timeline_json": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_event_timeline\\event_timeline.json",
+    "player_event_attribution_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_event_timeline\\player_event_attribution.csv",
+    "rally_segments_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_event_timeline\\rally_segments.csv",
+    "timeline_preview": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_event_timeline\\timeline_preview.jpg",
+    "timeline_summary": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_event_timeline\\timeline_summary.md"
+  },
+  "player_attributed_events_count": 5,
+  "rally_segments": [
+    {
+      "confidence_like_score": 0.79,
+      "duration_seconds": 1.0,
+      "end_frame": 180,
+      "end_time_seconds": 3.0,
+      "event_count": 5,
+      "players_involved": "player_a,player_b",
+      "possible_bounce_count": 0,
+      "possible_hit_count": 3,
+      "rally_id": "rally_001",
+      "segmentation_reason": "First prototype segment from first to last high-confidence trajectory anchor.",
+      "start_frame": 120,
+      "start_time_seconds": 2.0
+    }
+  ],
+  "rally_segments_count": 1,
+  "recommended_next_step": "Proceed to Stage 8.1: expand labels and timeline validation before tactical metrics.",
+  "source_event_count": 18,
+  "stage": "stage_8_event_timeline",
+  "timestamp": "2026-05-13T19:13:54+00:00",
+  "trajectory_points_count": 5,
+  "warnings": [
+    "Only a small number of high-confidence trajectory anchors are available; timeline segmentation is preliminary."
+  ]
+}

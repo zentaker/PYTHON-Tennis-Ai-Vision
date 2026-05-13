@@ -420,6 +420,61 @@ Expected outputs:
 - JSON report at `outputs/reports/stage_7_1_player_filtering_report.json`.
 - Markdown report at `outputs/reports/stage_7_1_player_filtering_report.md`.
 
+## Stage 8 - Shot/Event Timeline and Rally Segmentation Prototype
+
+Stage 8 combines the smoothed ball trajectory, Stage 6 event hypotheses, Stage 7 ball-player interaction hypotheses, and Stage 7.1 stabilized player identities into a first structured event timeline.
+
+Events remain hypotheses. This stage does not perform official scoring, line calling, confirmed hit detection, confirmed bounce detection, or shot classification.
+
+Run:
+
+```powershell
+python scripts\run_stage_8_event_timeline.py
+```
+
+Optional merge-window run:
+
+```powershell
+python scripts\run_stage_8_event_timeline.py --merge-window 5
+```
+
+Expected outputs:
+
+- Event timeline at `outputs/timeline/stage_8_event_timeline/event_timeline.csv`.
+- Event timeline JSON at `outputs/timeline/stage_8_event_timeline/event_timeline.json`.
+- Rally segments at `outputs/timeline/stage_8_event_timeline/rally_segments.csv`.
+- Player event attribution at `outputs/timeline/stage_8_event_timeline/player_event_attribution.csv`.
+- Timeline previews under `outputs/timeline/stage_8_event_timeline/`.
+- JSON report at `outputs/reports/stage_8_event_timeline_report.json`.
+- Markdown report at `outputs/reports/stage_8_event_timeline_report.md`.
+
+## Stage 8.1 - Expanded Ball Labels and Timeline Validation
+
+Stage 8 created a prototype timeline from sparse data. Stage 8.1 expands or reuses manual ball labels, validates candidate quality against those labels, and checks whether timeline events are supported by labeled ball positions.
+
+Interactive mode collects more labels. Non-interactive mode validates with the existing labels and is useful for repeatable agent verification.
+
+Run non-interactive validation:
+
+```powershell
+python scripts\run_stage_8_1_expand_labels.py --no-interactive
+```
+
+Run interactive label expansion:
+
+```powershell
+python scripts\run_stage_8_1_expand_labels.py --interactive --start-frame 90 --interval 15 --max-frames 12
+```
+
+Expected outputs:
+
+- Expanded labels at `outputs/timeline/stage_8_1_timeline_validation/expanded_ball_labels.csv`.
+- Candidate validation at `outputs/timeline/stage_8_1_timeline_validation/expanded_candidate_validation.csv`.
+- Timeline validation at `outputs/timeline/stage_8_1_timeline_validation/timeline_event_validation.csv`.
+- Validated timeline at `outputs/timeline/stage_8_1_timeline_validation/validated_event_timeline.csv`.
+- JSON report at `outputs/reports/stage_8_1_timeline_validation_report.json`.
+- Markdown report at `outputs/reports/stage_8_1_timeline_validation_report.md`.
+
 ## Lab Notebook
 
 The lab notebook turns generated reports into persistent project documentation. It records each stage's inputs, outputs, verdict, friction score, warnings, errors, interpretation, and next step.

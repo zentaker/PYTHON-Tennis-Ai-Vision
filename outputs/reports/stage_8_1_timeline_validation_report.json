@@ -1,0 +1,98 @@
+{
+  "average_candidate_distance": 3.73,
+  "average_label_gap": 15,
+  "candidate_validation_count": 5,
+  "candidate_validation_summary": {
+    "average_candidate_distance": 3.73,
+    "candidate_validation_count": 5,
+    "median_candidate_distance": 3.0,
+    "within_100_px": 5,
+    "within_10_px": 5,
+    "within_200_px": 5,
+    "within_25_px": 5,
+    "within_50_px": 5
+  },
+  "coverage_enough_for_timeline_validation": false,
+  "errors": [],
+  "existing_labels_count": 5,
+  "final_verdict": "needs_more_labels",
+  "flags": {
+    "candidate_validation_failed": false,
+    "event_validation_unsupported": false,
+    "labels_missing": false,
+    "manual_action_required": true,
+    "sparse_label_coverage": true,
+    "timeline_missing": false
+  },
+  "friction": {
+    "band": "medium friction",
+    "inputs": {
+      "candidate_validation_failed": false,
+      "errors_count": 0,
+      "event_validation_unsupported": false,
+      "labels_missing": false,
+      "manual_action_required": true,
+      "sparse_label_coverage": true,
+      "timeline_missing": false,
+      "warnings_count": 2
+    },
+    "score": 32
+  },
+  "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_8_1_timeline_validation_report.json",
+  "label_frame_range": "120 to 180",
+  "labels_per_second": 5.0,
+  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_8_1_timeline_validation_20260513T200104Z.log",
+  "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_8_1_timeline_validation_report.md",
+  "maximum_label_gap": 15,
+  "median_candidate_distance": 3.0,
+  "merged_labels_count": 5,
+  "mode": "non_interactive",
+  "new_labels_count": 0,
+  "output_paths": {
+    "court_validation_preview": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_1_timeline_validation\\court_validation_preview.jpg",
+    "expanded_candidate_validation": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_1_timeline_validation\\expanded_candidate_validation.csv",
+    "expanded_labels_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_1_timeline_validation\\expanded_ball_labels.csv",
+    "expanded_labels_json": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_1_timeline_validation\\expanded_ball_labels.json",
+    "expanded_labels_preview": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_1_timeline_validation\\expanded_labels_preview.jpg",
+    "label_coverage_report": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_1_timeline_validation\\label_coverage_report.csv",
+    "timeline_event_validation": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_1_timeline_validation\\timeline_event_validation.csv",
+    "timeline_validation_preview": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_1_timeline_validation\\timeline_validation_preview.jpg",
+    "validated_event_timeline_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_1_timeline_validation\\validated_event_timeline.csv",
+    "validated_event_timeline_json": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_1_timeline_validation\\validated_event_timeline.json"
+  },
+  "outside_coverage_events_count": 0,
+  "recommended_next_step": "Run Stage 8.1 interactively across more frames, then rerun timeline validation.",
+  "selected_frame_indices": [
+    90,
+    105,
+    120,
+    135,
+    150,
+    165,
+    180,
+    195,
+    210,
+    225,
+    240,
+    255
+  ],
+  "skipped_frames": 0,
+  "stage": "stage_8_1_timeline_validation",
+  "supported_events_count": 5,
+  "timeline_events_validated": 5,
+  "timeline_validation_summary": {
+    "outside_coverage_events_count": 0,
+    "supported_events_count": 5,
+    "timeline_events_validated": 5,
+    "unsupported_events_count": 0
+  },
+  "timestamp": "2026-05-13T20:01:01+00:00",
+  "unsupported_events_count": 0,
+  "validated_timeline_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_1_timeline_validation\\validated_event_timeline.csv",
+  "video_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\samples\\video_01.mov",
+  "visible_labels_count": 5,
+  "warnings": [
+    "Non-interactive mode used existing labels only; no new labels were collected.",
+    "Label coverage is still sparse for tactical metrics; collect more labels across the rally."
+  ]
+}
