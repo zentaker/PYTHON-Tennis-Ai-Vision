@@ -4,6 +4,8 @@ This folder is the persistent project lab notebook for Tennis AI Vision.
 
 The notebook records technical friction, inputs, outputs, decisions, warnings, errors, and validation results for each stage. This matters because the project is not only building a local tennis video analysis pipeline; it is also learning where the local workflow succeeds, where it struggles, and what should happen next.
 
+The notebook is plain-text friendly. Stage summaries use short field blocks instead of wide Markdown tables so they can be read in VS Code, Notepad, terminal previews, or raw GitHub view.
+
 The normal workflow is automatic:
 
 1. Codex implements or modifies a stage.

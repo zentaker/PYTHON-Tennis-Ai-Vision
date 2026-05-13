@@ -99,10 +99,26 @@ Possible next paths:
 
 Planned. Use validated timeline, court projection, and player identities to start lightweight tactical metrics and shot-zone summaries without official scoring or line calling.
 
-## Stage 6.x: Local MVP Pipeline
+## Future Phase: Local MVP Pipeline
 
 Connect local video loading, frame extraction, detection, calibration, tracking, and report generation into one terminal-driven pipeline.
 
-## Stage 7: Cloud Escalation Decision
+## Future Phase: Synthetic Rally Replay
+
+Generate simplified replay artifacts from validated ball trajectory, player states, and court projection. This should remain clearly separated from official broadcast-style analytics until the underlying detections are reliable.
+
+## Future Phase: Analytical Video Generation
+
+Create annotated analytical clips from local outputs, including trajectory overlays, event markers, player labels, and court-space summaries. This should use validated data and preserve uncertainty labels.
+
+## Future Phase: Real-Time Court Vision
+
+Explore whether the local pipeline can move from offline probes to near-real-time court understanding. This depends on stronger detector performance and careful runtime profiling.
+
+## Future Phase: Multi-Angle Camera Support
+
+Investigate calibration and event alignment across multiple camera angles. This is a later-stage capability after the single-camera pipeline is stable.
+
+## Future Phase: Cloud Escalation Decision
 
 Decide whether cloud resources are justified based on documented local friction, performance limits, and experiment results.

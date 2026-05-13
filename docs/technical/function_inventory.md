@@ -1,138 +1,1273 @@
 # Function Inventory
 
-Search hints use the function definition text to find the implementation quickly.
+This document is designed to be readable as plain text.
+It avoids wide Markdown tables because the Product Owner often reviews documentation in TXT/editor view.
 
-| Area | File | Function/Class | Purpose | Inputs | Outputs | Called by | Notes |
-|---|---|---|---|---|---|---|---|
-| Stage 0 | `src/tennis_vision/environment.py` | `check_python_version` | Capture Python version and executable | current Python runtime | dict status | `run_environment_checks` | Search: `def check_python_version` |
-| Stage 0 | `src/tennis_vision/environment.py` | `check_required_folders` | Validate project folders exist | project root | folder status dict | `run_environment_checks` | Checks samples and outputs paths |
-| Stage 0 | `src/tennis_vision/environment.py` | `check_required_packages` | Validate imports for required packages | installed environment | package import status | `run_environment_checks` | Covers OpenCV, NumPy, pandas, pydantic, rich |
-| Stage 0 | `src/tennis_vision/environment.py` | `check_ffmpeg` | Probe shell `ffmpeg` availability | shell PATH | availability dict | `run_environment_checks` | Warning, not blocker for current stages |
-| Stage 0 | `src/tennis_vision/environment.py` | `run_environment_checks` | Run all environment checks | project root | combined checks dict | `scripts/doctor.py` | Main Stage 0 module entry |
-| Reports | `src/tennis_vision/report.py` | `ensure_output_folders` | Create standard output folders | project root | folders on disk | all stage scripts | Does not create every stage-specific subfolder |
-| Reports | `src/tennis_vision/report.py` | `write_json_report` | Write machine-readable report | path, dict | JSON file | all stage scripts | Uses sorted, indented JSON |
-| Reports | `src/tennis_vision/report.py` | `write_markdown_report` | Write human-readable report | path, title, sections | Markdown file | all stage scripts | Section-based writer |
-| Reports | `src/tennis_vision/report.py` | `write_timestamped_log` | Write timestamped log | project root, name, lines | `.log` file | all stage scripts | Logs are ignored by Git |
-| Friction | `src/tennis_vision/friction.py` | `friction_band` | Map score to friction label | integer score | band string | all friction functions | 0-20 low, 21-50 medium, 51-80 high, 81+ blocking |
-| Friction | `src/tennis_vision/friction.py` | `calculate_friction_score` | Score Stage 0 readiness | missing packages/folders, ffmpeg, errors | friction dict | `scripts/doctor.py` | Stage 0 |
-| Friction | `src/tennis_vision/friction.py` | `calculate_stage_1_friction_score` | Score video loading friction | video/frame flags | friction dict | Stage 1 script | Stage 1 |
-| Friction | `src/tennis_vision/friction.py` | `calculate_stage_2_friction_score` | Score YOLO CPU friction | model/video/runtime flags | friction dict | Stage 2 script | Stage 2 |
-| Friction | `src/tennis_vision/friction.py` | `calculate_stage_3_friction_score` | Score court calibration friction | config/video/geometry flags | friction dict | Stage 3 script | Includes geometry invalidity |
-| Friction | `src/tennis_vision/friction.py` | `calculate_stage_3_1_friction_score` | Score point selection friction | image/grid/point flags | friction dict | Stage 3.1 script | Grid-only is non-blocking |
-| Friction | `src/tennis_vision/friction.py` | `calculate_stage_4_friction_score` | Score ball candidate probe friction | video/candidate/runtime flags | friction dict | Stage 4 script | Noisy candidates raise friction |
-| Friction | `src/tennis_vision/friction.py` | `calculate_stage_4_1_friction_score` | Score manual labeling helper friction | video/frame/label/comparison flags | friction dict | Stage 4.1 script | No labels is warning, not blocker if frames load |
-| Friction | `src/tennis_vision/friction.py` | `calculate_stage_5_friction_score` | Score filtering and projection friction | input/comparison/filtering/projection flags | friction dict | Stage 5 script | Search: `def calculate_stage_5_friction_score` |
-| Friction | `src/tennis_vision/friction.py` | `calculate_stage_5_1_friction_score` | Score candidate generation improvement friction | video/label/frame/candidate/improvement flags | friction dict | Stage 5.1 script | Search: `def calculate_stage_5_1_friction_score` |
-| Friction | `src/tennis_vision/friction.py` | `calculate_stage_6_friction_score` | Score trajectory smoothing friction | input/smoothing/event/projection flags | friction dict | Stage 6 script | Search: `def calculate_stage_6_friction_score` |
-| Friction | `src/tennis_vision/friction.py` | `calculate_stage_7_friction_score` | Score player tracking and interaction friction | video/trajectory/model/detection/association flags | friction dict | Stage 7 script | Search: `def calculate_stage_7_friction_score` |
-| Friction | `src/tennis_vision/friction.py` | `calculate_stage_7_1_friction_score` | Score player filtering and identity friction | detection/track/filter/profile/association flags | friction dict | Stage 7.1 script | Search: `def calculate_stage_7_1_friction_score` |
-| Stage 0 script | `scripts/doctor.py` | `main` | Run doctor, reports, notebook update | CLI execution | reports, log, console summary | terminal | Search: `def main` |
-| Stage 1 | `src/tennis_vision/video_io.py` | `validate_video_path` | Check video path exists | video path | validation dict | `read_video_metadata` | Search: `def validate_video_path` |
-| Stage 1 | `src/tennis_vision/video_io.py` | `open_video` | Open OpenCV `VideoCapture` | video path | capture or error | video stages | Central video open helper |
-| Stage 1 | `src/tennis_vision/video_io.py` | `read_video_metadata` | Read file size, FPS, frame count, resolution, codec | video path | metadata dict | Stage 1 script | Uses OpenCV |
-| Stage 1 | `src/tennis_vision/frame_sampler.py` | `extract_frames` | Save sampled JPG frames | video path, output folder, interval, max frames | extraction stats | Stage 1 script | Writes ignored generated frames |
-| Stage 1 script | `scripts/run_stage_1_video_probe.py` | `detect_default_video` | Auto-detect sample video | `samples/` folder | selected path metadata | `select_video_path` | Supports MOV/MP4/AVI/MKV/M4V |
-| Stage 1 script | `scripts/run_stage_1_video_probe.py` | `main` | Run metadata extraction, frame sampling, reports | CLI args | Stage 1 reports, frames, notebook | terminal | Search: `def main` |
-| Stage 2 | `src/tennis_vision/yolo_cpu.py` | `load_yolo_model` | Load small YOLO model | optional model name | model status dict | `run_yolo_cpu_baseline`, Stage 4 optional reference | Uses `ultralytics.YOLO` |
-| Stage 2 | `src/tennis_vision/yolo_cpu.py` | `resize_frame` | Resize before inference | frame, width | resized frame | YOLO baseline | CPU cost control |
-| Stage 2 | `src/tennis_vision/yolo_cpu.py` | `_collect_detections` | Convert YOLO boxes/classes to counts/confidences | YOLO result, class names | counts, confidence list | `run_yolo_cpu_baseline` | Search: `def _collect_detections` |
-| Stage 2 | `src/tennis_vision/yolo_cpu.py` | `run_yolo_cpu_baseline` | Run limited CPU inference and save annotated frames | video, output folder, model, frame options | YOLO result dict | Stage 2 script | CPU-only, device=`cpu` |
-| Stage 2 script | `scripts/run_stage_2_yolo_cpu_baseline.py` | `main` | Run Stage 2 reports and notebook update | CLI args | annotated frames, reports | terminal | Search: `def main` |
-| Stage 3 | `src/tennis_vision/court_calibration.py` | `load_frame_at_index` | Load one calibration frame | video path, frame index | frame or error | calibration probe | OpenCV frame seek |
-| Stage 3 | `src/tennis_vision/court_calibration.py` | `read_calibration_config` | Read manual point config | JSON path | config/errors/warnings | calibration probe | Uses `configs/court_calibration_sample.json` |
-| Stage 3 | `src/tennis_vision/court_calibration.py` | `validate_points` | Validate corner coordinates and frame bounds | point dict, frame shape | validation dict | calibration probe | Calls geometry validation |
-| Stage 3 | `src/tennis_vision/court_calibration.py` | `validate_corner_geometry` | Validate left/right order and polygon shape | usable corner points | geometry status | `validate_points` | Rejects inverted/crossed points |
-| Stage 3 | `src/tennis_vision/court_calibration.py` | `quadrilateral_self_intersects` | Detect crossed court polygon | ordered four points | bool | `validate_corner_geometry` | Prevents X-shaped overlay |
-| Stage 3 | `src/tennis_vision/court_calibration.py` | `compute_homography` | Compute court-to-mini-court transform | validated points | homography dict | calibration probe | Uses OpenCV `findHomography` |
-| Stage 3 | `src/tennis_vision/court_calibration.py` | `draw_points_overlay` | Draw points and polygon on frame | frame, validation | overlay image | calibration probe | Labels doubles court corner meanings |
-| Stage 3 | `src/tennis_vision/court_calibration.py` | `generate_mini_court_preview` | Warp frame into normalized court view | frame, homography | preview image or error | calibration probe | Only when homography succeeds |
-| Stage 3 | `src/tennis_vision/court_calibration.py` | `run_court_calibration_probe` | Orchestrate frame load, validation, overlay, homography | config, output folder, overrides | calibration result dict | Stage 3 script | Main Stage 3 module entry |
-| Stage 3 script | `scripts/run_stage_3_court_calibration_probe.py` | `main` | Run Stage 3 reports and notebook update | CLI args | calibration files, reports | terminal | Search: `def main` |
-| Stage 3.1 | `src/tennis_vision/court_point_selector.py` | `generate_coordinate_grid` | Draw coordinate grid over reference frame | image path, output path, grid step | grid result | Stage 3.1 script | Makes manual coordinate reading easier |
-| Stage 3.1 | `src/tennis_vision/court_point_selector.py` | `select_court_points_interactively` | OpenCV click selector for court corners | reference image, point names | selected points | Stage 3.1 script | Keys: `u`, `s`, `q` |
-| Stage 3.1 | `src/tennis_vision/court_point_selector.py` | `update_calibration_config` | Write selected points to config | config path, points | update status | Stage 3.1 script | Does not auto-fix inverted points |
-| Stage 3.1 | `src/tennis_vision/court_point_selector.py` | `validate_selected_points` | Validate selected points and geometry | point dict | point status | Stage 3.1 script | Uses court geometry validator |
-| Stage 3.1 script | `scripts/run_stage_3_1_court_point_selector.py` | `main` | Generate grid, optionally select points, reports | CLI args | grid image, config update, reports | terminal | Search: `def main` |
-| Stage 4 | `src/tennis_vision/ball_tracking_probe.py` | `resize_frame` | Resize video frame while preserving scale | frame, width | frame, scale | Stage 4 and 4.1 | Scale converts display/original coordinates |
-| Stage 4 | `src/tennis_vision/ball_tracking_probe.py` | `detect_ball_candidates` | HSV + contour heuristic for ball-like blobs | frame, frame index | candidate list | Stage 4 probe | Yellow/green color threshold and circularity filter |
-| Stage 4 | `src/tennis_vision/ball_tracking_probe.py` | `draw_candidates` | Draw candidate circles and scores | frame, candidates | overlay image | Stage 4 probe | Visual review artifact |
-| Stage 4 | `src/tennis_vision/ball_tracking_probe.py` | `write_candidates_csv` | Save candidate positions | CSV path, candidates | CSV file | Stage 4 probe | Used by Stage 4.1 comparison |
-| Stage 4 | `src/tennis_vision/ball_tracking_probe.py` | `save_trajectory_preview` | Draw rough line through best candidates | base frame, best candidates | preview path or none | Stage 4 probe | Exploratory only |
-| Stage 4 | `src/tennis_vision/ball_tracking_probe.py` | `run_yolo_reference` | Optional YOLO reference on sampled frames | sampled frames, output folder, confidence | YOLO reference dict | Stage 4 probe when `--use-yolo` | Not default |
-| Stage 4 | `src/tennis_vision/ball_tracking_probe.py` | `run_ball_tracking_probe` | Sample frames, detect candidates, save overlays/CSV | video, output folder, options | result dict | Stage 4 script | Main Stage 4 module entry |
-| Stage 4 script | `scripts/run_stage_4_ball_tracking_probe.py` | `stage_3_spatial_status` | Check whether Stage 3 homography exists | Stage 3 report | spatial status dict | Stage 4 script | Marks image-space-only if missing |
-| Stage 4 script | `scripts/run_stage_4_ball_tracking_probe.py` | `main` | Run Stage 4 probe, reports, notebook update | CLI args | candidates, reports | terminal | Search: `def main` |
-| Stage 4.1 | `src/tennis_vision/ball_labeling.py` | `build_frame_indices` | Resolve frame list from CLI | frames string/start/interval/max | frame index list | Stage 4.1 script | Default list is small |
-| Stage 4.1 | `src/tennis_vision/ball_labeling.py` | `load_frame_at_index` | Load selected frame | video path, frame index | frame or error | labeler | Uses OpenCV |
-| Stage 4.1 | `src/tennis_vision/ball_labeling.py` | `label_frames_interactively` | OpenCV click labeling workflow | video, frame indices, output dir, resize width | labels and status | Stage 4.1 script | Keys: click, `u`, `s`, `n`, `q` |
-| Stage 4.1 | `src/tennis_vision/ball_labeling.py` | `load_stage_4_display_frame` | Use Stage 4 overlay for display if available | overlay dir, frame index, fallback frame | display frame | labeler | Saves original-video coordinates |
-| Stage 4.1 | `src/tennis_vision/ball_labeling.py` | `write_labels_csv` | Save manual labels to CSV | path, labels | CSV file | Stage 4.1 script | Ground truth output |
-| Stage 4.1 | `src/tennis_vision/ball_labeling.py` | `write_labels_json` | Save manual labels to JSON | path, labels | JSON file | Stage 4.1 script | Ground truth output |
-| Stage 4.1 | `src/tennis_vision/ball_labeling.py` | `compare_candidates_to_labels` | Find nearest Stage 4 candidate per manual label | labels, candidate CSV, output CSV | comparison summary and CSV | Stage 4.1 script | Thresholds: 10/25/50/100 px |
-| Stage 4.1 script | `scripts/run_stage_4_1_ball_labeling_helper.py` | `load_frames_without_interaction` | Safe non-GUI verification path | video, frames, output dir | skipped labels/status | Stage 4.1 script | Used by `--no-interactive` |
-| Stage 4.1 script | `scripts/run_stage_4_1_ball_labeling_helper.py` | `main` | Run labeler or non-interactive verification, reports, notebook update | CLI args | labels, comparison, reports | terminal | Search: `def main` |
-| Stage 5 | `src/tennis_vision/ball_candidate_filtering.py` | `read_ball_candidates` | Load Stage 4 candidate CSV | candidate CSV path | candidate rows/errors | Stage 5 script | Search: `def read_ball_candidates` |
-| Stage 5 | `src/tennis_vision/ball_candidate_filtering.py` | `read_manual_labels` | Load visible manual labels | label CSV path | label rows/errors | Stage 5 script | Search: `def read_manual_labels` |
-| Stage 5 | `src/tennis_vision/ball_candidate_filtering.py` | `compare_candidates_to_labels` | Rank automatic candidates by distance to manual labels | candidates, labels | distance rows and summary | Stage 5 script | Thresholds: 10/25/50/100/200 px |
-| Stage 5 | `src/tennis_vision/ball_candidate_filtering.py` | `filter_candidates` | Select cleaner candidates using labels, court geometry, temporal interpolation | candidates, labels, court polygon | filtered rows and summary | Stage 5 script | Baseline filter, not learned tracking |
-| Stage 5 | `src/tennis_vision/ball_candidate_filtering.py` | `add_projection_to_rows` | Add projected court coordinates to selected rows | filtered rows, homography matrix | rows and projected count | Stage 5 script | Calls court projection |
-| Stage 5 | `src/tennis_vision/ball_candidate_filtering.py` | `save_filtered_trajectory_preview` | Save image-space trajectory preview | filtered rows, output path | preview path | Stage 5 script | Lightweight visualization |
-| Stage 5 | `src/tennis_vision/court_projection.py` | `load_stage_3_calibration` | Load homography and court polygon from Stage 3 report | Stage 3 report path | calibration status | Stage 5 script | Search: `def load_stage_3_calibration` |
-| Stage 5 | `src/tennis_vision/court_projection.py` | `project_image_points` | Project image points into normalized court plane | point rows, homography matrix | projected rows | Stage 5 script | Uses OpenCV perspective transform |
-| Stage 5 | `src/tennis_vision/court_projection.py` | `point_inside_or_near_polygon` | Check candidate against calibrated court polygon | point, polygon, margin | geometry status | `filter_candidates` | Rejects obvious off-court candidates |
-| Stage 5 | `src/tennis_vision/court_projection.py` | `save_court_projection_preview` | Draw projected candidates on mini-court | projected rows, target size | preview image | Stage 5 script | Search: `def save_court_projection_preview` |
-| Stage 5 script | `scripts/run_stage_5_ball_candidate_filtering.py` | `main` | Run comparison, filtering, projection, reports, notebook update | CLI args | Stage 5 outputs and reports | terminal | Search: `def main` |
-| Stage 5.1 | `src/tennis_vision/ball_candidate_improvement.py` | `load_labeled_frame_bundle` | Load labeled frames and nearby frames for motion comparison | video path, frame indices, resize width | frame bundles and errors | Stage 5.1 script | Search: `def load_labeled_frame_bundle` |
-| Stage 5.1 | `src/tennis_vision/ball_candidate_improvement.py` | `generate_hsv_candidates` | Detect yellow/green candidate blobs | frame bundle, court polygon | candidate rows | Stage 5.1 script | Search: `def generate_hsv_candidates` |
-| Stage 5.1 | `src/tennis_vision/ball_candidate_improvement.py` | `generate_motion_candidates` | Detect small moving objects from nearby frames | frame bundle, court polygon | candidate rows | Stage 5.1 script | Search: `def generate_motion_candidates` |
-| Stage 5.1 | `src/tennis_vision/ball_candidate_improvement.py` | `generate_hybrid_candidates` | Merge color and motion candidates with hybrid scoring | frame bundle, court polygon | candidate rows | Stage 5.1 script | Search: `def generate_hybrid_candidates` |
-| Stage 5.1 | `src/tennis_vision/ball_candidate_improvement.py` | `evaluate_strategies` | Compare strategy candidates against manual labels | candidates by strategy, labels | comparison rows and summaries | Stage 5.1 script | Thresholds: 10/25/50/100/200 px |
-| Stage 5.1 | `src/tennis_vision/ball_candidate_improvement.py` | `select_best_candidates` | Select nearest candidate per manual-label frame for best strategy | candidates, labels | selected candidate rows | Stage 5.1 script | Ground-truth evaluation helper |
-| Stage 5.1 | `src/tennis_vision/ball_candidate_improvement.py` | `save_strategy_overlays` | Save overlays comparing manual labels and best candidates | frame bundles, labels, best candidates | overlay image paths | Stage 5.1 script | Search: `def save_strategy_overlays` |
-| Stage 5.1 script | `scripts/run_stage_5_1_candidate_improvement.py` | `main` | Run strategy generation, evaluation, projection, reports, notebook update | CLI args | Stage 5.1 outputs and reports | terminal | Search: `def main` |
-| Stage 6 | `src/tennis_vision/trajectory_smoothing.py` | `read_improved_candidates` | Load Stage 5.1 improved candidates | improved candidate CSV | candidate rows/errors | Stage 6 script | Search: `def read_improved_candidates` |
-| Stage 6 | `src/tennis_vision/trajectory_smoothing.py` | `build_raw_trajectory` | Compute trajectory deltas and speeds | candidate rows, FPS | raw trajectory rows | Stage 6 script | Includes image and projected speed fields |
-| Stage 6 | `src/tennis_vision/trajectory_smoothing.py` | `interpolate_trajectory` | Add visualization-only interpolated points | raw trajectory rows, enabled flag | expanded rows | Stage 6 script | Interpolated rows are marked |
-| Stage 6 | `src/tennis_vision/trajectory_smoothing.py` | `moving_average_smooth` | Smooth image and projected trajectory coordinates | trajectory rows, window size | smoothed rows | Stage 6 script | Default window size 3 |
-| Stage 6 | `src/tennis_vision/event_segmentation.py` | `detect_events` | Generate hypothesis-only event markers | raw trajectory rows | event rows and warnings | Stage 6 script | Direction/speed heuristics only |
-| Stage 6 | `src/tennis_vision/event_segmentation.py` | `events_by_type` | Count event hypotheses | event rows | counts dict | Stage 6 script | Used in reports |
-| Stage 6 script | `scripts/run_stage_6_trajectory_smoothing.py` | `main` | Run smoothing, event segmentation, previews, reports, notebook update | CLI args | Stage 6 outputs and reports | terminal | Search: `def main` |
-| Stage 7 | `src/tennis_vision/player_tracking.py` | `read_smoothed_trajectory` | Load Stage 6 smoothed ball rows | smoothed trajectory CSV | trajectory rows/errors | Stage 7 script | Search: `def read_smoothed_trajectory` |
-| Stage 7 | `src/tennis_vision/player_tracking.py` | `select_analysis_frames` | Pick a small set of trajectory/event frames | trajectory rows, event frames, max frames | frame index list | Stage 7 script | Avoids full-video processing |
-| Stage 7 | `src/tennis_vision/player_tracking.py` | `detect_players` | Run CPU YOLO person detection on selected frames | video, frames, model, resize, confidence, homography | detection result dict | Stage 7 script | Detects `person` only |
-| Stage 7 | `src/tennis_vision/player_tracking.py` | `track_players` | Assign approximate nearest-center track IDs | player detections | tracked rows | Stage 7 script | Lightweight tracker only |
-| Stage 7 | `src/tennis_vision/ball_player_interaction.py` | `read_stage_6_events` | Load Stage 6 event hypotheses | events CSV | event rows/warnings | Stage 7 script | Search: `def read_stage_6_events` |
-| Stage 7 | `src/tennis_vision/ball_player_interaction.py` | `associate_ball_to_players` | Associate ball points to nearest player tracks | ball rows, player tracks, events, tolerance | associations, interactions, counts | Stage 7 script | Hypothesis generation only |
-| Stage 7 | `src/tennis_vision/ball_player_interaction.py` | `build_interactions` | Create proximity/event interaction hypotheses | association rows | interaction rows | `associate_ball_to_players` | Does not confirm hits |
-| Stage 7 script | `scripts/run_stage_7_player_interaction_probe.py` | `main` | Run player detection, tracking, association, overlays, reports, notebook update | CLI args | Stage 7 outputs and reports | terminal | Search: `def main` |
-| Stage 7.1 | `src/tennis_vision/player_filtering.py` | `read_player_tracks` | Load Stage 7 player tracks | player tracks CSV | track rows/errors | Stage 7.1 script | Search: `def read_player_tracks` |
-| Stage 7.1 | `src/tennis_vision/player_filtering.py` | `score_track_rows` | Score detections with court, size, duration, confidence signals | track rows, court polygon, thresholds | scored rows and track summaries | Stage 7.1 script | Court-aware filter |
-| Stage 7.1 | `src/tennis_vision/player_filtering.py` | `select_main_tracks` | Select likely main tennis player tracks | track summaries, max players | source track IDs | Stage 7.1 script | Does not define identity by side |
-| Stage 7.1 | `src/tennis_vision/player_filtering.py` | `build_side_states` | Generate near/far side states for identities | filtered rows | side-state rows | Stage 7.1 script | Side is mutable state |
-| Stage 7.1 | `src/tennis_vision/player_identity.py` | `build_identity_profiles` | Build clothing-color identity profiles from crops | video, filtered rows | profile JSON and warnings | Stage 7.1 script | Lightweight color heuristic |
-| Stage 7.1 | `src/tennis_vision/player_identity.py` | `compare_identity_profiles` | Compare identity profile histograms | profiles | match rows | Stage 7.1 script | Not biometric re-id |
-| Stage 7.1 script | `scripts/run_stage_7_1_player_filtering.py` | `main` | Run filtering, identity profiles, refined associations, reports, notebook update | CLI args | Stage 7.1 outputs and reports | terminal | Search: `def main` |
-| Stage 8 | `src/tennis_vision/event_timeline.py` | `read_smoothed_trajectory` | Load Stage 6 smoothed trajectory rows | smoothed trajectory CSV | trajectory rows/warnings | Stage 8 script | Search: `def read_smoothed_trajectory` |
-| Stage 8 | `src/tennis_vision/event_timeline.py` | `read_stage_events` | Load Stage 6 event hypotheses | trajectory events CSV | normalized event rows | Stage 8 script | Search: `def read_stage_events` |
-| Stage 8 | `src/tennis_vision/event_timeline.py` | `read_interactions` | Load Stage 7 player-ball interaction hypotheses | interaction CSV | normalized event rows | Stage 8 script | Search: `def read_interactions` |
-| Stage 8 | `src/tennis_vision/event_timeline.py` | `read_refined_associations` | Load Stage 7.1 identity-aware player associations | refined ball-player distance CSV | normalized association rows | Stage 8 script | Search: `def read_refined_associations` |
-| Stage 8 | `src/tennis_vision/event_timeline.py` | `make_trajectory_events` | Convert non-interpolated trajectory anchors into timeline events | trajectory rows | trajectory-point events | Stage 8 script | Interpolated points are excluded |
-| Stage 8 | `src/tennis_vision/event_timeline.py` | `merge_timeline_events` | Merge event evidence within a frame window | normalized events, merge window, FPS | event timeline rows | Stage 8 script | Search: `def merge_timeline_events` |
-| Stage 8 | `src/tennis_vision/event_timeline.py` | `build_player_event_attribution` | Attach player_a/player_b identity where Stage 7.1 evidence exists | timeline rows, refined associations | attribution rows | Stage 8 script | Side state remains separate from identity |
-| Stage 8 | `src/tennis_vision/rally_segmentation.py` | `build_rally_segments` | Build conservative rally segments from trajectory anchors | trajectory rows, timeline events, FPS | segment rows | Stage 8 script | Prototype segmentation only |
-| Stage 8 | `src/tennis_vision/friction.py` | `calculate_stage_8_friction_score` | Score timeline and rally segmentation friction | timeline/input/visual flags | friction dict | Stage 8 script | Search: `def calculate_stage_8_friction_score` |
-| Stage 8 script | `scripts/run_stage_8_event_timeline.py` | `main` | Run event normalization, merging, rally segmentation, reports, notebook update | CLI args | Stage 8 outputs and reports | terminal | Search: `def main` |
-| Stage 8.1 | `src/tennis_vision/label_expansion.py` | `read_manual_labels` | Load Stage 4.1 labels into validation schema | manual labels CSV | label rows/warnings | Stage 8.1 script | Search: `def read_manual_labels` |
-| Stage 8.1 | `src/tennis_vision/label_expansion.py` | `collect_interactive_labels` | Collect new labels through OpenCV click UI | video, frames, output dir | labels/warnings/errors | Stage 8.1 script | Reuses Stage 4.1 labeler |
-| Stage 8.1 | `src/tennis_vision/label_expansion.py` | `merge_labels` | Merge existing and new labels by frame | label lists | merged labels | Stage 8.1 script | New labels override old frame labels |
-| Stage 8.1 | `src/tennis_vision/label_expansion.py` | `analyze_label_coverage` | Measure label density and frame gaps | labels, FPS | coverage dict | Stage 8.1 script | Search: `def analyze_label_coverage` |
-| Stage 8.1 | `src/tennis_vision/timeline_validation.py` | `read_candidates` | Load Stage 5.1 improved candidates | candidate CSV | candidate rows/errors | Stage 8.1 script | Search: `def read_candidates` |
-| Stage 8.1 | `src/tennis_vision/timeline_validation.py` | `validate_candidates_against_labels` | Compare candidates with expanded labels | labels, candidates, frame tolerance | validation rows and summary | Stage 8.1 script | Thresholds: 10/25/50/100/200 px |
-| Stage 8.1 | `src/tennis_vision/timeline_validation.py` | `read_timeline` | Load Stage 8 event timeline | timeline CSV | event rows/errors | Stage 8.1 script | Search: `def read_timeline` |
-| Stage 8.1 | `src/tennis_vision/timeline_validation.py` | `validate_timeline_events` | Validate event support against expanded labels | timeline rows, labels | validation rows and validated timeline | Stage 8.1 script | Supports position, not confirmed event type |
-| Stage 8.1 | `src/tennis_vision/friction.py` | `calculate_stage_8_1_friction_score` | Score label/timeline validation friction | label/timeline/candidate flags | friction dict | Stage 8.1 script | Search: `def calculate_stage_8_1_friction_score` |
-| Stage 8.1 script | `scripts/run_stage_8_1_expand_labels.py` | `main` | Run label expansion, candidate validation, timeline validation, reports, notebook update | CLI args | Stage 8.1 outputs and reports | terminal | Search: `def main` |
-| Lab notebook | `src/tennis_vision/lab_notebook.py` | `update_lab_notebook` | Update all known stage docs and index from reports | project root | Markdown pages | stage scripts, `scripts/update_lab_notebook.py` | Central notebook updater |
-| Lab notebook | `src/tennis_vision/lab_notebook.py` | `build_experiment_index` | Build index table | stage summaries | Markdown text | `update_lab_notebook` | Writes `experiment_index.md` |
-| Lab notebook | `src/tennis_vision/lab_notebook.py` | `build_stage_0_document` through `build_stage_8_1_document` | Convert stage reports into notebook pages | report dicts | body/history entries | `update_lab_notebook` | One builder per implemented stage |
-| Lab notebook | `scripts/update_lab_notebook.py` | `main` | Manual fallback notebook update | CLI execution | notebook pages | terminal | Fallback/debug only |
+Line numbers are generated from the current Python source with `scripts/update_function_inventory.py`.
+
+## Stage 0 - Environment
+
+FUNCTION: run_environment_checks
+FILE: src/tennis_vision/environment.py
+LINE: 150
+AREA: Stage 0 - Environment
+
+PURPOSE:
+  Runs the complete local environment check for Python, folders, imports, and ffmpeg.
+
+INPUTS:
+  - project root path
+
+OUTPUTS:
+  - environment status dictionary
+
+CALLED BY:
+  - scripts/doctor.py
+
+WHY PRODUCT OWNER CARES:
+  This tells the Product Owner whether local development can continue before video analysis stages run.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/environment.py and go to line 150.
+  Search: def run_environment_checks
+
+NOTES:
+  ffmpeg missing is recorded as warning unless a later stage needs it.
+
+---
+
+FUNCTION: check_required_packages
+FILE: src/tennis_vision/environment.py
+LINE: 76
+AREA: Stage 0 - Environment
+
+PURPOSE:
+  Checks whether required Python packages can be imported.
+
+INPUTS:
+  - package name list
+
+OUTPUTS:
+  - package import status
+
+CALLED BY:
+  - run_environment_checks
+
+WHY PRODUCT OWNER CARES:
+  Missing packages are common setup friction and should be visible immediately.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/environment.py and go to line 76.
+  Search: def check_required_packages
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: check_ffmpeg
+FILE: src/tennis_vision/environment.py
+LINE: 98
+AREA: Stage 0 - Environment
+
+PURPOSE:
+  Checks whether ffmpeg is available from the shell.
+
+INPUTS:
+  - none
+
+OUTPUTS:
+  - ffmpeg availability and path/status
+
+CALLED BY:
+  - run_environment_checks
+
+WHY PRODUCT OWNER CARES:
+  Video work may eventually need ffmpeg, but Stage 1 proved MOV reading can work through OpenCV.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/environment.py and go to line 98.
+  Search: def check_ffmpeg
+
+NOTES:
+  None.
+
+---
+
+## Reports
+
+FUNCTION: write_json_report
+FILE: src/tennis_vision/report.py
+LINE: 35
+AREA: Reports
+
+PURPOSE:
+  Writes a machine-readable JSON report.
+
+INPUTS:
+  - report path
+  - report dictionary
+
+OUTPUTS:
+  - JSON report file
+
+CALLED BY:
+  - stage scripts
+
+WHY PRODUCT OWNER CARES:
+  Reports are the durable evidence layer for every experiment.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/report.py and go to line 35.
+  Search: def write_json_report
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: write_markdown_report
+FILE: src/tennis_vision/report.py
+LINE: 42
+AREA: Reports
+
+PURPOSE:
+  Writes a human-readable Markdown report.
+
+INPUTS:
+  - report path
+  - title
+  - sections
+
+OUTPUTS:
+  - Markdown report file
+
+CALLED BY:
+  - stage scripts
+
+WHY PRODUCT OWNER CARES:
+  The Product Owner can inspect results without parsing JSON.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/report.py and go to line 42.
+  Search: def write_markdown_report
+
+NOTES:
+  None.
+
+---
+
+## Friction
+
+FUNCTION: friction_band
+FILE: src/tennis_vision/friction.py
+LINE: 8
+AREA: Friction
+
+PURPOSE:
+  Converts a numeric friction score into low, medium, high, or blocking.
+
+INPUTS:
+  - score from 0 to 100
+
+OUTPUTS:
+  - friction band text
+
+CALLED BY:
+  - all friction scoring helpers
+
+WHY PRODUCT OWNER CARES:
+  Keeps operational risk readable across stages.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/friction.py and go to line 8.
+  Search: def friction_band
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: calculate_stage_1_friction_score
+FILE: src/tennis_vision/friction.py
+LINE: 52
+AREA: Friction
+
+PURPOSE:
+  Calculates friction for Stage 1 video loading.
+
+INPUTS:
+  - stage-specific warning/error/input flags
+
+OUTPUTS:
+  - friction score dictionary
+
+CALLED BY:
+  - scripts/run_stage_1_video_probe.py
+
+WHY PRODUCT OWNER CARES:
+  Prevents failures and uncertainty from being hidden.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/friction.py and go to line 52.
+  Search: def calculate_stage_1_friction_score
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: calculate_stage_2_friction_score
+FILE: src/tennis_vision/friction.py
+LINE: 91
+AREA: Friction
+
+PURPOSE:
+  Calculates friction for Stage 2 YOLO CPU inference.
+
+INPUTS:
+  - stage-specific warning/error/input flags
+
+OUTPUTS:
+  - friction score dictionary
+
+CALLED BY:
+  - scripts/run_stage_2_yolo_cpu_baseline.py
+
+WHY PRODUCT OWNER CARES:
+  Prevents failures and uncertainty from being hidden.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/friction.py and go to line 91.
+  Search: def calculate_stage_2_friction_score
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: calculate_stage_3_friction_score
+FILE: src/tennis_vision/friction.py
+LINE: 136
+AREA: Friction
+
+PURPOSE:
+  Calculates friction for Stage 3 court calibration.
+
+INPUTS:
+  - stage-specific warning/error/input flags
+
+OUTPUTS:
+  - friction score dictionary
+
+CALLED BY:
+  - scripts/run_stage_3_court_calibration_probe.py
+
+WHY PRODUCT OWNER CARES:
+  Prevents failures and uncertainty from being hidden.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/friction.py and go to line 136.
+  Search: def calculate_stage_3_friction_score
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: calculate_stage_4_friction_score
+FILE: src/tennis_vision/friction.py
+LINE: 232
+AREA: Friction
+
+PURPOSE:
+  Calculates friction for Stage 4 ball candidate probing.
+
+INPUTS:
+  - stage-specific warning/error/input flags
+
+OUTPUTS:
+  - friction score dictionary
+
+CALLED BY:
+  - scripts/run_stage_4_ball_tracking_probe.py
+
+WHY PRODUCT OWNER CARES:
+  Prevents failures and uncertainty from being hidden.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/friction.py and go to line 232.
+  Search: def calculate_stage_4_friction_score
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: calculate_stage_5_friction_score
+FILE: src/tennis_vision/friction.py
+LINE: 310
+AREA: Friction
+
+PURPOSE:
+  Calculates friction for Stage 5 candidate filtering.
+
+INPUTS:
+  - stage-specific warning/error/input flags
+
+OUTPUTS:
+  - friction score dictionary
+
+CALLED BY:
+  - scripts/run_stage_5_ball_candidate_filtering.py
+
+WHY PRODUCT OWNER CARES:
+  Prevents failures and uncertainty from being hidden.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/friction.py and go to line 310.
+  Search: def calculate_stage_5_friction_score
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: calculate_stage_6_friction_score
+FILE: src/tennis_vision/friction.py
+LINE: 397
+AREA: Friction
+
+PURPOSE:
+  Calculates friction for Stage 6 trajectory smoothing.
+
+INPUTS:
+  - stage-specific warning/error/input flags
+
+OUTPUTS:
+  - friction score dictionary
+
+CALLED BY:
+  - scripts/run_stage_6_trajectory_smoothing.py
+
+WHY PRODUCT OWNER CARES:
+  Prevents failures and uncertainty from being hidden.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/friction.py and go to line 397.
+  Search: def calculate_stage_6_friction_score
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: calculate_stage_7_friction_score
+FILE: src/tennis_vision/friction.py
+LINE: 436
+AREA: Friction
+
+PURPOSE:
+  Calculates friction for Stage 7 player interaction.
+
+INPUTS:
+  - stage-specific warning/error/input flags
+
+OUTPUTS:
+  - friction score dictionary
+
+CALLED BY:
+  - scripts/run_stage_7_player_interaction_probe.py
+
+WHY PRODUCT OWNER CARES:
+  Prevents failures and uncertainty from being hidden.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/friction.py and go to line 436.
+  Search: def calculate_stage_7_friction_score
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: calculate_stage_8_friction_score
+FILE: src/tennis_vision/friction.py
+LINE: 529
+AREA: Friction
+
+PURPOSE:
+  Calculates friction for Stage 8 event timeline.
+
+INPUTS:
+  - stage-specific warning/error/input flags
+
+OUTPUTS:
+  - friction score dictionary
+
+CALLED BY:
+  - scripts/run_stage_8_event_timeline.py
+
+WHY PRODUCT OWNER CARES:
+  Prevents failures and uncertainty from being hidden.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/friction.py and go to line 529.
+  Search: def calculate_stage_8_friction_score
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: calculate_stage_8_1_friction_score
+FILE: src/tennis_vision/friction.py
+LINE: 574
+AREA: Friction
+
+PURPOSE:
+  Calculates friction for Stage 8.1 timeline validation.
+
+INPUTS:
+  - stage-specific warning/error/input flags
+
+OUTPUTS:
+  - friction score dictionary
+
+CALLED BY:
+  - scripts/run_stage_8_1_expand_labels.py
+
+WHY PRODUCT OWNER CARES:
+  Prevents failures and uncertainty from being hidden.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/friction.py and go to line 574.
+  Search: def calculate_stage_8_1_friction_score
+
+NOTES:
+  None.
+
+---
+
+## Stage 1 - Video IO
+
+FUNCTION: read_video_metadata
+FILE: src/tennis_vision/video_io.py
+LINE: 59
+AREA: Stage 1 - Video IO
+
+PURPOSE:
+  Reads file size, frame count, FPS, duration, resolution, and codec metadata.
+
+INPUTS:
+  - video path
+
+OUTPUTS:
+  - metadata dictionary
+
+CALLED BY:
+  - scripts/run_stage_1_video_probe.py
+
+WHY PRODUCT OWNER CARES:
+  Confirms that the local sample video is readable before later analysis stages.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/video_io.py and go to line 59.
+  Search: def read_video_metadata
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: extract_frames
+FILE: src/tennis_vision/frame_sampler.py
+LINE: 12
+AREA: Stage 1 - Video IO
+
+PURPOSE:
+  Extracts JPG frames from a video at a fixed interval.
+
+INPUTS:
+  - video path
+  - output folder
+  - interval
+  - max frames
+
+OUTPUTS:
+  - saved frames and extraction statistics
+
+CALLED BY:
+  - scripts/run_stage_1_video_probe.py
+
+WHY PRODUCT OWNER CARES:
+  Frame extraction is the first concrete video-processing capability.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/frame_sampler.py and go to line 12.
+  Search: def extract_frames
+
+NOTES:
+  None.
+
+---
+
+## Stage 2 - YOLO CPU
+
+FUNCTION: load_yolo_model
+FILE: src/tennis_vision/yolo_cpu.py
+LINE: 16
+AREA: Stage 2 - YOLO CPU
+
+PURPOSE:
+  Loads a small YOLO model for local CPU inference.
+
+INPUTS:
+  - model name
+
+OUTPUTS:
+  - YOLO model or load error
+
+CALLED BY:
+  - scripts/run_stage_2_yolo_cpu_baseline.py
+
+WHY PRODUCT OWNER CARES:
+  Validates whether object detection can run locally without cloud or GPU assumptions.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/yolo_cpu.py and go to line 16.
+  Search: def load_yolo_model
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: run_yolo_cpu_baseline
+FILE: src/tennis_vision/yolo_cpu.py
+LINE: 98
+AREA: Stage 2 - YOLO CPU
+
+PURPOSE:
+  Runs limited YOLO CPU inference and saves annotated frames.
+
+INPUTS:
+  - video
+  - model
+  - interval
+  - max frames
+  - resize width
+  - confidence
+
+OUTPUTS:
+  - annotated images and detection summary
+
+CALLED BY:
+  - scripts/run_stage_2_yolo_cpu_baseline.py
+
+WHY PRODUCT OWNER CARES:
+  Proves the local object detection pipeline is technically possible.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/yolo_cpu.py and go to line 98.
+  Search: def run_yolo_cpu_baseline
+
+NOTES:
+  None.
+
+---
+
+## Stage 3 - Court Calibration
+
+FUNCTION: validate_corner_geometry
+FILE: src/tennis_vision/court_calibration.py
+LINE: 137
+AREA: Stage 3 - Court Calibration
+
+PURPOSE:
+  Checks point order and crossed court polygon geometry.
+
+INPUTS:
+  - manual court corner points
+
+OUTPUTS:
+  - geometry validation status
+
+CALLED BY:
+  - validate_points
+
+WHY PRODUCT OWNER CARES:
+  Prevents inverted court points from creating a false homography.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/court_calibration.py and go to line 137.
+  Search: def validate_corner_geometry
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: compute_homography
+FILE: src/tennis_vision/court_calibration.py
+LINE: 267
+AREA: Stage 3 - Court Calibration
+
+PURPOSE:
+  Computes the image-to-normalized-court homography from valid corner points.
+
+INPUTS:
+  - validated court points
+
+OUTPUTS:
+  - homography matrix/status
+
+CALLED BY:
+  - run_court_calibration_probe
+
+WHY PRODUCT OWNER CARES:
+  This is the bridge from video pixels to court-space reasoning.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/court_calibration.py and go to line 267.
+  Search: def compute_homography
+
+NOTES:
+  None.
+
+---
+
+## Stage 3.1 - Court Point Selection
+
+FUNCTION: generate_coordinate_grid
+FILE: src/tennis_vision/court_point_selector.py
+LINE: 28
+AREA: Stage 3.1 - Court Point Selection
+
+PURPOSE:
+  Draws coordinate grid labels on the calibration reference frame.
+
+INPUTS:
+  - reference image
+  - grid step
+
+OUTPUTS:
+  - grid image
+
+CALLED BY:
+  - scripts/run_stage_3_1_court_point_selector.py
+
+WHY PRODUCT OWNER CARES:
+  The user can estimate or verify court point coordinates without a frontend.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/court_point_selector.py and go to line 28.
+  Search: def generate_coordinate_grid
+
+NOTES:
+  None.
+
+---
+
+## Stage 4 - Ball Candidate Probe
+
+FUNCTION: detect_ball_candidates
+FILE: src/tennis_vision/ball_tracking_probe.py
+LINE: 30
+AREA: Stage 4 - Ball Candidate Probe
+
+PURPOSE:
+  Finds yellow/green blob candidates using OpenCV heuristics.
+
+INPUTS:
+  - frame
+  - frame index
+
+OUTPUTS:
+  - candidate list
+
+CALLED BY:
+  - run_ball_tracking_probe
+
+WHY PRODUCT OWNER CARES:
+  This showed the first local ball-detection approach produced many false positives.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/ball_tracking_probe.py and go to line 30.
+  Search: def detect_ball_candidates
+
+NOTES:
+  None.
+
+---
+
+## Stage 4.1 - Manual Ball Labeling
+
+FUNCTION: label_frames_interactively
+FILE: src/tennis_vision/ball_labeling.py
+LINE: 115
+AREA: Stage 4.1 - Manual Ball Labeling
+
+PURPOSE:
+  Opens OpenCV windows so the user can click the real ball.
+
+INPUTS:
+  - video
+  - frame indices
+  - output dir
+  - resize width
+
+OUTPUTS:
+  - manual labels and overlays
+
+CALLED BY:
+  - scripts/run_stage_4_1_ball_labeling_helper.py
+  - scripts/run_stage_8_1_expand_labels.py
+
+WHY PRODUCT OWNER CARES:
+  Manual labels create ground truth when automatic detection is noisy.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/ball_labeling.py and go to line 115.
+  Search: def label_frames_interactively
+
+NOTES:
+  None.
+
+---
+
+## Stage 5 - Candidate Filtering and Court Projection
+
+FUNCTION: compare_candidates_to_labels
+FILE: src/tennis_vision/ball_candidate_filtering.py
+LINE: 80
+AREA: Stage 5 - Candidate Filtering and Court Projection
+
+PURPOSE:
+  Ranks automatic candidates by distance to manual labels.
+
+INPUTS:
+  - candidate rows
+  - manual labels
+
+OUTPUTS:
+  - distance rows and summary
+
+CALLED BY:
+  - scripts/run_stage_5_ball_candidate_filtering.py
+
+WHY PRODUCT OWNER CARES:
+  Quantifies whether automatic candidates are actually near the real ball.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/ball_candidate_filtering.py and go to line 80.
+  Search: def compare_candidates_to_labels
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: project_image_points
+FILE: src/tennis_vision/court_projection.py
+LINE: 64
+AREA: Stage 5 - Candidate Filtering and Court Projection
+
+PURPOSE:
+  Projects image-space points into normalized court coordinates.
+
+INPUTS:
+  - point rows
+  - homography matrix
+
+OUTPUTS:
+  - projected point rows
+
+CALLED BY:
+  - Stage 5 and Stage 5.1 scripts
+
+WHY PRODUCT OWNER CARES:
+  Court-space projection is required for SwingVision-style spatial analysis.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/court_projection.py and go to line 64.
+  Search: def project_image_points
+
+NOTES:
+  None.
+
+---
+
+## Stage 5.1 - Candidate Generation Improvement
+
+FUNCTION: generate_hsv_candidates
+FILE: src/tennis_vision/ball_candidate_improvement.py
+LINE: 86
+AREA: Stage 5.1 - Candidate Generation Improvement
+
+PURPOSE:
+  Generates improved HSV color candidates for labeled frames.
+
+INPUTS:
+  - frame bundle
+  - court polygon
+
+OUTPUTS:
+  - candidate rows
+
+CALLED BY:
+  - scripts/run_stage_5_1_candidate_improvement.py
+
+WHY PRODUCT OWNER CARES:
+  This strategy dramatically improved ball candidate distance on the sample.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/ball_candidate_improvement.py and go to line 86.
+  Search: def generate_hsv_candidates
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: evaluate_strategies
+FILE: src/tennis_vision/ball_candidate_improvement.py
+LINE: 310
+AREA: Stage 5.1 - Candidate Generation Improvement
+
+PURPOSE:
+  Compares candidate generation strategies against manual labels.
+
+INPUTS:
+  - candidates by strategy
+  - manual labels
+
+OUTPUTS:
+  - strategy comparison rows and summaries
+
+CALLED BY:
+  - scripts/run_stage_5_1_candidate_improvement.py
+
+WHY PRODUCT OWNER CARES:
+  Helps decide whether to advance or improve the detector first.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/ball_candidate_improvement.py and go to line 310.
+  Search: def evaluate_strategies
+
+NOTES:
+  None.
+
+---
+
+## Stage 6 - Trajectory Smoothing
+
+FUNCTION: moving_average_smooth
+FILE: src/tennis_vision/trajectory_smoothing.py
+LINE: 191
+AREA: Stage 6 - Trajectory Smoothing
+
+PURPOSE:
+  Smooths raw and projected ball coordinates with a small moving average.
+
+INPUTS:
+  - trajectory rows
+  - window size
+
+OUTPUTS:
+  - smoothed trajectory rows
+
+CALLED BY:
+  - scripts/run_stage_6_trajectory_smoothing.py
+
+WHY PRODUCT OWNER CARES:
+  Creates a first trajectory without hiding sparse or bad detections.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/trajectory_smoothing.py and go to line 191.
+  Search: def moving_average_smooth
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: detect_events
+FILE: src/tennis_vision/event_segmentation.py
+LINE: 12
+AREA: Stage 6 - Trajectory Smoothing
+
+PURPOSE:
+  Creates hypothesis-only event markers from trajectory shape and speed changes.
+
+INPUTS:
+  - raw trajectory rows
+
+OUTPUTS:
+  - event rows and warnings
+
+CALLED BY:
+  - scripts/run_stage_6_trajectory_smoothing.py
+
+WHY PRODUCT OWNER CARES:
+  Starts event reasoning while preserving uncertainty.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/event_segmentation.py and go to line 12.
+  Search: def detect_events
+
+NOTES:
+  None.
+
+---
+
+## Stage 7 - Player Interaction
+
+FUNCTION: detect_players
+FILE: src/tennis_vision/player_tracking.py
+LINE: 59
+AREA: Stage 7 - Player Interaction
+
+PURPOSE:
+  Runs local YOLO person detection on selected frames.
+
+INPUTS:
+  - video
+  - frame list
+  - model
+  - resize width
+  - confidence
+
+OUTPUTS:
+  - player detection rows
+
+CALLED BY:
+  - scripts/run_stage_7_player_interaction_probe.py
+
+WHY PRODUCT OWNER CARES:
+  Player locations are needed to interpret possible ball-player interactions.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/player_tracking.py and go to line 59.
+  Search: def detect_players
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: associate_ball_to_players
+FILE: src/tennis_vision/ball_player_interaction.py
+LINE: 27
+AREA: Stage 7 - Player Interaction
+
+PURPOSE:
+  Associates ball trajectory points with nearby player tracks.
+
+INPUTS:
+  - ball rows
+  - player tracks
+  - events
+  - frame tolerance
+
+OUTPUTS:
+  - distance rows, interaction rows, counts
+
+CALLED BY:
+  - scripts/run_stage_7_player_interaction_probe.py
+
+WHY PRODUCT OWNER CARES:
+  Turns player proximity into possible-hit hypotheses, not confirmed events.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/ball_player_interaction.py and go to line 27.
+  Search: def associate_ball_to_players
+
+NOTES:
+  None.
+
+---
+
+## Stage 7.1 - Player Filtering and Identity
+
+FUNCTION: score_track_rows
+FILE: src/tennis_vision/player_filtering.py
+LINE: 50
+AREA: Stage 7.1 - Player Filtering and Identity
+
+PURPOSE:
+  Scores person detections using court, size, duration, and confidence signals.
+
+INPUTS:
+  - player track rows
+  - court polygon
+  - thresholds
+
+OUTPUTS:
+  - scored rows and track summaries
+
+CALLED BY:
+  - scripts/run_stage_7_1_player_filtering.py
+
+WHY PRODUCT OWNER CARES:
+  Filters audience and side people so only the main players remain.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/player_filtering.py and go to line 50.
+  Search: def score_track_rows
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: build_identity_profiles
+FILE: src/tennis_vision/player_identity.py
+LINE: 15
+AREA: Stage 7.1 - Player Filtering and Identity
+
+PURPOSE:
+  Builds lightweight clothing-color identity profiles from player crops.
+
+INPUTS:
+  - video
+  - filtered player rows
+
+OUTPUTS:
+  - identity profile JSON and warnings
+
+CALLED BY:
+  - scripts/run_stage_7_1_player_filtering.py
+
+WHY PRODUCT OWNER CARES:
+  Player identity should not be permanently tied to near/far side.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/player_identity.py and go to line 15.
+  Search: def build_identity_profiles
+
+NOTES:
+  None.
+
+---
+
+## Stage 8 - Event Timeline
+
+FUNCTION: merge_timeline_events
+FILE: src/tennis_vision/event_timeline.py
+LINE: 169
+AREA: Stage 8 - Event Timeline
+
+PURPOSE:
+  Merges nearby trajectory, event, and interaction evidence into timeline clusters.
+
+INPUTS:
+  - event rows
+  - merge window
+  - FPS
+
+OUTPUTS:
+  - timeline event rows
+
+CALLED BY:
+  - scripts/run_stage_8_event_timeline.py
+
+WHY PRODUCT OWNER CARES:
+  Creates the first readable rally timeline while preserving uncertainty.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/event_timeline.py and go to line 169.
+  Search: def merge_timeline_events
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: build_rally_segments
+FILE: src/tennis_vision/rally_segmentation.py
+LINE: 10
+AREA: Stage 8 - Event Timeline
+
+PURPOSE:
+  Builds conservative rally segments from trajectory anchors.
+
+INPUTS:
+  - trajectory rows
+  - timeline events
+  - FPS
+
+OUTPUTS:
+  - rally segment rows
+
+CALLED BY:
+  - scripts/run_stage_8_event_timeline.py
+
+WHY PRODUCT OWNER CARES:
+  Provides a first segment boundary without inferring score or outcome.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/rally_segmentation.py and go to line 10.
+  Search: def build_rally_segments
+
+NOTES:
+  None.
+
+---
+
+## Stage 8.1 - Timeline Validation
+
+FUNCTION: load_durable_or_fallback_labels
+FILE: src/tennis_vision/label_expansion.py
+LINE: 81
+AREA: Stage 8.1 - Timeline Validation
+
+PURPOSE:
+  Loads durable expanded labels first, then latest session backup, then Stage 4.1 fallback labels.
+
+INPUTS:
+  - expanded labels path
+  - fallback labels path
+
+OUTPUTS:
+  - labels
+  - source metadata
+  - warnings
+
+CALLED BY:
+  - scripts/run_stage_8_1_expand_labels.py
+
+WHY PRODUCT OWNER CARES:
+  Prevents non-interactive validation from downgrading manual label coverage.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/label_expansion.py and go to line 81.
+  Search: def load_durable_or_fallback_labels
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: write_label_session_backup
+FILE: src/tennis_vision/label_expansion.py
+LINE: 279
+AREA: Stage 8.1 - Timeline Validation
+
+PURPOSE:
+  Writes timestamped CSV and JSON backups for labels collected in an interactive session.
+
+INPUTS:
+  - session directory
+  - timestamp
+  - labels
+
+OUTPUTS:
+  - backup CSV path
+  - backup JSON path
+
+CALLED BY:
+  - scripts/run_stage_8_1_expand_labels.py
+
+WHY PRODUCT OWNER CARES:
+  Protects manual labeling work from later validation runs or report regeneration.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/label_expansion.py and go to line 279.
+  Search: def write_label_session_backup
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: latest_label_session_csv
+FILE: src/tennis_vision/label_expansion.py
+LINE: 73
+AREA: Stage 8.1 - Timeline Validation
+
+PURPOSE:
+  Finds the newest timestamped Stage 8.1 label session backup.
+
+INPUTS:
+  - label session directory
+
+OUTPUTS:
+  - latest session CSV path or None
+
+CALLED BY:
+  - load_durable_or_fallback_labels
+
+WHY PRODUCT OWNER CARES:
+  Allows non-interactive validation to recover from a missing or incomplete durable expanded label file.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/label_expansion.py and go to line 73.
+  Search: def latest_label_session_csv
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: validate_timeline_events
+FILE: src/tennis_vision/timeline_validation.py
+LINE: 95
+AREA: Stage 8.1 - Timeline Validation
+
+PURPOSE:
+  Checks whether timeline events are supported by nearby expanded ball labels.
+
+INPUTS:
+  - timeline rows
+  - expanded labels
+
+OUTPUTS:
+  - validation rows, validated timeline, summary
+
+CALLED BY:
+  - scripts/run_stage_8_1_expand_labels.py
+
+WHY PRODUCT OWNER CARES:
+  This is the gate before tactical metrics.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/timeline_validation.py and go to line 95.
+  Search: def validate_timeline_events
+
+NOTES:
+  None.
+
+---
+
+## Lab Notebook
+
+FUNCTION: update_lab_notebook
+FILE: src/tennis_vision/lab_notebook.py
+LINE: 1479
+AREA: Lab Notebook
+
+PURPOSE:
+  Updates stage lab notebook pages and experiment index from reports.
+
+INPUTS:
+  - project root
+
+OUTPUTS:
+  - lab notebook Markdown pages
+
+CALLED BY:
+  - stage scripts
+  - scripts/update_lab_notebook.py
+
+WHY PRODUCT OWNER CARES:
+  Keeps execution evidence current without manual documentation commands.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/lab_notebook.py and go to line 1479.
+  Search: def update_lab_notebook
+
+NOTES:
+  None.
+
+---

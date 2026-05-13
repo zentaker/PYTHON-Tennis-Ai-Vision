@@ -61,16 +61,23 @@ def read_json_report(path: Path) -> dict[str, Any] | None:
 
 
 def markdown_table(rows: list[tuple[str, Any]]) -> str:
-    """Convert row pairs into a Markdown table."""
-    lines = ["| Field | Value |", "|---|---|"]
+    """Convert row pairs into plain-text-friendly field blocks."""
+    lines: list[str] = []
     for field, value in rows:
-        lines.append(f"| {field} | {escape_table_value(not_available(value))} |")
-    return "\n".join(lines)
+        lines.append(f"{field}:")
+        lines.append(f"  {escape_block_value(not_available(value))}")
+        lines.append("")
+    return "\n".join(lines).rstrip()
 
 
 def escape_table_value(value: str) -> str:
     """Escape Markdown table-sensitive values."""
     return value.replace("|", "\\|").replace("\n", "<br>")
+
+
+def escape_block_value(value: str) -> str:
+    """Indent multi-line values for plain-text field blocks."""
+    return value.replace("\n", "\n  ")
 
 
 def bullet_list(items: Any, empty_text: str) -> str:
@@ -1266,10 +1273,15 @@ def build_stage_8_1_document(report: dict[str, Any], project_root: Path) -> dict
     input_table = markdown_table(
         [
             ("Mode", report.get("mode")),
+            ("Label source used", report.get("label_source_used")),
+            ("Expanded label frames", ", ".join(str(frame) for frame in report.get("expanded_label_frames", []))),
+            ("Expanded labels loaded", report.get("expanded_labels_loaded_successfully")),
+            ("Label persistence status", report.get("label_persistence_status")),
+            ("Previous best visible labels", report.get("previous_best_visible_labels_count")),
             ("Existing labels", report.get("existing_labels_count")),
             ("New labels", report.get("new_labels_count")),
             ("Merged labels", report.get("merged_labels_count")),
-            ("Visible labels", report.get("visible_labels_count")),
+            ("Merged visible labels", report.get("merged_visible_labels_count", report.get("visible_labels_count"))),
             ("Label frame range", report.get("label_frame_range")),
         ]
     )
@@ -1279,6 +1291,8 @@ def build_stage_8_1_document(report: dict[str, Any], project_root: Path) -> dict
             ("Markdown report path", markdown_path),
             ("Log", latest_log_for_prefix(project_root, "stage_8_1_timeline_validation_")),
             ("Expanded labels", outputs.get("expanded_labels_csv")),
+            ("Latest session backup", report.get("latest_session_path")),
+            ("Fallback labels", report.get("fallback_labels_path")),
             ("Candidate validation", outputs.get("expanded_candidate_validation")),
             ("Timeline validation", outputs.get("timeline_event_validation")),
             ("Validated timeline", outputs.get("validated_event_timeline_csv")),
@@ -1288,7 +1302,7 @@ def build_stage_8_1_document(report: dict[str, Any], project_root: Path) -> dict
         [
             ("Existing labels", report.get("existing_labels_count")),
             ("New labels", report.get("new_labels_count")),
-            ("Visible labels", report.get("visible_labels_count")),
+            ("Merged visible labels", report.get("merged_visible_labels_count", report.get("visible_labels_count"))),
             ("Average label gap", report.get("average_label_gap")),
             ("Maximum label gap", report.get("maximum_label_gap")),
             ("Candidate average distance", report.get("average_candidate_distance")),
@@ -1390,29 +1404,44 @@ def write_stage_notebook(path: Path, body: str, entry: str, entry_id: str) -> Pa
     entries = [history]
     if should_append:
         entries.append(entry)
-    text = body.rstrip() + "\n\n## Run history\n\n" + "\n\n".join(item for item in entries if item).rstrip() + "\n"
+    history_note = (
+        "Older entries are preserved as originally written. "
+        "Some historical entries may use legacy Markdown tables so prior run evidence is not erased."
+    )
+    text = (
+        body.rstrip()
+        + "\n\n## Run history\n\n"
+        + history_note
+        + "\n\n"
+        + "\n\n".join(item for item in entries if item).rstrip()
+        + "\n"
+    )
     path.write_text(text, encoding="utf-8")
     return path
 
 
 def build_experiment_index(stage_summaries: list[dict[str, str]]) -> str:
-    """Build the experiment index Markdown file."""
+    """Build the experiment index Markdown file in a plain-text-friendly format."""
     lines = [
         "# Experiment Index",
         "",
-        "| Stage | Name | Verdict | Friction | Main output | Next step |",
-        "|---|---|---|---|---|---|",
+        "This index is designed to be readable in plain text.",
+        "Each stage is listed as a short block instead of a wide Markdown table.",
+        "",
     ]
     for summary in stage_summaries:
-        lines.append(
-            "| {stage} | {name} | {verdict} | {friction} | {main_output} | {next_step} |".format(
-                stage=escape_table_value(summary["stage"]),
-                name=escape_table_value(summary["name"]),
-                verdict=escape_table_value(summary["verdict"]),
-                friction=escape_table_value(summary["friction"]),
-                main_output=escape_table_value(summary["main_output"]),
-                next_step=escape_table_value(summary["next_step"]),
-            )
+        lines.extend(
+            [
+                f"STAGE: {summary['stage']}",
+                f"NAME: {summary['name']}",
+                f"VERDICT: {summary['verdict']}",
+                f"FRICTION: {summary['friction']}",
+                f"MAIN OUTPUT: {summary['main_output']}",
+                f"NEXT STEP: {summary['next_step']}",
+                "",
+                "---",
+                "",
+            ]
         )
     return "\n".join(lines) + "\n"
 
@@ -1424,6 +1453,8 @@ def build_lab_readme() -> str:
 This folder is the persistent project lab notebook for Tennis AI Vision.
 
 The notebook records technical friction, inputs, outputs, decisions, warnings, errors, and validation results for each stage. This matters because the project is not only building a local tennis video analysis pipeline; it is also learning where the local workflow succeeds, where it struggles, and what should happen next.
+
+The notebook is plain-text friendly. Stage summaries use short field blocks instead of wide Markdown tables so they can be read in VS Code, Notepad, terminal previews, or raw GitHub view.
 
 The normal workflow is automatic:
 

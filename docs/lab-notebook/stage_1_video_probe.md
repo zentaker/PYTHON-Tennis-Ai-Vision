@@ -2,52 +2,98 @@
 
 ## Summary
 
-| Field | Value |
-|---|---|
-| Stage | Stage 1 — Video loading and frame extraction |
-| Verdict | ready_for_stage_2 |
-| Friction score | 0 |
-| Friction level | low friction |
-| Timestamp | 2026-05-12T21:26:45+00:00 |
-| Recommended next step | Proceed to Stage 2 YOLO CPU baseline. |
+Stage:
+  Stage 1 — Video loading and frame extraction
+
+Verdict:
+  ready_for_stage_2
+
+Friction score:
+  0
+
+Friction level:
+  low friction
+
+Timestamp:
+  2026-05-12T21:26:45+00:00
+
+Recommended next step:
+  Proceed to Stage 2 YOLO CPU baseline.
 
 ## Input
 
-| Field | Value |
-|---|---|
-| Video path | C:\Users\MSI\Desktop\TennisAiVision\samples\video_01.mov |
-| Video source | auto_detected |
-| File extension | .mov |
-| Resolution | 3840x2160 |
-| FPS | 60.0 |
-| Duration seconds | 14.833 |
-| Frame count | 890 |
-| OpenCV opened | yes |
+Video path:
+  C:\Users\MSI\Desktop\TennisAiVision\samples\video_01.mov
+
+Video source:
+  auto_detected
+
+File extension:
+  .mov
+
+Resolution:
+  3840x2160
+
+FPS:
+  60.0
+
+Duration seconds:
+  14.833
+
+Frame count:
+  890
+
+OpenCV opened:
+  yes
 
 ## Output
 
-| Field | Value |
-|---|---|
-| JSON report path | C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\stage_1_video_probe_report.json |
-| Markdown report path | C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\stage_1_video_probe_report.md |
-| Log | C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\stage_1_video_probe_20260512T212645Z.log |
-| Frames folder | C:\Users\MSI\Desktop\TennisAiVision\outputs\frames\stage_1_20260512T212617Z |
-| Frames saved | 25 |
+JSON report path:
+  C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\stage_1_video_probe_report.json
+
+Markdown report path:
+  C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\stage_1_video_probe_report.md
+
+Log:
+  C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\stage_1_video_probe_20260512T212645Z.log
+
+Frames folder:
+  C:\Users\MSI\Desktop\TennisAiVision\outputs\frames\stage_1_20260512T212617Z
+
+Frames saved:
+  25
 
 ## Console-equivalent table
 
-| Field | Value |
-|---|---|
-| Stage name | Stage 1 video probe |
-| Input video | C:\Users\MSI\Desktop\TennisAiVision\samples\video_01.mov |
-| Video source | auto_detected |
-| Verdict | ready_for_stage_2 |
-| Friction | 0 (low friction) |
-| Video duration | 14.833 seconds |
-| Resolution | 3840x2160 |
-| FPS | 60.0 |
-| Frames saved | 25 |
-| Recommended next step | Proceed to Stage 2 YOLO CPU baseline. |
+Stage name:
+  Stage 1 video probe
+
+Input video:
+  C:\Users\MSI\Desktop\TennisAiVision\samples\video_01.mov
+
+Video source:
+  auto_detected
+
+Verdict:
+  ready_for_stage_2
+
+Friction:
+  0 (low friction)
+
+Video duration:
+  14.833 seconds
+
+Resolution:
+  3840x2160
+
+FPS:
+  60.0
+
+Frames saved:
+  25
+
+Recommended next step:
+  Proceed to Stage 2 YOLO CPU baseline.
 
 ## Warnings
 
@@ -66,6 +112,20 @@ Video reading and frame extraction are validated for the current local sample. O
 Proceed to Stage 2 YOLO CPU baseline.
 
 ## Run history
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
 
 <!-- lab-entry:2026-05-12T16:29:35+00:00 -->
 

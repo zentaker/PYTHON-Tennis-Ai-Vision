@@ -24,8 +24,13 @@ EXPANDED_LABEL_FIELDS = [
 ]
 
 
-def read_manual_labels(path: Path, *, source: str = "stage_4_1_existing") -> tuple[list[dict[str, Any]], list[str]]:
-    """Read existing manual labels into the Stage 8.1 label schema."""
+def read_manual_labels(
+    path: Path,
+    *,
+    source: str = "stage_4_1_existing",
+    label_session: str = "stage_4_1",
+) -> tuple[list[dict[str, Any]], list[str]]:
+    """Read label CSV rows into the Stage 8.1 label schema."""
     if not path.exists():
         return [], [f"Manual labels CSV not found: {path}"]
     rows: list[dict[str, Any]] = []
@@ -41,14 +46,151 @@ def read_manual_labels(path: Path, *, source: str = "stage_4_1_existing") -> tup
                         "y": _float_or_none(row.get("y")),
                         "original_width": int(float(row.get("original_width") or 0)),
                         "original_height": int(float(row.get("original_height") or 0)),
-                        "source": source,
-                        "label_session": "stage_4_1",
+                        "source": row.get("source") or source,
+                        "label_session": row.get("label_session") or label_session,
                         "notes": row.get("notes", ""),
                     }
                 )
             except (KeyError, TypeError, ValueError):
                 continue
     return rows, []
+
+
+def visible_label_count(labels: list[dict[str, Any]]) -> int:
+    """Count visible labels with usable coordinates."""
+    return sum(1 for label in labels if label.get("visible") and label.get("x") is not None and label.get("y") is not None)
+
+
+def visible_label_frames(labels: list[dict[str, Any]]) -> list[int]:
+    """Return sorted frame indices for visible labels with usable coordinates."""
+    return sorted(
+        int(label["frame_index"])
+        for label in labels
+        if label.get("visible") and label.get("x") is not None and label.get("y") is not None
+    )
+
+
+def latest_label_session_csv(session_dir: Path) -> Path | None:
+    """Return the newest Stage 8.1 label session backup CSV."""
+    if not session_dir.exists():
+        return None
+    sessions = sorted(session_dir.glob("stage_8_1_labels_*.csv"), key=lambda path: path.stat().st_mtime)
+    return sessions[-1] if sessions else None
+
+
+def load_durable_or_fallback_labels(
+    *,
+    expanded_path: Path,
+    fallback_path: Path,
+) -> tuple[list[dict[str, Any]], dict[str, Any], list[str]]:
+    """Load persisted Stage 8.1 labels first, then session backups, then Stage 4.1 labels."""
+    session_dir = expanded_path.parent / "label_sessions"
+    expanded_labels, expanded_warnings = read_manual_labels(
+        expanded_path,
+        source="stage_8_1_persisted",
+        label_session="stage_8_1_persisted",
+    )
+    latest_session_path = latest_label_session_csv(session_dir)
+    session_labels: list[dict[str, Any]] = []
+    session_warnings: list[str] = []
+    if latest_session_path:
+        session_labels, session_warnings = read_manual_labels(
+            latest_session_path,
+            source="stage_8_1_latest_session",
+            label_session=latest_session_path.stem,
+        )
+    fallback_labels, fallback_warnings = read_manual_labels(
+        fallback_path,
+        source="stage_4_1_existing",
+        label_session="stage_4_1",
+    )
+
+    expanded_visible = visible_label_count(expanded_labels)
+    session_visible = visible_label_count(session_labels)
+    fallback_visible = visible_label_count(fallback_labels)
+    warnings: list[str] = []
+
+    if expanded_visible > 0 and session_visible > 0:
+        merged = merge_labels(fallback_labels, expanded_labels)
+        merged = merge_labels(merged, session_labels)
+        source = "merged_sources" if fallback_visible > 0 else "stage_8_1_expanded"
+        return (
+            merged,
+            {
+                "label_source_used": source,
+                "expanded_labels_loaded_successfully": True,
+                "expanded_labels_path": str(expanded_path),
+                "latest_session_path": str(latest_session_path),
+                "fallback_labels_path": str(fallback_path),
+                "label_persistence_status": "loaded_and_merged_persisted_expanded_and_latest_session_labels",
+            },
+            warnings,
+        )
+
+    if expanded_visible > 0:
+        source = "stage_8_1_expanded"
+        status = "loaded_persisted_expanded_labels"
+        if fallback_visible > 0 and expanded_visible <= fallback_visible:
+            source = "stage_4_1_fallback"
+            status = "expanded_file_matches_fallback_label_count"
+            warnings.append(
+                "Expanded label file exists but does not contain more visible labels than the Stage 4.1 fallback labels."
+            )
+        return (
+            expanded_labels,
+            {
+                "label_source_used": source,
+                "expanded_labels_loaded_successfully": True,
+                "expanded_labels_path": str(expanded_path),
+                "latest_session_path": str(latest_session_path) if latest_session_path else "Not available",
+                "fallback_labels_path": str(fallback_path),
+                "label_persistence_status": status,
+            },
+            warnings,
+        )
+
+    if session_visible > 0:
+        merged = merge_labels(fallback_labels, session_labels)
+        return (
+            merged,
+            {
+                "label_source_used": "stage_8_1_latest_session" if fallback_visible == 0 else "merged_sources",
+                "expanded_labels_loaded_successfully": False,
+                "expanded_labels_path": str(expanded_path),
+                "latest_session_path": str(latest_session_path),
+                "fallback_labels_path": str(fallback_path),
+                "label_persistence_status": "loaded_latest_session_backup_labels",
+            },
+            session_warnings,
+        )
+
+    if fallback_visible > 0:
+        return (
+            fallback_labels,
+            {
+                "label_source_used": "stage_4_1_fallback",
+                "expanded_labels_loaded_successfully": False,
+                "expanded_labels_path": str(expanded_path),
+                "latest_session_path": "Not available",
+                "fallback_labels_path": str(fallback_path),
+                "label_persistence_status": "fallback_labels_loaded_no_persisted_expanded_labels",
+            },
+            ["No persisted Stage 8.1 expanded labels or session backups were found; using Stage 4.1 fallback labels."],
+        )
+
+    warnings = [*expanded_warnings, *session_warnings, *fallback_warnings]
+    return (
+        [],
+        {
+            "label_source_used": "missing",
+            "expanded_labels_loaded_successfully": False,
+            "expanded_labels_path": str(expanded_path),
+            "latest_session_path": str(latest_session_path) if latest_session_path else "Not available",
+            "fallback_labels_path": str(fallback_path),
+            "label_persistence_status": "no_labels_available",
+        },
+        warnings or ["No visible labels were available from persisted expanded labels or Stage 4.1 fallback labels."],
+    )
 
 
 def collect_interactive_labels(
@@ -132,6 +274,16 @@ def write_expanded_labels_json(path: Path, labels: list[dict[str, Any]]) -> Path
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(labels, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return path
+
+
+def write_label_session_backup(session_dir: Path, timestamp: str, labels: list[dict[str, Any]]) -> dict[str, Path]:
+    """Write timestamped backups for labels collected in an interactive session."""
+    safe_timestamp = timestamp.replace(":", "").replace("+", "Z")
+    csv_path = session_dir / f"stage_8_1_labels_{safe_timestamp}.csv"
+    json_path = session_dir / f"stage_8_1_labels_{safe_timestamp}.json"
+    write_expanded_labels_csv(csv_path, labels)
+    write_expanded_labels_json(json_path, labels)
+    return {"csv": csv_path, "json": json_path}
 
 
 def write_coverage_csv(path: Path, coverage: dict[str, Any]) -> Path:

@@ -2,20 +2,39 @@
 
 This folder explains how Tennis AI Vision works at the code and pipeline level.
 
-It is different from `docs/lab-notebook/`:
+These docs are designed to be readable as plain text.
+Avoid wide Markdown tables here.
 
-- `docs/lab-notebook/` records execution results: verdicts, friction scores, inputs, outputs, warnings, errors, and run history.
-- `docs/technical/` records functional architecture: scripts, modules, important functions, data flow, file paths, dependencies, and implementation limits.
+START HERE:
 
-The Product Owner should be able to understand what each stage does without reading Python source directly.
+1. docs/technical/index.md
+2. docs/technical/product_owner_guide.md
+3. docs/technical/pipeline_map.md
+4. docs/technical/function_inventory.md
+5. docs/friction/friction_casebook.md
 
-Every future stage must update both documentation layers:
+DOCUMENTATION LAYERS:
 
-- Lab notebook: what happened when the stage ran.
-- Technical docs: what the code does and how the stage is wired.
+Lab notebook:
+  docs/lab-notebook/
 
-Start here:
+  Records execution results, verdicts, friction scores, inputs, outputs,
+  warnings, errors, and run history.
 
-- `pipeline_map.md` for the stage-by-stage system map.
-- `function_inventory.md` for important scripts, modules, functions, inputs, outputs, and search hints.
-- Stage-specific files for functional detail.
+Technical docs:
+  docs/technical/
+
+  Explain functional architecture, scripts, modules, important functions,
+  data flow, file paths, dependencies, and implementation limits.
+
+Friction docs:
+  docs/friction/
+
+  Explain problems, root causes, resolutions, and reusable rules.
+
+FUTURE STAGES:
+
+- Update the lab notebook by running the stage script.
+- Update technical docs when code behavior changes.
+- Update the function inventory if important functions are added.
+- Keep docs readable in raw Markdown or text editor view.

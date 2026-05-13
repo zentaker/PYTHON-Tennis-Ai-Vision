@@ -40,6 +40,10 @@ This repository is a local-first research project for tennis video analysis.
 - Player identity must be separated from court side. Near/far is a state, not a stable identity. If players switch sides, identity should persist based on track continuity and appearance cues when possible.
 - Timeline and rally segmentation must preserve uncertainty. Use `possible_*` labels until validated, and do not transform hypotheses into confirmed tennis events without manual validation or stronger evidence.
 - Before tactical metrics, timeline events must be validated against expanded ball labels. If label coverage is sparse, recommend collecting more labels rather than overclaiming timeline accuracy.
+- When a stage has interactive data collection, the collected data must persist as the default source for later non-interactive validation. Do not make the user relabel data every run. Do not calculate friction from missing new labels if persisted labels already exist.
+- Interactive user-generated data must never be overwritten by fallback data.
+- Non-interactive validation must preserve richer datasets instead of downgrading them.
+- Manual labeling stages must keep timestamped session backups so user work can be recovered.
 
 ## Repository hygiene rules
 
@@ -68,6 +72,18 @@ This repository is a local-first research project for tennis video analysis.
 - Do not let agent-created code become a black box.
 - If a function calls a model, external package, or important algorithm, document where and how.
 - If a stage adds a new script or module, update `docs/technical/function_inventory.md` and `docs/technical/pipeline_map.md`.
+
+## Plain-text documentation rules
+
+- Documentation must be readable without a Markdown renderer.
+- Avoid wide Markdown tables in Product Owner-facing documentation.
+- Future generated documentation must not rely on wide Markdown tables.
+- Use vertical blocks for functions, friction cases, and stage technical descriptions.
+- Product Owner must be able to read docs in VS Code, Notepad, terminal, or raw GitHub view.
+- Function references must include file path and line number when possible.
+- If line numbers are generated, use a script rather than inventing them.
+- Prefer short sections, bullets, and blocks over dense tables.
+- Do not make Product Owner inspect source code just to understand the pipeline.
 
 ## Stage 0 Scope
 

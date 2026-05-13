@@ -1,63 +1,38 @@
-# Stage 1 - Technical Functional Documentation
+# Stage 1 - Video IO
 
-## Purpose
+This document is designed to be readable as plain text.
+It avoids wide Markdown tables.
 
-Stage 1 validates that the project can find a local sample video, open it with OpenCV, read metadata, and extract a limited set of frames.
+STAGE PURPOSE:
+  Load the local tennis sample video, read metadata, and extract sample frames.
 
-## Main Files
+MAIN SCRIPT:
+  scripts/run_stage_1_video_probe.py
 
-- Script: `scripts/run_stage_1_video_probe.py`
-- Modules: `src/tennis_vision/video_io.py`, `src/tennis_vision/frame_sampler.py`, `src/tennis_vision/friction.py`
+MAIN MODULES:
+  - src/tennis_vision/video_io.py
+  - src/tennis_vision/frame_sampler.py
 
-## Functional Flow
+READS:
+  - samples/video_01.mov or supported sample video
 
-1. The script selects a video from `--video` or auto-detects a supported file in `samples/`.
-2. `read_video_metadata` opens the video and records FPS, resolution, duration, frame count, file size, and codec.
-3. `extract_frames` samples frames at a configured interval and saves JPG files.
-4. Stage 1 friction and verdict are computed.
-5. JSON, Markdown, log, and lab notebook files are written.
+WRITES:
+  - outputs/frames/
+  - outputs/reports/stage_1_video_probe_report.json
+  - outputs/reports/stage_1_video_probe_report.md
 
-## Important Functions
+IMPORTANT FUNCTIONS:
+  See docs/technical/function_inventory.md for FILE and LINE references.
+  Search that file for: Stage 1
 
-| Function | File | Purpose | Inputs | Outputs | Notes |
-|---|---|---|---|---|---|
-| `detect_default_video` | `scripts/run_stage_1_video_probe.py` | Find default video | `samples/` | selected path | Search: `def detect_default_video` |
-| `open_video` | `src/tennis_vision/video_io.py` | Open OpenCV capture | video path | capture or error | Shared by later stages |
-| `read_video_metadata` | `src/tennis_vision/video_io.py` | Read video metadata | video path | metadata dict | Search: `def read_video_metadata` |
-| `extract_frames` | `src/tennis_vision/frame_sampler.py` | Save sampled JPG frames | video path, interval, max frames | extraction stats | Search: `def extract_frames` |
-| `calculate_stage_1_friction_score` | `src/tennis_vision/friction.py` | Score video loading friction | Stage 1 flags | friction dict | Search hint matches function name |
-| `main` | `scripts/run_stage_1_video_probe.py` | Stage 1 entrypoint | CLI args | frames, reports | Search: `def main` |
+PRODUCT OWNER INTERPRETATION:
+  Load the local tennis sample video, read metadata, and extract sample frames.
+  The stage report and lab notebook record what happened in the latest run.
 
-## Inputs And Outputs
+CURRENT LIMITATIONS:
+  - This stage validates loading and extraction only, not detection quality.
 
-Reads:
-
-- `samples/video_01.mov`, `samples/video_01.mp4`, or another supported local video.
-
-Writes:
-
-- `outputs/frames/stage_1_*/frame_*.jpg`
-- `outputs/reports/stage_1_video_probe_report.json`
-- `outputs/reports/stage_1_video_probe_report.md`
-- `docs/lab-notebook/stage_1_video_probe.md`
-
-## Dependencies
-
-- OpenCV
-- pathlib
-- rich if available for console output
-
-## Product-Owner Interpretation
-
-Stage 1 answers: "Can the local project read this tennis video and extract frames?"
-
-## Known Limitations
-
-- It does not detect players, courts, or balls.
-- MOV decoding depends on local OpenCV build support.
-
-## Where To Inspect Code
-
-- `src/tennis_vision/video_io.py`, search `def read_video_metadata`.
-- `src/tennis_vision/frame_sampler.py`, search `def extract_frames`.
-- `scripts/run_stage_1_video_probe.py`, search `def main`.
+WHERE TO INSPECT CODE:
+  Start with scripts/run_stage_1_video_probe.py.
+  Then open the modules listed above.
+  Use the Function Inventory for exact line numbers.

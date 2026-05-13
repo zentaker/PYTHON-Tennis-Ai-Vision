@@ -4,9 +4,29 @@ Tennis AI Vision is a local-first Python research project for building toward Sw
 
 ## Current Stage
 
-Stage 5: ball candidate filtering and court projection.
+Stage 8.1: expanded ball labels and timeline validation.
 
-Stage 0 checks the local Python environment, required folders, required package imports, and whether `ffmpeg` is available from the terminal. Stage 1 loads a local sample video with OpenCV, reads metadata, extracts frames, and writes reports. Stage 2 runs a small local YOLO CPU baseline on sampled frames and saves annotated output. Stage 3 creates a manual court calibration reference frame and point overlay. Stage 3.1 helps read or select court point coordinates. Stage 4 probes simple local ball candidate detection. Stage 4.1 creates manual ball labels for ground truth. Stage 5 filters candidates and projects selected points into the calibrated court plane.
+Stage 0 checks the local Python environment, required folders, required package imports, and whether `ffmpeg` is available from the terminal. Stage 1 loads a local sample video with OpenCV, reads metadata, extracts frames, and writes reports. Stage 2 runs a small local YOLO CPU baseline on sampled frames and saves annotated output. Stage 3 creates a manual court calibration reference frame and point overlay. Stage 3.1 helps read or select court point coordinates. Stage 4 probes simple local ball candidate detection. Stage 4.1 creates manual ball labels for ground truth. Stage 5 filters candidates and projects selected points into the calibrated court plane. Stage 5.1 improves candidate generation. Stage 6 smooths the trajectory. Stage 7 and 7.1 add player interaction and identity filtering. Stage 8 and 8.1 build and validate a hypothesis-only event timeline.
+
+## Documentation Map
+
+Use these files when reviewing the project without reading source code first:
+
+- `docs/lab-notebook/`
+  - Stage run results.
+  - Verdicts, friction, warnings, errors, outputs, and run history.
+
+- `docs/technical/`
+  - How the code works.
+  - Main scripts, modules, function inventory, data flow, and file paths.
+
+- `docs/friction/`
+  - What went wrong, why it mattered, and what rule came from it.
+  - Useful when an issue repeats or a future agent needs context.
+
+- `ROADMAP.md`
+  - Where the project is going next.
+  - Current stage, planned stages, and long-term research directions.
 
 ## Local Setup
 
@@ -452,18 +472,32 @@ Expected outputs:
 
 Stage 8 created a prototype timeline from sparse data. Stage 8.1 expands or reuses manual ball labels, validates candidate quality against those labels, and checks whether timeline events are supported by labeled ball positions.
 
-Interactive mode collects more labels. Non-interactive mode validates with the existing labels and is useful for repeatable agent verification.
+Interactive mode collects more labels and persists the merged label set to:
 
-Run non-interactive validation:
-
-```powershell
-python scripts\run_stage_8_1_expand_labels.py --no-interactive
+```text
+outputs/timeline/stage_8_1_timeline_validation/expanded_ball_labels.csv
 ```
 
-Run interactive label expansion:
+Each interactive labeling session also writes timestamped backups under:
+
+```text
+outputs/timeline/stage_8_1_timeline_validation/label_sessions/
+```
+
+Non-interactive mode validates with the persisted expanded labels by default. If the durable expanded file is missing, it looks for the latest session backup before falling back to the original Stage 4.1 labels. Non-interactive validation should not overwrite a richer expanded label dataset with fallback labels.
+
+Correct workflow:
+
+1. Run interactive label expansion:
 
 ```powershell
 python scripts\run_stage_8_1_expand_labels.py --interactive --start-frame 90 --interval 15 --max-frames 12
+```
+
+2. Run non-interactive validation against the persisted expanded labels:
+
+```powershell
+python scripts\run_stage_8_1_expand_labels.py --no-interactive
 ```
 
 Expected outputs:

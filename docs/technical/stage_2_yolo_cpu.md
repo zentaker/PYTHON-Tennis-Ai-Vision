@@ -1,66 +1,37 @@
-# Stage 2 - Technical Functional Documentation
+# Stage 2 - YOLO CPU
 
-## Purpose
+This document is designed to be readable as plain text.
+It avoids wide Markdown tables.
 
-Stage 2 validates that a small YOLO model can run locally on CPU against sampled video frames and save annotated outputs.
+STAGE PURPOSE:
+  Validate that a small YOLO model can run locally on CPU.
 
-## Main Files
+MAIN SCRIPT:
+  scripts/run_stage_2_yolo_cpu_baseline.py
 
-- Script: `scripts/run_stage_2_yolo_cpu_baseline.py`
-- Modules: `src/tennis_vision/yolo_cpu.py`, `src/tennis_vision/video_io.py`, `src/tennis_vision/friction.py`
+MAIN MODULES:
+  - src/tennis_vision/yolo_cpu.py
 
-## Functional Flow
+READS:
+  - sample video
+  - small YOLO model
 
-1. The script selects a local sample video.
-2. `load_yolo_model` loads `yolo11n.pt` by default or falls back according to the module logic.
-3. `run_yolo_cpu_baseline` samples a limited number of frames.
-4. Frames are resized for CPU practicality.
-5. YOLO inference runs on `device="cpu"`.
-6. Annotated frames, detection counts, runtime stats, reports, and lab notebook entries are written.
+WRITES:
+  - outputs/annotated/stage_2_yolo_cpu/
+  - outputs/reports/stage_2_yolo_cpu_baseline_report.json
 
-## Important Functions
+IMPORTANT FUNCTIONS:
+  See docs/technical/function_inventory.md for FILE and LINE references.
+  Search that file for: Stage 2
 
-| Function | File | Purpose | Inputs | Outputs | Notes |
-|---|---|---|---|---|---|
-| `load_yolo_model` | `src/tennis_vision/yolo_cpu.py` | Load small YOLO model | model name | model status | Search: `def load_yolo_model` |
-| `resize_frame` | `src/tennis_vision/yolo_cpu.py` | Reduce frame width | frame, width | resized frame | CPU cost control |
-| `_collect_detections` | `src/tennis_vision/yolo_cpu.py` | Convert YOLO results to counts | YOLO result, class names | counts, confidences | Search: `def _collect_detections` |
-| `run_yolo_cpu_baseline` | `src/tennis_vision/yolo_cpu.py` | Run inference and save annotations | video, model, sampling options | result dict | Search: `def run_yolo_cpu_baseline` |
-| `calculate_stage_2_friction_score` | `src/tennis_vision/friction.py` | Score model/runtime friction | Stage 2 flags | friction dict | Documents installation/runtime issues |
-| `main` | `scripts/run_stage_2_yolo_cpu_baseline.py` | Stage 2 entrypoint | CLI args | annotated frames, reports | Search: `def main` |
+PRODUCT OWNER INTERPRETATION:
+  Validate that a small YOLO model can run locally on CPU.
+  The stage report and lab notebook record what happened in the latest run.
 
-## Inputs And Outputs
+CURRENT LIMITATIONS:
+  - This is a CPU baseline, not a tennis-ball tracker.
 
-Reads:
-
-- Local sample video.
-- Small YOLO model file or model resolved by ultralytics.
-
-Writes:
-
-- `outputs/annotated/stage_2_yolo_cpu/*.jpg`
-- `outputs/reports/stage_2_yolo_cpu_baseline_report.json`
-- `outputs/reports/stage_2_yolo_cpu_baseline_report.md`
-- `docs/lab-notebook/stage_2_yolo_cpu_baseline.md`
-
-## Dependencies
-
-- OpenCV
-- ultralytics
-- NumPy indirectly through model stack
-- rich if available
-
-## Product-Owner Interpretation
-
-Stage 2 answers: "Can this machine run a local YOLO baseline on CPU?" It does not solve tennis-specific ball tracking.
-
-## Known Limitations
-
-- CPU inference may be slow.
-- General YOLO classes are not expected to reliably detect a tennis ball in match footage.
-- It should not process the full 4K video by default.
-
-## Where To Inspect Code
-
-- `src/tennis_vision/yolo_cpu.py`, search `def run_yolo_cpu_baseline`.
-- `scripts/run_stage_2_yolo_cpu_baseline.py`, search `def main`.
+WHERE TO INSPECT CODE:
+  Start with scripts/run_stage_2_yolo_cpu_baseline.py.
+  Then open the modules listed above.
+  Use the Function Inventory for exact line numbers.

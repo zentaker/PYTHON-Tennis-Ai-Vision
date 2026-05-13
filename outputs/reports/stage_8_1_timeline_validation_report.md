@@ -2,19 +2,23 @@
 
 ## Verdict
 
-- Final verdict: needs_more_labels
-- Friction score: 32
-- Friction level: medium friction
+- Final verdict: ready_for_stage_9
+- Friction score: 0
+- Friction level: low friction
 
 ## Label expansion summary
 
 | Metric | Value |
 |---|---:|
-| existing labels | 5 |
+| label source used | merged_sources |
+| expanded label frames | 90, 105, 120, 135, 150, 165, 180, 195, 210, 225, 240, 255 |
+| expanded labels loaded | True |
+| label persistence status | validated_using_merged_persisted_sources |
+| existing labels | 12 |
 | new labels | 0 |
-| merged labels | 5 |
-| visible labels | 5 |
-| frame range | 120 to 180 |
+| merged labels | 12 |
+| merged visible labels | 12 |
+| frame range | 90 to 255 |
 | average label gap | 15 |
 | maximum label gap | 15 |
 
@@ -22,9 +26,9 @@
 
 | Metric | Value |
 |---|---:|
-| candidate comparisons | 5 |
-| average distance | 3.73 |
-| median distance | 3.0 |
+| candidate comparisons | 12 |
+| average distance | 2.797 |
+| median distance | 4.5 |
 | frames within 10 px | 5 |
 | frames within 25 px | 5 |
 | frames within 50 px | 5 |
@@ -43,12 +47,11 @@
 
 ## Product Owner interpretation
 
-Stage 8.1 validates the Stage 8 timeline against expanded ball labels. The current run used 5 merged labels with 5 visible ball labels. Candidate quality remains strong where labels exist, but coverage is still too sparse for tactical metrics.
+Stage 8.1 validates the Stage 8 timeline against expanded ball labels. The current run used 12 merged labels with 12 visible ball labels. Label coverage and event support are sufficient for a cautious tactical metrics prototype.
 
 ## Warnings
 
-- Non-interactive mode used existing labels only; no new labels were collected.
-- Label coverage is still sparse for tactical metrics; collect more labels across the rally.
+No warnings.
 
 ## Errors
 
@@ -56,4 +59,4 @@ No errors.
 
 ## Next step
 
-Run Stage 8.1 interactively across more frames, then rerun timeline validation.
+Proceed to Stage 9: Tactical Metrics and Shot Zone Prototype.

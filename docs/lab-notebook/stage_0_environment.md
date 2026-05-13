@@ -2,46 +2,80 @@
 
 ## Summary
 
-| Field | Value |
-|---|---|
-| Stage | Stage 0 — Environment and repo foundation |
-| Verdict | ready_with_warnings |
-| Friction score | 15 |
-| Friction level | low friction |
-| Timestamp | 2026-05-13T19:25:39+00:00 |
-| Recommended next step | Proceed to Stage 1 video loading and frame extraction. |
+Stage:
+  Stage 0 — Environment and repo foundation
+
+Verdict:
+  ready_with_warnings
+
+Friction score:
+  15
+
+Friction level:
+  low friction
+
+Timestamp:
+  2026-05-13T19:25:39+00:00
+
+Recommended next step:
+  Proceed to Stage 1 video loading and frame extraction.
 
 ## Input
 
-| Field | Value |
-|---|---|
-| Local environment | Windows-11-10.0.26200-SP0 |
-| Python | 3.14.4 |
-| Python executable | C:\Users\MSI\Desktop\TennisAiVision\.venv\Scripts\python.exe |
-| Folders missing | 0 |
-| Packages missing | 0 |
-| ffmpeg available | no |
-| ffmpeg path | Not available |
+Local environment:
+  Windows-11-10.0.26200-SP0
+
+Python:
+  3.14.4
+
+Python executable:
+  C:\Users\MSI\Desktop\TennisAiVision\.venv\Scripts\python.exe
+
+Folders missing:
+  0
+
+Packages missing:
+  0
+
+ffmpeg available:
+  no
+
+ffmpeg path:
+  Not available
 
 ## Output
 
-| Field | Value |
-|---|---|
-| JSON report path | C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\environment_report.json |
-| Markdown report path | C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\environment_report.md |
-| Log | C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\doctor_20260513T192539Z.log |
+JSON report path:
+  C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\environment_report.json
+
+Markdown report path:
+  C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\environment_report.md
+
+Log:
+  C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\doctor_20260513T192539Z.log
 
 ## Console-equivalent table
 
-| Field | Value |
-|---|---|
-| Verdict | ready_with_warnings |
-| Friction | 15 (low friction) |
-| Missing packages | 0 |
-| Missing folders | 0 |
-| ffmpeg | missing |
-| Errors | 0 |
-| Warnings | 1 |
+Verdict:
+  ready_with_warnings
+
+Friction:
+  15 (low friction)
+
+Missing packages:
+  0
+
+Missing folders:
+  0
+
+ffmpeg:
+  missing
+
+Errors:
+  0
+
+Warnings:
+  1
 
 ## Warnings
 
@@ -60,6 +94,20 @@ The local Python environment is usable for the current project stages. The remai
 Proceed to Stage 1 video loading and frame extraction.
 
 ## Run history
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
 
 <!-- lab-entry:2026-05-12T16:19:48+00:00 -->
 

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -23,11 +24,15 @@ from tennis_vision.friction import calculate_stage_8_1_friction_score  # noqa: E
 from tennis_vision.label_expansion import (  # noqa: E402
     analyze_label_coverage,
     collect_interactive_labels,
+    load_durable_or_fallback_labels,
     merge_labels,
     read_manual_labels,
+    visible_label_count,
+    visible_label_frames,
     write_coverage_csv,
     write_expanded_labels_csv,
     write_expanded_labels_json,
+    write_label_session_backup,
 )
 from tennis_vision.report import ensure_output_folders, utc_timestamp, write_json_report, write_markdown_report, write_timestamped_log  # noqa: E402
 from tennis_vision.timeline_validation import (  # noqa: E402
@@ -87,6 +92,22 @@ def recommended_next_step(report: dict[str, Any]) -> str:
     if verdict == "needs_better_candidate_generation":
         return "Return to candidate generation improvements before validating timeline events."
     return "Fix missing labels or Stage 8 timeline outputs, then rerun Stage 8.1."
+
+
+def previous_best_visible_label_count(logs_dir: Path) -> int:
+    """Read prior Stage 8.1 logs to detect whether richer labels were seen before."""
+    best = 0
+    if not logs_dir.exists():
+        return best
+    pattern = re.compile(r"visible_labels=(\d+)")
+    for path in logs_dir.glob("stage_8_1_timeline_validation_*.log"):
+        try:
+            text = path.read_text(encoding="utf-8")
+        except OSError:
+            continue
+        for match in pattern.finditer(text):
+            best = max(best, int(match.group(1)))
+    return best
 
 
 def save_expanded_labels_preview(labels: list[dict[str, Any]], video_path: Path, output_path: Path, resize_width: int) -> str | None:
@@ -230,10 +251,14 @@ def build_markdown_sections(report: dict[str, Any]) -> list[tuple[str, str]]:
             "Label expansion summary",
             _metric_table(
                 [
+                    ("label source used", report["label_source_used"]),
+                    ("expanded label frames", ", ".join(str(frame) for frame in report["expanded_label_frames"])),
+                    ("expanded labels loaded", report["expanded_labels_loaded_successfully"]),
+                    ("label persistence status", report["label_persistence_status"]),
                     ("existing labels", report["existing_labels_count"]),
                     ("new labels", report["new_labels_count"]),
                     ("merged labels", report["merged_labels_count"]),
-                    ("visible labels", report["visible_labels_count"]),
+                    ("merged visible labels", report["merged_visible_labels_count"]),
                     ("frame range", report["label_frame_range"]),
                     ("average label gap", report["average_label_gap"]),
                     ("maximum label gap", report["maximum_label_gap"]),
@@ -305,7 +330,8 @@ def print_summary(report: dict[str, Any], lab_paths: dict[str, Path]) -> None:
             ("Friction", f"{report['friction']['score']} ({report['friction']['band']})"),
             ("Existing labels", report["existing_labels_count"]),
             ("New labels", report["new_labels_count"]),
-            ("Visible labels", report["visible_labels_count"]),
+            ("Label source", report["label_source_used"]),
+            ("Visible labels", report["merged_visible_labels_count"]),
             ("Average label gap", report["average_label_gap"]),
             ("Maximum label gap", report["maximum_label_gap"]),
             ("Candidate avg distance", report["candidate_validation_summary"].get("average_candidate_distance")),
@@ -332,7 +358,18 @@ def main() -> int:
 
     warnings: list[str] = []
     errors: list[str] = []
-    existing_labels, existing_warnings = read_manual_labels(PROJECT_ROOT / "outputs" / "ball_tracking" / "stage_4_1_manual_labels" / "manual_ball_labels.csv")
+    expanded_csv = output_dir / "expanded_ball_labels.csv"
+    expanded_json = output_dir / "expanded_ball_labels.json"
+    session_dir = output_dir / "label_sessions"
+    session_dir.mkdir(parents=True, exist_ok=True)
+    fallback_labels_path = PROJECT_ROOT / "outputs" / "ball_tracking" / "stage_4_1_manual_labels" / "manual_ball_labels.csv"
+    expanded_before, _ = read_manual_labels(expanded_csv, source="stage_8_1_persisted", label_session="stage_8_1_persisted")
+    expanded_visible_before = visible_label_count(expanded_before)
+    previous_best_visible = previous_best_visible_label_count(PROJECT_ROOT / "outputs" / "logs")
+    existing_labels, label_source_info, existing_warnings = load_durable_or_fallback_labels(
+        expanded_path=expanded_csv,
+        fallback_path=fallback_labels_path,
+    )
     warnings.extend(existing_warnings)
     new_labels: list[dict[str, Any]] = []
     if args.interactive:
@@ -346,18 +383,40 @@ def main() -> int:
         new_labels = collected
         warnings.extend(label_warnings)
         errors.extend(label_errors)
+        if new_labels:
+            backup_paths = write_label_session_backup(session_dir, timestamp, new_labels)
+            label_source_info["latest_session_path"] = str(backup_paths["csv"])
     else:
-        warnings.append("Non-interactive mode used existing labels only; no new labels were collected.")
+        if label_source_info["label_source_used"] == "stage_8_1_expanded":
+            label_source_info["label_persistence_status"] = "validated_using_persisted_expanded_labels"
+        elif label_source_info["label_source_used"] == "stage_8_1_latest_session":
+            label_source_info["label_persistence_status"] = "validated_using_latest_session_backup_labels"
+        elif label_source_info["label_source_used"] == "merged_sources":
+            label_source_info["label_persistence_status"] = "validated_using_merged_persisted_sources"
+        elif label_source_info["label_source_used"] == "stage_4_1_fallback":
+            label_source_info["label_persistence_status"] = "validated_using_stage_4_1_fallback_labels"
 
     labels = merge_labels(existing_labels if args.merge_existing else [], new_labels)
     fps = read_fps(PROJECT_ROOT / "outputs" / "reports" / "stage_1_video_probe_report.json")
     coverage = analyze_label_coverage(labels, fps=fps)
+    current_visible = visible_label_count(labels)
+    if previous_best_visible > current_visible:
+        warnings.append(
+            "Expanded label dataset appears incomplete compared with previous interactive run. "
+            "Manual labels may have been overwritten or saved to a different path."
+        )
 
-    expanded_csv = output_dir / "expanded_ball_labels.csv"
-    expanded_json = output_dir / "expanded_ball_labels.json"
     coverage_csv = output_dir / "label_coverage_report.csv"
-    write_expanded_labels_csv(expanded_csv, labels)
-    write_expanded_labels_json(expanded_json, labels)
+    should_write_durable_labels = False
+    if args.interactive:
+        should_write_durable_labels = current_visible >= expanded_visible_before
+    elif label_source_info["label_source_used"] in {"stage_8_1_latest_session", "merged_sources", "stage_8_1_expanded"}:
+        should_write_durable_labels = current_visible > expanded_visible_before
+    if should_write_durable_labels:
+        write_expanded_labels_csv(expanded_csv, labels)
+        write_expanded_labels_json(expanded_json, labels)
+    elif not args.interactive and label_source_info["label_source_used"] == "stage_4_1_fallback":
+        warnings.append("Non-interactive mode preserved existing expanded labels and did not write fallback labels over the durable dataset.")
     write_coverage_csv(coverage_csv, coverage)
 
     candidates, candidate_errors = read_candidates(PROJECT_ROOT / "outputs" / "ball_tracking" / "stage_5_1_candidate_improvement" / "improved_ball_candidates.csv")
@@ -395,7 +454,7 @@ def main() -> int:
         "candidate_validation_failed": bool(not candidate_rows or avg_distance is None or avg_distance > 50),
         "sparse_label_coverage": not coverage["coverage_enough_for_timeline_validation"],
         "event_validation_unsupported": bool(timeline_count and supported / max(timeline_count, 1) < 0.6),
-        "manual_action_required": not args.interactive,
+        "manual_action_required": bool(not args.interactive and not coverage["coverage_enough_for_timeline_validation"]),
     }
     if flags["sparse_label_coverage"]:
         warnings.append("Label coverage is still sparse for tactical metrics; collect more labels across the rally.")
@@ -409,9 +468,19 @@ def main() -> int:
         "mode": "interactive" if args.interactive else "non_interactive",
         "video_path": str(video_path),
         "selected_frame_indices": frame_indices,
+        "label_source_used": label_source_info["label_source_used"],
+        "expanded_labels_path": label_source_info["expanded_labels_path"],
+        "latest_session_path": label_source_info.get("latest_session_path", "Not available"),
+        "fallback_labels_path": label_source_info["fallback_labels_path"],
+        "expanded_labels_loaded_successfully": label_source_info["expanded_labels_loaded_successfully"],
+        "label_persistence_status": label_source_info["label_persistence_status"],
+        "previous_best_visible_labels_count": previous_best_visible,
+        "expanded_visible_labels_before_run": expanded_visible_before,
+        "expanded_label_frames": visible_label_frames(labels),
         "existing_labels_count": len(existing_labels),
         "new_labels_count": len(new_labels),
         "merged_labels_count": len(labels),
+        "merged_visible_labels_count": coverage["visible_labels"],
         "visible_labels_count": coverage["visible_labels"],
         "skipped_frames": coverage["skipped_frames"],
         "label_frame_range": coverage["label_frame_range"],
