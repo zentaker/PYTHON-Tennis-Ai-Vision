@@ -164,7 +164,7 @@
     ]
   },
   "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_3_court_calibration_probe_report.json",
-  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_3_court_calibration_probe_20260512T234914Z.log",
+  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_3_court_calibration_probe_20260513T024714Z.log",
   "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_3_court_calibration_probe_report.md",
   "mini_court_preview_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\calibration\\stage_3_court_probe\\mini_court_preview.jpg",
   "overlay_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\calibration\\stage_3_court_probe\\court_points_overlay.jpg",
@@ -232,7 +232,7 @@
   "recommended_next_step": "Proceed to Stage 4: Ball Tracking Probe.",
   "reference_frame_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\calibration\\stage_3_court_probe\\calibration_reference_frame.jpg",
   "stage": "stage_3_court_calibration_probe",
-  "timestamp": "2026-05-12T23:49:14+00:00",
+  "timestamp": "2026-05-13T02:47:14+00:00",
   "video_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\samples\\video_01.mov",
   "warnings": []
 }

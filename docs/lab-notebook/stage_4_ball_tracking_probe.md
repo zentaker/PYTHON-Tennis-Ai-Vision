@@ -8,7 +8,7 @@
 | Verdict | ready_with_warnings |
 | Friction score | 21 |
 | Friction level | medium friction |
-| Timestamp | 2026-05-12T23:50:17+00:00 |
+| Timestamp | 2026-05-13T02:48:19+00:00 |
 | Recommended next step | Proceed to Stage 5: Ball Candidate Filtering and Court Projection. |
 
 ## Input
@@ -28,7 +28,7 @@
 |---|---|
 | JSON report path | C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\stage_4_ball_tracking_probe_report.json |
 | Markdown report path | C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\stage_4_ball_tracking_probe_report.md |
-| Log | C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\stage_4_ball_tracking_probe_20260512T235017Z.log |
+| Log | C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\stage_4_ball_tracking_probe_20260513T024819Z.log |
 | Overlay folder | C:\Users\MSI\Desktop\TennisAiVision\outputs\ball_tracking\stage_4_ball_probe\ball_candidates_overlay |
 | Candidate CSV | C:\Users\MSI\Desktop\TennisAiVision\outputs\ball_tracking\stage_4_ball_probe\ball_candidates.csv |
 | Trajectory preview | C:\Users\MSI\Desktop\TennisAiVision\outputs\ball_tracking\stage_4_ball_probe\trajectory_preview.jpg |
@@ -81,6 +81,18 @@ Proceed to Stage 5: Ball Candidate Filtering and Court Projection.
 <!-- lab-entry:2026-05-12T23:50:17+00:00 -->
 
 ### 2026-05-12T23:50:17+00:00
+
+| Field | Value |
+|---|---|
+| Stage | Stage 4 - Ball Tracking Probe |
+| Verdict | ready_with_warnings |
+| Friction score | 21 |
+| Friction level | medium friction |
+| Next step | Proceed to Stage 5: Ball Candidate Filtering and Court Projection. |
+
+<!-- lab-entry:2026-05-13T02:48:19+00:00 -->
+
+### 2026-05-13T02:48:19+00:00
 
 | Field | Value |
 |---|---|

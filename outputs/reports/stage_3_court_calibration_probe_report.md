@@ -21,7 +21,7 @@
 - Mini-court preview: `C:\Users\MSI\Desktop\TennisAiVision\outputs\calibration\stage_3_court_probe\mini_court_preview.jpg`
 - JSON report: `C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\stage_3_court_calibration_probe_report.json`
 - Markdown report: `C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\stage_3_court_calibration_probe_report.md`
-- Log path: `C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\stage_3_court_calibration_probe_20260512T234914Z.log`
+- Log path: `C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\stage_3_court_calibration_probe_20260513T024714Z.log`
 
 ## Court points
 

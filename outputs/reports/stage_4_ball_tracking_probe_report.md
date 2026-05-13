@@ -21,7 +21,7 @@
 - Trajectory preview path: `C:\Users\MSI\Desktop\TennisAiVision\outputs\ball_tracking\stage_4_ball_probe\trajectory_preview.jpg`
 - JSON report: `C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\stage_4_ball_tracking_probe_report.json`
 - Markdown report: `C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\stage_4_ball_tracking_probe_report.md`
-- Log path: `C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\stage_4_ball_tracking_probe_20260512T235017Z.log`
+- Log path: `C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\stage_4_ball_tracking_probe_20260513T024819Z.log`
 
 ## Candidate summary
 
