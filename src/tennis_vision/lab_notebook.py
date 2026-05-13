@@ -18,6 +18,9 @@ STAGE_NOTEBOOK_FILES = {
     "stage_3_1": "stage_3_1_court_point_selector.md",
     "stage_4": "stage_4_ball_tracking_probe.md",
     "stage_4_1": "stage_4_1_ball_labeling_helper.md",
+    "stage_5": "stage_5_ball_candidate_filtering.md",
+    "stage_5_1": "stage_5_1_candidate_improvement.md",
+    "stage_6": "stage_6_trajectory_smoothing.md",
 }
 
 
@@ -181,6 +184,45 @@ def stage_4_1_next_step(report: dict[str, Any]) -> str:
     if report.get("final_verdict") == "blocked":
         return "Fix video/frame loading, then rerun Stage 4.1."
     return "Run Stage 4.1 interactively and label visible ball positions."
+
+
+def stage_5_next_step(report: dict[str, Any]) -> str:
+    """Return Stage 5 next-step text."""
+    next_step = report.get("recommended_next_step")
+    if next_step:
+        return str(next_step)
+    if report.get("final_verdict") == "ready_for_stage_6":
+        return "Proceed to Stage 6 trajectory smoothing and event/rally segmentation."
+    if report.get("final_verdict") == "needs_better_ball_model":
+        return "Proceed to Stage 5.1 specialized ball detector research."
+    return "Review Stage 5 warnings, then rerun filtering after fixing inputs."
+
+
+def stage_5_1_next_step(report: dict[str, Any]) -> str:
+    """Return Stage 5.1 next-step text."""
+    next_step = report.get("recommended_next_step")
+    if next_step:
+        return str(next_step)
+    if report.get("final_verdict") == "ready_for_stage_6":
+        return "Proceed to Stage 6 trajectory smoothing and rally/event segmentation."
+    if report.get("final_verdict") == "blocked":
+        return "Fix Stage 5.1 input blockers, then rerun candidate improvement."
+    return "Proceed to Stage 5.2 specialized ball model research and benchmark."
+
+
+def stage_6_next_step(report: dict[str, Any]) -> str:
+    """Return Stage 6 next-step text."""
+    next_step = report.get("recommended_next_step")
+    if next_step:
+        return str(next_step)
+    verdict = report.get("final_verdict")
+    if verdict == "ready_for_stage_7":
+        return "Proceed to Stage 7 player tracking and ball-player interaction probe."
+    if verdict == "needs_more_labels":
+        return "Proceed to Stage 6.1 expand manual labels and rerun smoothing."
+    if verdict == "needs_better_ball_model":
+        return "Return to Stage 5.2 specialized ball model research."
+    return "Fix Stage 6 blockers, then rerun trajectory smoothing."
 
 
 def build_stage_0_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
@@ -724,6 +766,216 @@ def build_stage_4_1_document(report: dict[str, Any], project_root: Path) -> dict
     return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
 
 
+def build_stage_5_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
+    """Build Stage 5 notebook content."""
+    json_path = report_path(project_root, "stage_5_ball_candidate_filtering_report.json")
+    markdown_path = report_path(project_root, "stage_5_ball_candidate_filtering_report.md")
+    next_step = stage_5_next_step(report)
+    friction = report.get("friction", {})
+
+    summary = markdown_table(
+        [
+            ("Stage", "Stage 5 - Ball candidate filtering and court projection"),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction score", friction.get("score")),
+            ("Friction level", friction.get("band")),
+            ("Timestamp", report.get("timestamp")),
+            ("Recommended next step", next_step),
+        ]
+    )
+    input_table = markdown_table(
+        [
+            ("Automatic candidates CSV", report.get("input_candidate_csv")),
+            ("Manual labels CSV", report.get("input_manual_labels_csv")),
+            ("Calibration source", report.get("calibration_source")),
+            ("Homography available", nested_get(report, ("homography_status", "homography_available"))),
+        ]
+    )
+    output_table = markdown_table(
+        [
+            ("JSON report path", json_path),
+            ("Markdown report path", markdown_path),
+            ("Log", latest_log_for_prefix(project_root, "stage_5_ball_candidate_filtering_")),
+            ("Candidate-label distances", nested_get(report, ("output_paths", "candidate_label_distances"))),
+            ("Filtered candidates", nested_get(report, ("output_paths", "filtered_ball_candidates"))),
+            ("Projected candidates", nested_get(report, ("output_paths", "projected_ball_candidates"))),
+            ("Court projection preview", nested_get(report, ("output_paths", "court_projection_preview"))),
+        ]
+    )
+    console_table = markdown_table(
+        [
+            ("Manual labels", report.get("manual_labels_count")),
+            ("Automatic candidates", report.get("automatic_candidates_count")),
+            ("Average nearest distance", report.get("nearest_candidate_average_distance")),
+            ("Median nearest distance", report.get("nearest_candidate_median_distance")),
+            ("Filtered candidates", report.get("filtered_candidates_count")),
+            ("Projected candidates", report.get("projected_candidates_count")),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction", f"{not_available(friction.get('score'))} ({not_available(friction.get('band'))})"),
+            ("Recommended next step", next_step),
+        ]
+    )
+    interpretation = (
+        "Stage 5 filters noisy automatic candidates against manual labels and projects selected candidates into the calibrated court plane. "
+        "It is still a research probe, not production ball tracking."
+    )
+
+    body = stage_document(
+        title="Stage 5 - Ball Candidate Filtering",
+        summary=summary,
+        input_section=input_table,
+        output_section=output_table,
+        console_table=console_table,
+        warnings=bullet_list(report.get("warnings"), "No warnings."),
+        errors=bullet_list(report.get("errors"), "No errors."),
+        interpretation=interpretation,
+        next_step=next_step,
+    )
+    entry = history_entry(report, "Stage 5 - Ball Candidate Filtering", summary, next_step)
+    return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
+
+
+def build_stage_5_1_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
+    """Build Stage 5.1 notebook content."""
+    json_path = report_path(project_root, "stage_5_1_candidate_improvement_report.json")
+    markdown_path = report_path(project_root, "stage_5_1_candidate_improvement_report.md")
+    next_step = stage_5_1_next_step(report)
+    friction = report.get("friction", {})
+    baseline = report.get("baseline", {})
+
+    summary = markdown_table(
+        [
+            ("Stage", "Stage 5.1 - Ball candidate generation improvement"),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction score", friction.get("score")),
+            ("Friction level", friction.get("band")),
+            ("Timestamp", report.get("timestamp")),
+            ("Recommended next step", next_step),
+        ]
+    )
+    input_table = markdown_table(
+        [
+            ("Video path", report.get("input_video_path")),
+            ("Manual labels path", report.get("manual_labels_path")),
+            ("Labeled frames count", report.get("labeled_frames_count")),
+            ("Strategies tested", ", ".join(report.get("strategies_tested", []))),
+            ("Stage 5 baseline average distance", baseline.get("average_distance")),
+            ("Homography available", nested_get(report, ("calibration_status", "homography_available"))),
+        ]
+    )
+    output_table = markdown_table(
+        [
+            ("JSON report path", json_path),
+            ("Markdown report path", markdown_path),
+            ("Log", latest_log_for_prefix(project_root, "stage_5_1_candidate_improvement_")),
+            ("Strategy comparison CSV", nested_get(report, ("output_paths", "strategy_comparison_csv"))),
+            ("Improved candidates CSV", nested_get(report, ("output_paths", "improved_candidates_csv"))),
+            ("Projected candidates CSV", nested_get(report, ("output_paths", "projected_candidates_csv"))),
+            ("Strategy preview", nested_get(report, ("output_paths", "strategy_preview"))),
+        ]
+    )
+    console_table = markdown_table(
+        [
+            ("Best strategy", report.get("best_strategy")),
+            ("Baseline average distance", baseline.get("average_distance")),
+            ("Improved average distance", report.get("best_average_nearest_distance")),
+            ("Improvement over baseline", report.get("improvement_over_baseline")),
+            ("Improved candidates", report.get("improved_candidates_count")),
+            ("Projected candidates", report.get("projected_candidates_count")),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction", f"{not_available(friction.get('score'))} ({not_available(friction.get('band'))})"),
+            ("Recommended next step", next_step),
+        ]
+    )
+    interpretation = (
+        "Stage 5.1 tests low-cost local computer vision strategies against manual ball labels. "
+        "It measures whether handcrafted candidates are close enough for smoothing, without claiming production tracking."
+    )
+
+    body = stage_document(
+        title="Stage 5.1 - Candidate Improvement",
+        summary=summary,
+        input_section=input_table,
+        output_section=output_table,
+        console_table=console_table,
+        warnings=bullet_list(report.get("warnings"), "No warnings."),
+        errors=bullet_list(report.get("errors"), "No errors."),
+        interpretation=interpretation,
+        next_step=next_step,
+    )
+    entry = history_entry(report, "Stage 5.1 - Candidate Improvement", summary, next_step)
+    return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
+
+
+def build_stage_6_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
+    """Build Stage 6 notebook content."""
+    json_path = report_path(project_root, "stage_6_trajectory_smoothing_report.json")
+    markdown_path = report_path(project_root, "stage_6_trajectory_smoothing_report.md")
+    next_step = stage_6_next_step(report)
+    friction = report.get("friction", {})
+
+    summary = markdown_table(
+        [
+            ("Stage", "Stage 6 - Trajectory smoothing and event segmentation"),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction score", friction.get("score")),
+            ("Friction level", friction.get("band")),
+            ("Timestamp", report.get("timestamp")),
+            ("Recommended next step", next_step),
+        ]
+    )
+    input_table = markdown_table(
+        [
+            ("Improved candidates CSV", report.get("input_improved_candidates_path")),
+            ("Projected candidates CSV", report.get("input_projected_candidates_path")),
+            ("Manual labels CSV", report.get("input_manual_labels_path")),
+            ("Projected candidates available", report.get("projected_candidates_available")),
+        ]
+    )
+    output_table = markdown_table(
+        [
+            ("JSON report path", json_path),
+            ("Markdown report path", markdown_path),
+            ("Log", latest_log_for_prefix(project_root, "stage_6_trajectory_smoothing_")),
+            ("Raw trajectory CSV", report.get("raw_trajectory_csv_path")),
+            ("Smoothed trajectory CSV", report.get("smoothed_trajectory_csv_path")),
+            ("Events CSV", report.get("events_csv_path")),
+            ("Image preview", report.get("image_trajectory_preview_path")),
+            ("Court preview", report.get("court_trajectory_preview_path")),
+        ]
+    )
+    console_table = markdown_table(
+        [
+            ("Trajectory points", report.get("trajectory_points_count")),
+            ("Interpolated points", report.get("interpolated_points_count")),
+            ("Events", report.get("events_count")),
+            ("Events by type", report.get("events_by_type")),
+            ("Smoothing method", report.get("smoothing_method")),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction", f"{not_available(friction.get('score'))} ({not_available(friction.get('band'))})"),
+            ("Recommended next step", next_step),
+        ]
+    )
+    interpretation = (
+        "Stage 6 creates an initial smoothed trajectory from improved ball candidates and marks event hypotheses. "
+        "The event output is exploratory and should not be treated as scoring, line calling, or confirmed rally segmentation."
+    )
+
+    body = stage_document(
+        title="Stage 6 - Trajectory Smoothing",
+        summary=summary,
+        input_section=input_table,
+        output_section=output_table,
+        console_table=console_table,
+        warnings=bullet_list(report.get("warnings"), "No warnings."),
+        errors=bullet_list(report.get("errors"), "No errors."),
+        interpretation=interpretation,
+        next_step=next_step,
+    )
+    entry = history_entry(report, "Stage 6 - Trajectory Smoothing", summary, next_step)
+    return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
+
+
 def stage_document(
     *,
     title: str,
@@ -1015,6 +1267,75 @@ def update_lab_notebook(project_root: Path) -> list[Path]:
                 "friction": f"{not_available(nested_get(stage_4_1_report, ('friction', 'score')))} {not_available(nested_get(stage_4_1_report, ('friction', 'band')))}",
                 "main_output": "outputs/reports/stage_4_1_ball_labeling_helper_report.md",
                 "next_step": stage_4_1_next_step(stage_4_1_report),
+            }
+        )
+
+    stage_5_report = read_json_report(report_path(project_root, "stage_5_ball_candidate_filtering_report.json"))
+    if stage_5_report is not None:
+        document = build_stage_5_document(stage_5_report, project_root)
+        stage_path = notebook_dir / "stage_5_ball_candidate_filtering.md"
+        written.append(
+            write_stage_notebook(
+                stage_path,
+                document["body"],
+                document["entry"],
+                document["entry_id"],
+            )
+        )
+        stage_summaries.append(
+            {
+                "stage": "Stage 5",
+                "name": "Ball Candidate Filtering",
+                "verdict": not_available(stage_5_report.get("final_verdict")),
+                "friction": f"{not_available(nested_get(stage_5_report, ('friction', 'score')))} {not_available(nested_get(stage_5_report, ('friction', 'band')))}",
+                "main_output": "outputs/reports/stage_5_ball_candidate_filtering_report.md",
+                "next_step": stage_5_next_step(stage_5_report),
+            }
+        )
+
+    stage_5_1_report = read_json_report(report_path(project_root, "stage_5_1_candidate_improvement_report.json"))
+    if stage_5_1_report is not None:
+        document = build_stage_5_1_document(stage_5_1_report, project_root)
+        stage_path = notebook_dir / "stage_5_1_candidate_improvement.md"
+        written.append(
+            write_stage_notebook(
+                stage_path,
+                document["body"],
+                document["entry"],
+                document["entry_id"],
+            )
+        )
+        stage_summaries.append(
+            {
+                "stage": "Stage 5.1",
+                "name": "Candidate Improvement",
+                "verdict": not_available(stage_5_1_report.get("final_verdict")),
+                "friction": f"{not_available(nested_get(stage_5_1_report, ('friction', 'score')))} {not_available(nested_get(stage_5_1_report, ('friction', 'band')))}",
+                "main_output": "outputs/reports/stage_5_1_candidate_improvement_report.md",
+                "next_step": stage_5_1_next_step(stage_5_1_report),
+            }
+        )
+
+    stage_6_report = read_json_report(report_path(project_root, "stage_6_trajectory_smoothing_report.json"))
+    if stage_6_report is not None:
+        document = build_stage_6_document(stage_6_report, project_root)
+        stage_path = notebook_dir / "stage_6_trajectory_smoothing.md"
+        written.append(
+            write_stage_notebook(
+                stage_path,
+                document["body"],
+                document["entry"],
+                document["entry_id"],
+            )
+        )
+        stage_summaries.append(
+            {
+                "stage": "Stage 6",
+                "name": "Trajectory Smoothing",
+                "verdict": not_available(stage_6_report.get("final_verdict")),
+                "friction": f"{not_available(nested_get(stage_6_report, ('friction', 'score')))} {not_available(nested_get(stage_6_report, ('friction', 'band')))}",
+                "main_output": "outputs/reports/stage_6_trajectory_smoothing_report.md",
+                "next_step": stage_6_next_step(stage_6_report),
             }
         )
 

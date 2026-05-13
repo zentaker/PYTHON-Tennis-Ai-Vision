@@ -305,3 +305,129 @@ def calculate_stage_4_1_friction_score(
             "warnings_count": warnings_count,
         },
     }
+
+
+def calculate_stage_5_friction_score(
+    *,
+    candidate_csv_missing: bool = False,
+    manual_labels_missing: bool = False,
+    homography_missing: bool = False,
+    comparison_failed: bool = False,
+    filtering_failed: bool = False,
+    projection_failed: bool = False,
+    nearest_candidates_too_far: bool = False,
+    too_many_false_candidates: bool = False,
+    errors_count: int = 0,
+    warnings_count: int = 0,
+) -> dict[str, Any]:
+    """Calculate Stage 5 filtering and court projection friction."""
+    score = 0
+    score += 40 if candidate_csv_missing else 0
+    score += 45 if manual_labels_missing else 0
+    score += 15 if homography_missing else 0
+    score += 30 if comparison_failed else 0
+    score += 35 if filtering_failed else 0
+    score += 15 if projection_failed else 0
+    score += 25 if nearest_candidates_too_far else 0
+    score += 18 if too_many_false_candidates else 0
+    score += min(errors_count * 10, 30)
+    score += min(warnings_count * 3, 15)
+    score = max(0, min(score, 100))
+
+    return {
+        "score": score,
+        "band": friction_band(score),
+        "inputs": {
+            "candidate_csv_missing": candidate_csv_missing,
+            "manual_labels_missing": manual_labels_missing,
+            "homography_missing": homography_missing,
+            "comparison_failed": comparison_failed,
+            "filtering_failed": filtering_failed,
+            "projection_failed": projection_failed,
+            "nearest_candidates_too_far": nearest_candidates_too_far,
+            "too_many_false_candidates": too_many_false_candidates,
+            "errors_count": errors_count,
+            "warnings_count": warnings_count,
+        },
+    }
+
+
+def calculate_stage_5_1_friction_score(
+    *,
+    video_missing: bool = False,
+    manual_labels_missing: bool = False,
+    frame_load_failed: bool = False,
+    no_candidates_generated: bool = False,
+    no_improvement: bool = False,
+    candidates_still_far: bool = False,
+    projection_failed: bool = False,
+    errors_count: int = 0,
+    warnings_count: int = 0,
+) -> dict[str, Any]:
+    """Calculate Stage 5.1 candidate generation improvement friction."""
+    score = 0
+    score += 35 if video_missing else 0
+    score += 45 if manual_labels_missing else 0
+    score += 40 if frame_load_failed else 0
+    score += 35 if no_candidates_generated else 0
+    score += 25 if no_improvement else 0
+    score += 20 if candidates_still_far else 0
+    score += 10 if projection_failed else 0
+    score += min(errors_count * 10, 30)
+    score += min(warnings_count * 3, 15)
+    score = max(0, min(score, 100))
+
+    return {
+        "score": score,
+        "band": friction_band(score),
+        "inputs": {
+            "video_missing": video_missing,
+            "manual_labels_missing": manual_labels_missing,
+            "frame_load_failed": frame_load_failed,
+            "no_candidates_generated": no_candidates_generated,
+            "no_improvement": no_improvement,
+            "candidates_still_far": candidates_still_far,
+            "projection_failed": projection_failed,
+            "errors_count": errors_count,
+            "warnings_count": warnings_count,
+        },
+    }
+
+
+def calculate_stage_6_friction_score(
+    *,
+    improved_candidates_missing: bool = False,
+    projected_candidates_missing: bool = False,
+    too_few_points: bool = False,
+    smoothing_failed: bool = False,
+    event_detection_unreliable: bool = False,
+    projection_preview_failed: bool = False,
+    errors_count: int = 0,
+    warnings_count: int = 0,
+) -> dict[str, Any]:
+    """Calculate Stage 6 trajectory smoothing friction."""
+    score = 0
+    score += 45 if improved_candidates_missing else 0
+    score += 10 if projected_candidates_missing else 0
+    score += 25 if too_few_points else 0
+    score += 35 if smoothing_failed else 0
+    score += 15 if event_detection_unreliable else 0
+    score += 8 if projection_preview_failed else 0
+    score += min(errors_count * 10, 30)
+    score += min(warnings_count * 3, 15)
+    score = max(0, min(score, 100))
+
+    return {
+        "score": score,
+        "band": friction_band(score),
+        "inputs": {
+            "improved_candidates_missing": improved_candidates_missing,
+            "projected_candidates_missing": projected_candidates_missing,
+            "too_few_points": too_few_points,
+            "smoothing_failed": smoothing_failed,
+            "event_detection_unreliable": event_detection_unreliable,
+            "projection_preview_failed": projection_preview_failed,
+            "errors_count": errors_count,
+            "warnings_count": warnings_count,
+        },
+    }

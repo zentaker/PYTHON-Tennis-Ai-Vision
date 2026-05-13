@@ -4,9 +4,9 @@ Tennis AI Vision is a local-first Python research project for building toward Sw
 
 ## Current Stage
 
-Stage 4.1: manual ball labeling helper.
+Stage 5: ball candidate filtering and court projection.
 
-Stage 0 checks the local Python environment, required folders, required package imports, and whether `ffmpeg` is available from the terminal. Stage 1 loads a local sample video with OpenCV, reads metadata, extracts frames, and writes reports. Stage 2 runs a small local YOLO CPU baseline on sampled frames and saves annotated output. Stage 3 creates a manual court calibration reference frame and point overlay. Stage 3.1 helps read or select the court point pixel coordinates needed to rerun Stage 3 with homography. Stage 4 probes simple local ball candidate detection. Stage 4.1 creates manual ball labels for ground truth.
+Stage 0 checks the local Python environment, required folders, required package imports, and whether `ffmpeg` is available from the terminal. Stage 1 loads a local sample video with OpenCV, reads metadata, extracts frames, and writes reports. Stage 2 runs a small local YOLO CPU baseline on sampled frames and saves annotated output. Stage 3 creates a manual court calibration reference frame and point overlay. Stage 3.1 helps read or select court point coordinates. Stage 4 probes simple local ball candidate detection. Stage 4.1 creates manual ball labels for ground truth. Stage 5 filters candidates and projects selected points into the calibrated court plane.
 
 ## Local Setup
 
@@ -290,6 +290,84 @@ Expected outputs:
 - JSON report at `outputs/reports/stage_4_1_ball_labeling_helper_report.json`.
 - Markdown report at `outputs/reports/stage_4_1_ball_labeling_helper_report.md`.
 - Automatic lab notebook update under `docs/lab-notebook/`.
+
+## Stage 5 - Ball Candidate Filtering and Court Projection
+
+Stage 4 generated many false positives. Stage 4.1 produced manual ball labels. Stage 5 compares automatic candidates to those labels, applies a first-pass filter, and projects selected candidates onto the calibrated court plane when Stage 3 homography is available.
+
+Run:
+
+```powershell
+python scripts\run_stage_5_ball_candidate_filtering.py
+```
+
+Expected outputs:
+
+- Candidate-to-label distances at `outputs/ball_tracking/stage_5_filtered_candidates/candidate_label_distances.csv`.
+- Filtered candidates at `outputs/ball_tracking/stage_5_filtered_candidates/filtered_ball_candidates.csv`.
+- Projected candidates at `outputs/ball_tracking/stage_5_filtered_candidates/projected_ball_candidates.csv`.
+- Preview images under `outputs/ball_tracking/stage_5_filtered_candidates/`.
+- JSON report at `outputs/reports/stage_5_ball_candidate_filtering_report.json`.
+- Markdown report at `outputs/reports/stage_5_ball_candidate_filtering_report.md`.
+- Automatic lab notebook update under `docs/lab-notebook/`.
+
+## Stage 5.1 - Ball Candidate Generation Improvement
+
+Stage 5 showed that the nearest automatic candidates were still too far from the manual ball labels. Stage 5.1 tests improved local computer vision strategies before moving to trajectory smoothing.
+
+This stage uses the manual labels as ground truth and compares:
+
+- HSV tennis-ball color thresholding.
+- Motion-difference candidates.
+- Hybrid scoring with color, motion, shape, and court-region signals.
+
+Run:
+
+```powershell
+python scripts\run_stage_5_1_candidate_improvement.py
+```
+
+Expected outputs:
+
+- Strategy comparison CSV at `outputs/ball_tracking/stage_5_1_candidate_improvement/strategy_comparison.csv`.
+- Improved candidates CSV at `outputs/ball_tracking/stage_5_1_candidate_improvement/improved_ball_candidates.csv`.
+- Projected improved candidates at `outputs/ball_tracking/stage_5_1_candidate_improvement/projected_improved_candidates.csv`.
+- Review overlays and strategy preview under `outputs/ball_tracking/stage_5_1_candidate_improvement/`.
+- JSON report at `outputs/reports/stage_5_1_candidate_improvement_report.json`.
+- Markdown report at `outputs/reports/stage_5_1_candidate_improvement_report.md`.
+- Automatic lab notebook update under `docs/lab-notebook/`.
+
+The decision is whether improved handcrafted candidates are close enough for Stage 6 smoothing or whether Stage 5.2 should research specialized ball models.
+
+## Stage 6 - Trajectory Smoothing and Event Segmentation Probe
+
+Stage 5.1 improved candidate quality enough to create a first local trajectory. Stage 6 builds that trajectory, applies lightweight moving-average smoothing, projects it into the calibrated court plane when possible, and creates simple event hypotheses.
+
+Events are hypotheses only. Stage 6 does not implement scoring, official line calling, or production rally segmentation.
+
+Run:
+
+```powershell
+python scripts\run_stage_6_trajectory_smoothing.py
+```
+
+Run with an explicit smoothing window:
+
+```powershell
+python scripts\run_stage_6_trajectory_smoothing.py --window-size 3
+```
+
+Expected outputs:
+
+- Raw trajectory CSV at `outputs/ball_tracking/stage_6_trajectory_smoothing/raw_trajectory.csv`.
+- Smoothed trajectory CSV at `outputs/ball_tracking/stage_6_trajectory_smoothing/smoothed_trajectory.csv`.
+- Event hypotheses at `outputs/ball_tracking/stage_6_trajectory_smoothing/trajectory_events.csv`.
+- Image and court trajectory previews under `outputs/ball_tracking/stage_6_trajectory_smoothing/`.
+- JSON report at `outputs/reports/stage_6_trajectory_smoothing_report.json`.
+- Markdown report at `outputs/reports/stage_6_trajectory_smoothing_report.md`.
+- Automatic lab notebook update under `docs/lab-notebook/`.
+
+If too few points exist, the next step is Stage 6.1 to expand manual labels. If candidate quality collapses, return to Stage 5.2 model research.
 
 ## Lab Notebook
 

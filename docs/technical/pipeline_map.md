@@ -11,7 +11,10 @@
 | Stage 3.1 | Help user select court corner coordinates | `scripts/run_stage_3_1_court_point_selector.py` | `court_point_selector.py`, `court_calibration.py` | Stage 3 reference frame, calibration config | grid image, updated config, Stage 3.1 reports | Implemented |
 | Stage 4 | Generate exploratory automatic ball candidates | `scripts/run_stage_4_ball_tracking_probe.py` | `ball_tracking_probe.py`, `friction.py` | sample video, Stage 3 report | `outputs/ball_tracking/stage_4_ball_probe/`, Stage 4 reports | Implemented |
 | Stage 4.1 | Manually label true ball positions for ground truth | `scripts/run_stage_4_1_ball_labeling_helper.py` | `ball_labeling.py`, `ball_tracking_probe.py`, `friction.py` | sample video, Stage 4 candidate CSV if present | `outputs/ball_tracking/stage_4_1_manual_labels/`, Stage 4.1 reports | Implemented |
-| Stage 5 | Filter candidates and project into court plane | Not implemented | Planned | Stage 4 candidates, Stage 4.1 labels, Stage 3 homography | Planned reports and projections | Planned |
+| Stage 5 | Filter candidates and project into court plane | `scripts/run_stage_5_ball_candidate_filtering.py` | `ball_candidate_filtering.py`, `court_projection.py` | Stage 4 candidates, Stage 4.1 labels, Stage 3 homography | `outputs/ball_tracking/stage_5_filtered_candidates/`, Stage 5 reports | Implemented |
+| Stage 5.1 | Improve candidate generation and compare strategies against labels | `scripts/run_stage_5_1_candidate_improvement.py` | `ball_candidate_improvement.py`, `court_projection.py` | sample video, Stage 4.1 labels, Stage 3 homography, Stage 5 baseline | `outputs/ball_tracking/stage_5_1_candidate_improvement/`, Stage 5.1 reports | Implemented |
+| Stage 5.2 | Research specialized ball model if handcrafted candidates remain weak | Not implemented | Planned | Stage 5.1 report and strategy comparison | Planned | Planned |
+| Stage 6 | Smooth trajectory and probe event/rally segmentation hypotheses | `scripts/run_stage_6_trajectory_smoothing.py` | `trajectory_smoothing.py`, `event_segmentation.py` | Stage 5.1 improved/projected candidates, manual labels | `outputs/ball_tracking/stage_6_trajectory_smoothing/`, Stage 6 reports | Implemented |
 
 ## Flow
 
@@ -25,6 +28,9 @@ Stage 0 Environment Doctor
   -> Stage 4 Ball Tracking Probe
   -> Stage 4.1 Manual Ball Labeling
   -> Stage 5 Candidate Filtering and Court Projection
+  -> Stage 5.1 Candidate Generation Improvement
+  -> Stage 6 Trajectory Smoothing and Event/Rally Segmentation
+  -> Stage 7 Player Tracking and Ball-Player Interaction
 ```
 
 ## Architecture Notes

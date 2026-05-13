@@ -8,7 +8,7 @@
 | Verdict | ready_for_stage_4 |
 | Friction score | 0 |
 | Friction level | low friction |
-| Timestamp | 2026-05-13T02:47:14+00:00 |
+| Timestamp | 2026-05-13T07:51:16+00:00 |
 | Recommended next step | Proceed to Stage 4: Ball Tracking Probe. |
 
 ## Input
@@ -29,7 +29,7 @@
 |---|---|
 | JSON report path | C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\stage_3_court_calibration_probe_report.json |
 | Markdown report path | C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\stage_3_court_calibration_probe_report.md |
-| Log | C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\stage_3_court_calibration_probe_20260513T024714Z.log |
+| Log | C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\stage_3_court_calibration_probe_20260513T075116Z.log |
 | Reference frame | C:\Users\MSI\Desktop\TennisAiVision\outputs\calibration\stage_3_court_probe\calibration_reference_frame.jpg |
 | Points overlay | C:\Users\MSI\Desktop\TennisAiVision\outputs\calibration\stage_3_court_probe\court_points_overlay.jpg |
 | Mini-court preview | C:\Users\MSI\Desktop\TennisAiVision\outputs\calibration\stage_3_court_probe\mini_court_preview.jpg |
@@ -156,6 +156,18 @@ Proceed to Stage 4: Ball Tracking Probe.
 <!-- lab-entry:2026-05-13T02:47:14+00:00 -->
 
 ### 2026-05-13T02:47:14+00:00
+
+| Field | Value |
+|---|---|
+| Stage | Stage 3 - Court Calibration Probe |
+| Verdict | ready_for_stage_4 |
+| Friction score | 0 |
+| Friction level | low friction |
+| Next step | Proceed to Stage 4: Ball Tracking Probe. |
+
+<!-- lab-entry:2026-05-13T07:51:16+00:00 -->
+
+### 2026-05-13T07:51:16+00:00
 
 | Field | Value |
 |---|---|

@@ -1,0 +1,120 @@
+{
+  "baseline": {
+    "available": true,
+    "average_distance": 512.558,
+    "median_distance": 579.143,
+    "verdict": "ready_with_warnings"
+  },
+  "best_average_nearest_distance": 3.73,
+  "best_median_nearest_distance": 3.0,
+  "best_strategy": "hsv_color",
+  "calibration_status": {
+    "court_polygon_available": true,
+    "homography_available": true
+  },
+  "errors": [],
+  "final_verdict": "ready_for_stage_6",
+  "flags": {
+    "candidates_still_far": false,
+    "frame_load_failed": false,
+    "manual_labels_missing": false,
+    "no_candidates_generated": false,
+    "no_improvement": false,
+    "projection_failed": false,
+    "video_missing": false
+  },
+  "frames_within_100_px": 5,
+  "frames_within_10_px": 5,
+  "frames_within_200_px": 5,
+  "frames_within_25_px": 5,
+  "frames_within_50_px": 5,
+  "friction": {
+    "band": "low friction",
+    "inputs": {
+      "candidates_still_far": false,
+      "errors_count": 0,
+      "frame_load_failed": false,
+      "manual_labels_missing": false,
+      "no_candidates_generated": false,
+      "no_improvement": false,
+      "projection_failed": false,
+      "video_missing": false,
+      "warnings_count": 0
+    },
+    "score": 0
+  },
+  "improved_candidates_count": 5,
+  "improvement_over_baseline": 508.828,
+  "input_video_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\samples\\video_01.mov",
+  "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_5_1_candidate_improvement_report.json",
+  "labeled_frames": [
+    120,
+    135,
+    150,
+    165,
+    180
+  ],
+  "labeled_frames_count": 5,
+  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_5_1_candidate_improvement_20260513T081358Z.log",
+  "manual_labels_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_4_1_manual_labels\\manual_ball_labels.csv",
+  "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_5_1_candidate_improvement_report.md",
+  "output_paths": {
+    "court_projection_preview": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_5_1_candidate_improvement\\court_projection_preview.jpg",
+    "improved_candidates_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_5_1_candidate_improvement\\improved_ball_candidates.csv",
+    "overlay_folder": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_5_1_candidate_improvement\\overlays",
+    "projected_candidates_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_5_1_candidate_improvement\\projected_improved_candidates.csv",
+    "strategy_comparison_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_5_1_candidate_improvement\\strategy_comparison.csv",
+    "strategy_preview": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_5_1_candidate_improvement\\strategy_preview.jpg"
+  },
+  "projected_candidates_count": 5,
+  "recommended_next_step": "Proceed to Stage 6: trajectory smoothing and rally/event segmentation probe.",
+  "stage": "stage_5_1_candidate_improvement",
+  "strategies_tested": [
+    "hsv_color",
+    "motion_difference",
+    "hybrid"
+  ],
+  "strategy_summaries": [
+    {
+      "average_distance": 3.73,
+      "best_distance": 2.121,
+      "best_frame": 150,
+      "candidate_count": 60,
+      "frames_within_100_px": 5,
+      "frames_within_10_px": 5,
+      "frames_within_200_px": 5,
+      "frames_within_25_px": 5,
+      "frames_within_50_px": 5,
+      "median_distance": 3.0,
+      "strategy": "hsv_color"
+    },
+    {
+      "average_distance": 5.053,
+      "best_distance": 3.0,
+      "best_frame": 150,
+      "candidate_count": 60,
+      "frames_within_100_px": 5,
+      "frames_within_10_px": 5,
+      "frames_within_200_px": 5,
+      "frames_within_25_px": 5,
+      "frames_within_50_px": 5,
+      "median_distance": 5.101,
+      "strategy": "motion_difference"
+    },
+    {
+      "average_distance": 3.73,
+      "best_distance": 2.121,
+      "best_frame": 150,
+      "candidate_count": 60,
+      "frames_within_100_px": 5,
+      "frames_within_10_px": 5,
+      "frames_within_200_px": 5,
+      "frames_within_25_px": 5,
+      "frames_within_50_px": 5,
+      "median_distance": 3.0,
+      "strategy": "hybrid"
+    }
+  ],
+  "timestamp": "2026-05-13T08:13:58+00:00",
+  "warnings": []
+}

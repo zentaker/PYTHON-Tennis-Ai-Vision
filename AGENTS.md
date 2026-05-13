@@ -33,6 +33,9 @@ This repository is a local-first research project for tennis video analysis.
 - Stage 3 and Stage 3.1 must validate point order and reject crossed court polygons without silently auto-swapping user-selected points.
 - Stage 4 is a probe, not a production tracker. Do not overclaim ball tracking accuracy. Record false positives, missed detections, and runtime friction honestly.
 - When automatic detection produces many false positives, do not keep tuning blindly. Add a manual labeling or ground-truth step before optimizing the detector.
+- When automatic candidates are noisy, compare against manual labels before tuning blindly. Do not overclaim tracking. Document candidate-to-label distance and projection quality.
+- Before adding trajectory smoothing, validate candidate quality against manual labels. If nearest-candidate distances remain high, do not advance to event/rally logic; recommend model improvement instead.
+- Trajectory smoothing must not be used to hide poor detections. If too few points exist, recommend collecting more manual labels instead of overclaiming event segmentation.
 
 ## Repository hygiene rules
 

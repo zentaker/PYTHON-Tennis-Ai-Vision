@@ -32,13 +32,36 @@ Generate automatic ball candidates on short sample clips only after court calibr
 
 ## Stage 4.1: Manual Ball Labeling Helper
 
-Current stage. Manually label true ball positions to create a small ground-truth set for validating noisy automatic candidates.
+Manually label true ball positions to create a small ground-truth set for validating noisy automatic candidates.
 
 ## Stage 5: Ball Candidate Filtering And Court Projection
 
 Filter candidates using court calibration and manual labels, then project candidate coordinates into the calibrated court plane.
 
-## Stage 6: Local MVP Pipeline
+## Stage 5.1: Ball Candidate Generation Improvement
+
+Current stage. Improve local handcrafted candidate generation and compare HSV, motion, court-region, and hybrid strategies against manual labels.
+
+Decision branch:
+
+- If improved candidates are close enough, proceed to Stage 6.
+- If candidates remain too far from manual labels, proceed to Stage 5.2 specialized ball model research.
+
+## Stage 5.2: Specialized Ball Model Research
+
+If handcrafted candidate generation remains weak, research and benchmark specialized tennis-ball candidate generation before smoothing.
+
+## Stage 6: Trajectory Smoothing And Event/Rally Segmentation Probe
+
+Current stage. Smooth the improved candidate trajectory and generate hypothesis-only event/rally segmentation markers.
+
+Possible next paths:
+
+- Stage 7: player tracking and ball-player interaction if trajectory smoothing is viable.
+- Stage 6.1: expand manual labels if too few trajectory points exist.
+- Stage 5.2: specialized ball model research if candidate quality collapses.
+
+## Stage 6.x: Local MVP Pipeline
 
 Connect local video loading, frame extraction, detection, calibration, tracking, and report generation into one terminal-driven pipeline.
 

@@ -1,0 +1,124 @@
+{
+  "automatic_candidates_count": 160,
+  "calibration_source": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_3_court_calibration_probe_report.json",
+  "calibration_status": {
+    "available": true,
+    "court_polygon": [
+      [
+        1008.0,
+        1719.0
+      ],
+      [
+        3312.0,
+        1770.0
+      ],
+      [
+        2781.0,
+        549.0
+      ],
+      [
+        1566.0,
+        528.0
+      ]
+    ],
+    "error": null,
+    "homography_available": true,
+    "matrix": [
+      [
+        0.47601459174428556,
+        0.22301943089278875,
+        -863.1931101829438
+      ],
+      [
+        -0.03424362336427942,
+        1.9812382089333003,
+        -992.4682601283207
+      ],
+      [
+        -1.425583541874966e-05,
+        0.0012007362335857653,
+        1.0
+      ]
+    ],
+    "stage_3_verdict": "ready_for_stage_4",
+    "target_size": [
+      360,
+      780
+    ],
+    "warnings": []
+  },
+  "errors": [],
+  "filtered_candidates_count": 3,
+  "final_verdict": "ready_with_warnings",
+  "flags": {
+    "candidate_csv_missing": false,
+    "comparison_failed": false,
+    "filtering_failed": false,
+    "homography_missing": false,
+    "manual_labels_missing": false,
+    "nearest_candidates_too_far": false,
+    "projection_failed": false,
+    "too_many_false_candidates": true
+  },
+  "frames_within_100_px": 0,
+  "frames_within_10_px": 0,
+  "frames_within_200_px": 0,
+  "frames_within_25_px": 0,
+  "frames_within_50_px": 0,
+  "friction": {
+    "band": "medium friction",
+    "inputs": {
+      "candidate_csv_missing": false,
+      "comparison_failed": false,
+      "errors_count": 0,
+      "filtering_failed": false,
+      "homography_missing": false,
+      "manual_labels_missing": false,
+      "nearest_candidates_too_far": false,
+      "projection_failed": false,
+      "too_many_false_candidates": true,
+      "warnings_count": 1
+    },
+    "score": 21
+  },
+  "homography_status": {
+    "homography_available": true,
+    "target_size": [
+      360,
+      780
+    ]
+  },
+  "input_candidate_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_4_ball_probe\\ball_candidates.csv",
+  "input_manual_labels_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_4_1_manual_labels\\manual_ball_labels.csv",
+  "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_5_ball_candidate_filtering_report.json",
+  "labeled_frames_compared": 5,
+  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_5_ball_candidate_filtering_20260513T075607Z.log",
+  "main_rejection_reasons": {
+    "rejected_by_manual_label_distance": 40,
+    "rejected_by_temporal_or_court_filter": 117
+  },
+  "manual_labels_count": 5,
+  "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_5_ball_candidate_filtering_report.md",
+  "nearest_candidate_average_distance": 512.558,
+  "nearest_candidate_median_distance": 579.143,
+  "output_paths": {
+    "candidate_label_distances": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_5_filtered_candidates\\candidate_label_distances.csv",
+    "court_projection_preview": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_5_filtered_candidates\\court_projection_preview.jpg",
+    "filtered_ball_candidates": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_5_filtered_candidates\\filtered_ball_candidates.csv",
+    "filtered_trajectory_preview": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_5_filtered_candidates\\filtered_trajectory_preview.jpg",
+    "overlays": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_5_filtered_candidates\\overlays",
+    "projected_ball_candidates": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_5_filtered_candidates\\projected_ball_candidates.csv"
+  },
+  "overlay_files_count": 5,
+  "projected_candidates_count": 3,
+  "recommended_fixes": [
+    "Use Stage 5 filtering outputs to constrain candidates by court and temporal consistency."
+  ],
+  "recommended_next_step": "Review Stage 5 warnings, then decide between Stage 6 smoothing or Stage 5.1 detector improvement.",
+  "rejected_candidates_count": 157,
+  "stage": "stage_5_ball_candidate_filtering",
+  "timestamp": "2026-05-13T07:56:07+00:00",
+  "warnings": [
+    "Automatic candidates still contain many false positives relative to manual labels."
+  ]
+}
