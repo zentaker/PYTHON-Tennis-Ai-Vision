@@ -4,9 +4,9 @@ Tennis AI Vision is a local-first Python research project for building toward Sw
 
 ## Current Stage
 
-Stage 4: ball tracking probe.
+Stage 4.1: manual ball labeling helper.
 
-Stage 0 checks the local Python environment, required folders, required package imports, and whether `ffmpeg` is available from the terminal. Stage 1 loads a local sample video with OpenCV, reads metadata, extracts frames, and writes reports. Stage 2 runs a small local YOLO CPU baseline on sampled frames and saves annotated output. Stage 3 creates a manual court calibration reference frame and point overlay. Stage 3.1 helps read or select the court point pixel coordinates needed to rerun Stage 3 with homography. Stage 4 probes simple local ball candidate detection.
+Stage 0 checks the local Python environment, required folders, required package imports, and whether `ffmpeg` is available from the terminal. Stage 1 loads a local sample video with OpenCV, reads metadata, extracts frames, and writes reports. Stage 2 runs a small local YOLO CPU baseline on sampled frames and saves annotated output. Stage 3 creates a manual court calibration reference frame and point overlay. Stage 3.1 helps read or select the court point pixel coordinates needed to rerun Stage 3 with homography. Stage 4 probes simple local ball candidate detection. Stage 4.1 creates manual ball labels for ground truth.
 
 ## Local Setup
 
@@ -255,6 +255,42 @@ Expected outputs:
 - Markdown report at `outputs/reports/stage_4_ball_tracking_probe_report.md`.
 - Automatic lab notebook update under `docs/lab-notebook/`.
 
+## Stage 4.1 - Manual Ball Labeling Helper
+
+Stage 4 generated too many false positives for this video. The simple heuristic often selected scoreboard, audience, signage, lights, or court artifacts instead of the real tennis ball.
+
+Stage 4.1 lets the user manually click the real ball on selected frames. These labels become ground truth for Stage 5 filtering and court projection. This helper is still not production ball tracking.
+
+Run with explicit frames:
+
+```powershell
+python scripts\run_stage_4_1_ball_labeling_helper.py --frames 120,150,180
+```
+
+Run with a generated frame list:
+
+```powershell
+python scripts\run_stage_4_1_ball_labeling_helper.py --start-frame 90 --interval 30 --max-frames 8
+```
+
+Controls:
+
+- Left click: select the real tennis ball.
+- `u`: undo current frame selection.
+- `s`: save current frame label and continue.
+- `n`: skip current frame.
+- `q`: quit and save progress.
+
+Expected outputs:
+
+- Manual labels CSV at `outputs/ball_tracking/stage_4_1_manual_labels/manual_ball_labels.csv`.
+- Manual labels JSON at `outputs/ball_tracking/stage_4_1_manual_labels/manual_ball_labels.json`.
+- Label overlays under `outputs/ball_tracking/stage_4_1_manual_labels/label_overlays/`.
+- Candidate comparison CSV at `outputs/ball_tracking/stage_4_1_manual_labels/candidate_label_comparison.csv` when Stage 4 candidates exist.
+- JSON report at `outputs/reports/stage_4_1_ball_labeling_helper_report.json`.
+- Markdown report at `outputs/reports/stage_4_1_ball_labeling_helper_report.md`.
+- Automatic lab notebook update under `docs/lab-notebook/`.
+
 ## Lab Notebook
 
 The lab notebook turns generated reports into persistent project documentation. It records each stage's inputs, outputs, verdict, friction score, warnings, errors, interpretation, and next step.
@@ -280,6 +316,15 @@ python scripts\update_lab_notebook.py
 ```
 
 Stage pages keep a run history so previous entries are preserved. Future stages should write JSON reports under `outputs/reports/`, update the notebook automatically at the end of their stage script, and add a notebook builder so the stage appears in the lab notebook and experiment index.
+
+## Documentation Layers
+
+This project now has two documentation layers:
+
+- `docs/lab-notebook/` records execution results and friction history from stage runs.
+- `docs/technical/` explains functional code behavior, important functions, scripts, data flow, file paths, and pipeline architecture.
+
+Codex must maintain both layers when implementing or modifying stages.
 
 ## Cleaning Generated Outputs
 

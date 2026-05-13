@@ -32,6 +32,7 @@ This repository is a local-first research project for tennis video analysis.
 - Stage 3 calibration uses the doubles court outer boundary. Do not confuse doubles boundary calibration with singles-line or service-box calibration; those can be derived or added in later layers.
 - Stage 3 and Stage 3.1 must validate point order and reject crossed court polygons without silently auto-swapping user-selected points.
 - Stage 4 is a probe, not a production tracker. Do not overclaim ball tracking accuracy. Record false positives, missed detections, and runtime friction honestly.
+- When automatic detection produces many false positives, do not keep tuning blindly. Add a manual labeling or ground-truth step before optimizing the detector.
 
 ## Repository hygiene rules
 
@@ -49,6 +50,17 @@ This repository is a local-first research project for tennis video analysis.
 - Codex must verify staged files before every commit.
 - Codex must keep the repository lightweight and pushable.
 - Codex must treat Git push failure as operational friction and document it.
+
+## Technical documentation rules
+
+- Every future stage must update `docs/technical/` in addition to `docs/lab-notebook/`.
+- Lab notebook documents run outputs, verdicts, warnings, errors, friction, and run history.
+- Technical docs document code behavior, functions, scripts, data flow, model/package calls, and file paths.
+- The Product Owner should be able to understand the stage without reading code.
+- Important functions must be listed with file path and search hint.
+- Do not let agent-created code become a black box.
+- If a function calls a model, external package, or important algorithm, document where and how.
+- If a stage adds a new script or module, update `docs/technical/function_inventory.md` and `docs/technical/pipeline_map.md`.
 
 ## Stage 0 Scope
 

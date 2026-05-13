@@ -8,3 +8,4 @@
 | Stage 3 | Court Calibration Probe | ready_for_stage_4 | 0 low friction | outputs/reports/stage_3_court_calibration_probe_report.md | Proceed to Stage 4: Ball Tracking Probe. |
 | Stage 3.1 | Court Point Selection Helper | ready_to_rerun_stage_3 | 0 low friction | outputs/reports/stage_3_1_court_point_selector_report.md | Rerun Stage 3 to compute the court homography from the saved point coordinates. |
 | Stage 4 | Ball Tracking Probe | ready_with_warnings | 21 medium friction | outputs/reports/stage_4_ball_tracking_probe_report.md | Proceed to Stage 5: Ball Candidate Filtering and Court Projection. |
+| Stage 4.1 | Manual Ball Labeling Helper | ready_for_stage_5 | 0 low friction | outputs/reports/stage_4_1_ball_labeling_helper_report.md | Proceed to Stage 5: Ball Candidate Filtering and Court Projection. |

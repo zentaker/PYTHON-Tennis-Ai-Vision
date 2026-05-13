@@ -17,6 +17,7 @@ STAGE_NOTEBOOK_FILES = {
     "stage_3": "stage_3_court_calibration_probe.md",
     "stage_3_1": "stage_3_1_court_point_selector.md",
     "stage_4": "stage_4_ball_tracking_probe.md",
+    "stage_4_1": "stage_4_1_ball_labeling_helper.md",
 }
 
 
@@ -168,6 +169,18 @@ def stage_4_next_step(report: dict[str, Any]) -> str:
     if verdict == "needs_better_ball_model":
         return "Research a specialized tennis ball tracker or GPU-based detector later."
     return "Fix Stage 4 video loading or sampling blockers, then rerun the probe."
+
+
+def stage_4_1_next_step(report: dict[str, Any]) -> str:
+    """Return Stage 4.1 next-step text."""
+    next_step = report.get("recommended_next_step")
+    if next_step:
+        return str(next_step)
+    if (report.get("visible_ball_labels_count") or 0) > 0:
+        return "Proceed to Stage 5 ball candidate filtering and court projection."
+    if report.get("final_verdict") == "blocked":
+        return "Fix video/frame loading, then rerun Stage 4.1."
+    return "Run Stage 4.1 interactively and label visible ball positions."
 
 
 def build_stage_0_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
@@ -637,6 +650,80 @@ def build_stage_4_document(report: dict[str, Any], project_root: Path) -> dict[s
     return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
 
 
+def build_stage_4_1_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
+    """Build Stage 4.1 notebook content."""
+    json_path = report_path(project_root, "stage_4_1_ball_labeling_helper_report.json")
+    markdown_path = report_path(project_root, "stage_4_1_ball_labeling_helper_report.md")
+    next_step = stage_4_1_next_step(report)
+    friction = report.get("friction", {})
+    comparison = report.get("candidate_comparison", {})
+    comparison_summary = comparison.get("summary", {}) if isinstance(comparison, dict) else {}
+
+    summary = markdown_table(
+        [
+            ("Stage", "Stage 4.1 - Manual ball labeling helper"),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction score", friction.get("score")),
+            ("Friction level", friction.get("band")),
+            ("Timestamp", report.get("timestamp")),
+            ("Recommended next step", next_step),
+        ]
+    )
+    input_table = markdown_table(
+        [
+            ("Video path", report.get("video_path")),
+            ("Frame indices", report.get("selected_frame_indices")),
+            ("Resize width", report.get("resize_width")),
+            ("Frame source mode", report.get("frame_source_mode")),
+            ("Interactive", report.get("interactive")),
+        ]
+    )
+    output_table = markdown_table(
+        [
+            ("JSON report path", json_path),
+            ("Markdown report path", markdown_path),
+            ("Log", latest_log_for_prefix(project_root, "stage_4_1_ball_labeling_helper_")),
+            ("Manual labels CSV", report.get("output_csv_path")),
+            ("Manual labels JSON", report.get("output_json_path")),
+            ("Overlay folder", report.get("overlay_folder")),
+            ("Comparison CSV", report.get("comparison_csv_path")),
+        ]
+    )
+    console_table = markdown_table(
+        [
+            ("Stage name", "Stage 4.1 manual ball labeling helper"),
+            ("Input video", report.get("video_path")),
+            ("Frames shown", report.get("frames_shown")),
+            ("Visible labels", report.get("visible_ball_labels_count")),
+            ("Skipped frames", report.get("skipped_frames")),
+            ("Compared labels", comparison_summary.get("labeled_frames_compared")),
+            ("Average nearest distance", comparison_summary.get("average_nearest_distance")),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction", f"{not_available(friction.get('score'))} ({not_available(friction.get('band'))})"),
+            ("Recommended next step", next_step),
+        ]
+    )
+    interpretation = (
+        "Manual ball labels are available as ground truth for filtering and court projection."
+        if (report.get("visible_ball_labels_count") or 0) > 0
+        else "The helper is available, but visible ball labels have not been collected yet."
+    )
+
+    body = stage_document(
+        title="Stage 4.1 - Manual Ball Labeling Helper",
+        summary=summary,
+        input_section=input_table,
+        output_section=output_table,
+        console_table=console_table,
+        warnings=bullet_list(report.get("warnings"), "No warnings."),
+        errors=bullet_list(report.get("errors"), "No errors."),
+        interpretation=interpretation,
+        next_step=next_step,
+    )
+    entry = history_entry(report, "Stage 4.1 - Manual Ball Labeling Helper", summary, next_step)
+    return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
+
+
 def stage_document(
     *,
     title: str,
@@ -905,6 +992,29 @@ def update_lab_notebook(project_root: Path) -> list[Path]:
                 "friction": f"{not_available(nested_get(stage_4_report, ('friction', 'score')))} {not_available(nested_get(stage_4_report, ('friction', 'band')))}",
                 "main_output": "outputs/reports/stage_4_ball_tracking_probe_report.md",
                 "next_step": stage_4_next_step(stage_4_report),
+            }
+        )
+
+    stage_4_1_report = read_json_report(report_path(project_root, "stage_4_1_ball_labeling_helper_report.json"))
+    if stage_4_1_report is not None:
+        document = build_stage_4_1_document(stage_4_1_report, project_root)
+        stage_path = notebook_dir / "stage_4_1_ball_labeling_helper.md"
+        written.append(
+            write_stage_notebook(
+                stage_path,
+                document["body"],
+                document["entry"],
+                document["entry_id"],
+            )
+        )
+        stage_summaries.append(
+            {
+                "stage": "Stage 4.1",
+                "name": "Manual Ball Labeling Helper",
+                "verdict": not_available(stage_4_1_report.get("final_verdict")),
+                "friction": f"{not_available(nested_get(stage_4_1_report, ('friction', 'score')))} {not_available(nested_get(stage_4_1_report, ('friction', 'band')))}",
+                "main_output": "outputs/reports/stage_4_1_ball_labeling_helper_report.md",
+                "next_step": stage_4_1_next_step(stage_4_1_report),
             }
         )
 

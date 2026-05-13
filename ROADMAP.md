@@ -28,11 +28,15 @@ After Stage 3.1 saves valid points, rerun Stage 3 to compute and validate the co
 
 ## Stage 4: Ball Tracking Probe
 
-Current stage. Test local ball candidate detection and tracking approaches on short sample clips only after court calibration has a stable reference. This is a probe, not production-quality tracking.
+Generate automatic ball candidates on short sample clips only after court calibration has a stable reference. This is a probe, not production-quality tracking.
+
+## Stage 4.1: Manual Ball Labeling Helper
+
+Current stage. Manually label true ball positions to create a small ground-truth set for validating noisy automatic candidates.
 
 ## Stage 5: Ball Candidate Filtering And Court Projection
 
-Filter noisy ball candidates and project candidate coordinates into the calibrated court plane.
+Filter candidates using court calibration and manual labels, then project candidate coordinates into the calibrated court plane.
 
 ## Stage 6: Local MVP Pipeline
 

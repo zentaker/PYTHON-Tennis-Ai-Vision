@@ -269,3 +269,39 @@ def calculate_stage_4_friction_score(
             "manual_action_required": manual_action_required,
         },
     }
+
+
+def calculate_stage_4_1_friction_score(
+    *,
+    video_missing: bool = False,
+    frames_cannot_load: bool = False,
+    no_frames_shown: bool = False,
+    no_labels_saved: bool = False,
+    candidate_comparison_missing: bool = False,
+    errors_count: int = 0,
+    warnings_count: int = 0,
+) -> dict[str, Any]:
+    """Calculate Stage 4.1 manual ball labeling helper friction."""
+    score = 0
+    score += 35 if video_missing else 0
+    score += 45 if frames_cannot_load else 0
+    score += 35 if no_frames_shown else 0
+    score += 15 if no_labels_saved else 0
+    score += 8 if candidate_comparison_missing else 0
+    score += min(errors_count * 10, 30)
+    score += min(warnings_count * 3, 15)
+    score = max(0, min(score, 100))
+
+    return {
+        "score": score,
+        "band": friction_band(score),
+        "inputs": {
+            "video_missing": video_missing,
+            "frames_cannot_load": frames_cannot_load,
+            "no_frames_shown": no_frames_shown,
+            "no_labels_saved": no_labels_saved,
+            "candidate_comparison_missing": candidate_comparison_missing,
+            "errors_count": errors_count,
+            "warnings_count": warnings_count,
+        },
+    }

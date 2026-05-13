@@ -1,0 +1,208 @@
+{
+  "candidate_comparison": {
+    "available": true,
+    "comparison_csv_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_4_1_manual_labels\\candidate_label_comparison.csv",
+    "errors": [],
+    "rows": [
+      {
+        "frame_index": 120,
+        "label_x": 2181.0,
+        "label_y": 492.0,
+        "nearest_candidate_x": 1537.5,
+        "nearest_candidate_y": 207.0,
+        "nearest_distance_px": 703.79,
+        "within_100_px": false,
+        "within_10_px": false,
+        "within_25_px": false,
+        "within_50_px": false
+      },
+      {
+        "frame_index": 135,
+        "label_x": 2043.0,
+        "label_y": 762.0,
+        "nearest_candidate_x": 2353.5,
+        "nearest_candidate_y": 213.0,
+        "nearest_distance_px": 630.72,
+        "within_100_px": false,
+        "within_10_px": false,
+        "within_25_px": false,
+        "within_50_px": false
+      },
+      {
+        "frame_index": 150,
+        "label_x": 1905.0,
+        "label_y": 1149.0,
+        "nearest_candidate_x": 1407.81,
+        "nearest_candidate_y": 1446.0,
+        "nearest_distance_px": 579.14,
+        "within_100_px": false,
+        "within_10_px": false,
+        "within_25_px": false,
+        "within_50_px": false
+      },
+      {
+        "frame_index": 165,
+        "label_x": 1794.0,
+        "label_y": 1164.0,
+        "nearest_candidate_x": 1444.5,
+        "nearest_candidate_y": 1401.0,
+        "nearest_distance_px": 422.28,
+        "within_100_px": false,
+        "within_10_px": false,
+        "within_25_px": false,
+        "within_50_px": false
+      },
+      {
+        "frame_index": 180,
+        "label_x": 1674.0,
+        "label_y": 1248.0,
+        "nearest_candidate_x": 1474.5,
+        "nearest_candidate_y": 1356.0,
+        "nearest_distance_px": 226.86,
+        "within_100_px": false,
+        "within_10_px": false,
+        "within_25_px": false,
+        "within_50_px": false
+      }
+    ],
+    "summary": {
+      "average_nearest_distance": 512.56,
+      "labeled_frames_compared": 5,
+      "median_nearest_distance": 579.14,
+      "within_100_px": 0,
+      "within_10_px": 0,
+      "within_25_px": 0,
+      "within_50_px": 0
+    },
+    "warnings": []
+  },
+  "comparison_csv_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_4_1_manual_labels\\candidate_label_comparison.csv",
+  "errors": [],
+  "final_verdict": "ready_for_stage_5",
+  "flags": {
+    "candidate_comparison_missing": false,
+    "frames_cannot_load": false,
+    "no_frames_shown": false,
+    "no_labels_saved": false,
+    "video_missing": false
+  },
+  "frame_source_mode": "stage_4_overlay_if_available_else_video_frame",
+  "frames_shown": 5,
+  "friction": {
+    "band": "low friction",
+    "inputs": {
+      "candidate_comparison_missing": false,
+      "errors_count": 0,
+      "frames_cannot_load": false,
+      "no_frames_shown": false,
+      "no_labels_saved": false,
+      "video_missing": false,
+      "warnings_count": 0
+    },
+    "score": 0
+  },
+  "input_selection": {
+    "checked_paths": [
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\samples\\video_01.mov"
+    ],
+    "detection_method": "preferred_default",
+    "path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\samples\\video_01.mov",
+    "source": "auto_detected"
+  },
+  "interactive": true,
+  "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_4_1_ball_labeling_helper_report.json",
+  "labels": [
+    {
+      "display_height": 720,
+      "display_width": 1280,
+      "display_x": 727,
+      "display_y": 164,
+      "frame_index": 120,
+      "notes": "",
+      "original_height": 2160,
+      "original_width": 3840,
+      "overlay_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_4_1_manual_labels\\label_overlays\\manual_ball_label_frame_000120.jpg",
+      "visible": true,
+      "x": 2181.0,
+      "y": 492.0
+    },
+    {
+      "display_height": 720,
+      "display_width": 1280,
+      "display_x": 681,
+      "display_y": 254,
+      "frame_index": 135,
+      "notes": "",
+      "original_height": 2160,
+      "original_width": 3840,
+      "overlay_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_4_1_manual_labels\\label_overlays\\manual_ball_label_frame_000135.jpg",
+      "visible": true,
+      "x": 2043.0,
+      "y": 762.0
+    },
+    {
+      "display_height": 720,
+      "display_width": 1280,
+      "display_x": 635,
+      "display_y": 383,
+      "frame_index": 150,
+      "notes": "",
+      "original_height": 2160,
+      "original_width": 3840,
+      "overlay_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_4_1_manual_labels\\label_overlays\\manual_ball_label_frame_000150.jpg",
+      "visible": true,
+      "x": 1905.0,
+      "y": 1149.0
+    },
+    {
+      "display_height": 720,
+      "display_width": 1280,
+      "display_x": 598,
+      "display_y": 388,
+      "frame_index": 165,
+      "notes": "",
+      "original_height": 2160,
+      "original_width": 3840,
+      "overlay_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_4_1_manual_labels\\label_overlays\\manual_ball_label_frame_000165.jpg",
+      "visible": true,
+      "x": 1794.0,
+      "y": 1164.0
+    },
+    {
+      "display_height": 720,
+      "display_width": 1280,
+      "display_x": 558,
+      "display_y": 416,
+      "frame_index": 180,
+      "notes": "",
+      "original_height": 2160,
+      "original_width": 3840,
+      "overlay_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_4_1_manual_labels\\label_overlays\\manual_ball_label_frame_000180.jpg",
+      "visible": true,
+      "x": 1674.0,
+      "y": 1248.0
+    }
+  ],
+  "labels_saved": 5,
+  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_4_1_ball_labeling_helper_20260513T072719Z.log",
+  "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_4_1_ball_labeling_helper_report.md",
+  "output_csv_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_4_1_manual_labels\\manual_ball_labels.csv",
+  "output_json_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_4_1_manual_labels\\manual_ball_labels.json",
+  "overlay_folder": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_4_1_manual_labels\\label_overlays",
+  "recommended_fixes": [],
+  "recommended_next_step": "Proceed to Stage 5: Ball Candidate Filtering and Court Projection.",
+  "resize_width": 1280,
+  "selected_frame_indices": [
+    120,
+    135,
+    150,
+    165,
+    180
+  ],
+  "skipped_frames": 0,
+  "stage": "stage_4_1_ball_labeling_helper",
+  "timestamp": "2026-05-13T07:27:19+00:00",
+  "video_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\samples\\video_01.mov",
+  "visible_ball_labels_count": 5,
+  "warnings": []
+}
