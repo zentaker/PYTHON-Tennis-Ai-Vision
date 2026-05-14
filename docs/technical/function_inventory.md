@@ -449,6 +449,64 @@ NOTES:
 
 ---
 
+FUNCTION: calculate_stage_9_friction_score
+FILE: src/tennis_vision/friction.py
+LINE: 613
+AREA: Friction
+
+PURPOSE:
+  Calculates friction for Stage 9 tactical metrics.
+
+INPUTS:
+  - stage-specific warning/error/input flags
+
+OUTPUTS:
+  - friction score dictionary
+
+CALLED BY:
+  - scripts/run_stage_9_tactical_metrics.py
+
+WHY PRODUCT OWNER CARES:
+  Prevents failures and uncertainty from being hidden.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/friction.py and go to line 613.
+  Search: def calculate_stage_9_friction_score
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: calculate_stage_9_1_friction_score
+FILE: src/tennis_vision/friction.py
+LINE: 658
+AREA: Friction
+
+PURPOSE:
+  Calculates friction for Stage 9.1 projection coverage.
+
+INPUTS:
+  - stage-specific warning/error/input flags
+
+OUTPUTS:
+  - friction score dictionary
+
+CALLED BY:
+  - scripts/run_stage_9_1_projection_coverage.py
+
+WHY PRODUCT OWNER CARES:
+  Prevents failures and uncertainty from being hidden.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/friction.py and go to line 658.
+  Search: def calculate_stage_9_1_friction_score
+
+NOTES:
+  None.
+
+---
+
 ## Stage 1 - Video IO
 
 FUNCTION: read_video_metadata
@@ -1240,11 +1298,353 @@ NOTES:
 
 ---
 
+## Stage 9 - Tactical Metrics
+
+FUNCTION: assign_court_zone
+FILE: src/tennis_vision/court_zones.py
+LINE: 59
+AREA: Stage 9 - Tactical Metrics
+
+PURPOSE:
+  Assigns a normalized ball point to an approximate tactical court zone.
+
+INPUTS:
+  - projected_x
+  - projected_y
+
+OUTPUTS:
+  - zone id
+  - depth
+  - lateral lane
+  - side
+  - confidence-like score
+
+CALLED BY:
+  - build_ball_zone_assignments
+
+WHY PRODUCT OWNER CARES:
+  This turns raw tracking coordinates into tennis-readable shot placement information.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/court_zones.py and go to line 59.
+  Search: def assign_court_zone
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: classify_depth
+FILE: src/tennis_vision/court_zones.py
+LINE: 38
+AREA: Stage 9 - Tactical Metrics
+
+PURPOSE:
+  Classifies a normalized court y coordinate as short, mid, deep, or unknown.
+
+INPUTS:
+  - projected_y
+
+OUTPUTS:
+  - depth class
+
+CALLED BY:
+  - assign_court_zone
+
+WHY PRODUCT OWNER CARES:
+  Depth is one of the most important first tactical summaries.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/court_zones.py and go to line 38.
+  Search: def classify_depth
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: build_ball_zone_assignments
+FILE: src/tennis_vision/tactical_metrics.py
+LINE: 41
+AREA: Stage 9 - Tactical Metrics
+
+PURPOSE:
+  Combines manual labels, trajectory rows, and projected candidates into zone assignment rows.
+
+INPUTS:
+  - expanded labels
+  - smoothed trajectory
+  - projected candidate rows
+
+OUTPUTS:
+  - ball zone assignment rows
+
+CALLED BY:
+  - scripts/run_stage_9_tactical_metrics.py
+
+WHY PRODUCT OWNER CARES:
+  This is the main bridge from validated ball data to tactical placement outputs.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/tactical_metrics.py and go to line 41.
+  Search: def build_ball_zone_assignments
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: estimate_shot_directions
+FILE: src/tennis_vision/tactical_metrics.py
+LINE: 81
+AREA: Stage 9 - Tactical Metrics
+
+PURPOSE:
+  Estimates approximate crosscourt/down-the-line/center-like movement between consecutive ball points.
+
+INPUTS:
+  - zone assignment rows
+
+OUTPUTS:
+  - shot direction estimate rows
+
+CALLED BY:
+  - scripts/run_stage_9_tactical_metrics.py
+
+WHY PRODUCT OWNER CARES:
+  Direction estimates are a first tactical signal, but they remain hypothesis-based.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/tactical_metrics.py and go to line 81.
+  Search: def estimate_shot_directions
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: build_rally_tactical_summary
+FILE: src/tennis_vision/tactical_metrics.py
+LINE: 137
+AREA: Stage 9 - Tactical Metrics
+
+PURPOSE:
+  Summarizes dominant zone/depth/lane for each rally segment.
+
+INPUTS:
+  - rally segment rows
+  - zone assignment rows
+
+OUTPUTS:
+  - rally tactical summary rows
+
+CALLED BY:
+  - scripts/run_stage_9_tactical_metrics.py
+
+WHY PRODUCT OWNER CARES:
+  This gives the Product Owner a compact rally-level tactical readout.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/tactical_metrics.py and go to line 137.
+  Search: def build_rally_tactical_summary
+
+NOTES:
+  None.
+
+---
+
+## Stage 9.1 - Projection Coverage
+
+FUNCTION: load_stage_3_homography
+FILE: src/tennis_vision/projection_coverage.py
+LINE: 42
+AREA: Stage 9.1 - Projection Coverage
+
+PURPOSE:
+  Loads the Stage 3 image-to-court homography from the calibration report.
+
+INPUTS:
+  - Stage 3 calibration report path
+
+OUTPUTS:
+  - homography matrix
+  - metadata
+  - errors
+
+CALLED BY:
+  - scripts/run_stage_9_1_projection_coverage.py
+
+WHY PRODUCT OWNER CARES:
+  Projection coverage depends on the same validated court calibration used by earlier stages.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/projection_coverage.py and go to line 42.
+  Search: def load_stage_3_homography
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: project_labels_to_court
+FILE: src/tennis_vision/projection_coverage.py
+LINE: 57
+AREA: Stage 9.1 - Projection Coverage
+
+PURPOSE:
+  Projects expanded manual ball labels from image pixels into normalized court space.
+
+INPUTS:
+  - expanded label rows
+  - homography matrix
+
+OUTPUTS:
+  - projected label rows with projection status
+
+CALLED BY:
+  - scripts/run_stage_9_1_projection_coverage.py
+
+WHY PRODUCT OWNER CARES:
+  This reduces unknown tactical zones by giving all validated labels court coordinates when possible.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/projection_coverage.py and go to line 57.
+  Search: def project_labels_to_court
+
+NOTES:
+  Out-of-range projections are preserved as uncertainty instead of forced into confident zones.
+
+---
+
+FUNCTION: calculate_projection_coverage
+FILE: src/tennis_vision/projection_coverage.py
+LINE: 118
+AREA: Stage 9.1 - Projection Coverage
+
+PURPOSE:
+  Compares Stage 9 projection coverage with Stage 9.1 projected label coverage.
+
+INPUTS:
+  - projected Stage 9.1 labels
+  - Stage 9 zone rows
+
+OUTPUTS:
+  - before/after projection coverage metrics
+
+CALLED BY:
+  - scripts/run_stage_9_1_projection_coverage.py
+
+WHY PRODUCT OWNER CARES:
+  Shows whether the unknown-zone problem actually improved.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/projection_coverage.py and go to line 118.
+  Search: def calculate_projection_coverage
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: assign_tuned_court_zone
+FILE: src/tennis_vision/court_zone_tuning.py
+LINE: 47
+AREA: Stage 9.1 - Projection Coverage
+
+PURPOSE:
+  Assigns a tuned approximate zone while preserving missing and out-of-bounds uncertainty.
+
+INPUTS:
+  - projected_x
+  - projected_y
+  - optional tuning config
+
+OUTPUTS:
+  - tuned zone
+  - depth
+  - lane
+  - confidence-like score
+  - notes
+
+CALLED BY:
+  - tune_zone_assignments
+
+WHY PRODUCT OWNER CARES:
+  This turns improved projection coverage into more readable tactical placement without pretending to be official line calling.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/court_zone_tuning.py and go to line 47.
+  Search: def assign_tuned_court_zone
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: tune_zone_assignments
+FILE: src/tennis_vision/court_zone_tuning.py
+LINE: 83
+AREA: Stage 9.1 - Projection Coverage
+
+PURPOSE:
+  Applies tuned zone assignment to every projected expanded label.
+
+INPUTS:
+  - merged projected labels and Stage 9 assignment context
+
+OUTPUTS:
+  - tuned ball zone assignment rows
+
+CALLED BY:
+  - scripts/run_stage_9_1_projection_coverage.py
+
+WHY PRODUCT OWNER CARES:
+  This creates the Stage 9.1 replacement zone assignment artifact.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/court_zone_tuning.py and go to line 83.
+  Search: def tune_zone_assignments
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: compare_stage_9_to_9_1
+FILE: src/tennis_vision/court_zone_tuning.py
+LINE: 125
+AREA: Stage 9.1 - Projection Coverage
+
+PURPOSE:
+  Builds frame-level before/after comparison rows for Stage 9 and Stage 9.1.
+
+INPUTS:
+  - Stage 9 zone rows
+  - Stage 9.1 tuned rows
+
+OUTPUTS:
+  - comparison rows with improvement status
+
+CALLED BY:
+  - scripts/run_stage_9_1_projection_coverage.py
+
+WHY PRODUCT OWNER CARES:
+  The Product Owner can see which frames improved from unknown or gained projection.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/court_zone_tuning.py and go to line 125.
+  Search: def compare_stage_9_to_9_1
+
+NOTES:
+  None.
+
+---
+
 ## Lab Notebook
 
 FUNCTION: update_lab_notebook
 FILE: src/tennis_vision/lab_notebook.py
-LINE: 1479
+LINE: 1651
 AREA: Lab Notebook
 
 PURPOSE:
@@ -1264,7 +1664,7 @@ WHY PRODUCT OWNER CARES:
   Keeps execution evidence current without manual documentation commands.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/lab_notebook.py and go to line 1479.
+  Open src/tennis_vision/lab_notebook.py and go to line 1651.
   Search: def update_lab_notebook
 
 NOTES:

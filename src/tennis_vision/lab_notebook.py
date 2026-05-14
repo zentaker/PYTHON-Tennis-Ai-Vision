@@ -25,6 +25,8 @@ STAGE_NOTEBOOK_FILES = {
     "stage_7_1": "stage_7_1_player_filtering.md",
     "stage_8": "stage_8_event_timeline.md",
     "stage_8_1": "stage_8_1_timeline_validation.md",
+    "stage_9": "stage_9_tactical_metrics.md",
+    "stage_9_1": "stage_9_1_projection_coverage.md",
 }
 
 
@@ -289,6 +291,36 @@ def stage_8_1_next_step(report: dict[str, Any]) -> str:
     if verdict == "needs_better_candidate_generation":
         return "Improve candidate generation before timeline validation."
     return "Run Stage 8.1 interactively with more frames, then rerun validation."
+
+
+def stage_9_next_step(report: dict[str, Any]) -> str:
+    """Return Stage 9 next-step text."""
+    next_step = report.get("recommended_next_step")
+    if next_step:
+        return str(next_step)
+    verdict = report.get("final_verdict")
+    if verdict == "ready_for_stage_10":
+        return "Proceed to Stage 10 analytical report generator and coaching summary prototype."
+    if verdict == "needs_better_projection":
+        return "Tune court projection or candidate projection coverage, then rerun Stage 9."
+    if verdict == "needs_event_validation":
+        return "Return to Stage 8.2 manual event validation."
+    return "Review Stage 9 warnings, then decide between Stage 9.1 tuning and more validation."
+
+
+def stage_9_1_next_step(report: dict[str, Any]) -> str:
+    """Return Stage 9.1 next-step text."""
+    next_step = report.get("recommended_next_step")
+    if next_step:
+        return str(next_step)
+    verdict = report.get("final_verdict")
+    if verdict == "ready_for_stage_10":
+        return "Proceed to Stage 10 analytical report generator and coaching summary prototype."
+    if verdict == "needs_projection_review":
+        return "Review projection bounds, calibration, or court zone tuning before Stage 10."
+    if verdict == "needs_more_labels":
+        return "Collect more expanded labels, then rerun Stage 9.1."
+    return "Fix Stage 9.1 blockers, then rerun projection coverage tuning."
 
 
 def build_stage_0_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
@@ -1332,6 +1364,146 @@ def build_stage_8_1_document(report: dict[str, Any], project_root: Path) -> dict
     return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
 
 
+def build_stage_9_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
+    """Build Stage 9 notebook content."""
+    json_path = report_path(project_root, "stage_9_tactical_metrics_report.json")
+    markdown_path = report_path(project_root, "stage_9_tactical_metrics_report.md")
+    next_step = stage_9_next_step(report)
+    friction = report.get("friction", {})
+    outputs = report.get("output_paths", {})
+
+    summary = markdown_table(
+        [
+            ("Stage", "Stage 9 - Tactical metrics and shot zones"),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction score", friction.get("score")),
+            ("Friction level", friction.get("band")),
+            ("Timestamp", report.get("timestamp")),
+            ("Recommended next step", next_step),
+        ]
+    )
+    input_table = markdown_table(
+        [
+            ("Validated timeline", nested_get(report, ("inputs_used", "validated_timeline"))),
+            ("Expanded labels", nested_get(report, ("inputs_used", "expanded_labels"))),
+            ("Smoothed trajectory", nested_get(report, ("inputs_used", "smoothed_trajectory"))),
+            ("Projected candidates", nested_get(report, ("inputs_used", "projected_improved_candidates"))),
+            ("Player associations", nested_get(report, ("inputs_used", "refined_player_associations"))),
+        ]
+    )
+    output_table = markdown_table(
+        [
+            ("JSON report path", json_path),
+            ("Markdown report path", markdown_path),
+            ("Log", latest_log_for_prefix(project_root, "stage_9_tactical_metrics_")),
+            ("Ball zone assignments", outputs.get("ball_zone_assignments_csv")),
+            ("Shot direction estimates", outputs.get("shot_direction_estimates_csv")),
+            ("Rally tactical summary", outputs.get("rally_tactical_summary_csv")),
+            ("Tactical summary", outputs.get("tactical_summary_md")),
+            ("Court zone map", outputs.get("court_zone_map")),
+            ("Ball placement map", outputs.get("ball_placement_map")),
+        ]
+    )
+    console_table = markdown_table(
+        [
+            ("Ball points analyzed", report.get("ball_points_analyzed")),
+            ("Projected points", report.get("projected_points_count")),
+            ("Zone assignments", report.get("zone_assignments_count")),
+            ("Unknown zones", report.get("unknown_zone_count")),
+            ("Direction estimates", report.get("direction_estimates_count")),
+            ("Rally summaries", report.get("rally_summaries_count")),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction", f"{not_available(friction.get('score'))} ({not_available(friction.get('band'))})"),
+        ]
+    )
+    interpretation = (
+        "Stage 9 translates validated ball/timeline/player evidence into first-pass tactical placement signals. "
+        "The outputs are approximate and hypothesis-based, not official scoring, line calling, or coaching conclusions."
+    )
+    body = stage_document(
+        title="Stage 9 - Tactical Metrics",
+        summary=summary,
+        input_section=input_table,
+        output_section=output_table,
+        console_table=console_table,
+        warnings=bullet_list(report.get("warnings"), "No warnings."),
+        errors=bullet_list(report.get("errors"), "No errors."),
+        interpretation=interpretation,
+        next_step=next_step,
+    )
+    entry = history_entry(report, "Stage 9 - Tactical Metrics", summary, next_step)
+    return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
+
+
+def build_stage_9_1_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
+    """Build Stage 9.1 notebook content."""
+    json_path = report_path(project_root, "stage_9_1_projection_coverage_report.json")
+    markdown_path = report_path(project_root, "stage_9_1_projection_coverage_report.md")
+    next_step = stage_9_1_next_step(report)
+    friction = report.get("friction", {})
+    outputs = report.get("output_paths", {})
+
+    summary = markdown_table(
+        [
+            ("Stage", "Stage 9.1 - Projection coverage and court zone tuning"),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction score", friction.get("score")),
+            ("Friction level", friction.get("band")),
+            ("Timestamp", report.get("timestamp")),
+            ("Recommended next step", next_step),
+        ]
+    )
+    input_table = markdown_table(
+        [
+            ("Expanded labels", nested_get(report, ("inputs_used", "expanded_labels"))),
+            ("Stage 9 assignments", nested_get(report, ("inputs_used", "stage_9_assignments"))),
+            ("Court calibration", nested_get(report, ("inputs_used", "court_calibration"))),
+            ("Homography source", nested_get(report, ("inputs_used", "homography_source"))),
+        ]
+    )
+    output_table = markdown_table(
+        [
+            ("JSON report path", json_path),
+            ("Markdown report path", markdown_path),
+            ("Log", latest_log_for_prefix(project_root, "stage_9_1_projection_coverage_")),
+            ("Projected expanded labels", outputs.get("projected_expanded_labels_csv")),
+            ("Tuned zone assignments", outputs.get("tuned_ball_zone_assignments_csv")),
+            ("Zone comparison", outputs.get("stage_9_vs_9_1_zone_comparison_csv")),
+            ("Projection map", outputs.get("projection_coverage_map")),
+            ("Tuned placement map", outputs.get("tuned_ball_placement_map")),
+        ]
+    )
+    console_table = markdown_table(
+        [
+            ("Stage 9 projected points", report.get("stage_9_projected_points")),
+            ("Stage 9 unknown zones", report.get("stage_9_unknown_zones")),
+            ("Stage 9.1 projected points", report.get("stage_9_1_projected_points")),
+            ("Stage 9.1 unknown zones", report.get("stage_9_1_unknown_zones")),
+            ("Unknown zone reduction", report.get("unknown_zone_reduction")),
+            ("Projection coverage improvement", report.get("projection_coverage_improvement")),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction", f"{not_available(friction.get('score'))} ({not_available(friction.get('band'))})"),
+        ]
+    )
+    interpretation = (
+        "Stage 9.1 projects expanded manual labels through the Stage 3 homography so tactical zones "
+        "are based on court-space coordinates rather than missing projection fields. Outputs remain approximate."
+    )
+    body = stage_document(
+        title="Stage 9.1 - Projection Coverage",
+        summary=summary,
+        input_section=input_table,
+        output_section=output_table,
+        console_table=console_table,
+        warnings=bullet_list(report.get("warnings"), "No warnings."),
+        errors=bullet_list(report.get("errors"), "No errors."),
+        interpretation=interpretation,
+        next_step=next_step,
+    )
+    entry = history_entry(report, "Stage 9.1 - Projection Coverage", summary, next_step)
+    return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
+
+
 def stage_document(
     *,
     title: str,
@@ -1780,6 +1952,38 @@ def update_lab_notebook(project_root: Path) -> list[Path]:
                 "friction": f"{not_available(nested_get(stage_8_1_report, ('friction', 'score')))} {not_available(nested_get(stage_8_1_report, ('friction', 'band')))}",
                 "main_output": "outputs/reports/stage_8_1_timeline_validation_report.md",
                 "next_step": stage_8_1_next_step(stage_8_1_report),
+            }
+        )
+
+    stage_9_report = read_json_report(report_path(project_root, "stage_9_tactical_metrics_report.json"))
+    if stage_9_report is not None:
+        document = build_stage_9_document(stage_9_report, project_root)
+        stage_path = notebook_dir / "stage_9_tactical_metrics.md"
+        written.append(write_stage_notebook(stage_path, document["body"], document["entry"], document["entry_id"]))
+        stage_summaries.append(
+            {
+                "stage": "Stage 9",
+                "name": "Tactical Metrics",
+                "verdict": not_available(stage_9_report.get("final_verdict")),
+                "friction": f"{not_available(nested_get(stage_9_report, ('friction', 'score')))} {not_available(nested_get(stage_9_report, ('friction', 'band')))}",
+                "main_output": "outputs/reports/stage_9_tactical_metrics_report.md",
+                "next_step": stage_9_next_step(stage_9_report),
+            }
+        )
+
+    stage_9_1_report = read_json_report(report_path(project_root, "stage_9_1_projection_coverage_report.json"))
+    if stage_9_1_report is not None:
+        document = build_stage_9_1_document(stage_9_1_report, project_root)
+        stage_path = notebook_dir / "stage_9_1_projection_coverage.md"
+        written.append(write_stage_notebook(stage_path, document["body"], document["entry"], document["entry_id"]))
+        stage_summaries.append(
+            {
+                "stage": "Stage 9.1",
+                "name": "Projection Coverage",
+                "verdict": not_available(stage_9_1_report.get("final_verdict")),
+                "friction": f"{not_available(nested_get(stage_9_1_report, ('friction', 'score')))} {not_available(nested_get(stage_9_1_report, ('friction', 'band')))}",
+                "main_output": "outputs/reports/stage_9_1_projection_coverage_report.md",
+                "next_step": stage_9_1_next_step(stage_9_1_report),
             }
         )
 

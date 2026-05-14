@@ -608,3 +608,87 @@ def calculate_stage_8_1_friction_score(
             "warnings_count": warnings_count,
         },
     }
+
+
+def calculate_stage_9_friction_score(
+    *,
+    validated_timeline_missing: bool = False,
+    projected_points_missing: bool = False,
+    too_few_ball_points: bool = False,
+    zone_assignment_failed: bool = False,
+    too_many_unknown_zones: bool = False,
+    direction_estimation_unreliable: bool = False,
+    rally_summary_failed: bool = False,
+    visual_generation_failed: bool = False,
+    errors_count: int = 0,
+    warnings_count: int = 0,
+) -> dict[str, Any]:
+    """Calculate Stage 9 tactical metrics friction."""
+    score = 0
+    score += 45 if validated_timeline_missing else 0
+    score += 30 if projected_points_missing else 0
+    score += 18 if too_few_ball_points else 0
+    score += 35 if zone_assignment_failed else 0
+    score += 12 if too_many_unknown_zones else 0
+    score += 10 if direction_estimation_unreliable else 0
+    score += 25 if rally_summary_failed else 0
+    score += 8 if visual_generation_failed else 0
+    score += min(errors_count * 10, 30)
+    score += min(warnings_count * 3, 15)
+    score = max(0, min(score, 100))
+
+    return {
+        "score": score,
+        "band": friction_band(score),
+        "inputs": {
+            "validated_timeline_missing": validated_timeline_missing,
+            "projected_points_missing": projected_points_missing,
+            "too_few_ball_points": too_few_ball_points,
+            "zone_assignment_failed": zone_assignment_failed,
+            "too_many_unknown_zones": too_many_unknown_zones,
+            "direction_estimation_unreliable": direction_estimation_unreliable,
+            "rally_summary_failed": rally_summary_failed,
+            "visual_generation_failed": visual_generation_failed,
+            "errors_count": errors_count,
+            "warnings_count": warnings_count,
+        },
+    }
+
+
+def calculate_stage_9_1_friction_score(
+    *,
+    expanded_labels_missing: bool = False,
+    homography_missing: bool = False,
+    projection_failed: bool = False,
+    many_out_of_bounds_points: bool = False,
+    unknown_zones_not_reduced: bool = False,
+    visual_generation_failed: bool = False,
+    warnings_count: int = 0,
+    errors_count: int = 0,
+) -> dict[str, Any]:
+    """Calculate Stage 9.1 projection coverage and zone tuning friction."""
+    score = 0
+    score += 45 if expanded_labels_missing else 0
+    score += 45 if homography_missing else 0
+    score += 30 if projection_failed else 0
+    score += 15 if many_out_of_bounds_points else 0
+    score += 25 if unknown_zones_not_reduced else 0
+    score += 8 if visual_generation_failed else 0
+    score += min(warnings_count * 3, 15)
+    score += min(errors_count * 10, 30)
+    score = max(0, min(score, 100))
+
+    return {
+        "score": score,
+        "band": friction_band(score),
+        "inputs": {
+            "expanded_labels_missing": expanded_labels_missing,
+            "homography_missing": homography_missing,
+            "projection_failed": projection_failed,
+            "many_out_of_bounds_points": many_out_of_bounds_points,
+            "unknown_zones_not_reduced": unknown_zones_not_reduced,
+            "visual_generation_failed": visual_generation_failed,
+            "warnings_count": warnings_count,
+            "errors_count": errors_count,
+        },
+    }

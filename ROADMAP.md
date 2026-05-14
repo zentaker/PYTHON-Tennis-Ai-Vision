@@ -40,7 +40,7 @@ Filter candidates using court calibration and manual labels, then project candid
 
 ## Stage 5.1: Ball Candidate Generation Improvement
 
-Current stage. Improve local handcrafted candidate generation and compare HSV, motion, court-region, and hybrid strategies against manual labels.
+Implemented. Improve local handcrafted candidate generation and compare HSV, motion, court-region, and hybrid strategies against manual labels.
 
 Decision branch:
 
@@ -87,7 +87,7 @@ Possible next paths:
 
 ## Stage 8.1: Expanded Ball Labels And Timeline Validation
 
-Current stage. Expand or reuse manual ball labels, validate improved candidates against those labels, and check whether Stage 8 timeline events have enough label support.
+Implemented. Expand or reuse manual ball labels, validate improved candidates against those labels, and check whether Stage 8 timeline events have enough label support.
 
 Possible next paths:
 
@@ -97,7 +97,27 @@ Possible next paths:
 
 ## Stage 9: Tactical Metrics And Shot Zone Prototype
 
-Planned. Use validated timeline, court projection, and player identities to start lightweight tactical metrics and shot-zone summaries without official scoring or line calling.
+Implemented. Use validated timeline, court projection, and player identities to start lightweight tactical metrics and shot-zone summaries without official scoring or line calling.
+
+Possible next paths:
+
+- Stage 10: analytical report generator and coaching summary prototype.
+- Stage 9.1: court zone tuning if unknown zones or zone boundaries need refinement.
+- Stage 8.2: manual event labeling if event confidence is weak.
+
+## Stage 9.1: Court Zone Tuning And Projection Coverage
+
+Current stage. Project expanded labels through the Stage 3 homography, tune court zone assignment, compare Stage 9 vs Stage 9.1, and reduce unknown tactical zones before narrative reporting.
+
+Possible next paths:
+
+- Stage 10: analytical report generator and coaching summary prototype.
+- Stage 9.2: projection review if unknown zones or out-of-bounds projections remain high.
+- Stage 8.2: manual event validation if event confidence is weak.
+
+## Stage 10: Analytical Report Generator And Coaching Summary Prototype
+
+Planned. Turn validated metrics, timeline evidence, and visual previews into a plain-language analysis report while preserving uncertainty.
 
 ## Future Phase: Local MVP Pipeline
 

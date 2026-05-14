@@ -15,7 +15,7 @@ Friction level:
   low friction
 
 Timestamp:
-  2026-05-13T19:25:39+00:00
+  2026-05-14T01:49:12+00:00
 
 Recommended next step:
   Proceed to Stage 1 video loading and frame extraction.
@@ -52,7 +52,7 @@ Markdown report path:
   C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\environment_report.md
 
 Log:
-  C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\doctor_20260513T192539Z.log
+  C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\doctor_20260514T014912Z.log
 
 ## Console-equivalent table
 
@@ -94,6 +94,18 @@ The local Python environment is usable for the current project stages. The remai
 Proceed to Stage 1 video loading and frame extraction.
 
 ## Run history
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
 
 Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
 
@@ -264,3 +276,41 @@ Older entries are preserved as originally written. Some historical entries may u
 | Friction score | 15 |
 | Friction level | low friction |
 | Next step | Proceed to Stage 1 video loading and frame extraction. |
+
+<!-- lab-entry:2026-05-13T21:17:09+00:00 -->
+
+### 2026-05-13T21:17:09+00:00
+
+Stage:
+  Stage 0 — Environment
+
+Verdict:
+  ready_with_warnings
+
+Friction score:
+  15
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed to Stage 1 video loading and frame extraction.
+
+<!-- lab-entry:2026-05-14T01:49:12+00:00 -->
+
+### 2026-05-14T01:49:12+00:00
+
+Stage:
+  Stage 0 — Environment
+
+Verdict:
+  ready_with_warnings
+
+Friction score:
+  15
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed to Stage 1 video loading and frame extraction.

@@ -1,0 +1,85 @@
+{
+  "errors": [],
+  "expanded_labels_count": 12,
+  "final_verdict": "ready_for_stage_10",
+  "flags": {
+    "expanded_labels_missing": false,
+    "homography_missing": false,
+    "many_out_of_bounds_points": false,
+    "projection_failed": false,
+    "unknown_zones_not_reduced": false,
+    "visual_generation_failed": false
+  },
+  "friction": {
+    "band": "low friction",
+    "inputs": {
+      "errors_count": 0,
+      "expanded_labels_missing": false,
+      "homography_missing": false,
+      "many_out_of_bounds_points": false,
+      "projection_failed": false,
+      "unknown_zones_not_reduced": false,
+      "visual_generation_failed": false,
+      "warnings_count": 0
+    },
+    "score": 0
+  },
+  "homography_info": {
+    "homography_available": true,
+    "target_size": [
+      360,
+      780
+    ]
+  },
+  "inputs_used": {
+    "court_calibration": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_3_court_calibration_probe_report.json",
+    "expanded_labels": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_1_timeline_validation\\expanded_ball_labels.csv",
+    "homography_source": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_3_court_calibration_probe_report.json",
+    "stage_9_assignments": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_tactical_metrics\\ball_zone_assignments.csv"
+  },
+  "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_9_1_projection_coverage_report.json",
+  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_9_1_projection_coverage_20260514T015142Z.log",
+  "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_9_1_projection_coverage_report.md",
+  "output_paths": {
+    "projected_expanded_labels_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_1_projection_coverage\\projected_expanded_labels.csv",
+    "projection_coverage_map": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_1_projection_coverage\\projection_coverage_map.jpg",
+    "stage_9_vs_9_1_zone_comparison_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_1_projection_coverage\\stage_9_vs_9_1_zone_comparison.csv",
+    "tuned_ball_placement_map": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_1_projection_coverage\\tuned_ball_placement_map.jpg",
+    "tuned_ball_zone_assignments_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_1_projection_coverage\\tuned_ball_zone_assignments.csv",
+    "tuned_rally_tactical_summary_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_1_projection_coverage\\tuned_rally_tactical_summary.csv",
+    "tuned_shot_direction_estimates_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_1_projection_coverage\\tuned_shot_direction_estimates.csv",
+    "zone_comparison_preview": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_1_projection_coverage\\zone_comparison_preview.jpg"
+  },
+  "projection_coverage_improvement": 7,
+  "projection_failed_count": 0,
+  "projection_success_count": 12,
+  "recommended_next_step": "Proceed to Stage 10: Analytical Report Generator and Coaching Summary Prototype.",
+  "stage": "stage_9_1_projection_coverage",
+  "stage_9_1_projected_points": 12,
+  "stage_9_1_unknown_zones": 0,
+  "stage_9_projected_points": 5,
+  "stage_9_unknown_zones": 7,
+  "timestamp": "2026-05-14T01:51:42+00:00",
+  "tuned_depth_distribution": {
+    "deep": 5,
+    "mid": 5,
+    "short": 2
+  },
+  "tuned_lateral_distribution": {
+    "center": 8,
+    "left": 3,
+    "right": 1
+  },
+  "tuned_zone_distribution": {
+    "far_deep_center": 1,
+    "far_deep_right": 1,
+    "far_mid_center": 3,
+    "far_short_center": 1,
+    "near_deep_left": 1,
+    "near_mid_left": 2,
+    "near_short_center": 1,
+    "out_of_bounds": 2
+  },
+  "unknown_zone_reduction": 7,
+  "warnings": []
+}

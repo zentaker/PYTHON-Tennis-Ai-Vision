@@ -310,3 +310,33 @@ REUSABLE RULE:
 
 RELATED STAGES:
   Stage 8, Stage 8.1.
+
+---
+
+CASE F013 - Projection coverage limits tactical interpretation
+
+AREA:
+  Tactical metrics
+
+WHAT HAPPENED:
+  Stage 9 analyzed 12 ball points, but only 5 had projected court
+  coordinates.
+
+ROOT CAUSE:
+  Projected coordinates were generated for the high-confidence
+  candidate/trajectory path, not for every expanded manual label.
+
+IMPACT:
+  Seven ball points became unknown tactical zones even though those ball
+  positions had been manually labeled.
+
+RESOLUTION:
+  Stage 9.1 projects expanded labels using the Stage 3 homography and reruns
+  tuned zone assignment before analytical reporting.
+
+REUSABLE RULE:
+  Tactical metrics should project all validated labels before zone analysis.
+  Do not treat missing projection as tactical evidence.
+
+RELATED STAGES:
+  Stage 9, Stage 9.1.

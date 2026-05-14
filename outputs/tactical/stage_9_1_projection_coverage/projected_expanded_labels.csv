@@ -1,0 +1,13 @@
+frame_index,x,y,projected_x,projected_y,projection_status,source,notes
+90,2331.0,234.0,239.299,-487.826,outside_expected_range,stage_8_1_manual,Projected but outside expected normalized court range.
+105,2304.0,345.0,224.761,-280.756,outside_expected_range,stage_8_1_manual,Projected but outside expected normalized court range.
+120,2175.0,492.0,180.71,-59.098,projected,stage_8_1_manual,Projected with Stage 3 homography.
+135,2043.0,759.0,148.003,234.472,projected,stage_8_1_manual,Projected with Stage 3 homography.
+150,1911.0,1146.0,128.598,516.26,projected,stage_8_1_manual,Projected with Stage 3 homography.
+165,1797.0,1161.0,106.032,526.175,projected,stage_8_1_manual,Projected with Stage 3 homography.
+180,1671.0,1248.0,85.083,574.978,projected,stage_8_1_manual,Projected with Stage 3 homography.
+195,1578.0,1425.0,76.532,660.861,projected,stage_8_1_manual,Projected with Stage 3 homography.
+210,1941.0,942.0,128.759,383.846,projected,stage_8_1_manual,Projected with Stage 3 homography.
+225,2169.0,744.0,179.985,218.692,projected,stage_8_1_manual,Projected with Stage 3 homography.
+240,2307.0,708.0,216.191,182.282,projected,stage_8_1_manual,Projected with Stage 3 homography.
+255,2397.0,507.0,248.243,-44.495,projected,stage_8_1_manual,Projected with Stage 3 homography.

@@ -262,12 +262,40 @@ WRITES:
 
 STAGE: Stage 9
 NAME: Tactical Metrics and Shot Zones
-STATUS: Planned
-MAIN SCRIPT: Not implemented
+STATUS: Implemented
+MAIN SCRIPT: scripts/run_stage_9_tactical_metrics.py
 MAIN MODULES:
-  - Planned
+  - src/tennis_vision/tactical_metrics.py
+  - src/tennis_vision/court_zones.py
 READS:
   - validated Stage 8.1 timeline
+  - expanded ball labels
+  - Stage 6 smoothed trajectory
+  - Stage 5.1 projected candidates
+  - Stage 7.1 player associations
 WRITES:
-  - Planned tactical metrics
+  - ball zone assignments
+  - shot direction estimates
+  - rally tactical summary
+  - tactical previews
+  - Stage 9 reports
 
+---
+
+STAGE: Stage 9.1
+NAME: Projection Coverage and Court Zone Tuning
+STATUS: Implemented
+MAIN SCRIPT: scripts/run_stage_9_1_projection_coverage.py
+MAIN MODULES:
+  - src/tennis_vision/projection_coverage.py
+  - src/tennis_vision/court_zone_tuning.py
+READS:
+  - Stage 8.1 expanded labels
+  - Stage 9 zone assignments
+  - Stage 3 homography report
+WRITES:
+  - projected expanded labels
+  - tuned zone assignments
+  - before/after comparison
+  - projection coverage previews
+  - Stage 9.1 reports

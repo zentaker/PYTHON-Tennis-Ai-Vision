@@ -4,9 +4,9 @@ Tennis AI Vision is a local-first Python research project for building toward Sw
 
 ## Current Stage
 
-Stage 8.1: expanded ball labels and timeline validation.
+Stage 9.1: court zone tuning and projection coverage.
 
-Stage 0 checks the local Python environment, required folders, required package imports, and whether `ffmpeg` is available from the terminal. Stage 1 loads a local sample video with OpenCV, reads metadata, extracts frames, and writes reports. Stage 2 runs a small local YOLO CPU baseline on sampled frames and saves annotated output. Stage 3 creates a manual court calibration reference frame and point overlay. Stage 3.1 helps read or select court point coordinates. Stage 4 probes simple local ball candidate detection. Stage 4.1 creates manual ball labels for ground truth. Stage 5 filters candidates and projects selected points into the calibrated court plane. Stage 5.1 improves candidate generation. Stage 6 smooths the trajectory. Stage 7 and 7.1 add player interaction and identity filtering. Stage 8 and 8.1 build and validate a hypothesis-only event timeline.
+Stage 0 checks the local Python environment, required folders, required package imports, and whether `ffmpeg` is available from the terminal. Stage 1 loads a local sample video with OpenCV, reads metadata, extracts frames, and writes reports. Stage 2 runs a small local YOLO CPU baseline on sampled frames and saves annotated output. Stage 3 creates a manual court calibration reference frame and point overlay. Stage 3.1 helps read or select court point coordinates. Stage 4 probes simple local ball candidate detection. Stage 4.1 creates manual ball labels for ground truth. Stage 5 filters candidates and projects selected points into the calibrated court plane. Stage 5.1 improves candidate generation. Stage 6 smooths the trajectory. Stage 7 and 7.1 add player interaction and identity filtering. Stage 8 and 8.1 build and validate a hypothesis-only event timeline. Stage 9 creates first tactical metrics, and Stage 9.1 improves projection coverage so fewer validated ball labels become unknown zones.
 
 ## Documentation Map
 
@@ -508,6 +508,49 @@ Expected outputs:
 - Validated timeline at `outputs/timeline/stage_8_1_timeline_validation/validated_event_timeline.csv`.
 - JSON report at `outputs/reports/stage_8_1_timeline_validation_report.json`.
 - Markdown report at `outputs/reports/stage_8_1_timeline_validation_report.md`.
+
+## Stage 9 - Tactical Metrics and Shot Zone Prototype
+
+Stage 9 converts validated trajectory and timeline data into first tactical metrics. It assigns approximate court zones, classifies ball depth, estimates simple shot direction, adds player-side context, and writes a rally tactical summary.
+
+These outputs are approximate. Stage 9 does not perform official scoring, official line calling, confirmed shot classification, or coaching-grade tactical analysis.
+
+Run:
+
+```powershell
+python scripts\run_stage_9_tactical_metrics.py
+```
+
+Expected outputs:
+
+- Ball zone assignments at `outputs/tactical/stage_9_tactical_metrics/ball_zone_assignments.csv`.
+- Shot direction estimates at `outputs/tactical/stage_9_tactical_metrics/shot_direction_estimates.csv`.
+- Rally tactical summary at `outputs/tactical/stage_9_tactical_metrics/rally_tactical_summary.csv`.
+- Tactical summary at `outputs/tactical/stage_9_tactical_metrics/tactical_summary.md`.
+- Court zone and placement previews under `outputs/tactical/stage_9_tactical_metrics/`.
+- JSON report at `outputs/reports/stage_9_tactical_metrics_report.json`.
+- Markdown report at `outputs/reports/stage_9_tactical_metrics_report.md`.
+
+## Stage 9.1 - Court Zone Tuning and Projection Coverage
+
+Stage 9 produced too many unknown zones because only part of the expanded ball-label set had projected court coordinates. Stage 9.1 projects the expanded labels through the Stage 3 homography, reruns tuned zone assignment, and compares Stage 9 with Stage 9.1.
+
+This is still a prototype. It does not perform official line calling, official scoring, or coaching-grade tactical analysis.
+
+Run:
+
+```powershell
+python scripts\run_stage_9_1_projection_coverage.py
+```
+
+Expected outputs:
+
+- Projected expanded labels at `outputs/tactical/stage_9_1_projection_coverage/projected_expanded_labels.csv`.
+- Tuned zone assignments at `outputs/tactical/stage_9_1_projection_coverage/tuned_ball_zone_assignments.csv`.
+- Before/after comparison at `outputs/tactical/stage_9_1_projection_coverage/stage_9_vs_9_1_zone_comparison.csv`.
+- Projection and placement previews under `outputs/tactical/stage_9_1_projection_coverage/`.
+- JSON report at `outputs/reports/stage_9_1_projection_coverage_report.json`.
+- Markdown report at `outputs/reports/stage_9_1_projection_coverage_report.md`.
 
 ## Lab Notebook
 

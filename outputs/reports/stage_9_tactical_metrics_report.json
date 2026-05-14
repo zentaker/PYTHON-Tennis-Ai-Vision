@@ -1,0 +1,92 @@
+{
+  "ball_points_analyzed": 12,
+  "depth_distribution": {
+    "deep": 1,
+    "mid": 3,
+    "short": 1,
+    "unknown": 7
+  },
+  "direction_estimates_count": 4,
+  "errors": [],
+  "final_verdict": "ready_with_warnings",
+  "flags": {
+    "direction_estimation_unreliable": false,
+    "projected_points_missing": false,
+    "rally_summary_failed": false,
+    "too_few_ball_points": false,
+    "too_many_unknown_zones": true,
+    "validated_timeline_missing": false,
+    "visual_generation_failed": false,
+    "zone_assignment_failed": false
+  },
+  "friction": {
+    "band": "low friction",
+    "inputs": {
+      "direction_estimation_unreliable": false,
+      "errors_count": 0,
+      "projected_points_missing": false,
+      "rally_summary_failed": false,
+      "too_few_ball_points": false,
+      "too_many_unknown_zones": true,
+      "validated_timeline_missing": false,
+      "visual_generation_failed": false,
+      "warnings_count": 1,
+      "zone_assignment_failed": false
+    },
+    "score": 15
+  },
+  "inputs_used": {
+    "expanded_candidate_validation": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_1_timeline_validation\\expanded_candidate_validation.csv",
+    "expanded_labels": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_1_timeline_validation\\expanded_ball_labels.csv",
+    "player_event_attribution": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_event_timeline\\player_event_attribution.csv",
+    "projected_improved_candidates": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_5_1_candidate_improvement\\projected_improved_candidates.csv",
+    "rally_segments": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_event_timeline\\rally_segments.csv",
+    "refined_player_associations": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_1_player_filtering\\refined_ball_player_distances.csv",
+    "smoothed_trajectory": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_6_trajectory_smoothing\\smoothed_trajectory.csv",
+    "stage_8_event_timeline": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_event_timeline\\event_timeline.csv",
+    "validated_timeline": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_1_timeline_validation\\validated_event_timeline.csv"
+  },
+  "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_9_tactical_metrics_report.json",
+  "lateral_distribution": {
+    "center": 3,
+    "left": 2,
+    "right": 0,
+    "unknown": 7
+  },
+  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_9_tactical_metrics_20260513T212234Z.log",
+  "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_9_tactical_metrics_report.md",
+  "output_paths": {
+    "ball_placement_map": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_tactical_metrics\\ball_placement_map.jpg",
+    "ball_zone_assignments_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_tactical_metrics\\ball_zone_assignments.csv",
+    "court_zone_map": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_tactical_metrics\\court_zone_map.jpg",
+    "rally_tactical_summary_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_tactical_metrics\\rally_tactical_summary.csv",
+    "shot_direction_estimates_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_tactical_metrics\\shot_direction_estimates.csv",
+    "shot_direction_preview": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_tactical_metrics\\shot_direction_preview.jpg",
+    "tactical_summary_md": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_tactical_metrics\\tactical_summary.md",
+    "tactical_summary_preview": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_tactical_metrics\\tactical_summary_preview.jpg"
+  },
+  "player_associated_events_count": 5,
+  "player_context": {
+    "average_ball_player_distance_px": 490.912,
+    "player_a_associated_events": 3,
+    "player_b_associated_events": 2,
+    "unknown_player_events": 0
+  },
+  "projected_points_count": 5,
+  "rally_summaries_count": 1,
+  "recommended_next_step": "Proceed cautiously to Stage 9.1 court zone tuning or validate more events before Stage 10.",
+  "stage": "stage_9_tactical_metrics",
+  "timestamp": "2026-05-13T21:22:34+00:00",
+  "unknown_zone_count": 7,
+  "warnings": [
+    "Some visible labels do not have projected court coordinates; zone coverage is incomplete."
+  ],
+  "zone_assignments_count": 12,
+  "zone_distribution": {
+    "far_deep_center": 1,
+    "far_mid_center": 1,
+    "near_mid_left": 2,
+    "near_short_center": 1,
+    "unknown": 7
+  }
+}

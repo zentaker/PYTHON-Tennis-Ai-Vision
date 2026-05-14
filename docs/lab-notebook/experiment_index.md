@@ -129,3 +129,21 @@ NEXT STEP: Proceed to Stage 9: Tactical Metrics and Shot Zone Prototype.
 
 ---
 
+STAGE: Stage 9
+NAME: Tactical Metrics
+VERDICT: ready_with_warnings
+FRICTION: 15 low friction
+MAIN OUTPUT: outputs/reports/stage_9_tactical_metrics_report.md
+NEXT STEP: Proceed cautiously to Stage 9.1 court zone tuning or validate more events before Stage 10.
+
+---
+
+STAGE: Stage 9.1
+NAME: Projection Coverage
+VERDICT: ready_for_stage_10
+FRICTION: 0 low friction
+MAIN OUTPUT: outputs/reports/stage_9_1_projection_coverage_report.md
+NEXT STEP: Proceed to Stage 10: Analytical Report Generator and Coaching Summary Prototype.
+
+---
+

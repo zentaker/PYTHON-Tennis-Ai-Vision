@@ -1,0 +1,13 @@
+frame_index,timestamp_seconds,x,y,projected_x,projected_y,court_zone,depth,lateral_lane,side,source,confidence_like_score,notes
+90,,2331.0,234.0,,,unknown,unknown,unknown,unknown,stage_8_1_manual,0.25,Projection was missing or outside the expected normalized court range.
+105,,2304.0,345.0,,,unknown,unknown,unknown,unknown,stage_8_1_manual,0.25,Projection was missing or outside the expected normalized court range.
+120,,2175.0,492.0,180.71,-59.098,far_deep_center,deep,center,far,stage_8_1_manual,0.7,Approximate zone from normalized court coordinates; not official line calling.
+135,,2043.0,759.0,146.86,234.546,far_mid_center,mid,center,far,stage_8_1_manual,0.9,Approximate zone from normalized court coordinates; not official line calling.
+150,,1911.0,1146.0,127.727,517.18,near_short_center,short,center,near,stage_8_1_manual,0.9,Approximate zone from normalized court coordinates; not official line calling.
+165,,1797.0,1161.0,105.186,527.08,near_mid_left,mid,left,near,stage_8_1_manual,0.9,Approximate zone from normalized court coordinates; not official line calling.
+180,,1671.0,1248.0,85.083,574.978,near_mid_left,mid,left,near,stage_8_1_manual,0.9,Approximate zone from normalized court coordinates; not official line calling.
+195,,1578.0,1425.0,,,unknown,unknown,unknown,unknown,stage_8_1_manual,0.25,Projection was missing or outside the expected normalized court range.
+210,,1941.0,942.0,,,unknown,unknown,unknown,unknown,stage_8_1_manual,0.25,Projection was missing or outside the expected normalized court range.
+225,,2169.0,744.0,,,unknown,unknown,unknown,unknown,stage_8_1_manual,0.25,Projection was missing or outside the expected normalized court range.
+240,,2307.0,708.0,,,unknown,unknown,unknown,unknown,stage_8_1_manual,0.25,Projection was missing or outside the expected normalized court range.
+255,,2397.0,507.0,,,unknown,unknown,unknown,unknown,stage_8_1_manual,0.25,Projection was missing or outside the expected normalized court range.

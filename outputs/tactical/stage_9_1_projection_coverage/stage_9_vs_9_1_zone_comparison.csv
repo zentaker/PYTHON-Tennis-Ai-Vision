@@ -1,0 +1,13 @@
+frame_index,stage_9_zone,stage_9_1_zone,stage_9_depth,stage_9_1_depth,stage_9_projection_available,stage_9_1_projection_available,improvement_status
+90,unknown,out_of_bounds,unknown,deep,False,True,improved_from_unknown
+105,unknown,out_of_bounds,unknown,deep,False,True,improved_from_unknown
+120,far_deep_center,far_deep_center,deep,deep,True,True,unchanged
+135,far_mid_center,far_mid_center,mid,mid,True,True,unchanged
+150,near_short_center,near_short_center,short,short,True,True,unchanged
+165,near_mid_left,near_mid_left,mid,mid,True,True,unchanged
+180,near_mid_left,near_mid_left,mid,mid,True,True,unchanged
+195,unknown,near_deep_left,unknown,deep,False,True,improved_from_unknown
+210,unknown,far_short_center,unknown,short,False,True,improved_from_unknown
+225,unknown,far_mid_center,unknown,mid,False,True,improved_from_unknown
+240,unknown,far_mid_center,unknown,mid,False,True,improved_from_unknown
+255,unknown,far_deep_right,unknown,deep,False,True,improved_from_unknown

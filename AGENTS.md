@@ -44,6 +44,8 @@ This repository is a local-first research project for tennis video analysis.
 - Interactive user-generated data must never be overwritten by fallback data.
 - Non-interactive validation must preserve richer datasets instead of downgrading them.
 - Manual labeling stages must keep timestamped session backups so user work can be recovered.
+- Tactical metrics must preserve uncertainty. Do not convert approximate zones, directions, or event hypotheses into confirmed coaching conclusions. Explain confidence and limitations clearly.
+- Before generating coaching/report summaries, tactical metrics must have enough projected points and low unknown-zone rates. If many zones are unknown, fix projection coverage before creating narrative analysis.
 
 ## Repository hygiene rules
 

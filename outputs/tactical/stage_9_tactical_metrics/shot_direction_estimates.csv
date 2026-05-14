@@ -1,0 +1,5 @@
+from_frame,to_frame,from_zone,to_zone,direction_type,confidence_like_score,reason
+120,135,far_deep_center,far_mid_center,center_like,0.35,"Consecutive points are on the same side, so shot direction is weak evidence."
+135,150,far_mid_center,near_short_center,down_the_line_like,0.55,Ball moved between court sides while staying in the same lateral lane.
+150,165,near_short_center,near_mid_left,unknown,0.35,"Consecutive points are on the same side, so shot direction is weak evidence."
+165,180,near_mid_left,near_mid_left,center_like,0.35,"Consecutive points are on the same side, so shot direction is weak evidence."
