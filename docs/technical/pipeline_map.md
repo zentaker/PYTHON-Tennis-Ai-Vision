@@ -28,6 +28,7 @@ Stage 0 Environment Doctor
   -> Stage 13 2D Tactical Replay
   -> Stage 14 Side-View Replay
   -> Stage 14.1 Side-View Height Semantics Patch
+  -> Stage 14.2 Side-View Event Disambiguation Patch
 
 ---
 
@@ -427,7 +428,7 @@ WRITES:
 
 STAGE: Stage 14.1
 NAME: Side-View Height Semantics Patch
-STATUS: Current
+STATUS: Implemented
 MAIN SCRIPT: scripts/run_stage_14_side_view_replay.py
 MAIN MODULES:
   - src/tennis_vision/ball_flight_estimator.py
@@ -441,3 +442,23 @@ WRITES:
   - outputs/replay/stage_14_side_view_replay/side_view_summary.md
   - outputs/reports/stage_14_1_side_view_patch_report.*
   - docs/lab-notebook/stage_14_1_side_view_patch.md
+
+---
+
+STAGE: Stage 14.2
+NAME: Side-View Event Disambiguation Patch
+STATUS: Current
+MAIN SCRIPT: scripts/run_stage_14_side_view_replay.py
+MAIN MODULES:
+  - src/tennis_vision/ball_flight_estimator.py
+  - src/tennis_vision/replay_renderer_side_view.py
+READS:
+  - outputs/replay/stage_12_replay_schema/replay_schema.json
+  - Stage 14.1 side-view renderer logic
+  - Stage 7.1 player side-state data inside replay_schema.json
+WRITES:
+  - outputs/replay/stage_14_side_view_replay/side_view_semantic_debug.jpg
+  - outputs/replay/stage_14_side_view_replay/side_view_manifest.json
+  - outputs/replay/stage_14_side_view_replay/side_view_summary.md
+  - outputs/reports/stage_14_2_side_view_event_disambiguation_report.*
+  - docs/lab-notebook/stage_14_2_side_view_event_disambiguation.md

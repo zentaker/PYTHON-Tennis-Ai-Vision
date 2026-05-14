@@ -1,9 +1,9 @@
-# Stage 14.1 - Side-View Height Semantics Patch
+# Stage 14.2 - Side-View Event Disambiguation
 
 ## Summary
 
 Stage:
-  Stage 14.1 - Side-view height semantics patch
+  Stage 14.2 - Side-view event disambiguation
 
 Verdict:
   ready_for_stage_15
@@ -26,27 +26,33 @@ Recommended next step:
 ## Input
 
 Source stage:
-  14
+  14.1
 
-Bounce grounding:
+Player-aware hit validation:
   yes
 
-Hit contact band:
+Event render roles:
   yes
 
-Interpolated points marked:
-  yes
+Implausible hits downgraded:
+  3
 
-Height anchor summary:
-  {'arc_estimate': 10, 'interaction_cue': 2}
+Plausible hits:
+  0
+
+Plausible bounces:
+  0
+
+Uncertain events:
+  3
 
 ## Output
 
 JSON report path:
-  C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\stage_14_1_side_view_patch_report.json
+  C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\stage_14_2_side_view_event_disambiguation_report.json
 
 Markdown report path:
-  C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\stage_14_1_side_view_patch_report.md
+  C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\stage_14_2_side_view_event_disambiguation_report.md
 
 Semantic debug:
   C:\Users\MSI\Desktop\TennisAiVision\outputs\replay\stage_14_side_view_replay\side_view_semantic_debug.jpg
@@ -74,17 +80,14 @@ Frames generated:
 Video generated:
   yes
 
-Semantic patch applied:
+Player-aware hit validation:
   yes
 
-Bounce grounding:
+Event render roles:
   yes
 
-Hit contact band:
-  yes
-
-Interpolated points marked:
-  yes
+Implausible hits downgraded:
+  3
 
 Verdict:
   ready_for_stage_15
@@ -102,7 +105,7 @@ No errors.
 
 ## Interpretation
 
-Stage 14.1 improves the side-view semantics. Bounce-like events are forced near the court surface, hit-like events use a plausible synthetic contact band, and interpolated points remain visibly synthetic. The renderer still does not claim measured 3D ball height.
+Stage 14.2 improves side-view event meaning. Raw possible_hit labels are filtered against player depth and position before they are rendered as hits. Implausible hit labels become uncertain events, while bounces remain grounded and ball-near-player cues stay separate from hit and bounce markers.
 
 ## Next step
 
@@ -114,56 +117,12 @@ Older entries are preserved as originally written. Some historical entries may u
 
 Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
 
-Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
-
-Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
-
-Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
-
-<!-- lab-entry:2026-05-14T04:11:56+00:00 -->
-
-### 2026-05-14T04:11:56+00:00
-
-Stage:
-  Stage 14.1 - Side-View Patch
-
-Verdict:
-  ready_for_stage_15
-
-Friction score:
-  0
-
-Friction level:
-  low friction
-
-Next step:
-  Proceed to Stage 15: Multi-Camera Analytical Replay.
-
-<!-- lab-entry:2026-05-14T04:16:09+00:00 -->
-
-### 2026-05-14T04:16:09+00:00
-
-Stage:
-  Stage 14.1 - Side-View Patch
-
-Verdict:
-  ready_for_stage_15
-
-Friction score:
-  0
-
-Friction level:
-  low friction
-
-Next step:
-  Proceed to Stage 15: Multi-Camera Analytical Replay.
-
 <!-- lab-entry:2026-05-14T04:39:07+00:00 -->
 
 ### 2026-05-14T04:39:07+00:00
 
 Stage:
-  Stage 14.1 - Side-View Patch
+  Stage 14.2 - Side-View Event Disambiguation
 
 Verdict:
   ready_for_stage_15

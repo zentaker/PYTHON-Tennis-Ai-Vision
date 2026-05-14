@@ -11,6 +11,7 @@ HIT_CONTACT_MIN_HEIGHT = 62.0
 HIT_CONTACT_MAX_HEIGHT = 118.0
 DEFAULT_ARC_MIN_HEIGHT = 34.0
 DEFAULT_ARC_PEAK_HEIGHT = 155.0
+PLAYER_CONTACT_DEPTH_TOLERANCE = 140.0
 
 
 def load_replay_keyframes(schema: dict[str, Any]) -> list[dict[str, Any]]:
@@ -56,6 +57,126 @@ def classify_height_anchor_type(event_type: str | None) -> str:
     if "ball_near_player" in text or "near_player" in text:
         return "interaction_cue"
     return "arc_estimate"
+
+
+def classify_event_semantic_role(event: dict[str, Any], players: list[dict[str, Any]] | None = None) -> str:
+    """Classify a raw event into a player-aware semantic role."""
+    event_type = str(event.get("event_type") or "").lower()
+    if "bounce" in event_type:
+        return "bounce_plausible"
+    if "hit" in event_type:
+        return "hit_plausible" if is_hit_plausible_for_player(event, players or []) else "uncertain_event"
+    if "ball_near_player" in event_type or "near_player" in event_type:
+        return "player_interaction"
+    return "uncertain_event"
+
+
+def estimate_player_contact_window(player: dict[str, Any], frame_index: int | None, tolerance: float = PLAYER_CONTACT_DEPTH_TOLERANCE) -> dict[str, Any]:
+    """Estimate a conservative court-depth contact window for one player."""
+    state = nearest_player_state(player.get("side_states", []), frame_index)
+    depth = _float(state.get("projected_y")) if state else None
+    if depth is None:
+        return {
+            "player_id": player.get("player_id"),
+            "player_depth": None,
+            "min_depth": None,
+            "max_depth": None,
+            "side_state": state.get("side_state") if state else "unknown",
+            "available": False,
+        }
+    return {
+        "player_id": player.get("player_id"),
+        "player_depth": depth,
+        "min_depth": depth - tolerance,
+        "max_depth": depth + tolerance,
+        "side_state": state.get("side_state") or "unknown",
+        "available": True,
+    }
+
+
+def score_hit_plausibility(event: dict[str, Any], players: list[dict[str, Any]], tolerance: float = PLAYER_CONTACT_DEPTH_TOLERANCE) -> dict[str, Any]:
+    """Score whether a possible_hit is plausible relative to player depth."""
+    event_frame = _int(event.get("frame_index"))
+    player_id = str(event.get("player_id") or "")
+    projected = event.get("projected_position", {})
+    ball_depth = _float(projected.get("y"))
+    player = next((item for item in players if str(item.get("player_id")) == player_id), None)
+    if player is None or ball_depth is None:
+        return {
+            "plausible": False,
+            "score": 0.0,
+            "reason": "Missing player identity or projected ball depth.",
+            "ball_depth": ball_depth,
+            "player_depth": None,
+            "depth_delta": None,
+        }
+    window = estimate_player_contact_window(player, event_frame, tolerance=tolerance)
+    player_depth = window.get("player_depth")
+    if player_depth is None:
+        return {
+            "plausible": False,
+            "score": 0.0,
+            "reason": "Missing player projected depth near event frame.",
+            "ball_depth": ball_depth,
+            "player_depth": None,
+            "depth_delta": None,
+        }
+    depth_delta = abs(ball_depth - float(player_depth))
+    score = max(0.0, 1.0 - (depth_delta / max(tolerance, 1.0)))
+    plausible = depth_delta <= tolerance
+    return {
+        "plausible": plausible,
+        "score": round(score, 3),
+        "reason": "Ball depth is within player contact window." if plausible else "Ball depth is too far from attributed player depth.",
+        "ball_depth": ball_depth,
+        "player_depth": player_depth,
+        "depth_delta": round(depth_delta, 3),
+        "contact_window": window,
+    }
+
+
+def is_hit_plausible_for_player(event: dict[str, Any], players: list[dict[str, Any]], tolerance: float = PLAYER_CONTACT_DEPTH_TOLERANCE) -> bool:
+    """Test whether a candidate hit is plausible relative to player position and court depth."""
+    return bool(score_hit_plausibility(event, players, tolerance=tolerance).get("plausible"))
+
+
+def downgrade_implausible_hits(events: list[dict[str, Any]], players: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], dict[str, int]]:
+    """Assign render roles and downgrade implausible possible_hit events."""
+    summary = {
+        "implausible_hits_downgraded_count": 0,
+        "plausible_hits_count": 0,
+        "plausible_bounces_count": 0,
+        "uncertain_events_count": 0,
+        "player_interactions_count": 0,
+    }
+    updated_events: list[dict[str, Any]] = []
+    for event in events:
+        updated = dict(event)
+        raw_type = str(updated.get("event_type") or "").lower()
+        plausibility = score_hit_plausibility(updated, players) if "hit" in raw_type else {}
+        role = classify_event_semantic_role(updated, players)
+        updated["render_role"] = role
+        updated["hit_plausibility"] = plausibility
+        updated["player_aware_plausibility_status"] = "plausible" if plausibility.get("plausible") else "not_applicable" if "hit" not in raw_type else "implausible"
+        if raw_type and "hit" in raw_type and role != "hit_plausible":
+            updated["event_type_for_render"] = "uncertain_event"
+            updated["semantic_note"] = "Raw possible_hit downgraded because player depth does not support contact location."
+            summary["implausible_hits_downgraded_count"] += 1
+            summary["uncertain_events_count"] += 1
+        elif role == "hit_plausible":
+            updated["event_type_for_render"] = "possible_hit"
+            summary["plausible_hits_count"] += 1
+        elif role == "bounce_plausible":
+            updated["event_type_for_render"] = "possible_bounce"
+            summary["plausible_bounces_count"] += 1
+        elif role == "player_interaction":
+            updated["event_type_for_render"] = "ball_near_player"
+            summary["player_interactions_count"] += 1
+        else:
+            updated["event_type_for_render"] = "uncertain_event"
+            summary["uncertain_events_count"] += 1
+        updated_events.append(updated)
+    return updated_events, summary
 
 
 def apply_event_grounding_rules(height: float, event_type: str | None) -> float:
@@ -134,13 +255,14 @@ def build_side_view_keyframes(schema: dict[str, Any]) -> list[dict[str, Any]]:
     """Build side-view keyframes with synthetic height annotations."""
     court_height = float(schema.get("court_model", {}).get("normalized_court_height") or 780.0)
     sequence = extract_projected_ball_sequence(schema)
-    events = schema.get("event_timeline", [])
+    events, _summary = downgrade_implausible_hits(schema.get("event_timeline", []), schema.get("players", []))
     raw_keyframes: list[dict[str, Any]] = []
     for index, point in enumerate(sequence):
         frame = _int(point.get("frame_index"))
         event = nearest_event(events, frame)
-        event_type = event.get("event_type") if event else ""
-        role = classify_height_anchor_type(event_type)
+        event_type = event.get("event_type_for_render") if event else ""
+        render_role = event.get("render_role") if event else ""
+        role = "hit_contact" if render_role == "hit_plausible" else "bounce_grounded" if render_role == "bounce_plausible" else classify_height_anchor_type(event_type)
         depth = estimate_side_view_depth(point, court_height)
         raw_keyframes.append(
             {
@@ -152,6 +274,10 @@ def build_side_view_keyframes(schema: dict[str, Any]) -> list[dict[str, Any]]:
                 "projected_x": _float(point.get("projected_x")),
                 "projected_y": _float(point.get("projected_y")),
                 "event_type": event_type,
+                "raw_event_type": event.get("event_type") if event else "",
+                "render_role": render_role or role,
+                "player_aware_plausibility_status": event.get("player_aware_plausibility_status") if event else "not_applicable",
+                "hit_plausibility": event.get("hit_plausibility") if event else {},
                 "height_anchor_type": role,
                 "event_semantic_role": role,
                 "grounded_event": role == "bounce_grounded",
@@ -202,6 +328,10 @@ def interpolate_side_view_point(start: dict[str, Any], end: dict[str, Any], t: f
     time_b = _float(end.get("timestamp_seconds"))
     result["timestamp_seconds"] = _lerp(time_a, time_b, t)
     result["event_type"] = ""
+    result["raw_event_type"] = ""
+    result["render_role"] = "interpolation_only"
+    result["player_aware_plausibility_status"] = "not_applicable"
+    result["hit_plausibility"] = {}
     result["height_anchor_type"] = "visual_interpolation"
     result["event_semantic_role"] = "interpolated_visual_point"
     result["grounded_event"] = False
@@ -226,6 +356,13 @@ def nearest_event(events: list[dict[str, Any]], frame_index: int | None, toleran
     if not candidates:
         return None
     return sorted(candidates, key=lambda item: item[0])[0][1]
+
+
+def nearest_player_state(states: list[dict[str, Any]], frame_index: int | None) -> dict[str, Any] | None:
+    """Find the nearest player side-state row for an event frame."""
+    if frame_index is None or not states:
+        return None
+    return min(states, key=lambda row: abs((_int(row.get("frame_index")) or frame_index) - frame_index))
 
 
 def _lerp(start: float | None, end: float | None, t: float) -> float | None:

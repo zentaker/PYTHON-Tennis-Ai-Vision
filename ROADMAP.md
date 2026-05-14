@@ -173,12 +173,22 @@ Possible next paths:
 
 ## Stage 14.1: Side-View Height Semantics Patch
 
-Current stage. Improve side-view replay readability by grounding bounce-like events, keeping hit-like events in a plausible synthetic contact band, and clearly marking interpolated visual points.
+Implemented. Improve side-view replay readability by grounding bounce-like events, keeping hit-like events in a plausible synthetic contact band, and clearly marking interpolated visual points.
 
 Possible next paths:
 
 - Stage 15: Multi-Camera Analytical Replay.
 - Stage 14.2: Further side-view polish if needed.
+- Stage 13.1: Top-view replay polish if needed.
+
+## Stage 14.2: Side-View Event Disambiguation Patch
+
+Current stage. Validate side-view hit labels against player position and court depth, downgrade implausible hit labels, and separate bounce, hit, interaction, uncertainty, and interpolation render roles.
+
+Possible next paths:
+
+- Stage 15: Multi-Camera Analytical Replay.
+- Stage 14.3: Further side-view tuning if needed.
 - Stage 13.1: Top-view replay polish if needed.
 
 ## Future Phase: Local MVP Pipeline

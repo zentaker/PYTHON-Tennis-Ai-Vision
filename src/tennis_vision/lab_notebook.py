@@ -33,6 +33,7 @@ STAGE_NOTEBOOK_FILES = {
     "stage_13": "stage_13_2d_tactical_replay.md",
     "stage_14": "stage_14_side_view_replay.md",
     "stage_14_1": "stage_14_1_side_view_patch.md",
+    "stage_14_2": "stage_14_2_side_view_event_disambiguation.md",
 }
 
 
@@ -417,6 +418,18 @@ def stage_14_1_next_step(report: dict[str, Any]) -> str:
     if verdict == "ready_with_warnings":
         return "Review warnings, then proceed to Stage 15 or Stage 14.2 polish."
     return "Fix Stage 14.1 blockers, then rerun the side-view patch."
+
+
+def stage_14_2_next_step(report: dict[str, Any]) -> str:
+    """Return Stage 14.2 next-step text."""
+    verdict = report.get("final_verdict")
+    if verdict == "ready_for_stage_15":
+        return "Proceed to Stage 15: Multi-Camera Analytical Replay."
+    if verdict == "ready_with_warnings":
+        return "Review warnings, then proceed to Stage 15 or Stage 14.3 side-view tuning."
+    if verdict == "needs_more_event_disambiguation":
+        return "Tune player-aware side-view event semantics before Stage 15."
+    return "Fix Stage 14.2 blockers, then rerun the side-view patch."
 
 
 def build_stage_0_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
@@ -2035,6 +2048,79 @@ def build_stage_14_1_document(report: dict[str, Any], project_root: Path) -> dic
     return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
 
 
+def build_stage_14_2_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
+    """Build Stage 14.2 notebook content."""
+    json_path = report_path(project_root, "stage_14_2_side_view_event_disambiguation_report.json")
+    markdown_path = report_path(project_root, "stage_14_2_side_view_event_disambiguation_report.md")
+    next_step = stage_14_2_next_step(report)
+    friction = report.get("friction", {})
+    outputs = report.get("output_paths", {})
+
+    summary = markdown_table(
+        [
+            ("Stage", "Stage 14.2 - Side-view event disambiguation"),
+            ("Verdict", report.get("final_verdict")),
+            ("Patch applied", report.get("event_disambiguation_patch_applied")),
+            ("Friction score", friction.get("score")),
+            ("Friction level", friction.get("band")),
+            ("Timestamp", report.get("timestamp")),
+            ("Recommended next step", next_step),
+        ]
+    )
+    input_table = markdown_table(
+        [
+            ("Source stage", report.get("source_stage")),
+            ("Player-aware hit validation", report.get("player_aware_hit_validation_enabled")),
+            ("Event render roles", report.get("event_render_roles_enabled")),
+            ("Implausible hits downgraded", report.get("implausible_hits_downgraded_count")),
+            ("Plausible hits", report.get("plausible_hits_count")),
+            ("Plausible bounces", report.get("plausible_bounces_count")),
+            ("Uncertain events", report.get("uncertain_events_count")),
+        ]
+    )
+    output_table = markdown_table(
+        [
+            ("JSON report path", json_path),
+            ("Markdown report path", markdown_path),
+            ("Semantic debug", report.get("semantic_debug_artifact")),
+            ("Video", outputs.get("video_path")),
+            ("Contact sheet", outputs.get("contact_sheet_path")),
+            ("Final frame", outputs.get("final_frame_path")),
+            ("Arc preview", outputs.get("arc_preview_path")),
+            ("Manifest", outputs.get("manifest_path")),
+        ]
+    )
+    console_table = markdown_table(
+        [
+            ("Frames generated", report.get("frames_generated")),
+            ("Video generated", report.get("video_generated")),
+            ("Player-aware hit validation", report.get("player_aware_hit_validation_enabled")),
+            ("Event render roles", report.get("event_render_roles_enabled")),
+            ("Implausible hits downgraded", report.get("implausible_hits_downgraded_count")),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction", f"{not_available(friction.get('score'))} ({not_available(friction.get('band'))})"),
+        ]
+    )
+    interpretation = (
+        "Stage 14.2 improves side-view event meaning. Raw possible_hit labels are filtered against player "
+        "depth and position before they are rendered as hits. Implausible hit labels become uncertain events, "
+        "while bounces remain grounded and ball-near-player cues stay separate from hit and bounce markers."
+    )
+    body = stage_document(
+        title="Stage 14.2 - Side-View Event Disambiguation",
+        summary=summary,
+        input_section=input_table,
+        output_section=output_table,
+        console_table=console_table,
+        warnings=bullet_list(report.get("warnings"), "No warnings."),
+        errors=bullet_list(report.get("errors"), "No errors."),
+        interpretation=interpretation,
+        next_step=next_step,
+    )
+    entry = history_entry(report, "Stage 14.2 - Side-View Event Disambiguation", summary, next_step)
+    return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
+
+
 def stage_document(
     *,
     title: str,
@@ -2611,6 +2697,22 @@ def update_lab_notebook(project_root: Path) -> list[Path]:
                 "friction": f"{not_available(nested_get(stage_14_1_report, ('friction', 'score')))} {not_available(nested_get(stage_14_1_report, ('friction', 'band')))}",
                 "main_output": "outputs/replay/stage_14_side_view_replay/side_view_semantic_debug.jpg",
                 "next_step": stage_14_1_next_step(stage_14_1_report),
+            }
+        )
+
+    stage_14_2_report = read_json_report(report_path(project_root, "stage_14_2_side_view_event_disambiguation_report.json"))
+    if stage_14_2_report is not None:
+        document = build_stage_14_2_document(stage_14_2_report, project_root)
+        stage_path = notebook_dir / "stage_14_2_side_view_event_disambiguation.md"
+        written.append(write_stage_notebook(stage_path, document["body"], document["entry"], document["entry_id"]))
+        stage_summaries.append(
+            {
+                "stage": "Stage 14.2",
+                "name": "Side-View Event Disambiguation",
+                "verdict": not_available(stage_14_2_report.get("final_verdict")),
+                "friction": f"{not_available(nested_get(stage_14_2_report, ('friction', 'score')))} {not_available(nested_get(stage_14_2_report, ('friction', 'band')))}",
+                "main_output": "outputs/replay/stage_14_side_view_replay/side_view_semantic_debug.jpg",
+                "next_step": stage_14_2_next_step(stage_14_2_report),
             }
         )
 

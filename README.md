@@ -694,6 +694,24 @@ Expected patch output:
 - Semantic debug image at `outputs/replay/stage_14_side_view_replay/side_view_semantic_debug.jpg`.
 - Patch report at `outputs/reports/stage_14_1_side_view_patch_report.md`.
 
+## Stage 14.2 - Side-View Event Disambiguation Patch
+
+Stage 14.2 improves side-view event readability. It validates hit labels against player position and court depth, downgrades implausible hit labels, and separates bounce, hit, interaction, uncertainty, and interpolation render roles.
+
+It still does not represent measured 3D height.
+
+Run:
+
+```powershell
+python scripts\run_stage_14_side_view_replay.py
+```
+
+Expected patch output:
+
+- Semantic debug image at `outputs/replay/stage_14_side_view_replay/side_view_semantic_debug.jpg`.
+- Patch report at `outputs/reports/stage_14_2_side_view_event_disambiguation_report.md`.
+- Updated side-view manifest at `outputs/replay/stage_14_side_view_replay/side_view_manifest.json`.
+
 ## Lab Notebook
 
 The lab notebook turns generated reports into persistent project documentation. It records each stage's inputs, outputs, verdict, friction score, warnings, errors, interpretation, and next step.

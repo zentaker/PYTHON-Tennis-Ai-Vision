@@ -490,3 +490,35 @@ REUSABLE RULE:
 
 RELATED STAGES:
   Stage 14, Stage 14.1, and future replay renderers.
+
+---
+
+CASE F020 - Event labels may be internally valid but spatially implausible relative to player position
+
+AREA:
+  Synthetic replay / event semantics
+
+WHAT HAPPENED:
+  The side-view renderer could label raw possible_hit events as hits even when
+  player position did not support those contact locations.
+
+ROOT CAUSE:
+  Event rendering was based too directly on raw event type. It did not
+  conservatively check whether the attributed player was close enough in court
+  depth to plausibly contact the ball.
+
+IMPACT:
+  A Product Owner could see an in-court hit marker even though the player
+  remained near the baseline in the original clip.
+
+RESOLUTION:
+  Stage 14.2 adds player-aware hit plausibility validation and separates raw
+  event labels from side-view render roles. Implausible hits are downgraded to
+  uncertain events for rendering.
+
+REUSABLE RULE:
+  Event classification should be constrained by actor position, not only by
+  ball trajectory shape.
+
+RELATED STAGES:
+  Stage 14.2

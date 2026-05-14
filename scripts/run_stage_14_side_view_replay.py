@@ -14,8 +14,8 @@ SRC_ROOT = PROJECT_ROOT / "src"
 if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
-from tennis_vision.ball_flight_estimator import build_side_view_keyframes  # noqa: E402
-from tennis_vision.friction import calculate_stage_14_1_friction_score, calculate_stage_14_friction_score  # noqa: E402
+from tennis_vision.ball_flight_estimator import build_side_view_keyframes, downgrade_implausible_hits  # noqa: E402
+from tennis_vision.friction import calculate_stage_14_1_friction_score, calculate_stage_14_2_friction_score, calculate_stage_14_friction_score  # noqa: E402
 from tennis_vision.replay_renderer_side_view import (  # noqa: E402
     create_semantic_debug_image,
     create_side_contact_sheet,
@@ -89,6 +89,34 @@ def recommended_patch_next_step(report: dict[str, Any]) -> str:
     return "Fix Stage 14.1 blockers, then rerun the side-view patch."
 
 
+def determine_event_patch_verdict(report: dict[str, Any]) -> str:
+    flags = report["flags"]
+    if flags["replay_schema_missing"]:
+        return "blocked"
+    if (
+        flags["player_aware_hit_validation_failed"]
+        or flags["implausible_hit_downgrade_failed"]
+        or flags["render_role_assignment_failed"]
+        or flags["semantic_debug_generation_failed"]
+    ):
+        return "needs_more_event_disambiguation"
+    if flags["render_frames_failed"]:
+        return "blocked"
+    if flags["video_export_failed"] or report["warnings"]:
+        return "ready_with_warnings"
+    return "ready_for_stage_15"
+
+
+def recommended_event_patch_next_step(report: dict[str, Any]) -> str:
+    if report["final_verdict"] == "ready_for_stage_15":
+        return "Proceed to Stage 15: Multi-Camera Analytical Replay."
+    if report["final_verdict"] == "needs_more_event_disambiguation":
+        return "Tune side-view event disambiguation before Stage 15."
+    if report["final_verdict"] == "ready_with_warnings":
+        return "Review side-view semantic warnings, then proceed to Stage 15 or Stage 14.3 tuning."
+    return "Fix Stage 14.2 blockers, then rerun the side-view patch."
+
+
 def field_block(rows: list[tuple[str, Any]]) -> str:
     lines: list[str] = []
     for key, value in rows:
@@ -137,6 +165,13 @@ def build_side_view_summary(report: dict[str, Any]) -> str:
         "  Hits use a plausible estimated contact-height band.",
         "  Interpolated points remain synthetic visual points.",
         "  The renderer still does not use measured 3D height.",
+        "",
+        "EVENT DISAMBIGUATION PATCH",
+        "  Hit labels are now filtered by player-aware plausibility.",
+        f"  Implausible hit labels downgraded: {report.get('implausible_hits_downgraded_count', 0)}",
+        "  Bounce events remain grounded.",
+        "  Player interaction cues are visually separated from hit and bounce labels.",
+        "  Synthetic height is still estimated, not measured.",
         "",
         "OUTPUTS",
         f"  Frames: {outputs['frames_dir']}",
@@ -238,17 +273,53 @@ def build_patch_report_sections(report: dict[str, Any]) -> list[tuple[str, str]]
     ]
 
 
+def build_event_patch_report_sections(report: dict[str, Any]) -> list[tuple[str, str]]:
+    return [
+        ("VERDICT", field_block([("Final verdict", report["final_verdict"]), ("Friction", f"{report['friction']['score']} ({report['friction']['band']})"), ("Patch applied", report["event_disambiguation_patch_applied"])])),
+        ("WHY THIS PATCH EXISTS", "The previous side-view replay could label some implausible in-court events as hits even when player position did not support that contact location."),
+        (
+            "PATCH BEHAVIOR",
+            field_block(
+                [
+                    ("Player-aware hit validation", report["player_aware_hit_validation_enabled"]),
+                    ("Event render roles", report["event_render_roles_enabled"]),
+                    ("Implausible hit downgrade", report["implausible_hits_downgraded_count"]),
+                    ("Bounce preservation", report["plausible_bounces_count"]),
+                    ("Interaction cue separation", report["player_interactions_count"]),
+                ]
+            ),
+        ),
+        (
+            "OUTPUTS",
+            field_block(
+                [
+                    ("Video", report["output_paths"].get("video_path")),
+                    ("Contact sheet", report["output_paths"].get("contact_sheet_path")),
+                    ("Final frame", report["output_paths"].get("final_frame_path")),
+                    ("Arc preview", report["output_paths"].get("arc_preview_path")),
+                    ("Semantic debug", report["semantic_debug_artifact"]),
+                    ("Manifest", report["output_paths"].get("manifest_path")),
+                ]
+            ),
+        ),
+        ("PRODUCT OWNER INTERPRETATION", "The side-view should now be more readable as a tennis exchange because raw possible_hit labels are no longer rendered as hits when the attributed player is too far away in court depth. Ambiguous cues remain visible as uncertain or interaction markers."),
+        ("WARNINGS", bullet_list(report["warnings"], "No warnings.")),
+        ("ERRORS", bullet_list(report["errors"], "No errors.")),
+        ("NEXT STEP", report["recommended_next_step"]),
+    ]
+
+
 def update_lab_notebook_safely() -> tuple[dict[str, Path], str | None]:
     try:
         from tennis_vision.lab_notebook import lab_notebook_paths, update_lab_notebook
 
         update_lab_notebook(PROJECT_ROOT)
-        return lab_notebook_paths(PROJECT_ROOT, "stage_14_1"), None
+        return lab_notebook_paths(PROJECT_ROOT, "stage_14_2"), None
     except Exception as exc:
         try:
             from tennis_vision.lab_notebook import lab_notebook_paths
 
-            return lab_notebook_paths(PROJECT_ROOT, "stage_14_1"), f"Lab notebook update failed: {exc}"
+            return lab_notebook_paths(PROJECT_ROOT, "stage_14_2"), f"Lab notebook update failed: {exc}"
         except Exception:
             return {
                 "stage_page": PROJECT_ROOT / "docs" / "lab-notebook" / "stage_14_side_view_replay.md",
@@ -260,10 +331,12 @@ def print_summary(report: dict[str, Any], lab_paths: dict[str, Path]) -> None:
     rows = [
         ("Verdict", report["final_verdict"]),
         ("Friction", f"{report['friction']['score']} ({report['friction']['band']})"),
-        ("Semantic patch applied", report.get("semantic_height_patch_applied", True)),
-        ("Bounce grounding", report.get("bounce_grounding_enabled", True)),
-        ("Hit contact band", report.get("hit_contact_band_enabled", True)),
-        ("Interpolated points marked", report.get("interpolated_points_marked", True)),
+        ("Player-aware hit validation", report.get("player_aware_hit_validation_enabled", True)),
+        ("Event render roles", report.get("event_render_roles_enabled", True)),
+        ("Implausible hits downgraded", report.get("implausible_hits_downgraded_count", 0)),
+        ("Plausible hits", report.get("plausible_hits_count", 0)),
+        ("Plausible bounces", report.get("plausible_bounces_count", 0)),
+        ("Uncertain events", report.get("uncertain_events_count", 0)),
         ("Frames generated", report["frames_generated"]),
         ("Video generated", report["video_generated"]),
         ("Semantic debug", report.get("semantic_debug_artifact", "")),
@@ -275,14 +348,14 @@ def print_summary(report: dict[str, Any], lab_paths: dict[str, Path]) -> None:
         from rich.console import Console
         from rich.table import Table
 
-        table = Table(title="Stage 14.1 Side-View Patch")
+        table = Table(title="Stage 14.2 Side-View Event Disambiguation")
         table.add_column("Field", style="cyan", no_wrap=True)
         table.add_column("Value", style="white")
         for field, value in rows:
             table.add_row(str(field), str(value))
         Console().print(table)
     except ImportError:
-        print("Stage 14.1 Side-View Patch")
+        print("Stage 14.2 Side-View Event Disambiguation")
         for field, value in rows:
             print(f"{field}: {value}")
 
@@ -299,10 +372,12 @@ def main() -> int:
     schema_version = schema.get("metadata", {}).get("schema_version") if schema else None
     keyframes = list(schema.get("ball_trajectory", {}).get("replay_keyframes", [])) if schema else []
     events = list(schema.get("event_timeline", [])) if schema else []
+    players = list(schema.get("players", [])) if schema else []
+    enriched_events, event_role_summary = downgrade_implausible_hits(events, players)
     side_view_keyframes = build_side_view_keyframes(schema) if schema else []
 
     frame_paths: list[Path] = []
-    render_context: dict[str, Any] = {"side_view_keyframes": side_view_keyframes, "display_points": [], "players": [], "events": events}
+    render_context: dict[str, Any] = {"side_view_keyframes": side_view_keyframes, "display_points": [], "players": players, "events": enriched_events, "event_render_role_summary": event_role_summary}
     if schema and side_view_keyframes:
         frame_paths, render_context, frame_warnings, frame_errors = render_side_view_frames(
             schema=schema,
@@ -312,6 +387,8 @@ def main() -> int:
         )
         warnings.extend(frame_warnings)
         errors.extend(frame_errors)
+        event_role_summary = render_context.get("event_render_role_summary", event_role_summary)
+        enriched_events = render_context.get("events", enriched_events)
 
     frames_dir = output_dir / "frames"
     video_path = output_dir / "side_view_replay.mp4"
@@ -376,6 +453,16 @@ def main() -> int:
         "render_frames_failed": len(frame_paths) == 0,
         "video_export_failed": bool(frame_paths and not args.no_video and not video_generated),
     }
+    event_patch_flags = {
+        "replay_schema_missing": not bool(schema),
+        "player_data_missing": len(players) == 0,
+        "player_aware_hit_validation_failed": not validate_player_aware_hit_validation(enriched_events, players),
+        "implausible_hit_downgrade_failed": not validate_implausible_hit_downgrade(enriched_events),
+        "render_role_assignment_failed": not validate_render_role_assignment(enriched_events),
+        "semantic_debug_generation_failed": bool(frame_paths and not semantic_debug_generated),
+        "render_frames_failed": len(frame_paths) == 0,
+        "video_export_failed": bool(frame_paths and not args.no_video and not video_generated),
+    }
     friction = calculate_stage_14_friction_score(**flags, warnings_count=len(warnings), errors_count=len(errors))
     report: dict[str, Any] = {
         "timestamp": timestamp,
@@ -396,6 +483,13 @@ def main() -> int:
         "synthetic_height_enabled": True,
         "true_height_available": False,
         "height_estimation_method": "event-aware synthetic arc from 2D projected keyframes",
+        "player_aware_hit_validation_enabled": True,
+        "event_render_roles_enabled": True,
+        "implausible_hits_downgraded_count": event_role_summary.get("implausible_hits_downgraded_count", 0),
+        "plausible_hits_count": event_role_summary.get("plausible_hits_count", 0),
+        "plausible_bounces_count": event_role_summary.get("plausible_bounces_count", 0),
+        "uncertain_events_count": event_role_summary.get("uncertain_events_count", 0),
+        "player_interactions_count": event_role_summary.get("player_interactions_count", 0),
         "warnings": warnings,
         "errors": errors,
         "flags": flags,
@@ -429,6 +523,12 @@ def main() -> int:
                 "bounce_grounding_enabled": True,
                 "hit_contact_band_enabled": True,
                 "interpolated_points_marked": True,
+                "player_aware_hit_validation_enabled": True,
+                "event_render_roles_enabled": True,
+                "implausible_hits_downgraded_count": event_role_summary.get("implausible_hits_downgraded_count", 0),
+                "plausible_hits_count": event_role_summary.get("plausible_hits_count", 0),
+                "plausible_bounces_count": event_role_summary.get("plausible_bounces_count", 0),
+                "uncertain_events_count": event_role_summary.get("uncertain_events_count", 0),
                 "height_anchor_summary": summarize_height_anchors(side_view_keyframes),
                 "semantic_warnings": semantic_warnings(side_view_keyframes),
                 "output_paths": output_paths,
@@ -477,6 +577,35 @@ def main() -> int:
     patch_report["final_verdict"] = determine_patch_verdict(patch_report)
     patch_report["recommended_next_step"] = recommended_patch_next_step(patch_report)
 
+    event_patch_friction = calculate_stage_14_2_friction_score(**event_patch_flags, warnings_count=len(warnings), errors_count=len(errors))
+    event_patch_report: dict[str, Any] = {
+        "timestamp": timestamp,
+        "stage": "stage_14_2_side_view_event_disambiguation",
+        "source_stage": 14.1,
+        "event_disambiguation_patch_applied": True,
+        "player_aware_hit_validation_enabled": True,
+        "event_render_roles_enabled": True,
+        "implausible_hits_downgraded_count": event_role_summary.get("implausible_hits_downgraded_count", 0),
+        "plausible_hits_count": event_role_summary.get("plausible_hits_count", 0),
+        "plausible_bounces_count": event_role_summary.get("plausible_bounces_count", 0),
+        "uncertain_events_count": event_role_summary.get("uncertain_events_count", 0),
+        "player_interactions_count": event_role_summary.get("player_interactions_count", 0),
+        "frames_generated": len(frame_paths),
+        "video_generated": video_generated,
+        "semantic_debug_artifact": str(semantic_debug_path) if semantic_debug_path.exists() else "",
+        "warnings": warnings,
+        "errors": errors,
+        "flags": event_patch_flags,
+        "friction": event_patch_friction,
+        "final_verdict": "blocked",
+        "recommended_next_step": "",
+        "output_paths": output_paths,
+        "event_render_role_summary": event_role_summary,
+        "semantic_warnings": semantic_warnings(side_view_keyframes),
+    }
+    event_patch_report["final_verdict"] = determine_event_patch_verdict(event_patch_report)
+    event_patch_report["recommended_next_step"] = recommended_event_patch_next_step(event_patch_report)
+
     log_path = write_timestamped_log(
         PROJECT_ROOT,
         "stage_14_side_view_replay",
@@ -499,18 +628,25 @@ def main() -> int:
     patch_report["markdown_report_path"] = str(PROJECT_ROOT / "outputs" / "reports" / "stage_14_1_side_view_patch_report.md")
     write_json_report(Path(patch_report["json_report_path"]), patch_report)
     write_markdown_report(Path(patch_report["markdown_report_path"]), "Stage 14.1 Side-View Height Semantics Patch Report", build_patch_report_sections(patch_report))
+    event_patch_report["json_report_path"] = str(PROJECT_ROOT / "outputs" / "reports" / "stage_14_2_side_view_event_disambiguation_report.json")
+    event_patch_report["markdown_report_path"] = str(PROJECT_ROOT / "outputs" / "reports" / "stage_14_2_side_view_event_disambiguation_report.md")
+    write_json_report(Path(event_patch_report["json_report_path"]), event_patch_report)
+    write_markdown_report(Path(event_patch_report["markdown_report_path"]), "Stage 14.2 Side-View Event Disambiguation Report", build_event_patch_report_sections(event_patch_report))
 
     lab_paths, notebook_warning = update_lab_notebook_safely()
     if notebook_warning:
         report["warnings"].append(notebook_warning)
         patch_report["warnings"].append(notebook_warning)
+        event_patch_report["warnings"].append(notebook_warning)
         write_json_report(Path(report["json_report_path"]), report)
         write_markdown_report(Path(report["markdown_report_path"]), "Stage 14 Side-View Ball Flight Renderer Report", build_report_sections(report))
         write_json_report(Path(patch_report["json_report_path"]), patch_report)
         write_markdown_report(Path(patch_report["markdown_report_path"]), "Stage 14.1 Side-View Height Semantics Patch Report", build_patch_report_sections(patch_report))
+        write_json_report(Path(event_patch_report["json_report_path"]), event_patch_report)
+        write_markdown_report(Path(event_patch_report["markdown_report_path"]), "Stage 14.2 Side-View Event Disambiguation Report", build_event_patch_report_sections(event_patch_report))
         print(f"Warning: {notebook_warning}")
-    print_summary(patch_report, lab_paths)
-    return 1 if patch_report["final_verdict"] == "blocked" else 0
+    print_summary(event_patch_report, lab_paths)
+    return 1 if event_patch_report["final_verdict"] == "blocked" else 0
 
 
 def summarize_height_anchors(side_view_keyframes: list[dict[str, Any]]) -> dict[str, int]:
@@ -540,6 +676,30 @@ def validate_hit_contact_band(side_view_keyframes: list[dict[str, Any]]) -> bool
     if not hit_points:
         return True
     return all(62.0 <= float(point.get("synthetic_height") or 0) <= 118.0 for point in hit_points)
+
+
+def validate_player_aware_hit_validation(events: list[dict[str, Any]], players: list[dict[str, Any]]) -> bool:
+    raw_hits = [event for event in events if "hit" in str(event.get("event_type") or "").lower()]
+    if not raw_hits:
+        return True
+    if not players:
+        return False
+    return all(event.get("player_aware_plausibility_status") in {"plausible", "implausible"} for event in raw_hits)
+
+
+def validate_implausible_hit_downgrade(events: list[dict[str, Any]]) -> bool:
+    for event in events:
+        raw_type = str(event.get("event_type") or "").lower()
+        if "hit" not in raw_type:
+            continue
+        if event.get("player_aware_plausibility_status") == "implausible" and event.get("render_role") == "hit_plausible":
+            return False
+    return True
+
+
+def validate_render_role_assignment(events: list[dict[str, Any]]) -> bool:
+    valid_roles = {"hit_plausible", "bounce_plausible", "player_interaction", "uncertain_event", "interpolation_only"}
+    return all(str(event.get("render_role") or "") in valid_roles for event in events)
 
 
 if __name__ == "__main__":

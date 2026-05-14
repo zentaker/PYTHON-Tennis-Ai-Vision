@@ -681,6 +681,35 @@ NOTES:
 
 ---
 
+FUNCTION: calculate_stage_14_2_friction_score
+FILE: src/tennis_vision/friction.py
+LINE: 949
+AREA: Friction
+
+PURPOSE:
+  Calculates friction for Stage 14.2 side-view event disambiguation.
+
+INPUTS:
+  - stage-specific warning/error/input flags
+
+OUTPUTS:
+  - friction score dictionary
+
+CALLED BY:
+  - scripts/run_stage_14_side_view_replay.py
+
+WHY PRODUCT OWNER CARES:
+  Prevents failures and uncertainty from being hidden.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/friction.py and go to line 949.
+  Search: def calculate_stage_14_2_friction_score
+
+NOTES:
+  None.
+
+---
+
 ## Stage 1 - Video IO
 
 FUNCTION: read_video_metadata
@@ -2605,7 +2634,7 @@ NOTES:
 
 FUNCTION: estimate_synthetic_height
 FILE: src/tennis_vision/ball_flight_estimator.py
-LINE: 36
+LINE: 37
 AREA: Stage 14 - Side-View Replay
 
 PURPOSE:
@@ -2626,7 +2655,7 @@ WHY PRODUCT OWNER CARES:
   This enables side-view analytical video without pretending the system measured real ball height.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/ball_flight_estimator.py and go to line 36.
+  Open src/tennis_vision/ball_flight_estimator.py and go to line 37.
   Search: def estimate_synthetic_height
 
 NOTES:
@@ -2636,7 +2665,7 @@ NOTES:
 
 FUNCTION: build_side_view_keyframes
 FILE: src/tennis_vision/ball_flight_estimator.py
-LINE: 133
+LINE: 254
 AREA: Stage 14 - Side-View Replay
 
 PURPOSE:
@@ -2656,7 +2685,7 @@ WHY PRODUCT OWNER CARES:
   This converts the replay schema into the side-view renderer's data model.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/ball_flight_estimator.py and go to line 133.
+  Open src/tennis_vision/ball_flight_estimator.py and go to line 254.
   Search: def build_side_view_keyframes
 
 NOTES:
@@ -2666,7 +2695,7 @@ NOTES:
 
 FUNCTION: interpolate_side_view_motion
 FILE: src/tennis_vision/ball_flight_estimator.py
-LINE: 179
+LINE: 305
 AREA: Stage 14 - Side-View Replay
 
 PURPOSE:
@@ -2686,7 +2715,7 @@ WHY PRODUCT OWNER CARES:
   It smooths the animation while keeping interpolated positions distinct from measured keyframes.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/ball_flight_estimator.py and go to line 179.
+  Open src/tennis_vision/ball_flight_estimator.py and go to line 305.
   Search: def interpolate_side_view_motion
 
 NOTES:
@@ -2696,7 +2725,7 @@ NOTES:
 
 FUNCTION: render_side_view_frame
 FILE: src/tennis_vision/replay_renderer_side_view.py
-LINE: 216
+LINE: 221
 AREA: Stage 14 - Side-View Replay
 
 PURPOSE:
@@ -2719,7 +2748,7 @@ WHY PRODUCT OWNER CARES:
   This creates the first side-view replay visualization from analysis data.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/replay_renderer_side_view.py and go to line 216.
+  Open src/tennis_vision/replay_renderer_side_view.py and go to line 221.
   Search: def render_side_view_frame
 
 NOTES:
@@ -2729,7 +2758,7 @@ NOTES:
 
 FUNCTION: render_side_view_frames
 FILE: src/tennis_vision/replay_renderer_side_view.py
-LINE: 241
+LINE: 246
 AREA: Stage 14 - Side-View Replay
 
 PURPOSE:
@@ -2753,7 +2782,7 @@ WHY PRODUCT OWNER CARES:
   Frame rendering is the primary success condition for the side-view replay.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/replay_renderer_side_view.py and go to line 241.
+  Open src/tennis_vision/replay_renderer_side_view.py and go to line 246.
   Search: def render_side_view_frames
 
 NOTES:
@@ -2763,7 +2792,7 @@ NOTES:
 
 FUNCTION: export_side_view_video
 FILE: src/tennis_vision/replay_renderer_side_view.py
-LINE: 270
+LINE: 275
 AREA: Stage 14 - Side-View Replay
 
 PURPOSE:
@@ -2786,7 +2815,7 @@ WHY PRODUCT OWNER CARES:
   Video export is useful but codec-dependent, so it is not required for renderer success.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/replay_renderer_side_view.py and go to line 270.
+  Open src/tennis_vision/replay_renderer_side_view.py and go to line 275.
   Search: def export_side_view_video
 
 NOTES:
@@ -2798,7 +2827,7 @@ NOTES:
 
 FUNCTION: classify_height_anchor_type
 FILE: src/tennis_vision/ball_flight_estimator.py
-LINE: 49
+LINE: 50
 AREA: Stage 14.1 - Side-View Patch
 
 PURPOSE:
@@ -2818,7 +2847,7 @@ WHY PRODUCT OWNER CARES:
   This lets the side-view renderer treat bounce and hit moments differently.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/ball_flight_estimator.py and go to line 49.
+  Open src/tennis_vision/ball_flight_estimator.py and go to line 50.
   Search: def classify_height_anchor_type
 
 NOTES:
@@ -2828,7 +2857,7 @@ NOTES:
 
 FUNCTION: enforce_bounce_floor_contact
 FILE: src/tennis_vision/ball_flight_estimator.py
-LINE: 109
+LINE: 230
 AREA: Stage 14.1 - Side-View Patch
 
 PURPOSE:
@@ -2848,7 +2877,7 @@ WHY PRODUCT OWNER CARES:
   This makes the replay visually interpretable as tennis instead of showing floating bounces.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/ball_flight_estimator.py and go to line 109.
+  Open src/tennis_vision/ball_flight_estimator.py and go to line 230.
   Search: def enforce_bounce_floor_contact
 
 NOTES:
@@ -2858,7 +2887,7 @@ NOTES:
 
 FUNCTION: enforce_hit_contact_band
 FILE: src/tennis_vision/ball_flight_estimator.py
-LINE: 114
+LINE: 235
 AREA: Stage 14.1 - Side-View Patch
 
 PURPOSE:
@@ -2878,7 +2907,7 @@ WHY PRODUCT OWNER CARES:
   Hit markers should look plausible without claiming real measured 3D height.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/ball_flight_estimator.py and go to line 114.
+  Open src/tennis_vision/ball_flight_estimator.py and go to line 235.
   Search: def enforce_hit_contact_band
 
 NOTES:
@@ -2888,7 +2917,7 @@ NOTES:
 
 FUNCTION: estimate_semantic_height_profile
 FILE: src/tennis_vision/ball_flight_estimator.py
-LINE: 71
+LINE: 192
 AREA: Stage 14.1 - Side-View Patch
 
 PURPOSE:
@@ -2907,7 +2936,7 @@ WHY PRODUCT OWNER CARES:
   This keeps the side-view useful without pretending the system measured real 3D height.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/ball_flight_estimator.py and go to line 71.
+  Open src/tennis_vision/ball_flight_estimator.py and go to line 192.
   Search: def estimate_semantic_height_profile
 
 NOTES:
@@ -2917,7 +2946,7 @@ NOTES:
 
 FUNCTION: annotate_interpolated_height_points
 FILE: src/tennis_vision/ball_flight_estimator.py
-LINE: 119
+LINE: 240
 AREA: Stage 14.1 - Side-View Patch
 
 PURPOSE:
@@ -2936,7 +2965,7 @@ WHY PRODUCT OWNER CARES:
   Interpolated points must not be mistaken for measured or event-anchored truth.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/ball_flight_estimator.py and go to line 119.
+  Open src/tennis_vision/ball_flight_estimator.py and go to line 240.
   Search: def annotate_interpolated_height_points
 
 NOTES:
@@ -2946,7 +2975,7 @@ NOTES:
 
 FUNCTION: create_semantic_debug_image
 FILE: src/tennis_vision/replay_renderer_side_view.py
-LINE: 322
+LINE: 327
 AREA: Stage 14.1 - Side-View Patch
 
 PURPOSE:
@@ -2970,8 +2999,167 @@ WHY PRODUCT OWNER CARES:
   The Product Owner can inspect whether bounces are grounded and hits/interpolation are labeled clearly.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/replay_renderer_side_view.py and go to line 322.
+  Open src/tennis_vision/replay_renderer_side_view.py and go to line 327.
   Search: def create_semantic_debug_image
+
+NOTES:
+  None.
+
+---
+
+## Stage 14.2 - Side-View Event Disambiguation
+
+FUNCTION: estimate_player_contact_window
+FILE: src/tennis_vision/ball_flight_estimator.py
+LINE: 74
+AREA: Stage 14.2 - Side-View Event Disambiguation
+
+PURPOSE:
+  Estimates a conservative court-depth window where a player could plausibly contact the ball.
+
+INPUTS:
+  - player record
+  - event frame
+  - depth tolerance
+
+OUTPUTS:
+  - player contact window dictionary
+
+CALLED BY:
+  - score_hit_plausibility
+
+WHY PRODUCT OWNER CARES:
+  Hit labels should be constrained by where the player actually is, not only by ball trajectory shape.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/ball_flight_estimator.py and go to line 74.
+  Search: def estimate_player_contact_window
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: is_hit_plausible_for_player
+FILE: src/tennis_vision/ball_flight_estimator.py
+LINE: 138
+AREA: Stage 14.2 - Side-View Event Disambiguation
+
+PURPOSE:
+  Tests whether a candidate hit is plausible relative to player position and court depth.
+
+INPUTS:
+  - event record
+  - players
+  - depth tolerance
+
+OUTPUTS:
+  - boolean plausibility result
+
+CALLED BY:
+  - classify_event_semantic_role
+
+WHY PRODUCT OWNER CARES:
+  This prevents the renderer from labeling clearly implausible in-court positions as hits.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/ball_flight_estimator.py and go to line 138.
+  Search: def is_hit_plausible_for_player
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: score_hit_plausibility
+FILE: src/tennis_vision/ball_flight_estimator.py
+LINE: 97
+AREA: Stage 14.2 - Side-View Event Disambiguation
+
+PURPOSE:
+  Scores possible_hit events against attributed player depth.
+
+INPUTS:
+  - event record
+  - players
+  - depth tolerance
+
+OUTPUTS:
+  - plausibility score and explanation
+
+CALLED BY:
+  - is_hit_plausible_for_player
+  - downgrade_implausible_hits
+
+WHY PRODUCT OWNER CARES:
+  The Product Owner can see why a hit label was accepted or downgraded.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/ball_flight_estimator.py and go to line 97.
+  Search: def score_hit_plausibility
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: downgrade_implausible_hits
+FILE: src/tennis_vision/ball_flight_estimator.py
+LINE: 143
+AREA: Stage 14.2 - Side-View Event Disambiguation
+
+PURPOSE:
+  Assigns render roles and downgrades raw possible_hit events that fail player-aware plausibility.
+
+INPUTS:
+  - event records
+  - player records
+
+OUTPUTS:
+  - enriched events
+  - render-role summary
+
+CALLED BY:
+  - build_side_view_keyframes
+  - render_side_view_frames
+  - scripts/run_stage_14_side_view_replay.py
+
+WHY PRODUCT OWNER CARES:
+  It preserves raw event evidence while avoiding misleading hit labels in the replay.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/ball_flight_estimator.py and go to line 143.
+  Search: def downgrade_implausible_hits
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: assign_event_render_role
+FILE: src/tennis_vision/replay_renderer_side_view.py
+LINE: 415
+AREA: Stage 14.2 - Side-View Event Disambiguation
+
+PURPOSE:
+  Separates raw event labels from final side-view render roles.
+
+INPUTS:
+  - event record
+
+OUTPUTS:
+  - render role
+
+CALLED BY:
+  - render_event_markers
+  - render_timeline_strip
+
+WHY PRODUCT OWNER CARES:
+  This makes the side-view easier to read and prevents ambiguous tennis interpretation.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/replay_renderer_side_view.py and go to line 415.
+  Search: def assign_event_render_role
 
 NOTES:
   None.
@@ -2982,7 +3170,7 @@ NOTES:
 
 FUNCTION: update_lab_notebook
 FILE: src/tennis_vision/lab_notebook.py
-LINE: 2182
+LINE: 2268
 AREA: Lab Notebook
 
 PURPOSE:
@@ -3002,7 +3190,7 @@ WHY PRODUCT OWNER CARES:
   Keeps execution evidence current without manual documentation commands.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/lab_notebook.py and go to line 2182.
+  Open src/tennis_vision/lab_notebook.py and go to line 2268.
   Search: def update_lab_notebook
 
 NOTES:

@@ -1,17 +1,18 @@
 {
   "bounce_grounding_enabled": true,
   "errors": [],
+  "event_render_roles_enabled": true,
   "events_used": 5,
   "fps": 12,
   "frames_generated": 100,
-  "generated_at": "2026-05-14T04:16:09+00:00",
+  "generated_at": "2026-05-14T04:39:07+00:00",
   "height_anchor_summary": {
-    "arc_estimate": 7,
-    "hit_contact": 3,
+    "arc_estimate": 10,
     "interaction_cue": 2
   },
   "height_estimation_method": "event-aware synthetic arc from 2D projected keyframes",
   "hit_contact_band_enabled": true,
+  "implausible_hits_downgraded_count": 3,
   "input_schema_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_12_replay_schema\\replay_schema.json",
   "interpolated_points_marked": true,
   "interpolation_enabled": true,
@@ -34,6 +35,9 @@
     "summary_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_summary.md",
     "video_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_replay.mp4"
   },
+  "plausible_bounces_count": 0,
+  "plausible_hits_count": 0,
+  "player_aware_hit_validation_enabled": true,
   "renderer_type": "side_view_ball_flight",
   "schema_version": "0.1.0",
   "semantic_height_patch_applied": true,
@@ -43,6 +47,7 @@
   "stage": "stage_14_side_view_replay",
   "synthetic_height_enabled": true,
   "true_height_available": false,
+  "uncertain_events_count": 3,
   "video_generated": true,
   "warnings": []
 }

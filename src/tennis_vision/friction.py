@@ -944,3 +944,48 @@ def calculate_stage_14_1_friction_score(
             "errors_count": errors_count,
         },
     }
+
+
+def calculate_stage_14_2_friction_score(
+    *,
+    replay_schema_missing: bool = False,
+    player_data_missing: bool = False,
+    player_aware_hit_validation_failed: bool = False,
+    implausible_hit_downgrade_failed: bool = False,
+    render_role_assignment_failed: bool = False,
+    semantic_debug_generation_failed: bool = False,
+    render_frames_failed: bool = False,
+    video_export_failed: bool = False,
+    warnings_count: int = 0,
+    errors_count: int = 0,
+) -> dict[str, Any]:
+    """Calculate Stage 14.2 side-view event disambiguation friction."""
+    score = 0
+    score += 45 if replay_schema_missing else 0
+    score += 20 if player_data_missing else 0
+    score += 30 if player_aware_hit_validation_failed else 0
+    score += 30 if implausible_hit_downgrade_failed else 0
+    score += 25 if render_role_assignment_failed else 0
+    score += 20 if semantic_debug_generation_failed else 0
+    score += 35 if render_frames_failed else 0
+    score += 12 if video_export_failed else 0
+    score += min(warnings_count * 2, 12)
+    score += min(errors_count * 10, 30)
+    score = max(0, min(score, 100))
+
+    return {
+        "score": score,
+        "band": friction_band(score),
+        "inputs": {
+            "replay_schema_missing": replay_schema_missing,
+            "player_data_missing": player_data_missing,
+            "player_aware_hit_validation_failed": player_aware_hit_validation_failed,
+            "implausible_hit_downgrade_failed": implausible_hit_downgrade_failed,
+            "render_role_assignment_failed": render_role_assignment_failed,
+            "semantic_debug_generation_failed": semantic_debug_generation_failed,
+            "render_frames_failed": render_frames_failed,
+            "video_export_failed": video_export_failed,
+            "warnings_count": warnings_count,
+            "errors_count": errors_count,
+        },
+    }

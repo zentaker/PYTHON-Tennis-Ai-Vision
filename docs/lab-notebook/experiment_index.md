@@ -201,3 +201,12 @@ NEXT STEP: Proceed to Stage 15: Multi-Camera Analytical Replay.
 
 ---
 
+STAGE: Stage 14.2
+NAME: Side-View Event Disambiguation
+VERDICT: ready_for_stage_15
+FRICTION: 0 low friction
+MAIN OUTPUT: outputs/replay/stage_14_side_view_replay/side_view_semantic_debug.jpg
+NEXT STEP: Proceed to Stage 15: Multi-Camera Analytical Replay.
+
+---
+

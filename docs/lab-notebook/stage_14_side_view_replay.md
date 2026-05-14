@@ -18,7 +18,7 @@ Friction level:
   low friction
 
 Timestamp:
-  2026-05-14T04:16:09+00:00
+  2026-05-14T04:39:07+00:00
 
 Recommended next step:
   Proceed to Stage 15: Multi-Camera Analytical Replay.
@@ -52,7 +52,7 @@ Markdown report path:
   C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\stage_14_side_view_replay_report.md
 
 Log:
-  C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\stage_14_side_view_replay_20260514T041611Z.log
+  C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\stage_14_side_view_replay_20260514T043910Z.log
 
 Frames:
   C:\Users\MSI\Desktop\TennisAiVision\outputs\replay\stage_14_side_view_replay\frames
@@ -134,6 +134,10 @@ Older entries are preserved as originally written. Some historical entries may u
 
 Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
 
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
 <!-- lab-entry:2026-05-14T03:56:04+00:00 -->
 
 ### 2026-05-14T03:56:04+00:00
@@ -194,6 +198,25 @@ Next step:
 <!-- lab-entry:2026-05-14T04:16:09+00:00 -->
 
 ### 2026-05-14T04:16:09+00:00
+
+Stage:
+  Stage 14 - Side-View Replay
+
+Verdict:
+  ready_for_stage_15
+
+Friction score:
+  0
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed to Stage 15: Multi-Camera Analytical Replay.
+
+<!-- lab-entry:2026-05-14T04:39:07+00:00 -->
+
+### 2026-05-14T04:39:07+00:00
 
 Stage:
   Stage 14 - Side-View Replay

@@ -142,3 +142,21 @@ RELATED STAGES:
   Stage 14
   Stage 14.1
   Future replay renderer stages
+
+---
+
+LESSON: Validate event labels against actor position
+
+WHAT IT MEANS:
+  A raw event hypothesis should not automatically become a rendered tennis
+  event. Hit labels need a conservative plausibility check against player
+  position, court depth, and side-state context.
+
+WHY IT MATTERS:
+  A replay can look convincing even when an event marker is spatially
+  implausible. Player-aware validation prevents the renderer from turning weak
+  evidence into misleading contact labels.
+
+RELATED STAGES:
+  Stage 14.2
+  Future event rendering stages

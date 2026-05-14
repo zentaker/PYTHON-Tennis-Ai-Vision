@@ -1,40 +1,45 @@
 {
-  "bounce_grounding_enabled": true,
   "errors": [],
+  "event_disambiguation_patch_applied": true,
+  "event_render_role_summary": {
+    "implausible_hits_downgraded_count": 3,
+    "plausible_bounces_count": 0,
+    "plausible_hits_count": 0,
+    "player_interactions_count": 2,
+    "uncertain_events_count": 3
+  },
+  "event_render_roles_enabled": true,
   "final_verdict": "ready_for_stage_15",
   "flags": {
-    "bounce_grounding_failed": false,
-    "hit_contact_band_failed": false,
+    "implausible_hit_downgrade_failed": false,
+    "player_aware_hit_validation_failed": false,
+    "player_data_missing": false,
     "render_frames_failed": false,
+    "render_role_assignment_failed": false,
     "replay_schema_missing": false,
     "semantic_debug_generation_failed": false,
-    "side_view_source_missing": false,
     "video_export_failed": false
   },
   "frames_generated": 100,
   "friction": {
     "band": "low friction",
     "inputs": {
-      "bounce_grounding_failed": false,
       "errors_count": 0,
-      "hit_contact_band_failed": false,
+      "implausible_hit_downgrade_failed": false,
+      "player_aware_hit_validation_failed": false,
+      "player_data_missing": false,
       "render_frames_failed": false,
+      "render_role_assignment_failed": false,
       "replay_schema_missing": false,
       "semantic_debug_generation_failed": false,
-      "side_view_source_missing": false,
       "video_export_failed": false,
       "warnings_count": 0
     },
     "score": 0
   },
-  "height_anchor_summary": {
-    "arc_estimate": 10,
-    "interaction_cue": 2
-  },
-  "hit_contact_band_enabled": true,
-  "interpolated_points_marked": true,
-  "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_14_1_side_view_patch_report.json",
-  "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_14_1_side_view_patch_report.md",
+  "implausible_hits_downgraded_count": 3,
+  "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_14_2_side_view_event_disambiguation_report.json",
+  "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_14_2_side_view_event_disambiguation_report.md",
   "output_paths": {
     "arc_preview_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_arc_preview.jpg",
     "contact_sheet_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_contact_sheet.jpg",
@@ -45,15 +50,19 @@
     "summary_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_summary.md",
     "video_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_replay.mp4"
   },
+  "plausible_bounces_count": 0,
+  "plausible_hits_count": 0,
+  "player_aware_hit_validation_enabled": true,
+  "player_interactions_count": 2,
   "recommended_next_step": "Proceed to Stage 15: Multi-Camera Analytical Replay.",
   "semantic_debug_artifact": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_semantic_debug.jpg",
-  "semantic_height_patch_applied": true,
   "semantic_warnings": [
     "No possible_bounce anchors were present in the current replay schema; bounce grounding is enabled for future bounce events."
   ],
-  "source_stage": 14,
-  "stage": "stage_14_1_side_view_patch",
+  "source_stage": 14.1,
+  "stage": "stage_14_2_side_view_event_disambiguation",
   "timestamp": "2026-05-14T04:39:07+00:00",
+  "uncertain_events_count": 3,
   "video_generated": true,
   "warnings": []
 }

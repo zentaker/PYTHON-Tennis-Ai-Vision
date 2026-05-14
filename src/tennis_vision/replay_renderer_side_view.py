@@ -9,7 +9,7 @@ from typing import Any
 import cv2
 import numpy as np
 
-from tennis_vision.ball_flight_estimator import build_side_view_keyframes, interpolate_side_view_motion
+from tennis_vision.ball_flight_estimator import build_side_view_keyframes, downgrade_implausible_hits, interpolate_side_view_motion
 
 
 SIDE_STYLE: dict[str, Any] = {
@@ -27,6 +27,8 @@ SIDE_STYLE: dict[str, Any] = {
     "event": (210, 120, 255),
     "hit": (70, 120, 255),
     "bounce": (120, 255, 140),
+    "interaction": (220, 95, 220),
+    "uncertain": (170, 185, 195),
     "player_a": (255, 120, 70),
     "player_b": (80, 170, 255),
     "text": (245, 245, 240),
@@ -148,19 +150,22 @@ def render_event_markers(canvas: np.ndarray, events: list[dict[str, Any]], trans
             continue
         projected = event.get("projected_position", {})
         depth = projected.get("y")
-        event_text = str(event.get("event_type", "")).lower()
-        if "bounce" in event_text:
+        render_role = assign_event_render_role(event)
+        if render_role == "bounce_plausible":
             height = 2
-        elif "hit" in event_text:
+        elif render_role == "hit_plausible":
             height = 88
+        elif render_role == "player_interaction":
+            height = 42
         else:
-            height = 55
+            height = 58
         mapped = map_depth_height_to_canvas(depth, height, transform)
         if mapped is None:
             continue
-        color = event_color(event.get("event_type"))
-        cv2.drawMarker(canvas, mapped, color, markerType=cv2.MARKER_TILTED_CROSS, markerSize=18, thickness=2, line_type=cv2.LINE_AA)
-        label = str(event.get("event_type") or "possible_event").replace("possible_", "?")
+        color = render_role_color(render_role)
+        marker_type = cv2.MARKER_DIAMOND if render_role == "player_interaction" else cv2.MARKER_TILTED_CROSS
+        cv2.drawMarker(canvas, mapped, color, markerType=marker_type, markerSize=18, thickness=2, line_type=cv2.LINE_AA)
+        label = render_role_label(event)
         cv2.putText(canvas, label[:22], (mapped[0] + 8, mapped[1] - 8), SIDE_STYLE["font"], 0.42, color, 1, cv2.LINE_AA)
     return canvas
 
@@ -204,7 +209,7 @@ def render_timeline_strip(canvas: np.ndarray, points: list[dict[str, Any]], even
         if frame is None:
             continue
         x = timeline_x(frame, min_frame, max_frame, x0, x1)
-        cv2.line(canvas, (x, y - 22), (x, y - 7), event_color(event.get("event_type")), 2)
+        cv2.line(canvas, (x, y - 22), (x, y - 7), render_role_color(assign_event_render_role(event)), 2)
     current_frame = _int(points[current_index].get("frame_index"))
     if current_frame is not None:
         x = timeline_x(current_frame, min_frame, max_frame, x0, x1)
@@ -255,7 +260,7 @@ def render_side_view_frames(
         return [], {"side_view_keyframes": [], "display_points": [], "players": [], "events": []}, warnings, ["No side-view keyframes could be built."]
     points = interpolate_side_view_motion(keyframes, interpolate=interpolate, interpolation_steps=interpolation_steps)
     players = list(schema.get("players", []))
-    events = list(schema.get("event_timeline", []))
+    events, event_render_role_summary = downgrade_implausible_hits(list(schema.get("event_timeline", [])), players)
     paths: list[Path] = []
     for index in range(len(points)):
         frame = render_side_view_frame(schema=schema, points=points, current_index=index, players=players, events=events)
@@ -264,7 +269,7 @@ def render_side_view_frames(
             errors.append(f"Could not write side-view frame: {path}")
         else:
             paths.append(path)
-    return paths, {"side_view_keyframes": keyframes, "display_points": points, "players": players, "events": events}, warnings, errors
+    return paths, {"side_view_keyframes": keyframes, "display_points": points, "players": players, "events": events, "event_render_role_summary": event_render_role_summary}, warnings, errors
 
 
 def export_side_view_video(frame_paths: list[Path], output_path: Path, fps: int) -> tuple[bool, list[str], list[str]]:
@@ -346,16 +351,39 @@ def create_semantic_debug_image(
         role = str(point.get("height_anchor_type") or "arc_estimate")
         color = point_color(point)
         cv2.circle(canvas, mapped, 12, color, thickness=2, lineType=cv2.LINE_AA)
+        render_role = str(point.get("render_role") or "")
         if role == "bounce_grounded":
             label = "bounce grounded"
         elif role == "hit_contact":
             label = "hit estimate"
+        elif render_role == "uncertain_event":
+            label = "uncertain event"
         elif role == "interaction_cue":
             label = "near-player cue"
         else:
             label = "arc estimate"
         cv2.putText(canvas, label, (mapped[0] + 10, mapped[1] + 18), SIDE_STYLE["font"], 0.42, color, 1, cv2.LINE_AA)
-    cv2.putText(canvas, "Semantic debug: anchors are synthetic; bounce anchors are floor-grounded", (35, 145), SIDE_STYLE["font"], 0.46, SIDE_STYLE["text"], 1, cv2.LINE_AA)
+    for event in events:
+        projected = event.get("projected_position", {})
+        role = assign_event_render_role(event)
+        if role == "bounce_plausible":
+            height = 2
+        elif role == "hit_plausible":
+            height = 88
+        elif role == "player_interaction":
+            height = 42
+        else:
+            height = 58
+        mapped = map_depth_height_to_canvas(projected.get("y"), height, transform)
+        if mapped is None:
+            continue
+        color = render_role_color(role)
+        raw_type = str(event.get("event_type") or "event")
+        status = str(event.get("player_aware_plausibility_status") or "not_applicable")
+        cv2.putText(canvas, f"raw={raw_type} role={role}", (mapped[0] + 10, mapped[1] + 36), SIDE_STYLE["font"], 0.36, color, 1, cv2.LINE_AA)
+        if status != "not_applicable":
+            cv2.putText(canvas, f"player check: {status}", (mapped[0] + 10, mapped[1] + 52), SIDE_STYLE["font"], 0.34, color, 1, cv2.LINE_AA)
+    cv2.putText(canvas, "Semantic debug: raw events are separated from render roles; implausible hits become uncertain", (35, 145), SIDE_STYLE["font"], 0.46, SIDE_STYLE["text"], 1, cv2.LINE_AA)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     return bool(cv2.imwrite(str(output_path), canvas)), []
 
@@ -384,13 +412,64 @@ def event_color(event_type: Any) -> tuple[int, int, int]:
     return SIDE_STYLE["event"]
 
 
+def assign_event_render_role(event: dict[str, Any]) -> str:
+    """Separate raw event labels from the final side-view render role."""
+    role = str(event.get("render_role") or "").lower()
+    if role:
+        return role
+    text = str(event.get("event_type") or "").lower()
+    if "bounce" in text:
+        return "bounce_plausible"
+    if "ball_near_player" in text or "near_player" in text:
+        return "player_interaction"
+    if "hit" in text:
+        return "uncertain_event"
+    if event.get("is_interpolated"):
+        return "interpolation_only"
+    return "uncertain_event"
+
+
+def render_role_color(render_role: str) -> tuple[int, int, int]:
+    """Return BGR color for the final event render role."""
+    if render_role == "hit_plausible":
+        return SIDE_STYLE["hit"]
+    if render_role == "bounce_plausible":
+        return SIDE_STYLE["bounce"]
+    if render_role == "player_interaction":
+        return SIDE_STYLE["interaction"]
+    if render_role == "interpolation_only":
+        return SIDE_STYLE["ball_interpolated"]
+    if render_role == "uncertain_event":
+        return SIDE_STYLE["uncertain"]
+    return SIDE_STYLE["event"]
+
+
+def render_role_label(event: dict[str, Any]) -> str:
+    """Return short label for side-view event rendering."""
+    role = assign_event_render_role(event)
+    if role == "hit_plausible":
+        return "?hit plausible"
+    if role == "bounce_plausible":
+        return "?bounce grounded"
+    if role == "player_interaction":
+        return "near player cue"
+    if role == "interpolation_only":
+        return "interpolated"
+    return "uncertain"
+
+
 def point_color(point: dict[str, Any]) -> tuple[int, int, int]:
     """Return BGR color for a side-view point role."""
     role = str(point.get("height_anchor_type") or "")
+    render_role = str(point.get("render_role") or "")
     if role == "bounce_grounded":
         return SIDE_STYLE["bounce"]
     if role == "hit_contact":
         return SIDE_STYLE["hit"]
+    if render_role == "uncertain_event":
+        return SIDE_STYLE["uncertain"]
+    if render_role == "player_interaction":
+        return SIDE_STYLE["interaction"]
     if role == "visual_interpolation":
         return SIDE_STYLE["ball_interpolated"]
     return SIDE_STYLE["ball"]

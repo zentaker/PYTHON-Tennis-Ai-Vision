@@ -31,6 +31,13 @@ SEMANTIC HEIGHT PATCH
   Interpolated points remain synthetic visual points.
   The renderer still does not use measured 3D height.
 
+EVENT DISAMBIGUATION PATCH
+  Hit labels are now filtered by player-aware plausibility.
+  Implausible hit labels downgraded: 3
+  Bounce events remain grounded.
+  Player interaction cues are visually separated from hit and bounce labels.
+  Synthetic height is still estimated, not measured.
+
 OUTPUTS
   Frames: C:\Users\MSI\Desktop\TennisAiVision\outputs\replay\stage_14_side_view_replay\frames
   Video: C:\Users\MSI\Desktop\TennisAiVision\outputs\replay\stage_14_side_view_replay\side_view_replay.mp4

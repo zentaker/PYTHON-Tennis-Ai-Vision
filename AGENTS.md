@@ -52,6 +52,7 @@ This repository is a local-first research project for tennis video analysis.
 - Replay renderers must consume `replay_schema.json` and preserve uncertainty. Interpolated points must be marked as visual interpolation, not measured detections. Do not use generative AI until deterministic renderers work.
 - Side-view replay currently uses synthetic height. Do not present synthetic height as measured 3D ball height. Preserve uncertainty in all visual labels and documentation.
 - Synthetic side-view replay must visually ground bounce-like events near the court surface and distinguish interpolated visual points from event-anchored points. Do not present visually floating bounce points as acceptable output.
+- Side-view event labels must be validated against player position and court depth. Do not render implausible in-court contact points as hits when the player remains near the baseline.
 
 ## Repository hygiene rules
 
