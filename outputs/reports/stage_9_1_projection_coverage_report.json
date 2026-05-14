@@ -38,7 +38,7 @@
     "stage_9_assignments": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_tactical_metrics\\ball_zone_assignments.csv"
   },
   "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_9_1_projection_coverage_report.json",
-  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_9_1_projection_coverage_20260514T015142Z.log",
+  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_9_1_projection_coverage_20260514T015628Z.log",
   "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_9_1_projection_coverage_report.md",
   "output_paths": {
     "projected_expanded_labels_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_1_projection_coverage\\projected_expanded_labels.csv",
@@ -59,7 +59,7 @@
   "stage_9_1_unknown_zones": 0,
   "stage_9_projected_points": 5,
   "stage_9_unknown_zones": 7,
-  "timestamp": "2026-05-14T01:51:42+00:00",
+  "timestamp": "2026-05-14T01:56:28+00:00",
   "tuned_depth_distribution": {
     "deep": 5,
     "mid": 5,

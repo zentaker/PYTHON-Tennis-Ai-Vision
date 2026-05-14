@@ -46,6 +46,12 @@ This repository is a local-first research project for tennis video analysis.
 - Manual labeling stages must keep timestamped session backups so user work can be recovered.
 - Tactical metrics must preserve uncertainty. Do not convert approximate zones, directions, or event hypotheses into confirmed coaching conclusions. Explain confidence and limitations clearly.
 - Before generating coaching/report summaries, tactical metrics must have enough projected points and low unknown-zone rates. If many zones are unknown, fix projection coverage before creating narrative analysis.
+- Analytical reports must preserve uncertainty. Do not turn possible_* events into confirmed events. Do not present tactical summaries as coaching truth. Use confidence levels and limitations.
+- Packaging stages should not duplicate heavy artifacts blindly. Curate selected outputs, record missing artifacts, and preserve uncertainty/limitations.
+- Before generating synthetic replay videos, create and validate a replay data schema. Rendering should consume structured data and preserve uncertainty. Do not use generative video as a substitute for reliable tracking data.
+- Replay renderers must consume `replay_schema.json` and preserve uncertainty. Interpolated points must be marked as visual interpolation, not measured detections. Do not use generative AI until deterministic renderers work.
+- Side-view replay currently uses synthetic height. Do not present synthetic height as measured 3D ball height. Preserve uncertainty in all visual labels and documentation.
+- Synthetic side-view replay must visually ground bounce-like events near the court surface and distinguish interpolated visual points from event-anchored points. Do not present visually floating bounce points as acceptable output.
 
 ## Repository hygiene rules
 
@@ -77,11 +83,14 @@ This repository is a local-first research project for tennis video analysis.
 
 ## Plain-text documentation rules
 
+- Plain-text documentation rules apply to documentation files, not console output.
 - Documentation must be readable without a Markdown renderer.
 - Avoid wide Markdown tables in Product Owner-facing documentation.
 - Future generated documentation must not rely on wide Markdown tables.
 - Use vertical blocks for functions, friction cases, and stage technical descriptions.
 - Product Owner must be able to read docs in VS Code, Notepad, terminal, or raw GitHub view.
+- Console summaries should use Rich tables when available because the user reads them directly in PowerShell.
+- Markdown/docs should avoid wide tables because the user often opens them as raw TXT.
 - Function references must include file path and line number when possible.
 - If line numbers are generated, use a script rather than inventing them.
 - Prefer short sections, bullets, and blocks over dense tables.

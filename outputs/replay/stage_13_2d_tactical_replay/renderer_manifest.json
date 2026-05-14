@@ -1,0 +1,32 @@
+{
+  "ball_keyframes_rendered": 12,
+  "errors": [],
+  "events_rendered": 5,
+  "fps": 12,
+  "frames_generated": 67,
+  "generated_at": "2026-05-14T03:45:14+00:00",
+  "input_schema_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_12_replay_schema\\replay_schema.json",
+  "interpolation_enabled": true,
+  "interpolation_steps": 5,
+  "limitations": [
+    "2D tactical view only.",
+    "No photorealistic video.",
+    "No true ball height.",
+    "Interpolated points are visual only.",
+    "possible_* events are hypotheses."
+  ],
+  "output_paths": {
+    "contact_sheet_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_13_2d_tactical_replay\\tactical_replay_contact_sheet.jpg",
+    "final_frame_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_13_2d_tactical_replay\\tactical_replay_final_frame.jpg",
+    "frames_dir": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_13_2d_tactical_replay\\frames",
+    "renderer_manifest_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_13_2d_tactical_replay\\renderer_manifest.json",
+    "replay_summary_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_13_2d_tactical_replay\\replay_summary.md",
+    "video_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_13_2d_tactical_replay\\tactical_replay.mp4"
+  },
+  "players_rendered": 2,
+  "renderer_type": "2d_tactical_replay",
+  "schema_version": "0.1.0",
+  "stage": "stage_13_2d_tactical_replay",
+  "video_generated": true,
+  "warnings": []
+}

@@ -507,6 +507,180 @@ NOTES:
 
 ---
 
+FUNCTION: calculate_stage_10_friction_score
+FILE: src/tennis_vision/friction.py
+LINE: 697
+AREA: Friction
+
+PURPOSE:
+  Calculates friction for Stage 10 analytical reporting.
+
+INPUTS:
+  - stage-specific warning/error/input flags
+
+OUTPUTS:
+  - friction score dictionary
+
+CALLED BY:
+  - scripts/run_stage_10_analytical_report.py
+
+WHY PRODUCT OWNER CARES:
+  Prevents failures and uncertainty from being hidden.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/friction.py and go to line 697.
+  Search: def calculate_stage_10_friction_score
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: calculate_stage_11_friction_score
+FILE: src/tennis_vision/friction.py
+LINE: 739
+AREA: Friction
+
+PURPOSE:
+  Calculates friction for Stage 11 report packaging.
+
+INPUTS:
+  - stage-specific warning/error/input flags
+
+OUTPUTS:
+  - friction score dictionary
+
+CALLED BY:
+  - scripts/run_stage_11_report_package.py
+
+WHY PRODUCT OWNER CARES:
+  Prevents failures and uncertainty from being hidden.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/friction.py and go to line 739.
+  Search: def calculate_stage_11_friction_score
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: calculate_stage_12_friction_score
+FILE: src/tennis_vision/friction.py
+LINE: 781
+AREA: Friction
+
+PURPOSE:
+  Calculates friction for Stage 12 replay schema generation.
+
+INPUTS:
+  - stage-specific warning/error/input flags
+
+OUTPUTS:
+  - friction score dictionary
+
+CALLED BY:
+  - scripts/run_stage_12_replay_schema.py
+
+WHY PRODUCT OWNER CARES:
+  Prevents failures and uncertainty from being hidden.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/friction.py and go to line 781.
+  Search: def calculate_stage_12_friction_score
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: calculate_stage_13_friction_score
+FILE: src/tennis_vision/friction.py
+LINE: 823
+AREA: Friction
+
+PURPOSE:
+  Calculates friction for Stage 13 2D tactical replay rendering.
+
+INPUTS:
+  - stage-specific warning/error/input flags
+
+OUTPUTS:
+  - friction score dictionary
+
+CALLED BY:
+  - scripts/run_stage_13_2d_tactical_replay.py
+
+WHY PRODUCT OWNER CARES:
+  Prevents failures and uncertainty from being hidden.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/friction.py and go to line 823.
+  Search: def calculate_stage_13_friction_score
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: calculate_stage_14_friction_score
+FILE: src/tennis_vision/friction.py
+LINE: 865
+AREA: Friction
+
+PURPOSE:
+  Calculates friction for Stage 14 side-view replay rendering.
+
+INPUTS:
+  - stage-specific warning/error/input flags
+
+OUTPUTS:
+  - friction score dictionary
+
+CALLED BY:
+  - scripts/run_stage_14_side_view_replay.py
+
+WHY PRODUCT OWNER CARES:
+  Prevents failures and uncertainty from being hidden.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/friction.py and go to line 865.
+  Search: def calculate_stage_14_friction_score
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: calculate_stage_14_1_friction_score
+FILE: src/tennis_vision/friction.py
+LINE: 907
+AREA: Friction
+
+PURPOSE:
+  Calculates friction for Stage 14.1 side-view semantics patch.
+
+INPUTS:
+  - stage-specific warning/error/input flags
+
+OUTPUTS:
+  - friction score dictionary
+
+CALLED BY:
+  - scripts/run_stage_14_side_view_replay.py
+
+WHY PRODUCT OWNER CARES:
+  Prevents failures and uncertainty from being hidden.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/friction.py and go to line 907.
+  Search: def calculate_stage_14_1_friction_score
+
+NOTES:
+  None.
+
+---
+
 ## Stage 1 - Video IO
 
 FUNCTION: read_video_metadata
@@ -1640,11 +1814,1175 @@ NOTES:
 
 ---
 
+## Stage 10 - Analytical Report
+
+FUNCTION: read_stage_inputs
+FILE: src/tennis_vision/analytical_report.py
+LINE: 27
+AREA: Stage 10 - Analytical Report
+
+PURPOSE:
+  Loads Stage 10 input files from Stage 9.1, Stage 8.1, Stage 7.1, and Stage 6.
+
+INPUTS:
+  - input path map
+
+OUTPUTS:
+  - loaded row collections
+  - warnings
+  - errors
+
+CALLED BY:
+  - scripts/run_stage_10_analytical_report.py
+
+WHY PRODUCT OWNER CARES:
+  This controls which upstream evidence is used in the final analytical report.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/analytical_report.py and go to line 27.
+  Search: def read_stage_inputs
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: build_analysis_summary
+FILE: src/tennis_vision/analytical_report.py
+LINE: 137
+AREA: Stage 10 - Analytical Report
+
+PURPOSE:
+  Builds one structured summary of placement, direction, player, event, and rally evidence.
+
+INPUTS:
+  - loaded Stage 10 data
+
+OUTPUTS:
+  - summary dictionary
+
+CALLED BY:
+  - scripts/run_stage_10_analytical_report.py
+
+WHY PRODUCT OWNER CARES:
+  This is the data model behind the player-readable report.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/analytical_report.py and go to line 137.
+  Search: def build_analysis_summary
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: build_plain_language_report
+FILE: src/tennis_vision/analytical_report.py
+LINE: 147
+AREA: Stage 10 - Analytical Report
+
+PURPOSE:
+  Converts tactical metrics and validated timeline evidence into a readable report.
+
+INPUTS:
+  - summary
+  - key findings
+  - coaching observations
+  - confidence
+  - paths
+  - verdict
+
+OUTPUTS:
+  - plain-text-friendly Markdown report content
+
+CALLED BY:
+  - scripts/run_stage_10_analytical_report.py
+
+WHY PRODUCT OWNER CARES:
+  This is the first stage where raw analysis becomes a player-readable explanation.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/analytical_report.py and go to line 147.
+  Search: def build_plain_language_report
+
+NOTES:
+  The wording preserves possible_* uncertainty and avoids official coaching claims.
+
+---
+
+FUNCTION: build_coaching_observations
+FILE: src/tennis_vision/coaching_summary.py
+LINE: 19
+AREA: Stage 10 - Analytical Report
+
+PURPOSE:
+  Builds cautious rule-based coaching-style observations from the analytical summary.
+
+INPUTS:
+  - analysis summary
+  - confidence summary
+
+OUTPUTS:
+  - observation dictionaries
+
+CALLED BY:
+  - scripts/run_stage_10_analytical_report.py
+
+WHY PRODUCT OWNER CARES:
+  This gives the Product Owner readable observations without external AI or overclaiming.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/coaching_summary.py and go to line 19.
+  Search: def build_coaching_observations
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: build_key_findings
+FILE: src/tennis_vision/coaching_summary.py
+LINE: 80
+AREA: Stage 10 - Analytical Report
+
+PURPOSE:
+  Builds short report findings for the executive summary.
+
+INPUTS:
+  - analysis summary
+  - confidence summary
+
+OUTPUTS:
+  - short finding strings
+
+CALLED BY:
+  - scripts/run_stage_10_analytical_report.py
+
+WHY PRODUCT OWNER CARES:
+  Key findings help a player or Product Owner scan the report quickly.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/coaching_summary.py and go to line 80.
+  Search: def build_key_findings
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: evaluate_report_confidence
+FILE: src/tennis_vision/report_confidence.py
+LINE: 36
+AREA: Stage 10 - Analytical Report
+
+PURPOSE:
+  Scores confidence from labels, projection coverage, candidate distance, event support, and player identity context.
+
+INPUTS:
+  - evidence counts
+  - candidate validation rows
+
+OUTPUTS:
+  - confidence level
+  - reasons
+  - limitations
+  - validation steps
+
+CALLED BY:
+  - scripts/run_stage_10_analytical_report.py
+
+WHY PRODUCT OWNER CARES:
+  This prevents the final report from sounding more certain than the evidence supports.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/report_confidence.py and go to line 36.
+  Search: def evaluate_report_confidence
+
+NOTES:
+  None.
+
+---
+
+## Stage 11 - Report Package
+
+FUNCTION: build_report_package
+FILE: src/tennis_vision/report_package.py
+LINE: 41
+AREA: Stage 11 - Report Package
+
+PURPOSE:
+  Collects selected analysis outputs into a clean delivery package.
+
+INPUTS:
+  - package root
+  - artifact descriptors
+  - copy mode
+
+OUTPUTS:
+  - updated artifact descriptors
+  - warnings
+
+CALLED BY:
+  - scripts/run_stage_11_report_package.py
+
+WHY PRODUCT OWNER CARES:
+  This creates the first shareable output bundle from the whole analysis pipeline.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/report_package.py and go to line 41.
+  Search: def build_report_package
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: write_package_readme
+FILE: src/tennis_vision/report_package.py
+LINE: 52
+AREA: Stage 11 - Report Package
+
+PURPOSE:
+  Writes the package README with status, contents, limitations, and reading order.
+
+INPUTS:
+  - README path
+  - verdict
+  - confidence
+  - timestamp
+  - next step
+
+OUTPUTS:
+  - package README
+
+CALLED BY:
+  - scripts/run_stage_11_report_package.py
+
+WHY PRODUCT OWNER CARES:
+  The README is the first file a Product Owner should open in the deliverable package.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/report_package.py and go to line 52.
+  Search: def write_package_readme
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: write_package_index
+FILE: src/tennis_vision/report_package.py
+LINE: 104
+AREA: Stage 11 - Report Package
+
+PURPOSE:
+  Writes a vertical-block index for every included or missing package artifact.
+
+INPUTS:
+  - index path
+  - artifact descriptors
+
+OUTPUTS:
+  - package_index.md
+
+CALLED BY:
+  - scripts/run_stage_11_report_package.py
+
+WHY PRODUCT OWNER CARES:
+  This makes the package readable without guessing where files came from.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/report_package.py and go to line 104.
+  Search: def write_package_index
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: build_manifest
+FILE: src/tennis_vision/package_manifest.py
+LINE: 32
+AREA: Stage 11 - Report Package
+
+PURPOSE:
+  Builds package_manifest.json with included and missing artifacts.
+
+INPUTS:
+  - package metadata
+  - artifact descriptors
+  - warnings
+  - errors
+
+OUTPUTS:
+  - manifest dictionary
+
+CALLED BY:
+  - scripts/run_stage_11_report_package.py
+
+WHY PRODUCT OWNER CARES:
+  The manifest gives future UI/reporting code a structured package inventory.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/package_manifest.py and go to line 32.
+  Search: def build_manifest
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: write_manifest
+FILE: src/tennis_vision/package_manifest.py
+LINE: 63
+AREA: Stage 11 - Report Package
+
+PURPOSE:
+  Writes the Stage 11 package manifest JSON.
+
+INPUTS:
+  - manifest path
+  - manifest dictionary
+
+OUTPUTS:
+  - package_manifest.json
+
+CALLED BY:
+  - scripts/run_stage_11_report_package.py
+
+WHY PRODUCT OWNER CARES:
+  This is the machine-readable handoff file for the package.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/package_manifest.py and go to line 63.
+  Search: def write_manifest
+
+NOTES:
+  None.
+
+---
+
+## Stage 12 - Replay Schema
+
+FUNCTION: load_replay_inputs
+FILE: src/tennis_vision/replay_data_builder.py
+LINE: 41
+AREA: Stage 12 - Replay Schema
+
+PURPOSE:
+  Loads upstream court, trajectory, timeline, player, tactical, report, and package data for replay schema generation.
+
+INPUTS:
+  - source path dictionary
+
+OUTPUTS:
+  - loaded replay source data
+  - warnings
+  - errors
+
+CALLED BY:
+  - scripts/run_stage_12_replay_schema.py
+
+WHY PRODUCT OWNER CARES:
+  This gathers the evidence that future replay renderers will consume.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/replay_data_builder.py and go to line 41.
+  Search: def load_replay_inputs
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: build_replay_schema
+FILE: src/tennis_vision/replay_data_builder.py
+LINE: 286
+AREA: Stage 12 - Replay Schema
+
+PURPOSE:
+  Builds the replay data contract from court, trajectory, player, timeline and tactical outputs.
+
+INPUTS:
+  - loaded replay data
+  - source paths
+  - timestamp
+  - schema version
+
+OUTPUTS:
+  - replay schema dictionary
+
+CALLED BY:
+  - scripts/run_stage_12_replay_schema.py
+
+WHY PRODUCT OWNER CARES:
+  This is the bridge between analysis data and future synthetic replay videos.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/replay_data_builder.py and go to line 286.
+  Search: def build_replay_schema
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: build_ball_trajectory
+FILE: src/tennis_vision/replay_data_builder.py
+LINE: 172
+AREA: Stage 12 - Replay Schema
+
+PURPOSE:
+  Builds raw, smoothed, and replay keyframe ball trajectory sections.
+
+INPUTS:
+  - Stage 6 trajectory rows
+  - Stage 9.1 tuned zone rows
+
+OUTPUTS:
+  - raw_ball_points
+  - smoothed_ball_points
+  - replay_keyframes
+
+CALLED BY:
+  - build_replay_schema
+
+WHY PRODUCT OWNER CARES:
+  Replay renderers need ball keyframes before any synthetic playback can be built.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/replay_data_builder.py and go to line 172.
+  Search: def build_ball_trajectory
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: build_event_timeline
+FILE: src/tennis_vision/replay_data_builder.py
+LINE: 208
+AREA: Stage 12 - Replay Schema
+
+PURPOSE:
+  Converts validated possible_* events into replay event records.
+
+INPUTS:
+  - Stage 8.1 validated timeline rows
+
+OUTPUTS:
+  - event timeline list
+
+CALLED BY:
+  - build_replay_schema
+
+WHY PRODUCT OWNER CARES:
+  Future renderers need event markers while preserving uncertainty.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/replay_data_builder.py and go to line 208.
+  Search: def build_event_timeline
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: build_camera_profiles
+FILE: src/tennis_vision/replay_camera_presets.py
+LINE: 8
+AREA: Stage 12 - Replay Schema
+
+PURPOSE:
+  Defines deterministic camera presets for future replay renderers.
+
+INPUTS:
+  - none
+
+OUTPUTS:
+  - camera profile list
+
+CALLED BY:
+  - build_replay_schema
+  - scripts/run_stage_12_replay_schema.py
+
+WHY PRODUCT OWNER CARES:
+  Camera presets define future replay views without implying multi-angle video exists today.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/replay_camera_presets.py and go to line 8.
+  Search: def build_camera_profiles
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: build_visual_layers
+FILE: src/tennis_vision/replay_schema.py
+LINE: 15
+AREA: Stage 12 - Replay Schema
+
+PURPOSE:
+  Defines renderer layer contracts for court, players, ball, trajectory, events, zones, timeline, and confidence overlays.
+
+INPUTS:
+  - none
+
+OUTPUTS:
+  - visual layer list
+
+CALLED BY:
+  - build_replay_schema
+
+WHY PRODUCT OWNER CARES:
+  Renderer layers make uncertainty and required data explicit before video generation work begins.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/replay_schema.py and go to line 15.
+  Search: def build_visual_layers
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: build_renderer_hints
+FILE: src/tennis_vision/replay_schema.py
+LINE: 85
+AREA: Stage 12 - Replay Schema
+
+PURPOSE:
+  Defines deterministic renderer policy, initial renderer recommendation, and uncertainty display rules.
+
+INPUTS:
+  - none
+
+OUTPUTS:
+  - renderer hints dictionary
+
+CALLED BY:
+  - build_replay_schema
+
+WHY PRODUCT OWNER CARES:
+  This keeps future replay work local, deterministic, and honest about uncertainty.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/replay_schema.py and go to line 85.
+  Search: def build_renderer_hints
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: build_pretty_markdown
+FILE: src/tennis_vision/replay_data_builder.py
+LINE: 361
+AREA: Stage 12 - Replay Schema
+
+PURPOSE:
+  Writes a plain-text-friendly summary of the replay schema.
+
+INPUTS:
+  - schema
+  - verdict
+  - friction
+  - next step
+
+OUTPUTS:
+  - Markdown text
+
+CALLED BY:
+  - scripts/run_stage_12_replay_schema.py
+
+WHY PRODUCT OWNER CARES:
+  The Product Owner can inspect what replay-ready data exists without opening JSON.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/replay_data_builder.py and go to line 361.
+  Search: def build_pretty_markdown
+
+NOTES:
+  None.
+
+---
+
+## Stage 13 - 2D Tactical Replay
+
+FUNCTION: load_replay_schema
+FILE: src/tennis_vision/replay_renderer_2d.py
+LINE: 15
+AREA: Stage 13 - 2D Tactical Replay
+
+PURPOSE:
+  Loads the Stage 12 replay schema for rendering.
+
+INPUTS:
+  - replay schema path
+
+OUTPUTS:
+  - schema dictionary
+  - warnings
+  - errors
+
+CALLED BY:
+  - scripts/run_stage_13_2d_tactical_replay.py
+
+WHY PRODUCT OWNER CARES:
+  This ensures the renderer consumes the schema contract instead of inventing data.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/replay_renderer_2d.py and go to line 15.
+  Search: def load_replay_schema
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: create_court_canvas
+FILE: src/tennis_vision/replay_renderer_2d.py
+LINE: 45
+AREA: Stage 13 - 2D Tactical Replay
+
+PURPOSE:
+  Creates the base image canvas and normalized court coordinate transform.
+
+INPUTS:
+  - court model
+
+OUTPUTS:
+  - OpenCV image canvas
+  - court-to-canvas transform
+
+CALLED BY:
+  - render_replay_frame
+
+WHY PRODUCT OWNER CARES:
+  This converts court-space analysis data into visible replay coordinates.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/replay_renderer_2d.py and go to line 45.
+  Search: def create_court_canvas
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: render_replay_frame
+FILE: src/tennis_vision/replay_renderer_2d.py
+LINE: 194
+AREA: Stage 13 - 2D Tactical Replay
+
+PURPOSE:
+  Renders one deterministic 2D tactical replay frame from court, ball, player and event data.
+
+INPUTS:
+  - schema
+  - display points
+  - current frame index
+  - players
+  - events
+
+OUTPUTS:
+  - rendered OpenCV image
+
+CALLED BY:
+  - render_replay_frames
+
+WHY PRODUCT OWNER CARES:
+  This is the first step where analysis data becomes a generated visual replay.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/replay_renderer_2d.py and go to line 194.
+  Search: def render_replay_frame
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: render_replay_frames
+FILE: src/tennis_vision/replay_renderer_2d.py
+LINE: 218
+AREA: Stage 13 - 2D Tactical Replay
+
+PURPOSE:
+  Renders all replay frames to the Stage 13 frames folder.
+
+INPUTS:
+  - schema
+  - output directory
+  - interpolation settings
+
+OUTPUTS:
+  - frame paths
+  - render context
+  - warnings
+  - errors
+
+CALLED BY:
+  - scripts/run_stage_13_2d_tactical_replay.py
+
+WHY PRODUCT OWNER CARES:
+  Frame rendering is the primary success condition even if MP4 export is unavailable.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/replay_renderer_2d.py and go to line 218.
+  Search: def render_replay_frames
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: export_replay_video
+FILE: src/tennis_vision/replay_renderer_2d.py
+LINE: 247
+AREA: Stage 13 - 2D Tactical Replay
+
+PURPOSE:
+  Attempts MP4 export from rendered frames using OpenCV VideoWriter.
+
+INPUTS:
+  - frame paths
+  - output video path
+  - fps
+
+OUTPUTS:
+  - video generated flag
+  - warnings
+  - errors
+
+CALLED BY:
+  - scripts/run_stage_13_2d_tactical_replay.py
+
+WHY PRODUCT OWNER CARES:
+  Video export is useful but codec-dependent, so it is separated from core frame rendering.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/replay_renderer_2d.py and go to line 247.
+  Search: def export_replay_video
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: build_display_points
+FILE: src/tennis_vision/replay_renderer_2d.py
+LINE: 306
+AREA: Stage 13 - 2D Tactical Replay
+
+PURPOSE:
+  Creates measured and visual-only interpolated replay display points.
+
+INPUTS:
+  - replay keyframes
+  - interpolation settings
+
+OUTPUTS:
+  - display point list
+
+CALLED BY:
+  - render_replay_frames
+
+WHY PRODUCT OWNER CARES:
+  It makes smoother animation possible while marking interpolated points as visual only.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/replay_renderer_2d.py and go to line 306.
+  Search: def build_display_points
+
+NOTES:
+  None.
+
+---
+
+## Stage 14 - Side-View Replay
+
+FUNCTION: estimate_synthetic_height
+FILE: src/tennis_vision/ball_flight_estimator.py
+LINE: 36
+AREA: Stage 14 - Side-View Replay
+
+PURPOSE:
+  Creates a synthetic height profile for side-view replay when measured 3D height is unavailable.
+
+INPUTS:
+  - sequence index
+  - total points
+  - nearby event type
+
+OUTPUTS:
+  - synthetic height value
+
+CALLED BY:
+  - build_side_view_keyframes
+
+WHY PRODUCT OWNER CARES:
+  This enables side-view analytical video without pretending the system measured real ball height.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/ball_flight_estimator.py and go to line 36.
+  Search: def estimate_synthetic_height
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: build_side_view_keyframes
+FILE: src/tennis_vision/ball_flight_estimator.py
+LINE: 133
+AREA: Stage 14 - Side-View Replay
+
+PURPOSE:
+  Builds side-view keyframes with court depth and synthetic height annotations.
+
+INPUTS:
+  - replay schema
+
+OUTPUTS:
+  - side-view keyframe rows
+
+CALLED BY:
+  - scripts/run_stage_14_side_view_replay.py
+  - render_side_view_frames
+
+WHY PRODUCT OWNER CARES:
+  This converts the replay schema into the side-view renderer's data model.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/ball_flight_estimator.py and go to line 133.
+  Search: def build_side_view_keyframes
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: interpolate_side_view_motion
+FILE: src/tennis_vision/ball_flight_estimator.py
+LINE: 179
+AREA: Stage 14 - Side-View Replay
+
+PURPOSE:
+  Creates visual-only interpolation points between side-view keyframes.
+
+INPUTS:
+  - side-view keyframes
+  - interpolation settings
+
+OUTPUTS:
+  - side-view display points
+
+CALLED BY:
+  - render_side_view_frames
+
+WHY PRODUCT OWNER CARES:
+  It smooths the animation while keeping interpolated positions distinct from measured keyframes.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/ball_flight_estimator.py and go to line 179.
+  Search: def interpolate_side_view_motion
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: render_side_view_frame
+FILE: src/tennis_vision/replay_renderer_side_view.py
+LINE: 216
+AREA: Stage 14 - Side-View Replay
+
+PURPOSE:
+  Renders one side-view ball flight frame with court depth, net, synthetic arc, players, events, and timeline.
+
+INPUTS:
+  - schema
+  - display points
+  - current index
+  - players
+  - events
+
+OUTPUTS:
+  - rendered OpenCV image
+
+CALLED BY:
+  - render_side_view_frames
+
+WHY PRODUCT OWNER CARES:
+  This creates the first side-view replay visualization from analysis data.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/replay_renderer_side_view.py and go to line 216.
+  Search: def render_side_view_frame
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: render_side_view_frames
+FILE: src/tennis_vision/replay_renderer_side_view.py
+LINE: 241
+AREA: Stage 14 - Side-View Replay
+
+PURPOSE:
+  Renders all side-view frames to the Stage 14 frames folder.
+
+INPUTS:
+  - schema
+  - output directory
+  - interpolation settings
+
+OUTPUTS:
+  - frame paths
+  - render context
+  - warnings
+  - errors
+
+CALLED BY:
+  - scripts/run_stage_14_side_view_replay.py
+
+WHY PRODUCT OWNER CARES:
+  Frame rendering is the primary success condition for the side-view replay.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/replay_renderer_side_view.py and go to line 241.
+  Search: def render_side_view_frames
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: export_side_view_video
+FILE: src/tennis_vision/replay_renderer_side_view.py
+LINE: 270
+AREA: Stage 14 - Side-View Replay
+
+PURPOSE:
+  Attempts MP4 export from side-view frames using OpenCV VideoWriter.
+
+INPUTS:
+  - frame paths
+  - output video path
+  - fps
+
+OUTPUTS:
+  - video generated flag
+  - warnings
+  - errors
+
+CALLED BY:
+  - scripts/run_stage_14_side_view_replay.py
+
+WHY PRODUCT OWNER CARES:
+  Video export is useful but codec-dependent, so it is not required for renderer success.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/replay_renderer_side_view.py and go to line 270.
+  Search: def export_side_view_video
+
+NOTES:
+  None.
+
+---
+
+## Stage 14.1 - Side-View Patch
+
+FUNCTION: classify_height_anchor_type
+FILE: src/tennis_vision/ball_flight_estimator.py
+LINE: 49
+AREA: Stage 14.1 - Side-View Patch
+
+PURPOSE:
+  Classifies replay events into bounce, hit, interaction, arc, or interpolation height roles.
+
+INPUTS:
+  - event type
+
+OUTPUTS:
+  - height anchor type
+
+CALLED BY:
+  - estimate_synthetic_height
+  - build_side_view_keyframes
+
+WHY PRODUCT OWNER CARES:
+  This lets the side-view renderer treat bounce and hit moments differently.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/ball_flight_estimator.py and go to line 49.
+  Search: def classify_height_anchor_type
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: enforce_bounce_floor_contact
+FILE: src/tennis_vision/ball_flight_estimator.py
+LINE: 109
+AREA: Stage 14.1 - Side-View Patch
+
+PURPOSE:
+  Forces bounce-like events to visually ground near court surface in side-view replay.
+
+INPUTS:
+  - synthetic height
+
+OUTPUTS:
+  - floor-grounded synthetic height
+
+CALLED BY:
+  - estimate_synthetic_height
+  - estimate_semantic_height_profile
+
+WHY PRODUCT OWNER CARES:
+  This makes the replay visually interpretable as tennis instead of showing floating bounces.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/ball_flight_estimator.py and go to line 109.
+  Search: def enforce_bounce_floor_contact
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: enforce_hit_contact_band
+FILE: src/tennis_vision/ball_flight_estimator.py
+LINE: 114
+AREA: Stage 14.1 - Side-View Patch
+
+PURPOSE:
+  Constrains hit-like events to a plausible synthetic contact-height band.
+
+INPUTS:
+  - synthetic height
+
+OUTPUTS:
+  - contact-band synthetic height
+
+CALLED BY:
+  - estimate_synthetic_height
+  - estimate_semantic_height_profile
+
+WHY PRODUCT OWNER CARES:
+  Hit markers should look plausible without claiming real measured 3D height.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/ball_flight_estimator.py and go to line 114.
+  Search: def enforce_hit_contact_band
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: estimate_semantic_height_profile
+FILE: src/tennis_vision/ball_flight_estimator.py
+LINE: 71
+AREA: Stage 14.1 - Side-View Patch
+
+PURPOSE:
+  Creates a semantically constrained synthetic height profile.
+
+INPUTS:
+  - side-view point records
+
+OUTPUTS:
+  - synthetic height values
+
+CALLED BY:
+  - build_side_view_keyframes
+
+WHY PRODUCT OWNER CARES:
+  This keeps the side-view useful without pretending the system measured real 3D height.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/ball_flight_estimator.py and go to line 71.
+  Search: def estimate_semantic_height_profile
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: annotate_interpolated_height_points
+FILE: src/tennis_vision/ball_flight_estimator.py
+LINE: 119
+AREA: Stage 14.1 - Side-View Patch
+
+PURPOSE:
+  Marks interpolated side-view points as visual estimates.
+
+INPUTS:
+  - side-view display points
+
+OUTPUTS:
+  - annotated display points
+
+CALLED BY:
+  - interpolate_side_view_motion
+
+WHY PRODUCT OWNER CARES:
+  Interpolated points must not be mistaken for measured or event-anchored truth.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/ball_flight_estimator.py and go to line 119.
+  Search: def annotate_interpolated_height_points
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: create_semantic_debug_image
+FILE: src/tennis_vision/replay_renderer_side_view.py
+LINE: 322
+AREA: Stage 14.1 - Side-View Patch
+
+PURPOSE:
+  Writes a diagnostic side-view image showing semantic anchors and labels.
+
+INPUTS:
+  - schema
+  - side-view keyframes
+  - display points
+  - events
+  - players
+  - output path
+
+OUTPUTS:
+  - semantic debug image
+
+CALLED BY:
+  - scripts/run_stage_14_side_view_replay.py
+
+WHY PRODUCT OWNER CARES:
+  The Product Owner can inspect whether bounces are grounded and hits/interpolation are labeled clearly.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/replay_renderer_side_view.py and go to line 322.
+  Search: def create_semantic_debug_image
+
+NOTES:
+  None.
+
+---
+
 ## Lab Notebook
 
 FUNCTION: update_lab_notebook
 FILE: src/tennis_vision/lab_notebook.py
-LINE: 1651
+LINE: 2182
 AREA: Lab Notebook
 
 PURPOSE:
@@ -1664,7 +3002,7 @@ WHY PRODUCT OWNER CARES:
   Keeps execution evidence current without manual documentation commands.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/lab_notebook.py and go to line 1651.
+  Open src/tennis_vision/lab_notebook.py and go to line 2182.
   Search: def update_lab_notebook
 
 NOTES:

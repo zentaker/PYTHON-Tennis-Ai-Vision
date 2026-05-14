@@ -53,7 +53,7 @@
     "right": 0,
     "unknown": 7
   },
-  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_9_tactical_metrics_20260513T212234Z.log",
+  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_9_tactical_metrics_20260514T015537Z.log",
   "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_9_tactical_metrics_report.md",
   "output_paths": {
     "ball_placement_map": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_tactical_metrics\\ball_placement_map.jpg",
@@ -76,7 +76,7 @@
   "rally_summaries_count": 1,
   "recommended_next_step": "Proceed cautiously to Stage 9.1 court zone tuning or validate more events before Stage 10.",
   "stage": "stage_9_tactical_metrics",
-  "timestamp": "2026-05-13T21:22:34+00:00",
+  "timestamp": "2026-05-14T01:55:37+00:00",
   "unknown_zone_count": 7,
   "warnings": [
     "Some visible labels do not have projected court coordinates; zone coverage is incomplete."

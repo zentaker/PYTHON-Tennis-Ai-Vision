@@ -53,3 +53,92 @@ RELATED STAGES:
   Stage 5.1
   Stage 8.1
   Stage 9
+
+---
+
+LESSON: Preserve uncertainty in narrative reports
+
+WHAT IT MEANS:
+  A readable report should not make weak evidence feel certain. Use cautious
+  language, confidence levels, and limitations when translating model outputs
+  into human-readable observations.
+
+WHY IT MATTERS:
+  Analytical and coaching-style reports are easier to trust at a glance, so
+  they must clearly distinguish hypotheses from confirmed tennis facts.
+
+RELATED STAGES:
+  Stage 10
+  Later reporting and packaging stages
+
+---
+
+LESSON: Package curated outputs only
+
+WHAT IT MEANS:
+  A deliverable package should contain the reports, selected visuals, selected
+  CSVs, limitations, and provenance that make review easier. It should not
+  blindly copy whole generated folders.
+
+WHY IT MATTERS:
+  Packaging is a handoff step. The package should be lightweight, readable,
+  and honest about missing optional artifacts.
+
+RELATED STAGES:
+  Stage 11
+  Later export stages
+
+---
+
+LESSON: Create replay data before replay rendering
+
+WHAT IT MEANS:
+  Synthetic replay work should start with a stable data contract, not video
+  generation. The schema should list court geometry, players, ball keyframes,
+  possible events, tactical context, confidence, camera presets, visual
+  layers, and limitations.
+
+WHY IT MATTERS:
+  Rendering can make uncertain data feel real. A replay schema forces the
+  pipeline to show what is known, what is inferred, and what is still missing
+  before any animation or synthetic video is created.
+
+RELATED STAGES:
+  Stage 12
+  Future replay renderer stages
+
+---
+
+LESSON: Label synthetic height as synthetic
+
+WHAT IT MEANS:
+  Side-view replay can use a height-like curve for readability, but the system
+  must say that the value is synthetic when no measured 3D ball height exists.
+
+WHY IT MATTERS:
+  A side-view arc can look physically authoritative. Clear labels prevent a
+  visual aid from being mistaken for measured 3D reconstruction.
+
+RELATED STAGES:
+  Stage 14
+  Future replay renderer stages
+
+---
+
+LESSON: Synthetic renderers need visual semantics
+
+WHAT IT MEANS:
+  A renderer can produce valid frames while still communicating the wrong
+  meaning. Bounce-like points should look grounded, hit-like points should sit
+  in a plausible contact band, and interpolated points should look different
+  from event anchors.
+
+WHY IT MATTERS:
+  Replay visuals are persuasive. If the visual language is wrong, the Product
+  Owner may trust an artifact that is technically rendered but semantically
+  confusing.
+
+RELATED STAGES:
+  Stage 14
+  Stage 14.1
+  Future replay renderer stages

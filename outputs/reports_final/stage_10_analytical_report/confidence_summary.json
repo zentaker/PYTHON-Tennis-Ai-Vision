@@ -1,0 +1,22 @@
+{
+  "candidate_distance_summary": {
+    "average_candidate_distance": 2.797,
+    "matched_count": 5,
+    "median_candidate_distance": 4.5
+  },
+  "confidence_level": "medium-high",
+  "confidence_reasons": [
+    "12 visible expanded ball labels are available.",
+    "All visible labels have projected court coordinates and no unknown zones.",
+    "Candidate validation distance is low on matched frames (2.797 px average).",
+    "All timeline events in the validated timeline are label-supported.",
+    "Two main player identities are available from Stage 7.1."
+  ],
+  "confidence_score": 95,
+  "limiting_factors": [
+    "No major limiting factors detected for this prototype report."
+  ],
+  "recommended_validation_steps": [
+    "Proceed to Stage 11 while preserving uncertainty in report wording."
+  ]
+}

@@ -340,3 +340,153 @@ REUSABLE RULE:
 
 RELATED STAGES:
   Stage 9, Stage 9.1.
+
+---
+
+CASE F014 - Narrative reports can overclaim uncertain model outputs
+
+AREA:
+  Analytical reporting
+
+WHAT HAPPENED:
+  Stage 10 turns structured tactical outputs into human-readable analysis.
+  Narrative wording can sound more certain than the upstream evidence supports.
+
+ROOT CAUSE:
+  Readable reports are persuasive, while upstream events and tactical metrics
+  are still hypothesis-based.
+
+IMPACT:
+  A Product Owner or player could mistake possible_* events or approximate
+  zones for confirmed tennis facts.
+
+RESOLUTION:
+  Stage 10 uses deterministic report generation, cautious language, confidence
+  levels, limitations, and explicit non-official wording.
+
+REUSABLE RULE:
+  Analytical reporting must preserve uncertainty from upstream CV/ML stages.
+  Do not turn hypotheses into coaching truth.
+
+RELATED STAGES:
+  Stage 10 and later report-generation stages.
+
+---
+
+CASE F015 - Deliverable packaging can accidentally duplicate heavy outputs
+
+AREA:
+  Report packaging
+
+WHAT HAPPENED:
+  A report package could accidentally copy full generated folders or heavy
+  artifacts when only a small curated deliverable is needed.
+
+ROOT CAUSE:
+  Generated output folders contain many intermediate images, CSVs, and
+  experiment artifacts.
+
+IMPACT:
+  Packages can become noisy, oversized, and harder to review or commit.
+
+RESOLUTION:
+  Stage 11 copies only selected useful artifacts and records missing optional
+  files in the package manifest.
+
+REUSABLE RULE:
+  Export packages should include curated outputs, not full generated folders.
+
+RELATED STAGES:
+  Stage 11 and later packaging/export stages.
+
+---
+
+CASE F016 - Replay generation requires a stable data contract before rendering
+
+AREA:
+  Synthetic replay / renderer preparation
+
+WHAT HAPPENED:
+  The project is ready to move from analysis reports toward replay artifacts.
+  Jumping directly to video rendering would hide schema gaps and uncertainty.
+
+ROOT CAUSE:
+  Future renderers need consistent court, player, ball, event, tactical,
+  confidence, camera, and visual-layer data before any animation or synthetic
+  video work begins.
+
+IMPACT:
+  Without a replay schema, rendering code could invent missing data or make
+  possible_* events look confirmed.
+
+RESOLUTION:
+  Stage 12 creates a deterministic replay data schema before renderer work.
+
+REUSABLE RULE:
+  Generate structured replay data before renderer or video generation work.
+  Rendering should consume validated data and preserve uncertainty.
+
+RELATED STAGES:
+  Stage 12 and future replay renderer stages.
+
+---
+
+CASE F018 - Side-view replay needs height, but only 2D data exists
+
+AREA:
+  Synthetic replay / side-view visualization
+
+WHAT HAPPENED:
+  Side-view ball flight visualization needs a height-like dimension, but the
+  current pipeline only has image coordinates and normalized 2D court
+  projection.
+
+ROOT CAUSE:
+  The project has not estimated real 3D ball height or camera geometry beyond
+  the current 2D homography.
+
+IMPACT:
+  A side-view arc could look more physically certain than the evidence
+  supports.
+
+RESOLUTION:
+  Stage 14 uses synthetic height for visualization only and labels it clearly
+  in the renderer, reports, manifest, lab notebook, and technical docs.
+
+REUSABLE RULE:
+  Synthetic visualizations must explicitly distinguish estimated visual values
+  from measured data.
+
+RELATED STAGES:
+  Stage 14 and future synthetic replay stages.
+
+---
+
+CASE F019 - Synthetic side-view can be technically valid but semantically unreadable
+
+AREA:
+  Synthetic replay / side-view visualization
+
+WHAT HAPPENED:
+  Stage 14 rendered successfully, but bounce-like event semantics could appear
+  visually inconsistent because height was only a synthetic display value.
+
+ROOT CAUSE:
+  A smooth synthetic arc can satisfy rendering math while violating tennis
+  visual expectations, especially around bounce and contact moments.
+
+IMPACT:
+  A Product Owner can misread the side-view replay when bounce-like moments
+  appear to float above the court surface.
+
+RESOLUTION:
+  Stage 14.1 adds semantic grounding rules for bounce-like events, plausible
+  contact bands for hit-like events, and clearer visual treatment for
+  interpolated points.
+
+REUSABLE RULE:
+  Synthetic renderers must satisfy visual semantics, not just mathematical
+  interpolation.
+
+RELATED STAGES:
+  Stage 14, Stage 14.1, and future replay renderers.

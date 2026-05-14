@@ -692,3 +692,255 @@ def calculate_stage_9_1_friction_score(
             "errors_count": errors_count,
         },
     }
+
+
+def calculate_stage_10_friction_score(
+    *,
+    tactical_data_missing: bool = False,
+    report_generation_failed: bool = False,
+    coaching_summary_failed: bool = False,
+    low_confidence: bool = False,
+    sparse_data: bool = False,
+    missing_player_context: bool = False,
+    missing_event_context: bool = False,
+    errors_count: int = 0,
+    warnings_count: int = 0,
+) -> dict[str, Any]:
+    """Calculate Stage 10 analytical report friction."""
+    score = 0
+    score += 45 if tactical_data_missing else 0
+    score += 35 if report_generation_failed else 0
+    score += 25 if coaching_summary_failed else 0
+    score += 20 if low_confidence else 0
+    score += 15 if sparse_data else 0
+    score += 8 if missing_player_context else 0
+    score += 8 if missing_event_context else 0
+    score += min(warnings_count * 3, 15)
+    score += min(errors_count * 10, 30)
+    score = max(0, min(score, 100))
+
+    return {
+        "score": score,
+        "band": friction_band(score),
+        "inputs": {
+            "tactical_data_missing": tactical_data_missing,
+            "report_generation_failed": report_generation_failed,
+            "coaching_summary_failed": coaching_summary_failed,
+            "low_confidence": low_confidence,
+            "sparse_data": sparse_data,
+            "missing_player_context": missing_player_context,
+            "missing_event_context": missing_event_context,
+            "warnings_count": warnings_count,
+            "errors_count": errors_count,
+        },
+    }
+
+
+def calculate_stage_11_friction_score(
+    *,
+    analytical_report_missing: bool = False,
+    coaching_summary_missing: bool = False,
+    key_findings_missing: bool = False,
+    package_manifest_failed: bool = False,
+    missing_core_artifacts: bool = False,
+    many_optional_artifacts_missing: bool = False,
+    copy_failures: bool = False,
+    warnings_count: int = 0,
+    errors_count: int = 0,
+) -> dict[str, Any]:
+    """Calculate Stage 11 report package friction."""
+    score = 0
+    score += 45 if analytical_report_missing else 0
+    score += 35 if coaching_summary_missing else 0
+    score += 20 if key_findings_missing else 0
+    score += 35 if package_manifest_failed else 0
+    score += 40 if missing_core_artifacts else 0
+    score += 10 if many_optional_artifacts_missing else 0
+    score += 15 if copy_failures else 0
+    score += min(warnings_count * 2, 12)
+    score += min(errors_count * 10, 30)
+    score = max(0, min(score, 100))
+
+    return {
+        "score": score,
+        "band": friction_band(score),
+        "inputs": {
+            "analytical_report_missing": analytical_report_missing,
+            "coaching_summary_missing": coaching_summary_missing,
+            "key_findings_missing": key_findings_missing,
+            "package_manifest_failed": package_manifest_failed,
+            "missing_core_artifacts": missing_core_artifacts,
+            "many_optional_artifacts_missing": many_optional_artifacts_missing,
+            "copy_failures": copy_failures,
+            "warnings_count": warnings_count,
+            "errors_count": errors_count,
+        },
+    }
+
+
+def calculate_stage_12_friction_score(
+    *,
+    stage11_manifest_missing: bool = False,
+    court_model_missing: bool = False,
+    ball_trajectory_missing: bool = False,
+    player_data_missing: bool = False,
+    event_timeline_missing: bool = False,
+    camera_presets_missing: bool = False,
+    schema_write_failed: bool = False,
+    warnings_count: int = 0,
+    errors_count: int = 0,
+) -> dict[str, Any]:
+    """Calculate Stage 12 replay schema friction."""
+    score = 0
+    score += 35 if stage11_manifest_missing else 0
+    score += 35 if court_model_missing else 0
+    score += 40 if ball_trajectory_missing else 0
+    score += 15 if player_data_missing else 0
+    score += 15 if event_timeline_missing else 0
+    score += 20 if camera_presets_missing else 0
+    score += 35 if schema_write_failed else 0
+    score += min(warnings_count * 2, 12)
+    score += min(errors_count * 10, 30)
+    score = max(0, min(score, 100))
+
+    return {
+        "score": score,
+        "band": friction_band(score),
+        "inputs": {
+            "stage11_manifest_missing": stage11_manifest_missing,
+            "court_model_missing": court_model_missing,
+            "ball_trajectory_missing": ball_trajectory_missing,
+            "player_data_missing": player_data_missing,
+            "event_timeline_missing": event_timeline_missing,
+            "camera_presets_missing": camera_presets_missing,
+            "schema_write_failed": schema_write_failed,
+            "warnings_count": warnings_count,
+            "errors_count": errors_count,
+        },
+    }
+
+
+def calculate_stage_13_friction_score(
+    *,
+    replay_schema_missing: bool = False,
+    court_model_missing: bool = False,
+    keyframes_missing: bool = False,
+    render_frames_failed: bool = False,
+    video_export_failed: bool = False,
+    contact_sheet_failed: bool = False,
+    manifest_write_failed: bool = False,
+    warnings_count: int = 0,
+    errors_count: int = 0,
+) -> dict[str, Any]:
+    """Calculate Stage 13 2D tactical replay renderer friction."""
+    score = 0
+    score += 45 if replay_schema_missing else 0
+    score += 35 if court_model_missing else 0
+    score += 40 if keyframes_missing else 0
+    score += 35 if render_frames_failed else 0
+    score += 12 if video_export_failed else 0
+    score += 10 if contact_sheet_failed else 0
+    score += 30 if manifest_write_failed else 0
+    score += min(warnings_count * 2, 12)
+    score += min(errors_count * 10, 30)
+    score = max(0, min(score, 100))
+
+    return {
+        "score": score,
+        "band": friction_band(score),
+        "inputs": {
+            "replay_schema_missing": replay_schema_missing,
+            "court_model_missing": court_model_missing,
+            "keyframes_missing": keyframes_missing,
+            "render_frames_failed": render_frames_failed,
+            "video_export_failed": video_export_failed,
+            "contact_sheet_failed": contact_sheet_failed,
+            "manifest_write_failed": manifest_write_failed,
+            "warnings_count": warnings_count,
+            "errors_count": errors_count,
+        },
+    }
+
+
+def calculate_stage_14_friction_score(
+    *,
+    replay_schema_missing: bool = False,
+    keyframes_missing: bool = False,
+    side_view_keyframes_missing: bool = False,
+    render_frames_failed: bool = False,
+    video_export_failed: bool = False,
+    contact_sheet_failed: bool = False,
+    manifest_write_failed: bool = False,
+    warnings_count: int = 0,
+    errors_count: int = 0,
+) -> dict[str, Any]:
+    """Calculate Stage 14 side-view replay renderer friction."""
+    score = 0
+    score += 45 if replay_schema_missing else 0
+    score += 40 if keyframes_missing else 0
+    score += 40 if side_view_keyframes_missing else 0
+    score += 35 if render_frames_failed else 0
+    score += 12 if video_export_failed else 0
+    score += 10 if contact_sheet_failed else 0
+    score += 30 if manifest_write_failed else 0
+    score += min(warnings_count * 2, 12)
+    score += min(errors_count * 10, 30)
+    score = max(0, min(score, 100))
+
+    return {
+        "score": score,
+        "band": friction_band(score),
+        "inputs": {
+            "replay_schema_missing": replay_schema_missing,
+            "keyframes_missing": keyframes_missing,
+            "side_view_keyframes_missing": side_view_keyframes_missing,
+            "render_frames_failed": render_frames_failed,
+            "video_export_failed": video_export_failed,
+            "contact_sheet_failed": contact_sheet_failed,
+            "manifest_write_failed": manifest_write_failed,
+            "warnings_count": warnings_count,
+            "errors_count": errors_count,
+        },
+    }
+
+
+def calculate_stage_14_1_friction_score(
+    *,
+    replay_schema_missing: bool = False,
+    side_view_source_missing: bool = False,
+    bounce_grounding_failed: bool = False,
+    hit_contact_band_failed: bool = False,
+    semantic_debug_generation_failed: bool = False,
+    render_frames_failed: bool = False,
+    video_export_failed: bool = False,
+    warnings_count: int = 0,
+    errors_count: int = 0,
+) -> dict[str, Any]:
+    """Calculate Stage 14.1 side-view height semantics patch friction."""
+    score = 0
+    score += 45 if replay_schema_missing else 0
+    score += 25 if side_view_source_missing else 0
+    score += 35 if bounce_grounding_failed else 0
+    score += 25 if hit_contact_band_failed else 0
+    score += 20 if semantic_debug_generation_failed else 0
+    score += 35 if render_frames_failed else 0
+    score += 12 if video_export_failed else 0
+    score += min(warnings_count * 2, 12)
+    score += min(errors_count * 10, 30)
+    score = max(0, min(score, 100))
+
+    return {
+        "score": score,
+        "band": friction_band(score),
+        "inputs": {
+            "replay_schema_missing": replay_schema_missing,
+            "side_view_source_missing": side_view_source_missing,
+            "bounce_grounding_failed": bounce_grounding_failed,
+            "hit_contact_band_failed": hit_contact_band_failed,
+            "semantic_debug_generation_failed": semantic_debug_generation_failed,
+            "render_frames_failed": render_frames_failed,
+            "video_export_failed": video_export_failed,
+            "warnings_count": warnings_count,
+            "errors_count": errors_count,
+        },
+    }

@@ -1,0 +1,13 @@
+frame_index,timestamp_seconds,image_x,image_y,projected_x,projected_y,zone,depth,lateral_lane,source,confidence_like_score,is_interpolated,notes
+90,,2331.0,234.0,239.299,-487.826,out_of_bounds,deep,center,tuned_zone_assignment,0.35,False,Projected point is outside the tuned court tolerance; not a confident tactical zone.
+105,,2304.0,345.0,224.761,-280.756,out_of_bounds,deep,center,tuned_zone_assignment,0.35,False,Projected point is outside the tuned court tolerance; not a confident tactical zone.
+120,,2175.0,492.0,180.71,-59.098,far_deep_center,deep,center,tuned_zone_assignment,0.65,False,Tuned approximate court zone; not official line calling.
+135,,2043.0,759.0,148.003,234.472,far_mid_center,mid,center,tuned_zone_assignment,0.85,False,Tuned approximate court zone; not official line calling.
+150,,1911.0,1146.0,128.598,516.26,near_short_center,short,center,tuned_zone_assignment,0.85,False,Tuned approximate court zone; not official line calling.
+165,,1797.0,1161.0,106.032,526.175,near_mid_left,mid,left,tuned_zone_assignment,0.85,False,Tuned approximate court zone; not official line calling.
+180,,1671.0,1248.0,85.083,574.978,near_mid_left,mid,left,tuned_zone_assignment,0.85,False,Tuned approximate court zone; not official line calling.
+195,,1578.0,1425.0,76.532,660.861,near_deep_left,deep,left,tuned_zone_assignment,0.85,False,Tuned approximate court zone; not official line calling.
+210,,1941.0,942.0,128.759,383.846,far_short_center,short,center,tuned_zone_assignment,0.85,False,Tuned approximate court zone; not official line calling.
+225,,2169.0,744.0,179.985,218.692,far_mid_center,mid,center,tuned_zone_assignment,0.85,False,Tuned approximate court zone; not official line calling.
+240,,2307.0,708.0,216.191,182.282,far_mid_center,mid,center,tuned_zone_assignment,0.85,False,Tuned approximate court zone; not official line calling.
+255,,2397.0,507.0,248.243,-44.495,far_deep_right,deep,right,tuned_zone_assignment,0.65,False,Tuned approximate court zone; not official line calling.

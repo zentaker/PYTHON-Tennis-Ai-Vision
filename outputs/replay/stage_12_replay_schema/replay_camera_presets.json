@@ -1,0 +1,56 @@
+[
+  {
+    "camera_id": "top_tactical",
+    "coordinate_space": "normalized_court",
+    "name": "Top Tactical",
+    "purpose": "Overhead tactical replay from normalized court coordinates.",
+    "renderer_notes": "Best first renderer because Stage 3 homography and Stage 9.1 zones use normalized court coordinates.",
+    "supported_now": true,
+    "view_type": "2d_top_down"
+  },
+  {
+    "camera_id": "sideline_low",
+    "coordinate_space": "normalized_court_plus_estimated_height",
+    "name": "Sideline Low",
+    "purpose": "Future side-view ball flight interpretation.",
+    "renderer_notes": "Requires ball height estimation that does not exist yet.",
+    "supported_now": false,
+    "view_type": "synthetic_side_view"
+  },
+  {
+    "camera_id": "baseline_near",
+    "coordinate_space": "normalized_court",
+    "name": "Near Baseline",
+    "purpose": "Future baseline replay from near player perspective.",
+    "renderer_notes": "Renderer hint only; no true near-baseline camera exists.",
+    "supported_now": false,
+    "view_type": "synthetic_baseline"
+  },
+  {
+    "camera_id": "baseline_far",
+    "coordinate_space": "normalized_court",
+    "name": "Far Baseline",
+    "purpose": "Future baseline replay from far player perspective.",
+    "renderer_notes": "Renderer hint only; player identity is independent of side state.",
+    "supported_now": false,
+    "view_type": "synthetic_baseline"
+  },
+  {
+    "camera_id": "audience_side",
+    "coordinate_space": "normalized_court",
+    "name": "Audience Side",
+    "purpose": "Future stylized side/audience tactical replay.",
+    "renderer_notes": "Requires a renderer to map normalized court data into an oblique scene.",
+    "supported_now": false,
+    "view_type": "synthetic_oblique"
+  },
+  {
+    "camera_id": "mini_court",
+    "coordinate_space": "normalized_court",
+    "name": "Mini Court",
+    "purpose": "Compact tactical visualization for reports and UI cards.",
+    "renderer_notes": "Can consume replay keyframes and tactical zones immediately.",
+    "supported_now": true,
+    "view_type": "2d_mini_court"
+  }
+]

@@ -27,6 +27,12 @@ STAGE_NOTEBOOK_FILES = {
     "stage_8_1": "stage_8_1_timeline_validation.md",
     "stage_9": "stage_9_tactical_metrics.md",
     "stage_9_1": "stage_9_1_projection_coverage.md",
+    "stage_10": "stage_10_analytical_report.md",
+    "stage_11": "stage_11_report_package.md",
+    "stage_12": "stage_12_replay_schema.md",
+    "stage_13": "stage_13_2d_tactical_replay.md",
+    "stage_14": "stage_14_side_view_replay.md",
+    "stage_14_1": "stage_14_1_side_view_patch.md",
 }
 
 
@@ -321,6 +327,96 @@ def stage_9_1_next_step(report: dict[str, Any]) -> str:
     if verdict == "needs_more_labels":
         return "Collect more expanded labels, then rerun Stage 9.1."
     return "Fix Stage 9.1 blockers, then rerun projection coverage tuning."
+
+
+def stage_10_next_step(report: dict[str, Any]) -> str:
+    """Return Stage 10 next-step text."""
+    next_step = report.get("recommended_next_step")
+    if next_step:
+        return str(next_step)
+    verdict = report.get("final_verdict")
+    if verdict == "ready_for_stage_11":
+        return "Proceed to Stage 11: Annotated Highlight/Report Package Generator."
+    if verdict == "needs_more_validation":
+        return "Tune report wording in Stage 10.1 or validate more events before packaging."
+    if verdict == "ready_with_warnings":
+        return "Proceed cautiously to Stage 11 or Stage 10.1 wording/confidence tuning."
+    return "Fix Stage 10 blockers, then rerun the analytical report generator."
+
+
+def stage_11_next_step(report: dict[str, Any]) -> str:
+    """Return Stage 11 next-step text."""
+    next_step = report.get("recommended_next_step")
+    if next_step:
+        return str(next_step)
+    verdict = report.get("final_verdict")
+    if verdict == "ready_for_stage_12":
+        return "Proceed to Stage 12: Synthetic Rally Replay Data Schema."
+    if verdict == "ready_with_warnings":
+        return "Review optional missing artifacts, then proceed to Stage 12 or Stage 11.1 package polish."
+    if verdict == "package_incomplete":
+        return "Regenerate missing core reports, then rerun Stage 11."
+    return "Fix Stage 11 blockers, then rerun the report package generator."
+
+
+def stage_12_next_step(report: dict[str, Any]) -> str:
+    """Return Stage 12 next-step text."""
+    next_step = report.get("recommended_next_step")
+    if next_step:
+        return str(next_step)
+    verdict = report.get("final_verdict")
+    if verdict == "ready_for_stage_13":
+        return "Proceed to Stage 13: 2D Tactical Replay Renderer."
+    if verdict == "ready_with_warnings":
+        return "Review missing replay context, then proceed cautiously to Stage 13."
+    if verdict == "needs_more_replay_data":
+        return "Regenerate missing court, trajectory, player, or event data, then rerun Stage 12."
+    return "Fix Stage 12 blockers, then rerun the replay schema generator."
+
+
+def stage_13_next_step(report: dict[str, Any]) -> str:
+    """Return Stage 13 next-step text."""
+    next_step = report.get("recommended_next_step")
+    if next_step:
+        return str(next_step)
+    verdict = report.get("final_verdict")
+    if verdict == "ready_for_stage_14":
+        return "Proceed to Stage 14: Side-View Ball Flight Renderer."
+    if verdict == "ready_with_warnings":
+        return "Review renderer warnings, then proceed to Stage 14 or Stage 13.1 visual polish."
+    if verdict == "needs_more_replay_data":
+        return "Regenerate Stage 12 replay schema data, then rerun Stage 13."
+    return "Fix Stage 13 blockers, then rerun the 2D tactical replay renderer."
+
+
+def stage_14_next_step(report: dict[str, Any]) -> str:
+    """Return Stage 14 next-step text."""
+    next_step = report.get("recommended_next_step")
+    if next_step:
+        return str(next_step)
+    verdict = report.get("final_verdict")
+    if verdict == "ready_for_stage_15":
+        return "Proceed to Stage 15: Multi-Camera Analytical Replay."
+    if verdict == "ready_with_warnings":
+        return "Review renderer warnings, then proceed to Stage 15 or Stage 14.1 visual polish."
+    if verdict == "needs_more_replay_data":
+        return "Regenerate Stage 12 replay data with usable keyframes, then rerun Stage 14."
+    return "Fix Stage 14 blockers, then rerun the side-view renderer."
+
+
+def stage_14_1_next_step(report: dict[str, Any]) -> str:
+    """Return Stage 14.1 next-step text."""
+    next_step = report.get("recommended_next_step")
+    if next_step:
+        return str(next_step)
+    verdict = report.get("final_verdict")
+    if verdict == "ready_for_stage_15":
+        return "Proceed to Stage 15: Multi-Camera Analytical Replay."
+    if verdict == "needs_more_side_view_tuning":
+        return "Tune side-view semantics further before Stage 15."
+    if verdict == "ready_with_warnings":
+        return "Review warnings, then proceed to Stage 15 or Stage 14.2 polish."
+    return "Fix Stage 14.1 blockers, then rerun the side-view patch."
 
 
 def build_stage_0_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
@@ -1504,6 +1600,441 @@ def build_stage_9_1_document(report: dict[str, Any], project_root: Path) -> dict
     return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
 
 
+def build_stage_10_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
+    """Build Stage 10 notebook content."""
+    json_path = report_path(project_root, "stage_10_analytical_report_report.json")
+    markdown_path = report_path(project_root, "stage_10_analytical_report_report.md")
+    next_step = stage_10_next_step(report)
+    friction = report.get("friction", {})
+    outputs = report.get("output_paths", {})
+
+    summary = markdown_table(
+        [
+            ("Stage", "Stage 10 - Analytical report and coaching summary prototype"),
+            ("Verdict", report.get("final_verdict")),
+            ("Confidence level", report.get("confidence_level")),
+            ("Friction score", friction.get("score")),
+            ("Friction level", friction.get("band")),
+            ("Timestamp", report.get("timestamp")),
+            ("Recommended next step", next_step),
+        ]
+    )
+    input_table = markdown_table(
+        [
+            ("Tactical zones", nested_get(report, ("inputs_used", "tactical_zones"))),
+            ("Directions", nested_get(report, ("inputs_used", "directions"))),
+            ("Rally summary", nested_get(report, ("inputs_used", "rally_summary"))),
+            ("Validated timeline", nested_get(report, ("inputs_used", "validated_timeline"))),
+            ("Main players", nested_get(report, ("inputs_used", "main_players"))),
+        ]
+    )
+    output_table = markdown_table(
+        [
+            ("JSON report path", json_path),
+            ("Markdown report path", markdown_path),
+            ("Log", latest_log_for_prefix(project_root, "stage_10_analytical_report_")),
+            ("Analytical report", outputs.get("analytical_report_md")),
+            ("Analytical JSON", outputs.get("analytical_report_json")),
+            ("Coaching summary", outputs.get("coaching_summary_md")),
+            ("Confidence summary", outputs.get("confidence_summary_json")),
+            ("Key findings", outputs.get("key_findings_md")),
+            ("Visual references", outputs.get("visual_references_md")),
+        ]
+    )
+    console_table = markdown_table(
+        [
+            ("Labels analyzed", report.get("label_count")),
+            ("Projected points", report.get("projected_points_count")),
+            ("Unknown zones", report.get("unknown_zone_count")),
+            ("Key findings", report.get("key_findings_count")),
+            ("Coaching observations", report.get("observations_count")),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction", f"{not_available(friction.get('score'))} ({not_available(friction.get('band'))})"),
+        ]
+    )
+    interpretation = (
+        "Stage 10 converts validated tactical outputs into a player-readable analytical report. "
+        "It is deterministic, local, and preserves uncertainty. It does not provide official coaching, "
+        "scoring, line calling, or confirmed shot classification."
+    )
+    body = stage_document(
+        title="Stage 10 - Analytical Report",
+        summary=summary,
+        input_section=input_table,
+        output_section=output_table,
+        console_table=console_table,
+        warnings=bullet_list(report.get("warnings"), "No warnings."),
+        errors=bullet_list(report.get("errors"), "No errors."),
+        interpretation=interpretation,
+        next_step=next_step,
+    )
+    entry = history_entry(report, "Stage 10 - Analytical Report", summary, next_step)
+    return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
+
+
+def build_stage_11_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
+    """Build Stage 11 notebook content."""
+    json_path = report_path(project_root, "stage_11_report_package_report.json")
+    markdown_path = report_path(project_root, "stage_11_report_package_report.md")
+    next_step = stage_11_next_step(report)
+    friction = report.get("friction", {})
+    outputs = report.get("output_paths", {})
+
+    summary = markdown_table(
+        [
+            ("Stage", "Stage 11 - Annotated report package"),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction score", friction.get("score")),
+            ("Friction level", friction.get("band")),
+            ("Timestamp", report.get("timestamp")),
+            ("Recommended next step", next_step),
+        ]
+    )
+    input_table = markdown_table(
+        [
+            ("Package root", report.get("package_root")),
+            ("Included artifacts", report.get("included_artifact_count")),
+            ("Missing artifacts", report.get("missing_artifact_count")),
+            ("Core report included", report.get("core_report_included")),
+            ("Coaching summary included", report.get("coaching_summary_included")),
+        ]
+    )
+    output_table = markdown_table(
+        [
+            ("JSON report path", json_path),
+            ("Markdown report path", markdown_path),
+            ("Log", latest_log_for_prefix(project_root, "stage_11_report_package_")),
+            ("Package README", outputs.get("package_readme")),
+            ("Package manifest", outputs.get("package_manifest")),
+            ("Package index", outputs.get("package_index")),
+            ("Analytical report", outputs.get("analytical_report")),
+            ("Coaching summary", outputs.get("coaching_summary")),
+        ]
+    )
+    console_table = markdown_table(
+        [
+            ("Included artifacts", report.get("included_artifact_count")),
+            ("Missing artifacts", report.get("missing_artifact_count")),
+            ("Visual artifacts", report.get("visual_artifacts_included_count")),
+            ("Data artifacts", report.get("data_artifacts_included_count")),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction", f"{not_available(friction.get('score'))} ({not_available(friction.get('band'))})"),
+        ]
+    )
+    interpretation = (
+        "Stage 11 packages the most useful outputs into a clean local deliverable. "
+        "It organizes selected reports, visuals, data files, provenance, and limitations without creating new analysis."
+    )
+    body = stage_document(
+        title="Stage 11 - Report Package",
+        summary=summary,
+        input_section=input_table,
+        output_section=output_table,
+        console_table=console_table,
+        warnings=bullet_list(report.get("warnings"), "No warnings."),
+        errors=bullet_list(report.get("errors"), "No errors."),
+        interpretation=interpretation,
+        next_step=next_step,
+    )
+    entry = history_entry(report, "Stage 11 - Report Package", summary, next_step)
+    return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
+
+
+def build_stage_12_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
+    """Build Stage 12 notebook content."""
+    json_path = report_path(project_root, "stage_12_replay_schema_report.json")
+    markdown_path = report_path(project_root, "stage_12_replay_schema_report.md")
+    next_step = stage_12_next_step(report)
+    friction = report.get("friction", {})
+    outputs = report.get("output_paths", {})
+
+    summary = markdown_table(
+        [
+            ("Stage", "Stage 12 - Synthetic rally replay data schema"),
+            ("Verdict", report.get("final_verdict")),
+            ("Schema version", report.get("schema_version")),
+            ("Friction score", friction.get("score")),
+            ("Friction level", friction.get("band")),
+            ("Timestamp", report.get("timestamp")),
+            ("Recommended next step", next_step),
+        ]
+    )
+    input_table = markdown_table(
+        [
+            ("Stage 11 manifest", "outputs/report_packages/stage_11_report_package/package_manifest.json"),
+            ("Stage 9.1 tactical zones", "outputs/tactical/stage_9_1_projection_coverage/tuned_ball_zone_assignments.csv"),
+            ("Stage 8.1 validated timeline", "outputs/timeline/stage_8_1_timeline_validation/validated_event_timeline.csv"),
+            ("Stage 7.1 main players", "outputs/player_tracking/stage_7_1_player_filtering/main_players.csv"),
+            ("Stage 6 smoothed trajectory", "outputs/ball_tracking/stage_6_trajectory_smoothing/smoothed_trajectory.csv"),
+            ("Stage 3 calibration report", "outputs/reports/stage_3_court_calibration_probe_report.json"),
+        ]
+    )
+    output_table = markdown_table(
+        [
+            ("JSON report path", json_path),
+            ("Markdown report path", markdown_path),
+            ("Log", latest_log_for_prefix(project_root, "stage_12_replay_schema_")),
+            ("Replay schema", outputs.get("replay_schema_json")),
+            ("Pretty schema", outputs.get("replay_schema_pretty_md")),
+            ("Replay keyframes", outputs.get("replay_keyframes_csv")),
+            ("Replay events", outputs.get("replay_events_csv")),
+            ("Replay players", outputs.get("replay_players_json")),
+            ("Camera presets", outputs.get("replay_camera_presets_json")),
+            ("Replay manifest", outputs.get("replay_manifest_json")),
+        ]
+    )
+    console_table = markdown_table(
+        [
+            ("Replay keyframes", report.get("replay_keyframes_count")),
+            ("Players", report.get("players_count")),
+            ("Events", report.get("event_count")),
+            ("Rally segments", report.get("rally_segments_count")),
+            ("Camera presets", report.get("camera_presets_count")),
+            ("Visual layers", report.get("visual_layers_count")),
+            ("Confidence level", report.get("confidence_level")),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction", f"{not_available(friction.get('score'))} ({not_available(friction.get('band'))})"),
+        ]
+    )
+    interpretation = (
+        "Stage 12 creates the structured replay data contract for future deterministic renderers. "
+        "It does not generate video or synthetic images. It preserves possible_* event uncertainty, "
+        "player identity limitations, and doubles-boundary court calibration context."
+    )
+    body = stage_document(
+        title="Stage 12 - Synthetic Rally Replay Data Schema",
+        summary=summary,
+        input_section=input_table,
+        output_section=output_table,
+        console_table=console_table,
+        warnings=bullet_list(report.get("warnings"), "No warnings."),
+        errors=bullet_list(report.get("errors"), "No errors."),
+        interpretation=interpretation,
+        next_step=next_step,
+    )
+    entry = history_entry(report, "Stage 12 - Replay Schema", summary, next_step)
+    return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
+
+
+def build_stage_13_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
+    """Build Stage 13 notebook content."""
+    json_path = report_path(project_root, "stage_13_2d_tactical_replay_report.json")
+    markdown_path = report_path(project_root, "stage_13_2d_tactical_replay_report.md")
+    next_step = stage_13_next_step(report)
+    friction = report.get("friction", {})
+    outputs = report.get("output_paths", {})
+
+    summary = markdown_table(
+        [
+            ("Stage", "Stage 13 - 2D tactical replay renderer"),
+            ("Verdict", report.get("final_verdict")),
+            ("Schema version", report.get("schema_version")),
+            ("Friction score", friction.get("score")),
+            ("Friction level", friction.get("band")),
+            ("Timestamp", report.get("timestamp")),
+            ("Recommended next step", next_step),
+        ]
+    )
+    input_table = markdown_table(
+        [
+            ("Replay schema", report.get("input_schema_path")),
+            ("Keyframes", report.get("keyframes_count")),
+            ("Players", report.get("players_count")),
+            ("Events", report.get("events_count")),
+            ("Renderer", "2d_tactical_replay"),
+        ]
+    )
+    output_table = markdown_table(
+        [
+            ("JSON report path", json_path),
+            ("Markdown report path", markdown_path),
+            ("Log", latest_log_for_prefix(project_root, "stage_13_2d_tactical_replay_")),
+            ("Frames", outputs.get("frames_dir")),
+            ("Video", outputs.get("video_path")),
+            ("Contact sheet", outputs.get("contact_sheet_path")),
+            ("Final frame", outputs.get("final_frame_path")),
+            ("Manifest", outputs.get("renderer_manifest_path")),
+            ("Replay summary", outputs.get("replay_summary_path")),
+        ]
+    )
+    console_table = markdown_table(
+        [
+            ("Frames generated", report.get("frames_generated")),
+            ("Video generated", report.get("video_generated")),
+            ("Keyframes", report.get("keyframes_count")),
+            ("Players", report.get("players_count")),
+            ("Events", report.get("events_count")),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction", f"{not_available(friction.get('score'))} ({not_available(friction.get('band'))})"),
+        ]
+    )
+    interpretation = (
+        "Stage 13 is the first generated visual replay from analysis data. "
+        "It renders a deterministic 2D tactical court, ball trajectory, players, event markers, and timeline strip. "
+        "It is not photorealistic video, broadcast reconstruction, or official line/scoring analysis."
+    )
+    body = stage_document(
+        title="Stage 13 - 2D Tactical Replay Renderer",
+        summary=summary,
+        input_section=input_table,
+        output_section=output_table,
+        console_table=console_table,
+        warnings=bullet_list(report.get("warnings"), "No warnings."),
+        errors=bullet_list(report.get("errors"), "No errors."),
+        interpretation=interpretation,
+        next_step=next_step,
+    )
+    entry = history_entry(report, "Stage 13 - 2D Tactical Replay", summary, next_step)
+    return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
+
+
+def build_stage_14_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
+    """Build Stage 14 notebook content."""
+    json_path = report_path(project_root, "stage_14_side_view_replay_report.json")
+    markdown_path = report_path(project_root, "stage_14_side_view_replay_report.md")
+    next_step = stage_14_next_step(report)
+    friction = report.get("friction", {})
+    outputs = report.get("output_paths", {})
+
+    summary = markdown_table(
+        [
+            ("Stage", "Stage 14 - Side-view ball flight renderer"),
+            ("Verdict", report.get("final_verdict")),
+            ("Schema version", report.get("schema_version")),
+            ("Friction score", friction.get("score")),
+            ("Friction level", friction.get("band")),
+            ("Timestamp", report.get("timestamp")),
+            ("Recommended next step", next_step),
+        ]
+    )
+    input_table = markdown_table(
+        [
+            ("Replay schema", report.get("input_schema_path")),
+            ("Keyframes", report.get("keyframes_count")),
+            ("Side-view keyframes", report.get("side_view_keyframes_count")),
+            ("Events", report.get("events_count")),
+            ("Synthetic height enabled", report.get("synthetic_height_enabled")),
+            ("True height available", report.get("true_height_available")),
+        ]
+    )
+    output_table = markdown_table(
+        [
+            ("JSON report path", json_path),
+            ("Markdown report path", markdown_path),
+            ("Log", latest_log_for_prefix(project_root, "stage_14_side_view_replay_")),
+            ("Frames", outputs.get("frames_dir")),
+            ("Video", outputs.get("video_path")),
+            ("Contact sheet", outputs.get("contact_sheet_path")),
+            ("Final frame", outputs.get("final_frame_path")),
+            ("Arc preview", outputs.get("arc_preview_path")),
+            ("Manifest", outputs.get("manifest_path")),
+            ("Summary", outputs.get("summary_path")),
+        ]
+    )
+    console_table = markdown_table(
+        [
+            ("Frames generated", report.get("frames_generated")),
+            ("Video generated", report.get("video_generated")),
+            ("Keyframes", report.get("keyframes_count")),
+            ("Side-view keyframes", report.get("side_view_keyframes_count")),
+            ("Events", report.get("events_count")),
+            ("Synthetic height", report.get("synthetic_height_enabled")),
+            ("True height", report.get("true_height_available")),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction", f"{not_available(friction.get('score'))} ({not_available(friction.get('band'))})"),
+        ]
+    )
+    interpretation = (
+        "Stage 14 renders a deterministic side-view analytical replay from the Stage 12 schema. "
+        "The height profile is synthetic and estimated for visualization only; it is not measured 3D ball height."
+    )
+    body = stage_document(
+        title="Stage 14 - Side-View Ball Flight Renderer",
+        summary=summary,
+        input_section=input_table,
+        output_section=output_table,
+        console_table=console_table,
+        warnings=bullet_list(report.get("warnings"), "No warnings."),
+        errors=bullet_list(report.get("errors"), "No errors."),
+        interpretation=interpretation,
+        next_step=next_step,
+    )
+    entry = history_entry(report, "Stage 14 - Side-View Replay", summary, next_step)
+    return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
+
+
+def build_stage_14_1_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
+    """Build Stage 14.1 notebook content."""
+    json_path = report_path(project_root, "stage_14_1_side_view_patch_report.json")
+    markdown_path = report_path(project_root, "stage_14_1_side_view_patch_report.md")
+    next_step = stage_14_1_next_step(report)
+    friction = report.get("friction", {})
+    outputs = report.get("output_paths", {})
+
+    summary = markdown_table(
+        [
+            ("Stage", "Stage 14.1 - Side-view height semantics patch"),
+            ("Verdict", report.get("final_verdict")),
+            ("Patch applied", report.get("semantic_height_patch_applied")),
+            ("Friction score", friction.get("score")),
+            ("Friction level", friction.get("band")),
+            ("Timestamp", report.get("timestamp")),
+            ("Recommended next step", next_step),
+        ]
+    )
+    input_table = markdown_table(
+        [
+            ("Source stage", report.get("source_stage")),
+            ("Bounce grounding", report.get("bounce_grounding_enabled")),
+            ("Hit contact band", report.get("hit_contact_band_enabled")),
+            ("Interpolated points marked", report.get("interpolated_points_marked")),
+            ("Height anchor summary", report.get("height_anchor_summary")),
+        ]
+    )
+    output_table = markdown_table(
+        [
+            ("JSON report path", json_path),
+            ("Markdown report path", markdown_path),
+            ("Semantic debug", report.get("semantic_debug_artifact")),
+            ("Video", outputs.get("video_path")),
+            ("Contact sheet", outputs.get("contact_sheet_path")),
+            ("Final frame", outputs.get("final_frame_path")),
+            ("Arc preview", outputs.get("arc_preview_path")),
+            ("Manifest", outputs.get("manifest_path")),
+        ]
+    )
+    console_table = markdown_table(
+        [
+            ("Frames generated", report.get("frames_generated")),
+            ("Video generated", report.get("video_generated")),
+            ("Semantic patch applied", report.get("semantic_height_patch_applied")),
+            ("Bounce grounding", report.get("bounce_grounding_enabled")),
+            ("Hit contact band", report.get("hit_contact_band_enabled")),
+            ("Interpolated points marked", report.get("interpolated_points_marked")),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction", f"{not_available(friction.get('score'))} ({not_available(friction.get('band'))})"),
+        ]
+    )
+    interpretation = (
+        "Stage 14.1 improves the side-view semantics. Bounce-like events are forced near the court surface, "
+        "hit-like events use a plausible synthetic contact band, and interpolated points remain visibly synthetic. "
+        "The renderer still does not claim measured 3D ball height."
+    )
+    body = stage_document(
+        title="Stage 14.1 - Side-View Height Semantics Patch",
+        summary=summary,
+        input_section=input_table,
+        output_section=output_table,
+        console_table=console_table,
+        warnings=bullet_list(report.get("warnings"), "No warnings."),
+        errors=bullet_list(report.get("errors"), "No errors."),
+        interpretation=interpretation,
+        next_step=next_step,
+    )
+    entry = history_entry(report, "Stage 14.1 - Side-View Patch", summary, next_step)
+    return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
+
+
 def stage_document(
     *,
     title: str,
@@ -1984,6 +2515,102 @@ def update_lab_notebook(project_root: Path) -> list[Path]:
                 "friction": f"{not_available(nested_get(stage_9_1_report, ('friction', 'score')))} {not_available(nested_get(stage_9_1_report, ('friction', 'band')))}",
                 "main_output": "outputs/reports/stage_9_1_projection_coverage_report.md",
                 "next_step": stage_9_1_next_step(stage_9_1_report),
+            }
+        )
+
+    stage_10_report = read_json_report(report_path(project_root, "stage_10_analytical_report_report.json"))
+    if stage_10_report is not None:
+        document = build_stage_10_document(stage_10_report, project_root)
+        stage_path = notebook_dir / "stage_10_analytical_report.md"
+        written.append(write_stage_notebook(stage_path, document["body"], document["entry"], document["entry_id"]))
+        stage_summaries.append(
+            {
+                "stage": "Stage 10",
+                "name": "Analytical Report",
+                "verdict": not_available(stage_10_report.get("final_verdict")),
+                "friction": f"{not_available(nested_get(stage_10_report, ('friction', 'score')))} {not_available(nested_get(stage_10_report, ('friction', 'band')))}",
+                "main_output": "outputs/reports_final/stage_10_analytical_report/analytical_report.md",
+                "next_step": stage_10_next_step(stage_10_report),
+            }
+        )
+
+    stage_11_report = read_json_report(report_path(project_root, "stage_11_report_package_report.json"))
+    if stage_11_report is not None:
+        document = build_stage_11_document(stage_11_report, project_root)
+        stage_path = notebook_dir / "stage_11_report_package.md"
+        written.append(write_stage_notebook(stage_path, document["body"], document["entry"], document["entry_id"]))
+        stage_summaries.append(
+            {
+                "stage": "Stage 11",
+                "name": "Report Package",
+                "verdict": not_available(stage_11_report.get("final_verdict")),
+                "friction": f"{not_available(nested_get(stage_11_report, ('friction', 'score')))} {not_available(nested_get(stage_11_report, ('friction', 'band')))}",
+                "main_output": "outputs/report_packages/stage_11_report_package/README.md",
+                "next_step": stage_11_next_step(stage_11_report),
+            }
+        )
+
+    stage_12_report = read_json_report(report_path(project_root, "stage_12_replay_schema_report.json"))
+    if stage_12_report is not None:
+        document = build_stage_12_document(stage_12_report, project_root)
+        stage_path = notebook_dir / "stage_12_replay_schema.md"
+        written.append(write_stage_notebook(stage_path, document["body"], document["entry"], document["entry_id"]))
+        stage_summaries.append(
+            {
+                "stage": "Stage 12",
+                "name": "Replay Schema",
+                "verdict": not_available(stage_12_report.get("final_verdict")),
+                "friction": f"{not_available(nested_get(stage_12_report, ('friction', 'score')))} {not_available(nested_get(stage_12_report, ('friction', 'band')))}",
+                "main_output": "outputs/replay/stage_12_replay_schema/replay_schema.json",
+                "next_step": stage_12_next_step(stage_12_report),
+            }
+        )
+
+    stage_13_report = read_json_report(report_path(project_root, "stage_13_2d_tactical_replay_report.json"))
+    if stage_13_report is not None:
+        document = build_stage_13_document(stage_13_report, project_root)
+        stage_path = notebook_dir / "stage_13_2d_tactical_replay.md"
+        written.append(write_stage_notebook(stage_path, document["body"], document["entry"], document["entry_id"]))
+        stage_summaries.append(
+            {
+                "stage": "Stage 13",
+                "name": "2D Tactical Replay",
+                "verdict": not_available(stage_13_report.get("final_verdict")),
+                "friction": f"{not_available(nested_get(stage_13_report, ('friction', 'score')))} {not_available(nested_get(stage_13_report, ('friction', 'band')))}",
+                "main_output": "outputs/replay/stage_13_2d_tactical_replay/tactical_replay_contact_sheet.jpg",
+                "next_step": stage_13_next_step(stage_13_report),
+            }
+        )
+
+    stage_14_report = read_json_report(report_path(project_root, "stage_14_side_view_replay_report.json"))
+    if stage_14_report is not None:
+        document = build_stage_14_document(stage_14_report, project_root)
+        stage_path = notebook_dir / "stage_14_side_view_replay.md"
+        written.append(write_stage_notebook(stage_path, document["body"], document["entry"], document["entry_id"]))
+        stage_summaries.append(
+            {
+                "stage": "Stage 14",
+                "name": "Side-View Replay",
+                "verdict": not_available(stage_14_report.get("final_verdict")),
+                "friction": f"{not_available(nested_get(stage_14_report, ('friction', 'score')))} {not_available(nested_get(stage_14_report, ('friction', 'band')))}",
+                "main_output": "outputs/replay/stage_14_side_view_replay/side_view_arc_preview.jpg",
+                "next_step": stage_14_next_step(stage_14_report),
+            }
+        )
+
+    stage_14_1_report = read_json_report(report_path(project_root, "stage_14_1_side_view_patch_report.json"))
+    if stage_14_1_report is not None:
+        document = build_stage_14_1_document(stage_14_1_report, project_root)
+        stage_path = notebook_dir / "stage_14_1_side_view_patch.md"
+        written.append(write_stage_notebook(stage_path, document["body"], document["entry"], document["entry_id"]))
+        stage_summaries.append(
+            {
+                "stage": "Stage 14.1",
+                "name": "Side-View Patch",
+                "verdict": not_available(stage_14_1_report.get("final_verdict")),
+                "friction": f"{not_available(nested_get(stage_14_1_report, ('friction', 'score')))} {not_available(nested_get(stage_14_1_report, ('friction', 'band')))}",
+                "main_output": "outputs/replay/stage_14_side_view_replay/side_view_semantic_debug.jpg",
+                "next_step": stage_14_1_next_step(stage_14_1_report),
             }
         )
 

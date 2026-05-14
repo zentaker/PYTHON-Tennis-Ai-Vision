@@ -15,7 +15,7 @@ Friction level:
   low friction
 
 Timestamp:
-  2026-05-13T21:22:34+00:00
+  2026-05-14T01:55:37+00:00
 
 Recommended next step:
   Proceed cautiously to Stage 9.1 court zone tuning or validate more events before Stage 10.
@@ -46,7 +46,7 @@ Markdown report path:
   C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\stage_9_tactical_metrics_report.md
 
 Log:
-  C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\stage_9_tactical_metrics_20260513T212234Z.log
+  C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\stage_9_tactical_metrics_20260514T015537Z.log
 
 Ball zone assignments:
   C:\Users\MSI\Desktop\TennisAiVision\outputs\tactical\stage_9_tactical_metrics\ball_zone_assignments.csv
@@ -120,6 +120,50 @@ Older entries are preserved as originally written. Some historical entries may u
 
 Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
 
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
 <!-- lab-entry:2026-05-13T21:17:24+00:00 -->
 
 ### 2026-05-13T21:17:24+00:00
@@ -142,6 +186,25 @@ Next step:
 <!-- lab-entry:2026-05-13T21:22:34+00:00 -->
 
 ### 2026-05-13T21:22:34+00:00
+
+Stage:
+  Stage 9 - Tactical Metrics
+
+Verdict:
+  ready_with_warnings
+
+Friction score:
+  15
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed cautiously to Stage 9.1 court zone tuning or validate more events before Stage 10.
+
+<!-- lab-entry:2026-05-14T01:55:37+00:00 -->
+
+### 2026-05-14T01:55:37+00:00
 
 Stage:
   Stage 9 - Tactical Metrics

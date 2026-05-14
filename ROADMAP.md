@@ -107,7 +107,7 @@ Possible next paths:
 
 ## Stage 9.1: Court Zone Tuning And Projection Coverage
 
-Current stage. Project expanded labels through the Stage 3 homography, tune court zone assignment, compare Stage 9 vs Stage 9.1, and reduce unknown tactical zones before narrative reporting.
+Implemented. Project expanded labels through the Stage 3 homography, tune court zone assignment, compare Stage 9 vs Stage 9.1, and reduce unknown tactical zones before narrative reporting.
 
 Possible next paths:
 
@@ -117,7 +117,69 @@ Possible next paths:
 
 ## Stage 10: Analytical Report Generator And Coaching Summary Prototype
 
-Planned. Turn validated metrics, timeline evidence, and visual previews into a plain-language analysis report while preserving uncertainty.
+Implemented. Turn validated metrics, timeline evidence, and visual references into a plain-language analysis report and cautious coaching-style summary while preserving uncertainty.
+
+Possible next paths:
+
+- Stage 11: annotated highlight/report package generator.
+- Stage 10.1: report wording and confidence tuning.
+- Stage 8.2: manual event validation if event confidence is weak.
+- Stage 12 later: synthetic rally replay data schema.
+
+## Stage 11: Annotated Highlight / Report Package Generator
+
+Implemented. Package the most useful reports, data files, selected visuals, limitations, and source notes into a clean local deliverable.
+
+Possible next paths:
+
+- Stage 12: Synthetic Rally Replay Data Schema.
+- Stage 11.1: Package polish and PDF/HTML export.
+- Stage 10.1: Report wording and confidence tuning.
+
+## Stage 12: Synthetic Rally Replay Data Schema
+
+Implemented. Define and generate a structured replay data contract from court calibration, players, ball trajectory, events, tactical metrics, confidence data, and renderer hints.
+
+Stage 12 does not generate replay video. It prepares deterministic data for future renderers while preserving uncertainty.
+
+Possible next paths:
+
+- Stage 13: 2D Tactical Replay Renderer.
+- Stage 14: Side-View Ball Flight Renderer.
+- Stage 15: Multi-Camera Analytical Replay.
+- Stage 16: Stylistic Replay Layer.
+
+## Stage 13: 2D Tactical Replay Renderer
+
+Implemented. Render the first deterministic mini-court replay from Stage 12 replay_schema.json, including court, ball trail, player markers, possible event markers, timeline strip, exported frames, and optional MP4.
+
+Possible next paths:
+
+- Stage 14: Side-View Ball Flight Renderer.
+- Stage 13.1: Replay visual polish.
+- Stage 13.2: HTML/interactive replay viewer later.
+- Stage 15: Multi-Camera Analytical Replay.
+
+## Stage 14: Side-View Ball Flight Renderer
+
+Implemented. Render a deterministic side-view replay with court depth, net, estimated ball arc, event markers, and optional MP4 while clearly labeling height as synthetic.
+
+Possible next paths:
+
+- Stage 15: Multi-Camera Analytical Replay.
+- Stage 14.1: Side-view visual polish.
+- Stage 13.1: 2D replay visual polish.
+- Stage 16: Stylistic Replay Layer later.
+
+## Stage 14.1: Side-View Height Semantics Patch
+
+Current stage. Improve side-view replay readability by grounding bounce-like events, keeping hit-like events in a plausible synthetic contact band, and clearly marking interpolated visual points.
+
+Possible next paths:
+
+- Stage 15: Multi-Camera Analytical Replay.
+- Stage 14.2: Further side-view polish if needed.
+- Stage 13.1: Top-view replay polish if needed.
 
 ## Future Phase: Local MVP Pipeline
 

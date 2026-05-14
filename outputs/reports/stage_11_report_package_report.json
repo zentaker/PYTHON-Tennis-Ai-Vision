@@ -1,0 +1,53 @@
+{
+  "coaching_summary_included": true,
+  "core_report_included": true,
+  "data_artifacts_included_count": 7,
+  "errors": [],
+  "final_verdict": "ready_for_stage_12",
+  "flags": {
+    "analytical_report_missing": false,
+    "coaching_summary_missing": false,
+    "copy_failures": false,
+    "key_findings_missing": false,
+    "many_optional_artifacts_missing": false,
+    "missing_core_artifacts": false,
+    "package_manifest_failed": false
+  },
+  "friction": {
+    "band": "low friction",
+    "inputs": {
+      "analytical_report_missing": false,
+      "coaching_summary_missing": false,
+      "copy_failures": false,
+      "errors_count": 0,
+      "key_findings_missing": false,
+      "many_optional_artifacts_missing": false,
+      "missing_core_artifacts": false,
+      "package_manifest_failed": false,
+      "warnings_count": 0
+    },
+    "score": 0
+  },
+  "included_artifact_count": 21,
+  "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_11_report_package_report.json",
+  "key_findings_included": true,
+  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_11_report_package_20260514T030026Z.log",
+  "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_11_report_package_report.md",
+  "missing_artifact_count": 0,
+  "output_paths": {
+    "analytical_report": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\analysis\\analytical_report.md",
+    "coaching_summary": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\analysis\\coaching_summary.md",
+    "limitations": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\notes\\limitations.md",
+    "package_index": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\package_index.md",
+    "package_manifest": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\package_manifest.json",
+    "package_readme": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\README.md",
+    "source_artifacts": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\notes\\source_artifacts.md",
+    "visuals_dir": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\visuals"
+  },
+  "package_root": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package",
+  "recommended_next_step": "Proceed to Stage 12: Synthetic Rally Replay Data Schema.",
+  "stage": "stage_11_report_package",
+  "timestamp": "2026-05-14T03:00:26+00:00",
+  "visual_artifacts_included_count": 9,
+  "warnings": []
+}

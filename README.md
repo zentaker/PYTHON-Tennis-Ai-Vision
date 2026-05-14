@@ -28,6 +28,10 @@ Use these files when reviewing the project without reading source code first:
   - Where the project is going next.
   - Current stage, planned stages, and long-term research directions.
 
+Terminal output may use Rich tables because it is read directly in PowerShell.
+Documentation files should remain plain-text friendly because they are often
+opened as raw TXT or Markdown source.
+
 ## Local Setup
 
 From the repository root:
@@ -551,6 +555,144 @@ Expected outputs:
 - Projection and placement previews under `outputs/tactical/stage_9_1_projection_coverage/`.
 - JSON report at `outputs/reports/stage_9_1_projection_coverage_report.json`.
 - Markdown report at `outputs/reports/stage_9_1_projection_coverage_report.md`.
+
+## Stage 10 - Analytical Report Generator and Coaching Summary Prototype
+
+Stage 10 converts validated tactical metrics into a human-readable analytical report and cautious coaching-style summary. It is deterministic and local.
+
+Stage 10 does not use external LLMs. It does not provide official coaching, scoring, line calling, or confirmed shot classification.
+
+Run:
+
+```powershell
+python scripts\run_stage_10_analytical_report.py
+```
+
+Expected outputs:
+
+- Analytical report at `outputs/reports_final/stage_10_analytical_report/analytical_report.md`.
+- JSON summary at `outputs/reports_final/stage_10_analytical_report/analytical_report.json`.
+- Coaching summary at `outputs/reports_final/stage_10_analytical_report/coaching_summary.md`.
+- Confidence summary at `outputs/reports_final/stage_10_analytical_report/confidence_summary.json`.
+- Key findings at `outputs/reports_final/stage_10_analytical_report/key_findings.md`.
+- Visual reference index at `outputs/reports_final/stage_10_analytical_report/visual_references.md`.
+- Pipeline report at `outputs/reports/stage_10_analytical_report_report.md`.
+
+## Stage 11 - Annotated Highlight / Report Package Generator
+
+Stage 11 packages the analysis outputs into a clean local deliverable. It does not create new analysis. It organizes reports, selected visuals, data files, source notes, limitations, and a manifest for future UI/reporting work.
+
+Run:
+
+```powershell
+python scripts\run_stage_11_report_package.py
+```
+
+Expected outputs:
+
+- Package README at `outputs/report_packages/stage_11_report_package/README.md`.
+- Package manifest at `outputs/report_packages/stage_11_report_package/package_manifest.json`.
+- Package index at `outputs/report_packages/stage_11_report_package/package_index.md`.
+- Analysis files under `outputs/report_packages/stage_11_report_package/analysis/`.
+- Selected data files under `outputs/report_packages/stage_11_report_package/data/`.
+- Selected visuals under `outputs/report_packages/stage_11_report_package/visuals/`.
+- Limitations and source notes under `outputs/report_packages/stage_11_report_package/notes/`.
+
+## Stage 12 - Synthetic Rally Replay Data Schema
+
+Stage 12 creates the data contract for future replay renderers. It does not generate video yet. It packages court, player, ball trajectory, event, tactical metric, confidence, camera preset, and visual-layer data into deterministic local schema files.
+
+This is the bridge toward synthetic rally replay. It does not use generative AI, official scoring, or line calling.
+
+Run:
+
+```powershell
+python scripts\run_stage_12_replay_schema.py
+```
+
+Expected outputs:
+
+- Full replay schema at `outputs/replay/stage_12_replay_schema/replay_schema.json`.
+- Plain-text schema summary at `outputs/replay/stage_12_replay_schema/replay_schema_pretty.md`.
+- Replay keyframes at `outputs/replay/stage_12_replay_schema/replay_keyframes.csv`.
+- Replay events at `outputs/replay/stage_12_replay_schema/replay_events.csv`.
+- Replay players at `outputs/replay/stage_12_replay_schema/replay_players.json`.
+- Camera presets at `outputs/replay/stage_12_replay_schema/replay_camera_presets.json`.
+- Replay manifest at `outputs/replay/stage_12_replay_schema/replay_manifest.json`.
+
+## Stage 13 - 2D Tactical Replay Renderer
+
+Stage 13 renders a deterministic 2D tactical replay from `replay_schema.json`. It shows the court, ball trajectory, player markers, possible event markers, and a timeline strip.
+
+It does not generate photorealistic video. It does not use generative AI. MP4 export is attempted only when local OpenCV codec support allows it.
+
+Run:
+
+```powershell
+python scripts\run_stage_13_2d_tactical_replay.py
+```
+
+Optional commands:
+
+```powershell
+python scripts\run_stage_13_2d_tactical_replay.py --no-video
+python scripts\run_stage_13_2d_tactical_replay.py --fps 12 --interpolation-steps 5
+```
+
+Expected outputs:
+
+- Replay frames under `outputs/replay/stage_13_2d_tactical_replay/frames/`.
+- Renderer manifest at `outputs/replay/stage_13_2d_tactical_replay/renderer_manifest.json`.
+- Replay summary at `outputs/replay/stage_13_2d_tactical_replay/replay_summary.md`.
+- Contact sheet at `outputs/replay/stage_13_2d_tactical_replay/tactical_replay_contact_sheet.jpg`.
+- Final frame at `outputs/replay/stage_13_2d_tactical_replay/tactical_replay_final_frame.jpg`.
+- Optional MP4 at `outputs/replay/stage_13_2d_tactical_replay/tactical_replay.mp4`.
+
+## Stage 14 - Side-View Ball Flight Renderer
+
+Stage 14 renders a deterministic side-view visualization from `replay_schema.json`. It shows court depth, the net, an estimated ball arc, possible event markers, and a timeline strip.
+
+The side-view height is synthetic and estimated. It is not true measured 3D ball height. Stage 14 does not use generative AI and does not create a photorealistic replay.
+
+Run:
+
+```powershell
+python scripts\run_stage_14_side_view_replay.py
+```
+
+Optional commands:
+
+```powershell
+python scripts\run_stage_14_side_view_replay.py --no-video
+python scripts\run_stage_14_side_view_replay.py --fps 12 --interpolation-steps 8
+```
+
+Expected outputs:
+
+- Side-view frames under `outputs/replay/stage_14_side_view_replay/frames/`.
+- Side-view manifest at `outputs/replay/stage_14_side_view_replay/side_view_manifest.json`.
+- Side-view summary at `outputs/replay/stage_14_side_view_replay/side_view_summary.md`.
+- Contact sheet at `outputs/replay/stage_14_side_view_replay/side_view_contact_sheet.jpg`.
+- Final frame at `outputs/replay/stage_14_side_view_replay/side_view_final_frame.jpg`.
+- Arc preview at `outputs/replay/stage_14_side_view_replay/side_view_arc_preview.jpg`.
+- Optional MP4 at `outputs/replay/stage_14_side_view_replay/side_view_replay.mp4`.
+
+## Stage 14.1 - Side-View Height Semantics Patch
+
+Stage 14.1 improves side-view replay readability. It grounds bounce-like events near the court surface, keeps hit heights in a plausible estimated contact band, and distinguishes interpolated visual points from event-anchored points.
+
+It still does not represent measured 3D height.
+
+Run:
+
+```powershell
+python scripts\run_stage_14_side_view_replay.py
+```
+
+Expected patch output:
+
+- Semantic debug image at `outputs/replay/stage_14_side_view_replay/side_view_semantic_debug.jpg`.
+- Patch report at `outputs/reports/stage_14_1_side_view_patch_report.md`.
 
 ## Lab Notebook
 

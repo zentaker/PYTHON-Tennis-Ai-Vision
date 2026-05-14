@@ -245,28 +245,32 @@ def update_lab_notebook_safely() -> tuple[dict[str, Path], str | None]:
 
 
 def print_summary(report: dict[str, Any], lab_paths: dict[str, Path]) -> None:
+    rows = [
+        ("Verdict", report["final_verdict"]),
+        ("Friction", f"{report['friction']['score']} ({report['friction']['band']})"),
+        ("Ball points analyzed", report["ball_points_analyzed"]),
+        ("Projected points", report["projected_points_count"]),
+        ("Zone assignments", report["zone_assignments_count"]),
+        ("Unknown zones", report["unknown_zone_count"]),
+        ("Direction estimates", report["direction_estimates_count"]),
+        ("Rally summaries", report["rally_summaries_count"]),
+        ("Lab notebook", lab_paths["stage_page"]),
+        ("Recommended next step", report["recommended_next_step"]),
+    ]
     try:
         from rich.console import Console
+        from rich.table import Table
 
-        Console().print(
-            "\n".join(
-                [
-                    "Stage 9 Tactical Metrics",
-                    f"Verdict: {report['final_verdict']}",
-                    f"Friction: {report['friction']['score']} ({report['friction']['band']})",
-                    f"Ball points analyzed: {report['ball_points_analyzed']}",
-                    f"Projected points: {report['projected_points_count']}",
-                    f"Zone assignments: {report['zone_assignments_count']}",
-                    f"Unknown zones: {report['unknown_zone_count']}",
-                    f"Direction estimates: {report['direction_estimates_count']}",
-                    f"Rally summaries: {report['rally_summaries_count']}",
-                    f"Lab notebook: {lab_paths['stage_page']}",
-                    f"Recommended next step: {report['recommended_next_step']}",
-                ]
-            )
-        )
+        table = Table(title="Stage 9 Tactical Metrics")
+        table.add_column("Field", style="cyan", no_wrap=True)
+        table.add_column("Value", style="white")
+        for field, value in rows:
+            table.add_row(str(field), str(value))
+        Console().print(table)
     except ImportError:
-        print(f"Verdict: {report['final_verdict']}")
+        print("Stage 9 Tactical Metrics")
+        for field, value in rows:
+            print(f"{field}: {value}")
 
 
 def main() -> int:

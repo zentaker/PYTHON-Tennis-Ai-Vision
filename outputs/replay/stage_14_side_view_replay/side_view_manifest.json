@@ -1,0 +1,48 @@
+{
+  "bounce_grounding_enabled": true,
+  "errors": [],
+  "events_used": 5,
+  "fps": 12,
+  "frames_generated": 100,
+  "generated_at": "2026-05-14T04:16:09+00:00",
+  "height_anchor_summary": {
+    "arc_estimate": 7,
+    "hit_contact": 3,
+    "interaction_cue": 2
+  },
+  "height_estimation_method": "event-aware synthetic arc from 2D projected keyframes",
+  "hit_contact_band_enabled": true,
+  "input_schema_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_12_replay_schema\\replay_schema.json",
+  "interpolated_points_marked": true,
+  "interpolation_enabled": true,
+  "interpolation_steps": 8,
+  "keyframes_used": 12,
+  "limitations": [
+    "No true 3D reconstruction.",
+    "No measured ball height.",
+    "possible_* events are hypotheses.",
+    "Side-view is analytical visualization only.",
+    "Not a broadcast reconstruction."
+  ],
+  "output_paths": {
+    "arc_preview_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_arc_preview.jpg",
+    "contact_sheet_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_contact_sheet.jpg",
+    "final_frame_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_final_frame.jpg",
+    "frames_dir": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\frames",
+    "manifest_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_manifest.json",
+    "semantic_debug_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_semantic_debug.jpg",
+    "summary_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_summary.md",
+    "video_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_replay.mp4"
+  },
+  "renderer_type": "side_view_ball_flight",
+  "schema_version": "0.1.0",
+  "semantic_height_patch_applied": true,
+  "semantic_warnings": [
+    "No possible_bounce anchors were present in the current replay schema; bounce grounding is enabled for future bounce events."
+  ],
+  "stage": "stage_14_side_view_replay",
+  "synthetic_height_enabled": true,
+  "true_height_available": false,
+  "video_generated": true,
+  "warnings": []
+}

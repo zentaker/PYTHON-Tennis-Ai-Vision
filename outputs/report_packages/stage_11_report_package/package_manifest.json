@@ -1,0 +1,234 @@
+{
+  "confidence_level": "medium-high",
+  "errors": [],
+  "generated_at": "2026-05-14T03:00:26+00:00",
+  "included_artifacts": [
+    {
+      "copied": true,
+      "exists": true,
+      "name": "analytical_report.md",
+      "package_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\analysis\\analytical_report.md",
+      "purpose": "Human-readable rally analysis.",
+      "required": true,
+      "source_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports_final\\stage_10_analytical_report\\analytical_report.md",
+      "type": "Markdown report"
+    },
+    {
+      "copied": true,
+      "exists": true,
+      "name": "coaching_summary.md",
+      "package_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\analysis\\coaching_summary.md",
+      "purpose": "Cautious coaching-style observations.",
+      "required": true,
+      "source_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports_final\\stage_10_analytical_report\\coaching_summary.md",
+      "type": "Markdown report"
+    },
+    {
+      "copied": true,
+      "exists": true,
+      "name": "key_findings.md",
+      "package_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\analysis\\key_findings.md",
+      "purpose": "Compact key findings.",
+      "required": true,
+      "source_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports_final\\stage_10_analytical_report\\key_findings.md",
+      "type": "Markdown report"
+    },
+    {
+      "copied": true,
+      "exists": true,
+      "name": "confidence_summary.json",
+      "package_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\analysis\\confidence_summary.json",
+      "purpose": "Confidence level, reasons, and limitations.",
+      "required": true,
+      "source_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports_final\\stage_10_analytical_report\\confidence_summary.json",
+      "type": "JSON"
+    },
+    {
+      "copied": true,
+      "exists": true,
+      "name": "visual_references.md",
+      "package_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\notes\\visual_references.md",
+      "purpose": "References to existing visual assets.",
+      "required": false,
+      "source_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports_final\\stage_10_analytical_report\\visual_references.md",
+      "type": "Markdown notes"
+    },
+    {
+      "copied": true,
+      "exists": true,
+      "name": "tuned_ball_zone_assignments.csv",
+      "package_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\data\\tuned_ball_zone_assignments.csv",
+      "purpose": "Tuned tactical zone assignment data.",
+      "required": false,
+      "source_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_1_projection_coverage\\tuned_ball_zone_assignments.csv",
+      "type": "CSV data"
+    },
+    {
+      "copied": true,
+      "exists": true,
+      "name": "tuned_shot_direction_estimates.csv",
+      "package_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\data\\tuned_shot_direction_estimates.csv",
+      "purpose": "Approximate shot direction estimates.",
+      "required": false,
+      "source_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_1_projection_coverage\\tuned_shot_direction_estimates.csv",
+      "type": "CSV data"
+    },
+    {
+      "copied": true,
+      "exists": true,
+      "name": "tuned_rally_tactical_summary.csv",
+      "package_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\data\\tuned_rally_tactical_summary.csv",
+      "purpose": "Rally-level tactical summary.",
+      "required": false,
+      "source_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_1_projection_coverage\\tuned_rally_tactical_summary.csv",
+      "type": "CSV data"
+    },
+    {
+      "copied": true,
+      "exists": true,
+      "name": "event_timeline.csv",
+      "package_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\data\\event_timeline.csv",
+      "purpose": "Stage 8 event timeline.",
+      "required": false,
+      "source_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_event_timeline\\event_timeline.csv",
+      "type": "CSV data"
+    },
+    {
+      "copied": true,
+      "exists": true,
+      "name": "rally_segments.csv",
+      "package_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\data\\rally_segments.csv",
+      "purpose": "Stage 8 rally segments.",
+      "required": false,
+      "source_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_event_timeline\\rally_segments.csv",
+      "type": "CSV data"
+    },
+    {
+      "copied": true,
+      "exists": true,
+      "name": "main_players.csv",
+      "package_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\data\\main_players.csv",
+      "purpose": "Stage 7.1 main player identities.",
+      "required": false,
+      "source_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_1_player_filtering\\main_players.csv",
+      "type": "CSV data"
+    },
+    {
+      "copied": true,
+      "exists": true,
+      "name": "smoothed_trajectory.csv",
+      "package_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\data\\smoothed_trajectory.csv",
+      "purpose": "Stage 6 smoothed trajectory.",
+      "required": false,
+      "source_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_6_trajectory_smoothing\\smoothed_trajectory.csv",
+      "type": "CSV data"
+    },
+    {
+      "copied": true,
+      "exists": true,
+      "name": "projection_coverage_map.jpg",
+      "package_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\visuals\\projection_coverage_map.jpg",
+      "purpose": "Projection coverage mini-court map.",
+      "required": false,
+      "source_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_1_projection_coverage\\projection_coverage_map.jpg",
+      "type": "Image"
+    },
+    {
+      "copied": true,
+      "exists": true,
+      "name": "tuned_ball_placement_map.jpg",
+      "package_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\visuals\\tuned_ball_placement_map.jpg",
+      "purpose": "Tuned ball placement map.",
+      "required": false,
+      "source_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_1_projection_coverage\\tuned_ball_placement_map.jpg",
+      "type": "Image"
+    },
+    {
+      "copied": true,
+      "exists": true,
+      "name": "zone_comparison_preview.jpg",
+      "package_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\visuals\\zone_comparison_preview.jpg",
+      "purpose": "Stage 9 vs Stage 9.1 comparison preview.",
+      "required": false,
+      "source_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_1_projection_coverage\\zone_comparison_preview.jpg",
+      "type": "Image"
+    },
+    {
+      "copied": true,
+      "exists": true,
+      "name": "timeline_preview.jpg",
+      "package_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\visuals\\timeline_preview.jpg",
+      "purpose": "Timeline preview.",
+      "required": false,
+      "source_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_event_timeline\\timeline_preview.jpg",
+      "type": "Image"
+    },
+    {
+      "copied": true,
+      "exists": true,
+      "name": "court_timeline_preview.jpg",
+      "package_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\visuals\\court_timeline_preview.jpg",
+      "purpose": "Court-space timeline preview.",
+      "required": false,
+      "source_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_event_timeline\\court_timeline_preview.jpg",
+      "type": "Image"
+    },
+    {
+      "copied": true,
+      "exists": true,
+      "name": "image_trajectory_preview.jpg",
+      "package_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\visuals\\image_trajectory_preview.jpg",
+      "purpose": "Image-space trajectory preview.",
+      "required": false,
+      "source_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_6_trajectory_smoothing\\image_trajectory_preview.jpg",
+      "type": "Image"
+    },
+    {
+      "copied": true,
+      "exists": true,
+      "name": "court_trajectory_preview.jpg",
+      "package_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\visuals\\court_trajectory_preview.jpg",
+      "purpose": "Court-space trajectory preview.",
+      "required": false,
+      "source_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_6_trajectory_smoothing\\court_trajectory_preview.jpg",
+      "type": "Image"
+    },
+    {
+      "copied": true,
+      "exists": true,
+      "name": "player_identity_preview.jpg",
+      "package_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\visuals\\player_identity_preview.jpg",
+      "purpose": "Main player identity preview.",
+      "required": false,
+      "source_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_1_player_filtering\\player_identity_preview.jpg",
+      "type": "Image"
+    },
+    {
+      "copied": true,
+      "exists": true,
+      "name": "strategy_preview.jpg",
+      "package_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\visuals\\strategy_preview.jpg",
+      "purpose": "Candidate generation strategy preview.",
+      "required": false,
+      "source_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_5_1_candidate_improvement\\strategy_preview.jpg",
+      "type": "Image"
+    }
+  ],
+  "missing_artifacts": [],
+  "output_paths": {
+    "analytical_report": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\analysis\\analytical_report.md",
+    "coaching_summary": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\analysis\\coaching_summary.md",
+    "limitations": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\notes\\limitations.md",
+    "package_index": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\package_index.md",
+    "package_manifest": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\package_manifest.json",
+    "package_readme": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\README.md",
+    "source_artifacts": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\notes\\source_artifacts.md",
+    "visuals_dir": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\visuals"
+  },
+  "package_root": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package",
+  "recommended_next_step": "Proceed to Stage 12: Synthetic Rally Replay Data Schema.",
+  "source_stage": "stage_10_analytical_report",
+  "stage": "stage_11_report_package",
+  "verdict": "ready_for_stage_12",
+  "warnings": []
+}

@@ -1,0 +1,53 @@
+{
+  "camera_presets_count": 6,
+  "confidence_level": "medium-high",
+  "errors": [],
+  "event_count": 5,
+  "final_verdict": "ready_for_stage_13",
+  "flags": {
+    "ball_trajectory_missing": false,
+    "camera_presets_missing": false,
+    "court_model_missing": false,
+    "event_timeline_missing": false,
+    "player_data_missing": false,
+    "schema_write_failed": false,
+    "stage11_manifest_missing": false
+  },
+  "friction": {
+    "band": "low friction",
+    "inputs": {
+      "ball_trajectory_missing": false,
+      "camera_presets_missing": false,
+      "court_model_missing": false,
+      "errors_count": 0,
+      "event_timeline_missing": false,
+      "player_data_missing": false,
+      "schema_write_failed": false,
+      "stage11_manifest_missing": false,
+      "warnings_count": 0
+    },
+    "score": 0
+  },
+  "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_12_replay_schema_report.json",
+  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_12_replay_schema_20260514T033016Z.log",
+  "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_12_replay_schema_report.md",
+  "output_paths": {
+    "replay_camera_presets_json": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_12_replay_schema\\replay_camera_presets.json",
+    "replay_events_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_12_replay_schema\\replay_events.csv",
+    "replay_keyframes_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_12_replay_schema\\replay_keyframes.csv",
+    "replay_manifest_json": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_12_replay_schema\\replay_manifest.json",
+    "replay_players_json": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_12_replay_schema\\replay_players.json",
+    "replay_schema_json": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_12_replay_schema\\replay_schema.json",
+    "replay_schema_pretty_md": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_12_replay_schema\\replay_schema_pretty.md"
+  },
+  "players_count": 2,
+  "rally_segments_count": 1,
+  "recommended_next_step": "Proceed to Stage 13: 2D Tactical Replay Renderer.",
+  "replay_keyframes_count": 12,
+  "replay_schema_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_12_replay_schema\\replay_schema.json",
+  "schema_version": "0.1.0",
+  "stage": "stage_12_replay_schema",
+  "timestamp": "2026-05-14T03:30:16+00:00",
+  "visual_layers_count": 8,
+  "warnings": []
+}

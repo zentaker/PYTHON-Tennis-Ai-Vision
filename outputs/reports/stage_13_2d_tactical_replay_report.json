@@ -1,0 +1,54 @@
+{
+  "contact_sheet_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_13_2d_tactical_replay\\tactical_replay_contact_sheet.jpg",
+  "errors": [],
+  "events_count": 5,
+  "final_frame_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_13_2d_tactical_replay\\tactical_replay_final_frame.jpg",
+  "final_verdict": "ready_for_stage_14",
+  "flags": {
+    "contact_sheet_failed": false,
+    "court_model_missing": false,
+    "keyframes_missing": false,
+    "manifest_write_failed": false,
+    "render_frames_failed": false,
+    "replay_schema_missing": false,
+    "video_export_failed": false
+  },
+  "frames_generated": 67,
+  "friction": {
+    "band": "low friction",
+    "inputs": {
+      "contact_sheet_failed": false,
+      "court_model_missing": false,
+      "errors_count": 0,
+      "keyframes_missing": false,
+      "manifest_write_failed": false,
+      "render_frames_failed": false,
+      "replay_schema_missing": false,
+      "video_export_failed": false,
+      "warnings_count": 0
+    },
+    "score": 0
+  },
+  "input_schema_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_12_replay_schema\\replay_schema.json",
+  "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_13_2d_tactical_replay_report.json",
+  "keyframes_count": 12,
+  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_13_2d_tactical_replay_20260514T034517Z.log",
+  "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_13_2d_tactical_replay_report.md",
+  "output_paths": {
+    "contact_sheet_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_13_2d_tactical_replay\\tactical_replay_contact_sheet.jpg",
+    "final_frame_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_13_2d_tactical_replay\\tactical_replay_final_frame.jpg",
+    "frames_dir": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_13_2d_tactical_replay\\frames",
+    "renderer_manifest_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_13_2d_tactical_replay\\renderer_manifest.json",
+    "replay_summary_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_13_2d_tactical_replay\\replay_summary.md",
+    "video_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_13_2d_tactical_replay\\tactical_replay.mp4"
+  },
+  "players_count": 2,
+  "recommended_next_step": "Proceed to Stage 14: Side-View Ball Flight Renderer.",
+  "renderer_manifest_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_13_2d_tactical_replay\\renderer_manifest.json",
+  "schema_version": "0.1.0",
+  "stage": "stage_13_2d_tactical_replay",
+  "timestamp": "2026-05-14T03:45:14+00:00",
+  "video_generated": true,
+  "video_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_13_2d_tactical_replay\\tactical_replay.mp4",
+  "warnings": []
+}

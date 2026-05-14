@@ -147,3 +147,57 @@ NEXT STEP: Proceed to Stage 10: Analytical Report Generator and Coaching Summary
 
 ---
 
+STAGE: Stage 10
+NAME: Analytical Report
+VERDICT: ready_for_stage_11
+FRICTION: 0 low friction
+MAIN OUTPUT: outputs/reports_final/stage_10_analytical_report/analytical_report.md
+NEXT STEP: Proceed to Stage 11: Annotated Highlight/Report Package Generator.
+
+---
+
+STAGE: Stage 11
+NAME: Report Package
+VERDICT: ready_for_stage_12
+FRICTION: 0 low friction
+MAIN OUTPUT: outputs/report_packages/stage_11_report_package/README.md
+NEXT STEP: Proceed to Stage 12: Synthetic Rally Replay Data Schema.
+
+---
+
+STAGE: Stage 12
+NAME: Replay Schema
+VERDICT: ready_for_stage_13
+FRICTION: 0 low friction
+MAIN OUTPUT: outputs/replay/stage_12_replay_schema/replay_schema.json
+NEXT STEP: Proceed to Stage 13: 2D Tactical Replay Renderer.
+
+---
+
+STAGE: Stage 13
+NAME: 2D Tactical Replay
+VERDICT: ready_for_stage_14
+FRICTION: 0 low friction
+MAIN OUTPUT: outputs/replay/stage_13_2d_tactical_replay/tactical_replay_contact_sheet.jpg
+NEXT STEP: Proceed to Stage 14: Side-View Ball Flight Renderer.
+
+---
+
+STAGE: Stage 14
+NAME: Side-View Replay
+VERDICT: ready_for_stage_15
+FRICTION: 0 low friction
+MAIN OUTPUT: outputs/replay/stage_14_side_view_replay/side_view_arc_preview.jpg
+NEXT STEP: Proceed to Stage 15: Multi-Camera Analytical Replay.
+
+---
+
+STAGE: Stage 14.1
+NAME: Side-View Patch
+VERDICT: ready_for_stage_15
+FRICTION: 0 low friction
+MAIN OUTPUT: outputs/replay/stage_14_side_view_replay/side_view_semantic_debug.jpg
+NEXT STEP: Proceed to Stage 15: Multi-Camera Analytical Replay.
+
+---
+

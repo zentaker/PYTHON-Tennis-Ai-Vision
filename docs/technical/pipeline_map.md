@@ -21,6 +21,13 @@ Stage 0 Environment Doctor
   -> Stage 8 Event Timeline
   -> Stage 8.1 Timeline Validation
   -> Stage 9 Tactical Metrics and Shot Zones
+  -> Stage 9.1 Projection Coverage
+  -> Stage 10 Analytical Report
+  -> Stage 11 Report Package
+  -> Stage 12 Replay Schema
+  -> Stage 13 2D Tactical Replay
+  -> Stage 14 Side-View Replay
+  -> Stage 14.1 Side-View Height Semantics Patch
 
 ---
 
@@ -299,3 +306,138 @@ WRITES:
   - before/after comparison
   - projection coverage previews
   - Stage 9.1 reports
+
+---
+
+STAGE: Stage 10
+NAME: Analytical Report and Coaching Summary Prototype
+STATUS: Implemented
+MAIN SCRIPT: scripts/run_stage_10_analytical_report.py
+MAIN MODULES:
+  - src/tennis_vision/analytical_report.py
+  - src/tennis_vision/coaching_summary.py
+  - src/tennis_vision/report_confidence.py
+READS:
+  - Stage 9.1 tuned zones, directions, and rally summary
+  - Stage 8.1 validated timeline and expanded labels
+  - Stage 7.1 main players and refined associations
+  - Stage 6 smoothed trajectory and trajectory events
+WRITES:
+  - outputs/reports_final/stage_10_analytical_report/analytical_report.md
+  - outputs/reports_final/stage_10_analytical_report/coaching_summary.md
+  - outputs/reports_final/stage_10_analytical_report/confidence_summary.json
+  - outputs/reports/stage_10_analytical_report_report.*
+
+---
+
+STAGE: Stage 11
+NAME: Annotated Highlight / Report Package Generator
+STATUS: Implemented
+MAIN SCRIPT: scripts/run_stage_11_report_package.py
+MAIN MODULES:
+  - src/tennis_vision/report_package.py
+  - src/tennis_vision/package_manifest.py
+READS:
+  - Stage 10 analytical reports and summaries
+  - Stage 9.1 tactical maps and CSVs
+  - Stage 8 timeline artifacts
+  - Stage 7.1 player identity artifacts
+  - Stage 6 trajectory previews and CSVs
+WRITES:
+  - outputs/report_packages/stage_11_report_package/README.md
+  - outputs/report_packages/stage_11_report_package/package_manifest.json
+  - outputs/report_packages/stage_11_report_package/package_index.md
+  - outputs/report_packages/stage_11_report_package/analysis/
+  - outputs/report_packages/stage_11_report_package/data/
+  - outputs/report_packages/stage_11_report_package/visuals/
+  - outputs/report_packages/stage_11_report_package/notes/
+  - outputs/reports/stage_11_report_package_report.*
+
+---
+
+STAGE: Stage 12
+NAME: Synthetic Rally Replay Data Schema
+STATUS: Implemented
+MAIN SCRIPT: scripts/run_stage_12_replay_schema.py
+MAIN MODULES:
+  - src/tennis_vision/replay_data_builder.py
+  - src/tennis_vision/replay_schema.py
+  - src/tennis_vision/replay_camera_presets.py
+READS:
+  - Stage 11 package manifest
+  - Stage 10 analytical report and confidence summary
+  - Stage 9.1 tactical zones and projected labels
+  - Stage 8.1 validated timeline and expanded labels
+  - Stage 8 rally segments and event timeline
+  - Stage 7.1 main players and side states
+  - Stage 6 trajectory data
+  - Stage 3 calibration
+WRITES:
+  - outputs/replay/stage_12_replay_schema/replay_schema.json
+  - outputs/replay/stage_12_replay_schema/replay_schema_pretty.md
+  - outputs/replay/stage_12_replay_schema/replay_keyframes.csv
+  - outputs/replay/stage_12_replay_schema/replay_events.csv
+  - outputs/replay/stage_12_replay_schema/replay_players.json
+  - outputs/replay/stage_12_replay_schema/replay_camera_presets.json
+  - outputs/replay/stage_12_replay_schema/replay_manifest.json
+  - outputs/reports/stage_12_replay_schema_report.*
+
+---
+
+STAGE: Stage 13
+NAME: 2D Tactical Replay Renderer
+STATUS: Implemented
+MAIN SCRIPT: scripts/run_stage_13_2d_tactical_replay.py
+MAIN MODULES:
+  - src/tennis_vision/replay_renderer_2d.py
+  - src/tennis_vision/replay_visual_styles.py
+READS:
+  - outputs/replay/stage_12_replay_schema/replay_schema.json
+WRITES:
+  - outputs/replay/stage_13_2d_tactical_replay/frames/
+  - outputs/replay/stage_13_2d_tactical_replay/tactical_replay.mp4
+  - outputs/replay/stage_13_2d_tactical_replay/tactical_replay_contact_sheet.jpg
+  - outputs/replay/stage_13_2d_tactical_replay/tactical_replay_final_frame.jpg
+  - outputs/replay/stage_13_2d_tactical_replay/renderer_manifest.json
+  - outputs/replay/stage_13_2d_tactical_replay/replay_summary.md
+  - outputs/reports/stage_13_2d_tactical_replay_report.*
+
+---
+
+STAGE: Stage 14
+NAME: Side-View Ball Flight Renderer
+STATUS: Implemented
+MAIN SCRIPT: scripts/run_stage_14_side_view_replay.py
+MAIN MODULES:
+  - src/tennis_vision/ball_flight_estimator.py
+  - src/tennis_vision/replay_renderer_side_view.py
+READS:
+  - outputs/replay/stage_12_replay_schema/replay_schema.json
+WRITES:
+  - outputs/replay/stage_14_side_view_replay/frames/
+  - outputs/replay/stage_14_side_view_replay/side_view_replay.mp4
+  - outputs/replay/stage_14_side_view_replay/side_view_contact_sheet.jpg
+  - outputs/replay/stage_14_side_view_replay/side_view_final_frame.jpg
+  - outputs/replay/stage_14_side_view_replay/side_view_arc_preview.jpg
+  - outputs/replay/stage_14_side_view_replay/side_view_manifest.json
+  - outputs/replay/stage_14_side_view_replay/side_view_summary.md
+  - outputs/reports/stage_14_side_view_replay_report.*
+
+---
+
+STAGE: Stage 14.1
+NAME: Side-View Height Semantics Patch
+STATUS: Current
+MAIN SCRIPT: scripts/run_stage_14_side_view_replay.py
+MAIN MODULES:
+  - src/tennis_vision/ball_flight_estimator.py
+  - src/tennis_vision/replay_renderer_side_view.py
+READS:
+  - outputs/replay/stage_12_replay_schema/replay_schema.json
+  - Stage 14 side-view renderer logic
+WRITES:
+  - outputs/replay/stage_14_side_view_replay/side_view_semantic_debug.jpg
+  - outputs/replay/stage_14_side_view_replay/side_view_manifest.json
+  - outputs/replay/stage_14_side_view_replay/side_view_summary.md
+  - outputs/reports/stage_14_1_side_view_patch_report.*
+  - docs/lab-notebook/stage_14_1_side_view_patch.md

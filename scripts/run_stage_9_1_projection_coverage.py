@@ -216,15 +216,32 @@ def update_lab_notebook_safely() -> tuple[dict[str, Path], str | None]:
 
 
 def print_summary(report: dict[str, Any], lab_paths: dict[str, Path]) -> None:
-    print("Stage 9.1 Projection Coverage")
-    print(f"Verdict: {report['final_verdict']}")
-    print(f"Friction: {report['friction']['score']} ({report['friction']['band']})")
-    print(f"Stage 9 projected points: {report['stage_9_projected_points']}")
-    print(f"Stage 9 unknown zones: {report['stage_9_unknown_zones']}")
-    print(f"Stage 9.1 projected points: {report['stage_9_1_projected_points']}")
-    print(f"Stage 9.1 unknown zones: {report['stage_9_1_unknown_zones']}")
-    print(f"Unknown zone reduction: {report['unknown_zone_reduction']}")
-    print(f"Lab notebook: {lab_paths['stage_page']}")
+    rows = [
+        ("Verdict", report["final_verdict"]),
+        ("Friction", f"{report['friction']['score']} ({report['friction']['band']})"),
+        ("Stage 9 projected points", report["stage_9_projected_points"]),
+        ("Stage 9 unknown zones", report["stage_9_unknown_zones"]),
+        ("Stage 9.1 projected points", report["stage_9_1_projected_points"]),
+        ("Stage 9.1 unknown zones", report["stage_9_1_unknown_zones"]),
+        ("Unknown zone reduction", report["unknown_zone_reduction"]),
+        ("Projection coverage improvement", report["projection_coverage_improvement"]),
+        ("Lab notebook", lab_paths["stage_page"]),
+        ("Recommended next step", report["recommended_next_step"]),
+    ]
+    try:
+        from rich.console import Console
+        from rich.table import Table
+
+        table = Table(title="Stage 9.1 Projection Coverage")
+        table.add_column("Field", style="cyan", no_wrap=True)
+        table.add_column("Value", style="white")
+        for field, value in rows:
+            table.add_row(str(field), str(value))
+        Console().print(table)
+    except ImportError:
+        print("Stage 9.1 Projection Coverage")
+        for field, value in rows:
+            print(f"{field}: {value}")
 
 
 def main() -> int:

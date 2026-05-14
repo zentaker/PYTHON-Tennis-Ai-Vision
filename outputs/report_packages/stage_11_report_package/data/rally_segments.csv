@@ -1,0 +1,2 @@
+rally_id,start_frame,end_frame,start_time_seconds,end_time_seconds,duration_seconds,event_count,possible_hit_count,possible_bounce_count,players_involved,confidence_like_score,segmentation_reason
+rally_001,120,180,2.0,3.0,1.0,5,3,0,"player_a,player_b",0.79,First prototype segment from first to last high-confidence trajectory anchor.
