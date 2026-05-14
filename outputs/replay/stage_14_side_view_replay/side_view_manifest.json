@@ -1,18 +1,27 @@
 {
+  "annotation_band_enabled": true,
   "bounce_grounding_enabled": true,
+  "downgraded_hits_annotation_count": 6,
   "errors": [],
   "event_render_roles_enabled": true,
+  "event_source_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_3_event_validation\\validated_event_timeline.csv",
+  "event_source_priority": [
+    "stage_8_3_validated_event_timeline",
+    "stage_8_1_validated_event_timeline",
+    "stage_8_event_timeline",
+    "stage_6_trajectory_events"
+  ],
   "events_used": 5,
   "fps": 12,
   "frames_generated": 100,
-  "generated_at": "2026-05-14T04:39:07+00:00",
+  "generated_at": "2026-05-14T19:06:59+00:00",
   "height_anchor_summary": {
-    "arc_estimate": 10,
-    "interaction_cue": 2
+    "arc_estimate": 11,
+    "bounce_grounded": 1
   },
   "height_estimation_method": "event-aware synthetic arc from 2D projected keyframes",
   "hit_contact_band_enabled": true,
-  "implausible_hits_downgraded_count": 3,
+  "implausible_hits_downgraded_count": 0,
   "input_schema_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_12_replay_schema\\replay_schema.json",
   "interpolated_points_marked": true,
   "interpolation_enabled": true,
@@ -25,6 +34,7 @@
     "Side-view is analytical visualization only.",
     "Not a broadcast reconstruction."
   ],
+  "main_path_physical_events_only": true,
   "output_paths": {
     "arc_preview_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_arc_preview.jpg",
     "contact_sheet_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_contact_sheet.jpg",
@@ -33,21 +43,25 @@
     "manifest_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_manifest.json",
     "semantic_debug_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_semantic_debug.jpg",
     "summary_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_summary.md",
+    "validated_events_debug_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_validated_events_debug.jpg",
     "video_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_replay.mp4"
   },
   "plausible_bounces_count": 0,
   "plausible_hits_count": 0,
   "player_aware_hit_validation_enabled": true,
+  "rejected_events_ignored_count": 2,
   "renderer_type": "side_view_ball_flight",
   "schema_version": "0.1.0",
   "semantic_height_patch_applied": true,
-  "semantic_warnings": [
-    "No possible_bounce anchors were present in the current replay schema; bounce grounding is enabled for future bounce events."
-  ],
+  "semantic_warnings": [],
   "stage": "stage_14_side_view_replay",
   "synthetic_height_enabled": true,
   "true_height_available": false,
-  "uncertain_events_count": 3,
+  "uncertain_events_count": 0,
+  "unvalidated_events_annotation_count": 13,
+  "validated_bounces_rendered_count": 3,
+  "validated_event_source_used": true,
+  "validated_hits_rendered_count": 0,
   "video_generated": true,
   "warnings": []
 }

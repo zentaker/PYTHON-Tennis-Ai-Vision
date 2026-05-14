@@ -3,10 +3,10 @@
 ## VERDICT
 
 Final verdict:
-  ready_for_stage_15
+  needs_more_side_view_tuning
 
 Friction:
-  0 (low friction)
+  35 (medium friction)
 
 Patch applied:
   True
@@ -63,4 +63,4 @@ No errors.
 
 ## NEXT STEP
 
-Proceed to Stage 15: Multi-Camera Analytical Replay.
+Tune side-view semantics further before Stage 15.

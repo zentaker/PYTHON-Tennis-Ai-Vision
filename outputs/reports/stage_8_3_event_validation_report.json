@@ -1,0 +1,57 @@
+{
+  "automatic_events_count": 18,
+  "bounce_windows_count": 1,
+  "downgraded_hit_count": 6,
+  "errors": [],
+  "final_verdict": "ready_with_warnings",
+  "flags": {
+    "manual_labels_missing": false,
+    "many_auto_events_unvalidated": true,
+    "no_bounce_or_hit_labels": false,
+    "no_hit_labels": true,
+    "preview_generation_failed": false,
+    "validation_output_failed": false
+  },
+  "friction": {
+    "band": "medium friction",
+    "inputs": {
+      "errors_count": 0,
+      "manual_labels_missing": false,
+      "many_auto_events_unvalidated": true,
+      "no_bounce_or_hit_labels": false,
+      "no_hit_labels": true,
+      "preview_generation_failed": false,
+      "validation_output_failed": false,
+      "warnings_count": 2
+    },
+    "score": 31
+  },
+  "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_8_3_event_validation_report.json",
+  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_8_3_event_validation_20260514T053456Z.log",
+  "manual_bounce_labels_count": 3,
+  "manual_hit_labels_count": 0,
+  "manual_labels_count": 53,
+  "manual_no_event_count": 23,
+  "manual_uncertain_count": 3,
+  "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_8_3_event_validation_report.md",
+  "output_paths": {
+    "event_validation_notes": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_3_event_validation\\event_validation_notes.md",
+    "event_validation_results": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_3_event_validation\\event_validation_results.csv",
+    "event_validation_summary": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_3_event_validation\\event_validation_summary.json",
+    "event_validation_timeline_preview": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_3_event_validation\\event_validation_timeline_preview.jpg",
+    "manual_event_windows": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_3_event_validation\\manual_event_windows.csv",
+    "validated_event_timeline": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_3_event_validation\\validated_event_timeline.csv"
+  },
+  "outside_coverage_count": 4,
+  "recommended_next_step": "Proceed to Stage 14.3 using validated events, but collect manual hit labels before confirming hits.",
+  "rejected_events_count": 2,
+  "stage": "stage_8_3_event_validation",
+  "timestamp": "2026-05-14T05:34:56+00:00",
+  "unvalidated_events_count": 11,
+  "validated_bounce_count": 3,
+  "validated_hit_count": 0,
+  "warnings": [
+    "No hit events are confirmed because no manual hit labels were provided.",
+    "Adjacent manual bounce labels were grouped into bounce windows."
+  ]
+}

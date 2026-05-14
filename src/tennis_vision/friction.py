@@ -610,6 +610,87 @@ def calculate_stage_8_1_friction_score(
     }
 
 
+def calculate_stage_8_2_friction_score(
+    *,
+    video_missing: bool = False,
+    no_frames_loaded: bool = False,
+    no_event_labels: bool = False,
+    no_bounce_or_hit_labels: bool = False,
+    comparison_failed: bool = False,
+    label_persistence_failed: bool = False,
+    manual_action_required: bool = False,
+    errors_count: int = 0,
+    warnings_count: int = 0,
+) -> dict[str, Any]:
+    """Calculate Stage 8.2 manual event labeling friction."""
+    score = 0
+    score += 45 if video_missing else 0
+    score += 35 if no_frames_loaded else 0
+    score += 25 if no_event_labels else 0
+    score += 20 if no_bounce_or_hit_labels else 0
+    score += 15 if comparison_failed else 0
+    score += 30 if label_persistence_failed else 0
+    score += 8 if manual_action_required else 0
+    score += min(errors_count * 10, 30)
+    score += min(warnings_count * 3, 15)
+    score = max(0, min(score, 100))
+
+    return {
+        "score": score,
+        "band": friction_band(score),
+        "inputs": {
+            "video_missing": video_missing,
+            "no_frames_loaded": no_frames_loaded,
+            "no_event_labels": no_event_labels,
+            "no_bounce_or_hit_labels": no_bounce_or_hit_labels,
+            "comparison_failed": comparison_failed,
+            "label_persistence_failed": label_persistence_failed,
+            "manual_action_required": manual_action_required,
+            "errors_count": errors_count,
+            "warnings_count": warnings_count,
+        },
+    }
+
+
+def calculate_stage_8_3_friction_score(
+    *,
+    manual_labels_missing: bool = False,
+    no_bounce_or_hit_labels: bool = False,
+    no_hit_labels: bool = False,
+    many_auto_events_unvalidated: bool = False,
+    validation_output_failed: bool = False,
+    preview_generation_failed: bool = False,
+    errors_count: int = 0,
+    warnings_count: int = 0,
+) -> dict[str, Any]:
+    """Calculate Stage 8.3 event validation and reclassification friction."""
+    score = 0
+    score += 45 if manual_labels_missing else 0
+    score += 30 if no_bounce_or_hit_labels else 0
+    score += 10 if no_hit_labels else 0
+    score += 15 if many_auto_events_unvalidated else 0
+    score += 35 if validation_output_failed else 0
+    score += 8 if preview_generation_failed else 0
+    score += min(errors_count * 10, 30)
+    score += min(warnings_count * 3, 15)
+    score = max(0, min(score, 100))
+
+    return {
+        "score": score,
+        "band": friction_band(score),
+        "inputs": {
+            "manual_labels_missing": manual_labels_missing,
+            "no_bounce_or_hit_labels": no_bounce_or_hit_labels,
+            "no_hit_labels": no_hit_labels,
+            "many_auto_events_unvalidated": many_auto_events_unvalidated,
+            "validation_output_failed": validation_output_failed,
+            "preview_generation_failed": preview_generation_failed,
+            "errors_count": errors_count,
+            "warnings_count": warnings_count,
+        },
+    }
+
+
 def calculate_stage_9_friction_score(
     *,
     validated_timeline_missing: bool = False,
@@ -985,6 +1066,48 @@ def calculate_stage_14_2_friction_score(
             "semantic_debug_generation_failed": semantic_debug_generation_failed,
             "render_frames_failed": render_frames_failed,
             "video_export_failed": video_export_failed,
+            "warnings_count": warnings_count,
+            "errors_count": errors_count,
+        },
+    }
+
+
+def calculate_stage_14_3_friction_score(
+    *,
+    replay_schema_missing: bool = False,
+    event_source_missing: bool = False,
+    validated_event_source_missing: bool = False,
+    render_frames_failed: bool = False,
+    video_export_failed: bool = False,
+    validated_debug_generation_failed: bool = False,
+    downgraded_hits_rendered_as_physical: bool = False,
+    warnings_count: int = 0,
+    errors_count: int = 0,
+) -> dict[str, Any]:
+    """Calculate Stage 14.3 validated-event side-view friction."""
+    score = 0
+    score += 45 if replay_schema_missing else 0
+    score += 35 if event_source_missing else 0
+    score += 12 if validated_event_source_missing else 0
+    score += 35 if render_frames_failed else 0
+    score += 12 if video_export_failed else 0
+    score += 15 if validated_debug_generation_failed else 0
+    score += 30 if downgraded_hits_rendered_as_physical else 0
+    score += min(warnings_count * 2, 12)
+    score += min(errors_count * 10, 30)
+    score = max(0, min(score, 100))
+
+    return {
+        "score": score,
+        "band": friction_band(score),
+        "inputs": {
+            "replay_schema_missing": replay_schema_missing,
+            "event_source_missing": event_source_missing,
+            "validated_event_source_missing": validated_event_source_missing,
+            "render_frames_failed": render_frames_failed,
+            "video_export_failed": video_export_failed,
+            "validated_debug_generation_failed": validated_debug_generation_failed,
+            "downgraded_hits_rendered_as_physical": downgraded_hits_rendered_as_physical,
             "warnings_count": warnings_count,
             "errors_count": errors_count,
         },

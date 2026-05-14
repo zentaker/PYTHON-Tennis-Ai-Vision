@@ -53,6 +53,9 @@ This repository is a local-first research project for tennis video analysis.
 - Side-view replay currently uses synthetic height. Do not present synthetic height as measured 3D ball height. Preserve uncertainty in all visual labels and documentation.
 - Synthetic side-view replay must visually ground bounce-like events near the court surface and distinguish interpolated visual points from event-anchored points. Do not present visually floating bounce points as acceptable output.
 - Side-view event labels must be validated against player position and court depth. Do not render implausible in-court contact points as hits when the player remains near the baseline.
+- When hit/bounce semantics are ambiguous, collect manual event labels before tuning visual renderers. Do not infer confirmed hits or bounces from trajectory heuristics alone.
+- Video events like bounces may span a short frame window. Do not assume event labels are single-frame truths. Use event windows when manual labels cluster around the same action.
+- Side-view replay must use validated event sources when available. Raw possible_hit events must not be rendered as physical contact markers unless validated by manual labels or stronger evidence.
 
 ## Repository hygiene rules
 

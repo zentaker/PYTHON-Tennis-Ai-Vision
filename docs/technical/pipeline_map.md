@@ -20,6 +20,8 @@ Stage 0 Environment Doctor
   -> Stage 7.1 Player Filtering and Identity
   -> Stage 8 Event Timeline
   -> Stage 8.1 Timeline Validation
+  -> Stage 8.2 Manual Event Labeling
+  -> Stage 8.3 Event Validation and Reclassification
   -> Stage 9 Tactical Metrics and Shot Zones
   -> Stage 9.1 Projection Coverage
   -> Stage 10 Analytical Report
@@ -29,6 +31,7 @@ Stage 0 Environment Doctor
   -> Stage 14 Side-View Replay
   -> Stage 14.1 Side-View Height Semantics Patch
   -> Stage 14.2 Side-View Event Disambiguation Patch
+  -> Stage 14.3 Side-View Replay with Validated Events
 
 ---
 
@@ -268,6 +271,48 @@ WRITES:
 
 ---
 
+STAGE: Stage 8.2
+NAME: Manual Bounce / Hit Event Labeling
+STATUS: Implemented
+MAIN SCRIPT: scripts/run_stage_8_2_event_labeling_helper.py
+MAIN MODULES:
+  - src/tennis_vision/event_labeling.py
+READS:
+  - samples/video_01.mov
+  - Stage 8.1 expanded ball labels
+  - Stage 8 event timeline
+  - Stage 6 trajectory events
+  - Stage 7 player interactions
+WRITES:
+  - manual event labels
+  - event label comparison
+  - event label coverage
+  - event label overlays
+  - Stage 8.2 reports
+
+---
+
+STAGE: Stage 8.3
+NAME: Event Validation and Reclassification
+STATUS: Current
+MAIN SCRIPT: scripts/run_stage_8_3_event_validation.py
+MAIN MODULES:
+  - src/tennis_vision/event_validation.py
+  - src/tennis_vision/event_reclassification.py
+READS:
+  - Stage 8.2 manual event labels
+  - Stage 8 event timeline
+  - Stage 6 trajectory events
+  - Stage 7 interaction hypotheses
+WRITES:
+  - manual event windows
+  - event validation results
+  - validated event timeline
+  - event validation preview
+  - Stage 8.3 reports
+
+---
+
 STAGE: Stage 9
 NAME: Tactical Metrics and Shot Zones
 STATUS: Implemented
@@ -447,7 +492,7 @@ WRITES:
 
 STAGE: Stage 14.2
 NAME: Side-View Event Disambiguation Patch
-STATUS: Current
+STATUS: Implemented
 MAIN SCRIPT: scripts/run_stage_14_side_view_replay.py
 MAIN MODULES:
   - src/tennis_vision/ball_flight_estimator.py
@@ -462,3 +507,26 @@ WRITES:
   - outputs/replay/stage_14_side_view_replay/side_view_summary.md
   - outputs/reports/stage_14_2_side_view_event_disambiguation_report.*
   - docs/lab-notebook/stage_14_2_side_view_event_disambiguation.md
+
+---
+
+STAGE: Stage 14.3
+NAME: Side-View Replay with Validated Events
+STATUS: Current
+MAIN SCRIPT: scripts/run_stage_14_side_view_replay.py
+MAIN MODULES:
+  - src/tennis_vision/validated_event_source.py
+  - src/tennis_vision/ball_flight_estimator.py
+  - src/tennis_vision/replay_renderer_side_view.py
+READS:
+  - outputs/replay/stage_12_replay_schema/replay_schema.json
+  - outputs/timeline/stage_8_3_event_validation/validated_event_timeline.csv
+WRITES:
+  - outputs/replay/stage_14_side_view_replay/side_view_validated_events_debug.jpg
+  - outputs/replay/stage_14_side_view_replay/side_view_manifest.json
+  - outputs/reports/stage_14_3_validated_events_side_view_report.*
+  - docs/lab-notebook/stage_14_3_validated_events_side_view.md
+NOTES:
+  Stage 14.3 uses validated event semantics before rendering physical side-view
+  contact markers. Downgraded, rejected, and unvalidated hits are annotations
+  only.

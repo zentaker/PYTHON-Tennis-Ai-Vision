@@ -21,6 +21,27 @@ RELATED STAGES:
 
 ---
 
+LESSON: Render from validated semantic layers
+
+SOURCE FRICTION:
+  F024 - Renderers should use validated event sources, not raw event hypotheses
+
+RULE:
+  Downstream visualizations should consume validated semantic layers before raw
+  model hypotheses. Raw possible_hit events should not become physical contact
+  markers unless manual labels or stronger validation support them.
+
+WHY IT MATTERS:
+  A renderer can make uncertain model guesses look more certain than they are.
+  That is especially risky for side-view replay because contact markers carry
+  strong tennis meaning.
+
+RELATED STAGES:
+  Stage 8.3
+  Stage 14.3
+
+---
+
 LESSON: Project validated labels before zone analysis
 
 WHAT IT MEANS:
@@ -160,3 +181,39 @@ WHY IT MATTERS:
 RELATED STAGES:
   Stage 14.2
   Future event rendering stages
+
+---
+
+LESSON: Label ambiguous event semantics manually
+
+WHAT IT MEANS:
+  When a system cannot reliably tell hit, bounce, interaction cue, and
+  uncertain trajectory moments apart, add manual labels before more renderer
+  tuning.
+
+WHY IT MATTERS:
+  Visual polish can make weak event hypotheses look more trustworthy than they
+  are. Manual event labels create the ground truth needed for honest event
+  validation and reclassification.
+
+RELATED STAGES:
+  Stage 8.2
+  Stage 8.3
+  Stage 14 replay stages
+
+---
+
+LESSON: Represent short temporal actions as windows
+
+WHAT IT MEANS:
+  A bounce or contact moment may span several adjacent labeled frames. Those
+  frames should often become one event window instead of multiple independent
+  events.
+
+WHY IT MATTERS:
+  Windowed event validation keeps downstream timelines and replay renderers
+  from exaggerating a single action into several separate actions.
+
+RELATED STAGES:
+  Stage 8.3
+  Future event validation stages

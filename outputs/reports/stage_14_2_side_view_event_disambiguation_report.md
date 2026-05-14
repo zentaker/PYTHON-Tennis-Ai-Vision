@@ -24,13 +24,13 @@ Event render roles:
   True
 
 Implausible hit downgrade:
-  3
+  0
 
 Bounce preservation:
   0
 
 Interaction cue separation:
-  2
+  0
 
 ## OUTPUTS
 

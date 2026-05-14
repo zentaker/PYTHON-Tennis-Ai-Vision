@@ -513,6 +513,49 @@ Expected outputs:
 - JSON report at `outputs/reports/stage_8_1_timeline_validation_report.json`.
 - Markdown report at `outputs/reports/stage_8_1_timeline_validation_report.md`.
 
+## Stage 8.2 - Manual Bounce / Hit Event Labeling Helper
+
+Stage 8.2 creates ground truth for tennis event semantics. It lets the user label selected frames as bounce, hit, no_event, uncertain, or skipped.
+
+These labels support Stage 8.3 event validation and later side-view replay correction. Stage 8.2 does not train a model and does not claim confirmed automatic event detection.
+
+Commands:
+
+```powershell
+python scripts\run_stage_8_2_event_labeling_helper.py --no-interactive
+python scripts\run_stage_8_2_event_labeling_helper.py --interactive --start-frame 90 --interval 15 --max-frames 12
+```
+
+Expected outputs:
+
+- Manual event labels at `outputs/timeline/stage_8_2_event_labels/manual_event_labels.csv`.
+- Event comparison at `outputs/timeline/stage_8_2_event_labels/event_label_comparison.csv`.
+- Event coverage at `outputs/timeline/stage_8_2_event_labels/event_label_coverage.csv`.
+- Label overlays under `outputs/timeline/stage_8_2_event_labels/event_label_overlays/`.
+- JSON report at `outputs/reports/stage_8_2_event_labeling_report.json`.
+- Markdown report at `outputs/reports/stage_8_2_event_labeling_report.md`.
+
+## Stage 8.3 - Event Validation and Reclassification
+
+Stage 8.3 uses manual event labels from Stage 8.2 to validate, downgrade, or leave uncertain the automatic event hypotheses from earlier stages.
+
+Adjacent bounce labels are grouped into bounce windows because a real bounce can span several video frames. The validated event timeline prepares side-view replay to use validated event roles instead of raw possible_hit hypotheses.
+
+Command:
+
+```powershell
+python scripts\run_stage_8_3_event_validation.py
+```
+
+Expected outputs:
+
+- Manual event windows at `outputs/timeline/stage_8_3_event_validation/manual_event_windows.csv`.
+- Event validation results at `outputs/timeline/stage_8_3_event_validation/event_validation_results.csv`.
+- Validated event timeline at `outputs/timeline/stage_8_3_event_validation/validated_event_timeline.csv`.
+- Event validation summary at `outputs/timeline/stage_8_3_event_validation/event_validation_summary.json`.
+- JSON report at `outputs/reports/stage_8_3_event_validation_report.json`.
+- Markdown report at `outputs/reports/stage_8_3_event_validation_report.md`.
+
 ## Stage 9 - Tactical Metrics and Shot Zone Prototype
 
 Stage 9 converts validated trajectory and timeline data into first tactical metrics. It assigns approximate court zones, classifies ball depth, estimates simple shot direction, adds player-side context, and writes a rally tactical summary.
@@ -710,6 +753,26 @@ Expected patch output:
 
 - Semantic debug image at `outputs/replay/stage_14_side_view_replay/side_view_semantic_debug.jpg`.
 - Patch report at `outputs/reports/stage_14_2_side_view_event_disambiguation_report.md`.
+- Updated side-view manifest at `outputs/replay/stage_14_side_view_replay/side_view_manifest.json`.
+
+## Stage 14.3 - Side-View Replay with Validated Events
+
+Stage 14.3 makes the side-view renderer use Stage 8.3 validated events as the preferred event source.
+
+Validated bounces are rendered on the court surface. Unvalidated, downgraded, or rejected hit hypotheses are shown only as secondary annotations, not physical hit markers. There are currently no validated hit labels, so confident hit markers should not be shown.
+
+It still does not represent measured 3D height.
+
+Run:
+
+```powershell
+python scripts\run_stage_14_side_view_replay.py
+```
+
+Expected patch output:
+
+- Validated-events debug image at `outputs/replay/stage_14_side_view_replay/side_view_validated_events_debug.jpg`.
+- Patch report at `outputs/reports/stage_14_3_validated_events_side_view_report.md`.
 - Updated side-view manifest at `outputs/replay/stage_14_side_view_replay/side_view_manifest.json`.
 
 ## Lab Notebook

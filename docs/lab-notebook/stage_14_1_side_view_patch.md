@@ -6,22 +6,22 @@ Stage:
   Stage 14.1 - Side-view height semantics patch
 
 Verdict:
-  ready_for_stage_15
+  needs_more_side_view_tuning
 
 Patch applied:
   yes
 
 Friction score:
-  0
+  35
 
 Friction level:
-  low friction
+  medium friction
 
 Timestamp:
-  2026-05-14T04:39:07+00:00
+  2026-05-14T19:06:59+00:00
 
 Recommended next step:
-  Proceed to Stage 15: Multi-Camera Analytical Replay.
+  Tune side-view semantics further before Stage 15.
 
 ## Input
 
@@ -38,7 +38,7 @@ Interpolated points marked:
   yes
 
 Height anchor summary:
-  {'arc_estimate': 10, 'interaction_cue': 2}
+  {'arc_estimate': 11, 'bounce_grounded': 1}
 
 ## Output
 
@@ -87,10 +87,10 @@ Interpolated points marked:
   yes
 
 Verdict:
-  ready_for_stage_15
+  needs_more_side_view_tuning
 
 Friction:
-  0 (low friction)
+  35 (medium friction)
 
 ## Warnings
 
@@ -106,9 +106,33 @@ Stage 14.1 improves the side-view semantics. Bounce-like events are forced near 
 
 ## Next step
 
-Proceed to Stage 15: Multi-Camera Analytical Replay.
+Tune side-view semantics further before Stage 15.
 
 ## Run history
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
 
 Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
 
@@ -176,3 +200,60 @@ Friction level:
 
 Next step:
   Proceed to Stage 15: Multi-Camera Analytical Replay.
+
+<!-- lab-entry:2026-05-14T05:51:30+00:00 -->
+
+### 2026-05-14T05:51:30+00:00
+
+Stage:
+  Stage 14.1 - Side-View Patch
+
+Verdict:
+  needs_more_side_view_tuning
+
+Friction score:
+  35
+
+Friction level:
+  medium friction
+
+Next step:
+  Tune side-view semantics further before Stage 15.
+
+<!-- lab-entry:2026-05-14T05:52:04+00:00 -->
+
+### 2026-05-14T05:52:04+00:00
+
+Stage:
+  Stage 14.1 - Side-View Patch
+
+Verdict:
+  needs_more_side_view_tuning
+
+Friction score:
+  35
+
+Friction level:
+  medium friction
+
+Next step:
+  Tune side-view semantics further before Stage 15.
+
+<!-- lab-entry:2026-05-14T19:06:59+00:00 -->
+
+### 2026-05-14T19:06:59+00:00
+
+Stage:
+  Stage 14.1 - Side-View Patch
+
+Verdict:
+  needs_more_side_view_tuning
+
+Friction score:
+  35
+
+Friction level:
+  medium friction
+
+Next step:
+  Tune side-view semantics further before Stage 15.

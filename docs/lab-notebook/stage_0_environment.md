@@ -15,7 +15,7 @@ Friction level:
   low friction
 
 Timestamp:
-  2026-05-14T04:39:41+00:00
+  2026-05-14T05:51:13+00:00
 
 Recommended next step:
   Proceed to Stage 1 video loading and frame extraction.
@@ -52,7 +52,7 @@ Markdown report path:
   C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\environment_report.md
 
 Log:
-  C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\doctor_20260514T043941Z.log
+  C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\doctor_20260514T055113Z.log
 
 ## Console-equivalent table
 
@@ -94,6 +94,30 @@ The local Python environment is usable for the current project stages. The remai
 Proceed to Stage 1 video loading and frame extraction.
 
 ## Run history
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
 
 Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
 
@@ -480,6 +504,63 @@ Next step:
 <!-- lab-entry:2026-05-14T04:39:41+00:00 -->
 
 ### 2026-05-14T04:39:41+00:00
+
+Stage:
+  Stage 0 — Environment
+
+Verdict:
+  ready_with_warnings
+
+Friction score:
+  15
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed to Stage 1 video loading and frame extraction.
+
+<!-- lab-entry:2026-05-14T04:56:56+00:00 -->
+
+### 2026-05-14T04:56:56+00:00
+
+Stage:
+  Stage 0 — Environment
+
+Verdict:
+  ready_with_warnings
+
+Friction score:
+  15
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed to Stage 1 video loading and frame extraction.
+
+<!-- lab-entry:2026-05-14T05:32:05+00:00 -->
+
+### 2026-05-14T05:32:05+00:00
+
+Stage:
+  Stage 0 — Environment
+
+Verdict:
+  ready_with_warnings
+
+Friction score:
+  15
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed to Stage 1 video loading and frame extraction.
+
+<!-- lab-entry:2026-05-14T05:51:13+00:00 -->
+
+### 2026-05-14T05:51:13+00:00
 
 Stage:
   Stage 0 — Environment

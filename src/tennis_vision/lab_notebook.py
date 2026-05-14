@@ -25,6 +25,8 @@ STAGE_NOTEBOOK_FILES = {
     "stage_7_1": "stage_7_1_player_filtering.md",
     "stage_8": "stage_8_event_timeline.md",
     "stage_8_1": "stage_8_1_timeline_validation.md",
+    "stage_8_2": "stage_8_2_event_labeling.md",
+    "stage_8_3": "stage_8_3_event_validation.md",
     "stage_9": "stage_9_tactical_metrics.md",
     "stage_9_1": "stage_9_1_projection_coverage.md",
     "stage_10": "stage_10_analytical_report.md",
@@ -34,6 +36,7 @@ STAGE_NOTEBOOK_FILES = {
     "stage_14": "stage_14_side_view_replay.md",
     "stage_14_1": "stage_14_1_side_view_patch.md",
     "stage_14_2": "stage_14_2_side_view_event_disambiguation.md",
+    "stage_14_3": "stage_14_3_validated_events_side_view.md",
 }
 
 
@@ -300,6 +303,38 @@ def stage_8_1_next_step(report: dict[str, Any]) -> str:
     return "Run Stage 8.1 interactively with more frames, then rerun validation."
 
 
+def stage_8_2_next_step(report: dict[str, Any]) -> str:
+    """Return Stage 8.2 next-step text."""
+    next_step = report.get("recommended_next_step")
+    if next_step:
+        return str(next_step)
+    verdict = report.get("final_verdict")
+    if verdict == "ready_for_stage_8_3":
+        return "Proceed to Stage 8.3: Event Validation and Reclassification."
+    if verdict == "ready_with_warnings":
+        return "Review manual event label warnings, then proceed to Stage 8.3."
+    if verdict == "needs_more_event_labels":
+        return "Run Stage 8.2 interactively to collect bounce/hit/no-event/uncertain labels."
+    return "Fix Stage 8.2 blockers, then rerun the event labeling helper."
+
+
+def stage_8_3_next_step(report: dict[str, Any]) -> str:
+    """Return Stage 8.3 next-step text."""
+    next_step = report.get("recommended_next_step")
+    if next_step:
+        return str(next_step)
+    verdict = report.get("final_verdict")
+    if verdict == "ready_for_stage_14_3":
+        return "Proceed to Stage 14.3: Side-View Replay with Validated Events."
+    if verdict == "ready_with_warnings":
+        return "Proceed to Stage 14.3, but collect manual hit labels before confirming hits."
+    if verdict == "needs_manual_hit_labels":
+        return "Return to Stage 8.2 and collect manual hit labels."
+    if verdict == "needs_more_event_labels":
+        return "Return to Stage 8.2 and collect more manual event labels."
+    return "Fix Stage 8.3 blockers, then rerun event validation."
+
+
 def stage_9_next_step(report: dict[str, Any]) -> str:
     """Return Stage 9 next-step text."""
     next_step = report.get("recommended_next_step")
@@ -430,6 +465,23 @@ def stage_14_2_next_step(report: dict[str, Any]) -> str:
     if verdict == "needs_more_event_disambiguation":
         return "Tune player-aware side-view event semantics before Stage 15."
     return "Fix Stage 14.2 blockers, then rerun the side-view patch."
+
+
+def stage_14_3_next_step(report: dict[str, Any]) -> str:
+    """Return Stage 14.3 next-step text."""
+    next_step = report.get("recommended_next_step")
+    if next_step:
+        return str(next_step)
+    verdict = report.get("final_verdict")
+    if verdict == "ready_for_stage_15":
+        return "Proceed to Stage 15: Multi-Camera Analytical Replay."
+    if verdict == "ready_with_warnings":
+        return "Proceed cautiously to Stage 15, or collect manual hit labels before rendering confident hit markers."
+    if verdict == "needs_more_side_view_tuning":
+        return "Tune side-view validated-event rendering before Stage 15."
+    if verdict == "needs_more_hit_labels":
+        return "Return to Stage 8.2 and collect manual hit labels."
+    return "Fix Stage 14.3 blockers, then rerun the side-view renderer."
 
 
 def build_stage_0_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
@@ -1473,6 +1525,145 @@ def build_stage_8_1_document(report: dict[str, Any], project_root: Path) -> dict
     return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
 
 
+def build_stage_8_2_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
+    """Build Stage 8.2 notebook content."""
+    json_path = report_path(project_root, "stage_8_2_event_labeling_report.json")
+    markdown_path = report_path(project_root, "stage_8_2_event_labeling_report.md")
+    next_step = stage_8_2_next_step(report)
+    friction = report.get("friction", {})
+
+    summary = markdown_table(
+        [
+            ("Stage", "Stage 8.2 - Manual event labeling"),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction score", friction.get("score")),
+            ("Friction level", friction.get("band")),
+            ("Timestamp", report.get("timestamp")),
+            ("Recommended next step", next_step),
+        ]
+    )
+    input_table = markdown_table(
+        [
+            ("Mode", report.get("mode")),
+            ("Frames requested", ", ".join(str(frame) for frame in report.get("frames_requested", []))),
+            ("Frames shown", report.get("frames_shown")),
+            ("Existing labels", report.get("existing_labels_count")),
+            ("New labels", report.get("new_labels_count")),
+            ("Merged labels", report.get("merged_labels_count")),
+        ]
+    )
+    output_table = markdown_table(
+        [
+            ("JSON report path", json_path),
+            ("Markdown report path", markdown_path),
+            ("Manual event labels", report.get("manual_event_labels_path")),
+            ("Event comparison", report.get("event_label_comparison_path")),
+            ("Event coverage", report.get("event_label_coverage_path")),
+            ("Overlay folder", report.get("overlay_folder")),
+        ]
+    )
+    console_table = markdown_table(
+        [
+            ("Bounce labels", report.get("bounce_count")),
+            ("Hit labels", report.get("hit_count")),
+            ("No-event labels", report.get("no_event_count")),
+            ("Uncertain labels", report.get("uncertain_count")),
+            ("Compatible matches", report.get("compatible_matches")),
+            ("Mismatches", report.get("mismatches")),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction", f"{not_available(friction.get('score'))} ({not_available(friction.get('band'))})"),
+        ]
+    )
+    interpretation = (
+        "Stage 8.2 creates human event labels for bounce, hit, no_event, and uncertain frames. "
+        "This is the missing ground-truth layer needed before event reclassification or more side-view replay tuning."
+    )
+    body = stage_document(
+        title="Stage 8.2 - Manual Bounce / Hit Event Labeling",
+        summary=summary,
+        input_section=input_table,
+        output_section=output_table,
+        console_table=console_table,
+        warnings=bullet_list(report.get("warnings"), "No warnings."),
+        errors=bullet_list(report.get("errors"), "No errors."),
+        interpretation=interpretation,
+        next_step=next_step,
+    )
+    entry = history_entry(report, "Stage 8.2 - Manual Event Labeling", summary, next_step)
+    return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
+
+
+def build_stage_8_3_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
+    """Build Stage 8.3 notebook content."""
+    json_path = report_path(project_root, "stage_8_3_event_validation_report.json")
+    markdown_path = report_path(project_root, "stage_8_3_event_validation_report.md")
+    next_step = stage_8_3_next_step(report)
+    friction = report.get("friction", {})
+    outputs = report.get("output_paths", {})
+
+    summary = markdown_table(
+        [
+            ("Stage", "Stage 8.3 - Event validation and reclassification"),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction score", friction.get("score")),
+            ("Friction level", friction.get("band")),
+            ("Timestamp", report.get("timestamp")),
+            ("Recommended next step", next_step),
+        ]
+    )
+    input_table = markdown_table(
+        [
+            ("Manual labels", report.get("manual_labels_count")),
+            ("Bounce labels", report.get("manual_bounce_labels_count")),
+            ("Hit labels", report.get("manual_hit_labels_count")),
+            ("No-event labels", report.get("manual_no_event_count")),
+            ("Uncertain labels", report.get("manual_uncertain_count")),
+            ("Bounce windows", report.get("bounce_windows_count")),
+        ]
+    )
+    output_table = markdown_table(
+        [
+            ("JSON report path", json_path),
+            ("Markdown report path", markdown_path),
+            ("Manual event windows", outputs.get("manual_event_windows")),
+            ("Event validation results", outputs.get("event_validation_results")),
+            ("Validated event timeline", outputs.get("validated_event_timeline")),
+            ("Validation preview", outputs.get("event_validation_timeline_preview")),
+        ]
+    )
+    console_table = markdown_table(
+        [
+            ("Automatic events", report.get("automatic_events_count")),
+            ("Validated bounces", report.get("validated_bounce_count")),
+            ("Validated hits", report.get("validated_hit_count")),
+            ("Downgraded hits", report.get("downgraded_hit_count")),
+            ("Rejected events", report.get("rejected_events_count")),
+            ("Unvalidated events", report.get("unvalidated_events_count")),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction", f"{not_available(friction.get('score'))} ({not_available(friction.get('band'))})"),
+        ]
+    )
+    interpretation = (
+        "Stage 8.3 uses manual event labels to validate or downgrade automatic event hypotheses. "
+        "Adjacent bounce labels are grouped into one bounce window so a multi-frame bounce is not treated "
+        "as several separate bounces. The validated timeline should be the preferred event source for "
+        "side-view replay correction."
+    )
+    body = stage_document(
+        title="Stage 8.3 - Event Validation and Reclassification",
+        summary=summary,
+        input_section=input_table,
+        output_section=output_table,
+        console_table=console_table,
+        warnings=bullet_list(report.get("warnings"), "No warnings."),
+        errors=bullet_list(report.get("errors"), "No errors."),
+        interpretation=interpretation,
+        next_step=next_step,
+    )
+    entry = history_entry(report, "Stage 8.3 - Event Validation", summary, next_step)
+    return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
+
+
 def build_stage_9_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
     """Build Stage 9 notebook content."""
     json_path = report_path(project_root, "stage_9_tactical_metrics_report.json")
@@ -2121,6 +2312,77 @@ def build_stage_14_2_document(report: dict[str, Any], project_root: Path) -> dic
     return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
 
 
+def build_stage_14_3_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
+    """Build Stage 14.3 notebook content."""
+    json_path = report_path(project_root, "stage_14_3_validated_events_side_view_report.json")
+    markdown_path = report_path(project_root, "stage_14_3_validated_events_side_view_report.md")
+    next_step = stage_14_3_next_step(report)
+    friction = report.get("friction", {})
+    outputs = report.get("output_paths", {})
+
+    summary = markdown_table(
+        [
+            ("Stage", "Stage 14.3 - Side-view replay with validated events"),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction score", friction.get("score")),
+            ("Friction level", friction.get("band")),
+            ("Event source used", report.get("event_source_used")),
+            ("Stage 8.3 available", report.get("validated_event_source_available")),
+            ("Timestamp", report.get("timestamp")),
+            ("Recommended next step", next_step),
+        ]
+    )
+    input_table = markdown_table(
+        [
+            ("Source path", report.get("event_source_path")),
+            ("Fallback used", report.get("fallback_used")),
+            ("Validated bounces rendered", report.get("validated_bounces_rendered_count")),
+            ("Validated hits rendered", report.get("validated_hits_rendered_count")),
+            ("Downgraded hit annotations", report.get("downgraded_hits_annotation_count")),
+            ("Rejected events ignored", report.get("rejected_events_ignored_count")),
+            ("Unvalidated annotations", report.get("unvalidated_events_annotation_count")),
+        ]
+    )
+    output_table = markdown_table(
+        [
+            ("JSON report path", json_path),
+            ("Markdown report path", markdown_path),
+            ("Validated events debug", report.get("validated_events_debug_path")),
+            ("Video", outputs.get("video_path")),
+            ("Frames", outputs.get("frames_dir")),
+            ("Manifest", outputs.get("manifest_path")),
+        ]
+    )
+    console_table = markdown_table(
+        [
+            ("Frames generated", report.get("frames_generated")),
+            ("Video generated", report.get("video_generated")),
+            ("Main path physical-only", report.get("main_path_physical_events_only")),
+            ("Annotation band enabled", report.get("annotation_band_enabled")),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction", f"{not_available(friction.get('score'))} ({not_available(friction.get('band'))})"),
+        ]
+    )
+    interpretation = (
+        "Stage 14.3 makes the side-view renderer consume the Stage 8.3 validated event timeline first. "
+        "Validated bounces are physical grounded markers. Raw, downgraded, unvalidated, or rejected hit hypotheses "
+        "are rendered only as secondary annotations, so the replay no longer presents unconfirmed hits as contacts."
+    )
+    body = stage_document(
+        title="Stage 14.3 - Side-View Replay with Validated Events",
+        summary=summary,
+        input_section=input_table,
+        output_section=output_table,
+        console_table=console_table,
+        warnings=bullet_list(report.get("warnings"), "No warnings."),
+        errors=bullet_list(report.get("errors"), "No errors."),
+        interpretation=interpretation,
+        next_step=next_step,
+    )
+    entry = history_entry(report, "Stage 14.3 - Side-View Replay with Validated Events", summary, next_step)
+    return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
+
+
 def stage_document(
     *,
     title: str,
@@ -2572,6 +2834,38 @@ def update_lab_notebook(project_root: Path) -> list[Path]:
             }
         )
 
+    stage_8_2_report = read_json_report(report_path(project_root, "stage_8_2_event_labeling_report.json"))
+    if stage_8_2_report is not None:
+        document = build_stage_8_2_document(stage_8_2_report, project_root)
+        stage_path = notebook_dir / "stage_8_2_event_labeling.md"
+        written.append(write_stage_notebook(stage_path, document["body"], document["entry"], document["entry_id"]))
+        stage_summaries.append(
+            {
+                "stage": "Stage 8.2",
+                "name": "Manual Event Labeling",
+                "verdict": not_available(stage_8_2_report.get("final_verdict")),
+                "friction": f"{not_available(nested_get(stage_8_2_report, ('friction', 'score')))} {not_available(nested_get(stage_8_2_report, ('friction', 'band')))}",
+                "main_output": "outputs/reports/stage_8_2_event_labeling_report.md",
+                "next_step": stage_8_2_next_step(stage_8_2_report),
+            }
+        )
+
+    stage_8_3_report = read_json_report(report_path(project_root, "stage_8_3_event_validation_report.json"))
+    if stage_8_3_report is not None:
+        document = build_stage_8_3_document(stage_8_3_report, project_root)
+        stage_path = notebook_dir / "stage_8_3_event_validation.md"
+        written.append(write_stage_notebook(stage_path, document["body"], document["entry"], document["entry_id"]))
+        stage_summaries.append(
+            {
+                "stage": "Stage 8.3",
+                "name": "Event Validation",
+                "verdict": not_available(stage_8_3_report.get("final_verdict")),
+                "friction": f"{not_available(nested_get(stage_8_3_report, ('friction', 'score')))} {not_available(nested_get(stage_8_3_report, ('friction', 'band')))}",
+                "main_output": "outputs/timeline/stage_8_3_event_validation/validated_event_timeline.csv",
+                "next_step": stage_8_3_next_step(stage_8_3_report),
+            }
+        )
+
     stage_9_report = read_json_report(report_path(project_root, "stage_9_tactical_metrics_report.json"))
     if stage_9_report is not None:
         document = build_stage_9_document(stage_9_report, project_root)
@@ -2713,6 +3007,22 @@ def update_lab_notebook(project_root: Path) -> list[Path]:
                 "friction": f"{not_available(nested_get(stage_14_2_report, ('friction', 'score')))} {not_available(nested_get(stage_14_2_report, ('friction', 'band')))}",
                 "main_output": "outputs/replay/stage_14_side_view_replay/side_view_semantic_debug.jpg",
                 "next_step": stage_14_2_next_step(stage_14_2_report),
+            }
+        )
+
+    stage_14_3_report = read_json_report(report_path(project_root, "stage_14_3_validated_events_side_view_report.json"))
+    if stage_14_3_report is not None:
+        document = build_stage_14_3_document(stage_14_3_report, project_root)
+        stage_path = notebook_dir / "stage_14_3_validated_events_side_view.md"
+        written.append(write_stage_notebook(stage_path, document["body"], document["entry"], document["entry_id"]))
+        stage_summaries.append(
+            {
+                "stage": "Stage 14.3",
+                "name": "Side-View Validated Events",
+                "verdict": not_available(stage_14_3_report.get("final_verdict")),
+                "friction": f"{not_available(nested_get(stage_14_3_report, ('friction', 'score')))} {not_available(nested_get(stage_14_3_report, ('friction', 'band')))}",
+                "main_output": "outputs/replay/stage_14_side_view_replay/side_view_validated_events_debug.jpg",
+                "next_step": stage_14_3_next_step(stage_14_3_report),
             }
         )
 

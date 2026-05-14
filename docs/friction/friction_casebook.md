@@ -5,6 +5,37 @@ It uses case blocks instead of wide tables.
 
 ---
 
+CASE: F024 - Renderers should use validated event sources, not raw event hypotheses
+AREA: Side-view replay semantics
+
+WHAT HAPPENED:
+  Side-view replay used raw event hypotheses and visually overemphasized
+  questionable possible_hit events.
+
+ROOT CAUSE:
+  The renderer consumed automatic event guesses before the manually validated
+  Stage 8.3 event layer existed.
+
+IMPACT:
+  Product Owner review found that some hit markers looked like physical contact
+  even when player position and original video review did not support that
+  interpretation.
+
+RESOLUTION:
+  Stage 14.3 uses the Stage 8.3 validated and reclassified event timeline as
+  the preferred event source. Validated bounces render as grounded physical
+  events. Downgraded, rejected, or unvalidated hits render as annotations only.
+
+REUSABLE RULE:
+  Downstream visualizations should consume validated semantic layers, not raw
+  model hypotheses.
+
+RELATED STAGES:
+  Stage 8.3
+  Stage 14.3
+
+---
+
 CASE F001 - AWS/cloud friction
 
 AREA:
@@ -522,3 +553,68 @@ REUSABLE RULE:
 
 RELATED STAGES:
   Stage 14.2
+
+---
+
+CASE F022 - Event semantics need manual ground truth before visualization
+
+AREA:
+  Event validation / replay semantics
+
+WHAT HAPPENED:
+  Side-view replay could not reliably distinguish hit, bounce, and uncertain
+  trajectory moments from heuristics alone.
+
+ROOT CAUSE:
+  The project had manual ball labels and player filtering, but no human-labeled
+  ground truth for tennis event semantics.
+
+IMPACT:
+  Renderer patches could improve visual language but still risked presenting
+  uncertain automatic hypotheses as tennis events.
+
+RESOLUTION:
+  Stage 8.2 adds a manual event labeling helper for bounce, hit, no_event,
+  uncertain, and skipped frames.
+
+REUSABLE RULE:
+  For ambiguous temporal events, collect ground truth before renderer
+  polishing or event reclassification.
+
+RELATED STAGES:
+  Stage 8.2
+  Stage 8.3
+  Stage 14 replay stages
+
+---
+
+CASE F023 - Bounces can span multiple frames, not a single instant
+
+AREA:
+  Event validation / temporal labeling
+
+WHAT HAPPENED:
+  The user labeled several adjacent frames around the same bounce moment:
+  one frame before or near contact, one central bounce frame, and one frame
+  after the ball began leaving the surface.
+
+ROOT CAUSE:
+  In video, temporal events are not always clean one-frame truths. Human
+  labels may intentionally mark a short event window rather than one exact
+  frame.
+
+IMPACT:
+  Treating every nearby bounce label as a separate bounce would inflate event
+  counts and confuse downstream replay semantics.
+
+RESOLUTION:
+  Stage 8.3 groups nearby bounce labels into one bounce window before
+  validating and reclassifying automatic events.
+
+REUSABLE RULE:
+  Temporal events in video should be represented as windows when frame-perfect
+  ground truth is hard.
+
+RELATED STAGES:
+  Stage 8.3
+  Future temporal event validation stages

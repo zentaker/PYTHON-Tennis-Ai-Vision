@@ -143,7 +143,7 @@ def render_ball(canvas: np.ndarray, point: dict[str, Any], transform: dict[str, 
 
 
 def render_event_markers(canvas: np.ndarray, events: list[dict[str, Any]], transform: dict[str, float], current_frame: int) -> np.ndarray:
-    """Render possible event markers along the side-view court."""
+    """Render validated physical event markers along the side-view court."""
     for event in events:
         event_frame = _int(event.get("frame_index"))
         if event_frame is None or event_frame > current_frame:
@@ -151,14 +151,12 @@ def render_event_markers(canvas: np.ndarray, events: list[dict[str, Any]], trans
         projected = event.get("projected_position", {})
         depth = projected.get("y")
         render_role = assign_event_render_role(event)
+        if render_role not in {"bounce_plausible", "hit_plausible"} or not event.get("side_view_physical_event", render_role in {"bounce_plausible", "hit_plausible"}):
+            continue
         if render_role == "bounce_plausible":
             height = 2
-        elif render_role == "hit_plausible":
-            height = 88
-        elif render_role == "player_interaction":
-            height = 42
         else:
-            height = 58
+            height = 88
         mapped = map_depth_height_to_canvas(depth, height, transform)
         if mapped is None:
             continue
@@ -167,6 +165,40 @@ def render_event_markers(canvas: np.ndarray, events: list[dict[str, Any]], trans
         cv2.drawMarker(canvas, mapped, color, markerType=marker_type, markerSize=18, thickness=2, line_type=cv2.LINE_AA)
         label = render_role_label(event)
         cv2.putText(canvas, label[:22], (mapped[0] + 8, mapped[1] - 8), SIDE_STYLE["font"], 0.42, color, 1, cv2.LINE_AA)
+    return canvas
+
+
+def render_annotation_band(canvas: np.ndarray, events: list[dict[str, Any]], points: list[dict[str, Any]], current_index: int) -> np.ndarray:
+    """Render uncertain, rejected, and interaction events away from the physical ball path."""
+    if not points:
+        return canvas
+    frames = [_int(point.get("frame_index")) for point in points if _int(point.get("frame_index")) is not None]
+    if not frames:
+        return canvas
+    min_frame = min(frames)
+    max_frame = max(frames)
+    current_frame = _int(points[current_index].get("frame_index")) or max_frame
+    x0 = 95
+    x1 = canvas.shape[1] - 95
+    y = canvas.shape[0] - 118
+    cv2.line(canvas, (x0, y), (x1, y), SIDE_STYLE["muted"], 1, cv2.LINE_AA)
+    cv2.putText(canvas, "annotation band: unvalidated or downgraded events, not ball contacts", (x0, y - 10), SIDE_STYLE["font"], 0.42, SIDE_STYLE["muted"], 1, cv2.LINE_AA)
+    for event in events:
+        frame = _int(event.get("frame_index"))
+        if frame is None or frame > current_frame:
+            continue
+        role = assign_event_render_role(event)
+        if role in {"bounce_plausible", "hit_plausible"} and event.get("side_view_physical_event"):
+            continue
+        if event.get("ignored_event") and not event.get("annotation_only"):
+            label = "rejected"
+        else:
+            label = render_role_label(event)
+        x = timeline_x(frame, min_frame, max_frame, x0, x1)
+        color = render_role_color(role)
+        marker = cv2.MARKER_TRIANGLE_UP if role == "player_interaction" else cv2.MARKER_CROSS
+        cv2.drawMarker(canvas, (x, y), color, markerType=marker, markerSize=13, thickness=2, line_type=cv2.LINE_AA)
+        cv2.putText(canvas, label[:16], (x + 6, y + 18), SIDE_STYLE["font"], 0.34, color, 1, cv2.LINE_AA)
     return canvas
 
 
@@ -235,6 +267,7 @@ def render_side_view_frame(
     render_ball_arc(canvas, points, transform, current_index)
     render_ball(canvas, current, transform)
     render_event_markers(canvas, events, transform, current_frame)
+    render_annotation_band(canvas, events, points, current_index)
     render_player_depth_markers(canvas, players, transform, current_frame)
     render_timeline_strip(canvas, points, events, current_index)
     height = current.get("synthetic_height")
@@ -249,18 +282,23 @@ def render_side_view_frames(
     output_dir: Path,
     interpolate: bool = True,
     interpolation_steps: int = 8,
+    event_rows: list[dict[str, Any]] | None = None,
 ) -> tuple[list[Path], dict[str, Any], list[str], list[str]]:
     """Render side-view replay frames."""
     warnings: list[str] = []
     errors: list[str] = []
     frames_dir = output_dir / "frames"
     frames_dir.mkdir(parents=True, exist_ok=True)
-    keyframes = build_side_view_keyframes(schema)
+    keyframes = build_side_view_keyframes(schema, event_rows=event_rows)
     if not keyframes:
         return [], {"side_view_keyframes": [], "display_points": [], "players": [], "events": []}, warnings, ["No side-view keyframes could be built."]
     points = interpolate_side_view_motion(keyframes, interpolate=interpolate, interpolation_steps=interpolation_steps)
     players = list(schema.get("players", []))
-    events, event_render_role_summary = downgrade_implausible_hits(list(schema.get("event_timeline", [])), players)
+    if event_rows is None:
+        events, event_render_role_summary = downgrade_implausible_hits(list(schema.get("event_timeline", [])), players)
+    else:
+        events = event_rows
+        event_render_role_summary = {}
     paths: list[Path] = []
     for index in range(len(points)):
         frame = render_side_view_frame(schema=schema, points=points, current_index=index, players=players, events=events)
@@ -388,6 +426,43 @@ def create_semantic_debug_image(
     return bool(cv2.imwrite(str(output_path), canvas)), []
 
 
+def create_validated_events_debug_image(
+    *,
+    schema: dict[str, Any],
+    display_points: list[dict[str, Any]],
+    events: list[dict[str, Any]],
+    players: list[dict[str, Any]],
+    output_path: Path,
+    event_source_used: str,
+) -> tuple[bool, list[str]]:
+    """Create a debug image for Stage 14.3 validated-event rendering."""
+    if not display_points:
+        return False, ["No display points available for validated-event debug image."]
+    canvas = render_side_view_frame(
+        schema=schema,
+        points=display_points,
+        current_index=len(display_points) - 1,
+        players=players,
+        events=events,
+    )
+    cv2.putText(canvas, "Events rendered from Stage 8.3 validated timeline", (35, 145), SIDE_STYLE["font"], 0.5, SIDE_STYLE["text"], 1, cv2.LINE_AA)
+    cv2.putText(canvas, f"Event source used: {event_source_used}", (35, 168), SIDE_STYLE["font"], 0.44, SIDE_STYLE["muted"], 1, cv2.LINE_AA)
+    legend_x = 35
+    legend_y = 198
+    legend = [
+        ("validated bounce = grounded physical event", SIDE_STYLE["bounce"]),
+        ("validated hit = physical contact event; none shown unless validated", SIDE_STYLE["hit"]),
+        ("downgraded/unvalidated/rejected = annotation band only", SIDE_STYLE["uncertain"]),
+        ("interpolated points = visual-only motion", SIDE_STYLE["ball_interpolated"]),
+    ]
+    for index, (label, color) in enumerate(legend):
+        y = legend_y + index * 22
+        cv2.circle(canvas, (legend_x + 6, y - 4), 5, color, thickness=-1, lineType=cv2.LINE_AA)
+        cv2.putText(canvas, label, (legend_x + 20, y), SIDE_STYLE["font"], 0.42, color, 1, cv2.LINE_AA)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    return bool(cv2.imwrite(str(output_path), canvas)), []
+
+
 def write_side_view_manifest(path: Path, manifest: dict[str, Any]) -> Path:
     """Write the Stage 14 side-view renderer manifest."""
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -441,6 +516,10 @@ def render_role_color(render_role: str) -> tuple[int, int, int]:
         return SIDE_STYLE["ball_interpolated"]
     if render_role == "uncertain_event":
         return SIDE_STYLE["uncertain"]
+    if render_role == "rejected_event":
+        return (120, 120, 135)
+    if render_role == "trajectory_annotation":
+        return SIDE_STYLE["muted"]
     return SIDE_STYLE["event"]
 
 
@@ -455,6 +534,10 @@ def render_role_label(event: dict[str, Any]) -> str:
         return "near player cue"
     if role == "interpolation_only":
         return "interpolated"
+    if role == "rejected_event":
+        return "rejected"
+    if role == "trajectory_annotation":
+        return "trajectory cue"
     return "uncertain"
 
 

@@ -33,10 +33,17 @@ SEMANTIC HEIGHT PATCH
 
 EVENT DISAMBIGUATION PATCH
   Hit labels are now filtered by player-aware plausibility.
-  Implausible hit labels downgraded: 3
+  Implausible hit labels downgraded: 0
   Bounce events remain grounded.
   Player interaction cues are visually separated from hit and bounce labels.
   Synthetic height is still estimated, not measured.
+
+VALIDATED EVENT SOURCE PATCH
+  Event source used: stage_8_3_validated_event_timeline
+  Validated bounces rendered: 3
+  Validated hits rendered: 0
+  Downgraded hits shown as annotation: 6
+  Rejected, unvalidated, and downgraded events are not physical ball-contact markers.
 
 OUTPUTS
   Frames: C:\Users\MSI\Desktop\TennisAiVision\outputs\replay\stage_14_side_view_replay\frames

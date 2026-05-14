@@ -251,11 +251,11 @@ def annotate_interpolated_height_points(points: list[dict[str, Any]]) -> list[di
     return annotated
 
 
-def build_side_view_keyframes(schema: dict[str, Any]) -> list[dict[str, Any]]:
+def build_side_view_keyframes(schema: dict[str, Any], event_rows: list[dict[str, Any]] | None = None) -> list[dict[str, Any]]:
     """Build side-view keyframes with synthetic height annotations."""
     court_height = float(schema.get("court_model", {}).get("normalized_court_height") or 780.0)
     sequence = extract_projected_ball_sequence(schema)
-    events, _summary = downgrade_implausible_hits(schema.get("event_timeline", []), schema.get("players", []))
+    events = event_rows if event_rows is not None else downgrade_implausible_hits(schema.get("event_timeline", []), schema.get("players", []))[0]
     raw_keyframes: list[dict[str, Any]] = []
     for index, point in enumerate(sequence):
         frame = _int(point.get("frame_index"))
@@ -263,6 +263,8 @@ def build_side_view_keyframes(schema: dict[str, Any]) -> list[dict[str, Any]]:
         event_type = event.get("event_type_for_render") if event else ""
         render_role = event.get("render_role") if event else ""
         role = "hit_contact" if render_role == "hit_plausible" else "bounce_grounded" if render_role == "bounce_plausible" else classify_height_anchor_type(event_type)
+        if event and not event.get("side_view_physical_event") and render_role not in {"bounce_plausible", "hit_plausible"}:
+            role = "arc_estimate"
         depth = estimate_side_view_depth(point, court_height)
         raw_keyframes.append(
             {
@@ -276,6 +278,8 @@ def build_side_view_keyframes(schema: dict[str, Any]) -> list[dict[str, Any]]:
                 "event_type": event_type,
                 "raw_event_type": event.get("event_type") if event else "",
                 "render_role": render_role or role,
+                "side_view_physical_event": bool(event.get("side_view_physical_event")) if event else False,
+                "annotation_only": bool(event.get("annotation_only")) if event else False,
                 "player_aware_plausibility_status": event.get("player_aware_plausibility_status") if event else "not_applicable",
                 "hit_plausibility": event.get("hit_plausibility") if event else {},
                 "height_anchor_type": role,

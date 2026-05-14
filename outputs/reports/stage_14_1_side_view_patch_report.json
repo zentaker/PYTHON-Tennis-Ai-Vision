@@ -1,9 +1,9 @@
 {
   "bounce_grounding_enabled": true,
   "errors": [],
-  "final_verdict": "ready_for_stage_15",
+  "final_verdict": "needs_more_side_view_tuning",
   "flags": {
-    "bounce_grounding_failed": false,
+    "bounce_grounding_failed": true,
     "hit_contact_band_failed": false,
     "render_frames_failed": false,
     "replay_schema_missing": false,
@@ -13,9 +13,9 @@
   },
   "frames_generated": 100,
   "friction": {
-    "band": "low friction",
+    "band": "medium friction",
     "inputs": {
-      "bounce_grounding_failed": false,
+      "bounce_grounding_failed": true,
       "errors_count": 0,
       "hit_contact_band_failed": false,
       "render_frames_failed": false,
@@ -25,11 +25,11 @@
       "video_export_failed": false,
       "warnings_count": 0
     },
-    "score": 0
+    "score": 35
   },
   "height_anchor_summary": {
-    "arc_estimate": 10,
-    "interaction_cue": 2
+    "arc_estimate": 11,
+    "bounce_grounded": 1
   },
   "hit_contact_band_enabled": true,
   "interpolated_points_marked": true,
@@ -43,17 +43,16 @@
     "manifest_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_manifest.json",
     "semantic_debug_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_semantic_debug.jpg",
     "summary_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_summary.md",
+    "validated_events_debug_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_validated_events_debug.jpg",
     "video_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_replay.mp4"
   },
-  "recommended_next_step": "Proceed to Stage 15: Multi-Camera Analytical Replay.",
+  "recommended_next_step": "Tune side-view semantics further before Stage 15.",
   "semantic_debug_artifact": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_semantic_debug.jpg",
   "semantic_height_patch_applied": true,
-  "semantic_warnings": [
-    "No possible_bounce anchors were present in the current replay schema; bounce grounding is enabled for future bounce events."
-  ],
+  "semantic_warnings": [],
   "source_stage": 14,
   "stage": "stage_14_1_side_view_patch",
-  "timestamp": "2026-05-14T04:39:07+00:00",
+  "timestamp": "2026-05-14T19:06:59+00:00",
   "video_generated": true,
   "warnings": []
 }

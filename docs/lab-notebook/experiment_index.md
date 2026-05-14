@@ -129,6 +129,24 @@ NEXT STEP: Proceed to Stage 9: Tactical Metrics and Shot Zone Prototype.
 
 ---
 
+STAGE: Stage 8.2
+NAME: Manual Event Labeling
+VERDICT: ready_for_stage_8_3
+FRICTION: 0 low friction
+MAIN OUTPUT: outputs/reports/stage_8_2_event_labeling_report.md
+NEXT STEP: Proceed to Stage 8.3: Event Validation and Reclassification.
+
+---
+
+STAGE: Stage 8.3
+NAME: Event Validation
+VERDICT: ready_with_warnings
+FRICTION: 31 medium friction
+MAIN OUTPUT: outputs/timeline/stage_8_3_event_validation/validated_event_timeline.csv
+NEXT STEP: Proceed to Stage 14.3 using validated events, but collect manual hit labels before confirming hits.
+
+---
+
 STAGE: Stage 9
 NAME: Tactical Metrics
 VERDICT: ready_with_warnings
@@ -194,10 +212,10 @@ NEXT STEP: Proceed to Stage 15: Multi-Camera Analytical Replay.
 
 STAGE: Stage 14.1
 NAME: Side-View Patch
-VERDICT: ready_for_stage_15
-FRICTION: 0 low friction
+VERDICT: needs_more_side_view_tuning
+FRICTION: 35 medium friction
 MAIN OUTPUT: outputs/replay/stage_14_side_view_replay/side_view_semantic_debug.jpg
-NEXT STEP: Proceed to Stage 15: Multi-Camera Analytical Replay.
+NEXT STEP: Tune side-view semantics further before Stage 15.
 
 ---
 
@@ -207,6 +225,15 @@ VERDICT: ready_for_stage_15
 FRICTION: 0 low friction
 MAIN OUTPUT: outputs/replay/stage_14_side_view_replay/side_view_semantic_debug.jpg
 NEXT STEP: Proceed to Stage 15: Multi-Camera Analytical Replay.
+
+---
+
+STAGE: Stage 14.3
+NAME: Side-View Validated Events
+VERDICT: ready_with_warnings
+FRICTION: 2 low friction
+MAIN OUTPUT: outputs/replay/stage_14_side_view_replay/side_view_validated_events_debug.jpg
+NEXT STEP: Proceed to Stage 15 for multi-camera prototype, or collect manual hit labels before showing confident side-view hit markers.
 
 ---
 

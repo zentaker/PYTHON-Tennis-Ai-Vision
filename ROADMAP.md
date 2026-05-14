@@ -95,6 +95,26 @@ Possible next paths:
 - Stage 8.2: manual event labeling helper if event hypotheses need direct validation.
 - Stage 8.1 repeat: collect more labels if coverage remains sparse.
 
+## Stage 8.2: Manual Bounce / Hit Event Labeling Helper
+
+Implemented. Collect manual labels for bounce, hit, no_event, uncertain, and skipped frames so event semantics are grounded in human review rather than trajectory heuristics alone.
+
+Possible next paths:
+
+- Stage 8.3: event validation and reclassification.
+- Stage 14.3: side-view replay correction using validated events.
+- Stage 8.2 repeat: collect more labels if event coverage remains sparse.
+
+## Stage 8.3: Event Validation And Reclassification
+
+Current inserted validation stage. Use Stage 8.2 manual event labels to group bounce windows, validate automatic hypotheses, downgrade contradicted hits, and write a validated event timeline for replay correction.
+
+Possible next paths:
+
+- Stage 14.3: Side-view replay with validated events.
+- Stage 8.2 repeat: collect manual hit labels if hit confirmation is needed.
+- Stage 8.3 repeat: rerun validation after more manual labels.
+
 ## Stage 9: Tactical Metrics And Shot Zone Prototype
 
 Implemented. Use validated timeline, court projection, and player identities to start lightweight tactical metrics and shot-zone summaries without official scoring or line calling.
@@ -183,13 +203,23 @@ Possible next paths:
 
 ## Stage 14.2: Side-View Event Disambiguation Patch
 
-Current stage. Validate side-view hit labels against player position and court depth, downgrade implausible hit labels, and separate bounce, hit, interaction, uncertainty, and interpolation render roles.
+Implemented. Validate side-view hit labels against player position and court depth, downgrade implausible hit labels, and separate bounce, hit, interaction, uncertainty, and interpolation render roles.
 
 Possible next paths:
 
 - Stage 15: Multi-Camera Analytical Replay.
-- Stage 14.3: Further side-view tuning if needed.
+- Stage 14.3: Side-view replay with validated events.
 - Stage 13.1: Top-view replay polish if needed.
+
+## Stage 14.3: Side-View Replay with Validated Events
+
+Current. Use the Stage 8.3 validated event timeline as the side-view source of truth. Validated bounces render as grounded physical events. Downgraded, rejected, or unvalidated hits render as annotations only.
+
+Possible next paths:
+
+- Stage 15: Multi-Camera Analytical Replay.
+- Stage 8.4: Manual Hit Labeling if hit validation is needed.
+- Stage 14.4: Further side-view polish if still visually confusing.
 
 ## Future Phase: Local MVP Pipeline
 

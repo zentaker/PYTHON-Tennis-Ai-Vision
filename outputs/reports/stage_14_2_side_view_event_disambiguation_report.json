@@ -2,11 +2,13 @@
   "errors": [],
   "event_disambiguation_patch_applied": true,
   "event_render_role_summary": {
-    "implausible_hits_downgraded_count": 3,
-    "plausible_bounces_count": 0,
-    "plausible_hits_count": 0,
-    "player_interactions_count": 2,
-    "uncertain_events_count": 3
+    "annotation_events_count": 13,
+    "downgraded_hits_annotation_count": 6,
+    "physical_events_count": 3,
+    "rejected_events_ignored_count": 2,
+    "unvalidated_events_annotation_count": 13,
+    "validated_bounces_rendered_count": 3,
+    "validated_hits_rendered_count": 0
   },
   "event_render_roles_enabled": true,
   "final_verdict": "ready_for_stage_15",
@@ -37,7 +39,7 @@
     },
     "score": 0
   },
-  "implausible_hits_downgraded_count": 3,
+  "implausible_hits_downgraded_count": 0,
   "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_14_2_side_view_event_disambiguation_report.json",
   "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_14_2_side_view_event_disambiguation_report.md",
   "output_paths": {
@@ -48,21 +50,20 @@
     "manifest_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_manifest.json",
     "semantic_debug_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_semantic_debug.jpg",
     "summary_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_summary.md",
+    "validated_events_debug_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_validated_events_debug.jpg",
     "video_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_replay.mp4"
   },
   "plausible_bounces_count": 0,
   "plausible_hits_count": 0,
   "player_aware_hit_validation_enabled": true,
-  "player_interactions_count": 2,
+  "player_interactions_count": 0,
   "recommended_next_step": "Proceed to Stage 15: Multi-Camera Analytical Replay.",
   "semantic_debug_artifact": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_semantic_debug.jpg",
-  "semantic_warnings": [
-    "No possible_bounce anchors were present in the current replay schema; bounce grounding is enabled for future bounce events."
-  ],
+  "semantic_warnings": [],
   "source_stage": 14.1,
   "stage": "stage_14_2_side_view_event_disambiguation",
-  "timestamp": "2026-05-14T04:39:07+00:00",
-  "uncertain_events_count": 3,
+  "timestamp": "2026-05-14T19:06:59+00:00",
+  "uncertain_events_count": 0,
   "video_generated": true,
   "warnings": []
 }

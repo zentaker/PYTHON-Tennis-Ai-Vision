@@ -449,9 +449,67 @@ NOTES:
 
 ---
 
-FUNCTION: calculate_stage_9_friction_score
+FUNCTION: calculate_stage_8_2_friction_score
 FILE: src/tennis_vision/friction.py
 LINE: 613
+AREA: Friction
+
+PURPOSE:
+  Calculates friction for Stage 8.2 manual event labeling.
+
+INPUTS:
+  - stage-specific warning/error/input flags
+
+OUTPUTS:
+  - friction score dictionary
+
+CALLED BY:
+  - scripts/run_stage_8_2_event_labeling_helper.py
+
+WHY PRODUCT OWNER CARES:
+  Prevents failures and uncertainty from being hidden.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/friction.py and go to line 613.
+  Search: def calculate_stage_8_2_friction_score
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: calculate_stage_8_3_friction_score
+FILE: src/tennis_vision/friction.py
+LINE: 655
+AREA: Friction
+
+PURPOSE:
+  Calculates friction for Stage 8.3 event validation.
+
+INPUTS:
+  - stage-specific warning/error/input flags
+
+OUTPUTS:
+  - friction score dictionary
+
+CALLED BY:
+  - scripts/run_stage_8_3_event_validation.py
+
+WHY PRODUCT OWNER CARES:
+  Prevents failures and uncertainty from being hidden.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/friction.py and go to line 655.
+  Search: def calculate_stage_8_3_friction_score
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: calculate_stage_9_friction_score
+FILE: src/tennis_vision/friction.py
+LINE: 694
 AREA: Friction
 
 PURPOSE:
@@ -470,7 +528,7 @@ WHY PRODUCT OWNER CARES:
   Prevents failures and uncertainty from being hidden.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/friction.py and go to line 613.
+  Open src/tennis_vision/friction.py and go to line 694.
   Search: def calculate_stage_9_friction_score
 
 NOTES:
@@ -480,7 +538,7 @@ NOTES:
 
 FUNCTION: calculate_stage_9_1_friction_score
 FILE: src/tennis_vision/friction.py
-LINE: 658
+LINE: 739
 AREA: Friction
 
 PURPOSE:
@@ -499,7 +557,7 @@ WHY PRODUCT OWNER CARES:
   Prevents failures and uncertainty from being hidden.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/friction.py and go to line 658.
+  Open src/tennis_vision/friction.py and go to line 739.
   Search: def calculate_stage_9_1_friction_score
 
 NOTES:
@@ -509,7 +567,7 @@ NOTES:
 
 FUNCTION: calculate_stage_10_friction_score
 FILE: src/tennis_vision/friction.py
-LINE: 697
+LINE: 778
 AREA: Friction
 
 PURPOSE:
@@ -528,7 +586,7 @@ WHY PRODUCT OWNER CARES:
   Prevents failures and uncertainty from being hidden.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/friction.py and go to line 697.
+  Open src/tennis_vision/friction.py and go to line 778.
   Search: def calculate_stage_10_friction_score
 
 NOTES:
@@ -538,7 +596,7 @@ NOTES:
 
 FUNCTION: calculate_stage_11_friction_score
 FILE: src/tennis_vision/friction.py
-LINE: 739
+LINE: 820
 AREA: Friction
 
 PURPOSE:
@@ -557,7 +615,7 @@ WHY PRODUCT OWNER CARES:
   Prevents failures and uncertainty from being hidden.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/friction.py and go to line 739.
+  Open src/tennis_vision/friction.py and go to line 820.
   Search: def calculate_stage_11_friction_score
 
 NOTES:
@@ -567,7 +625,7 @@ NOTES:
 
 FUNCTION: calculate_stage_12_friction_score
 FILE: src/tennis_vision/friction.py
-LINE: 781
+LINE: 862
 AREA: Friction
 
 PURPOSE:
@@ -586,7 +644,7 @@ WHY PRODUCT OWNER CARES:
   Prevents failures and uncertainty from being hidden.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/friction.py and go to line 781.
+  Open src/tennis_vision/friction.py and go to line 862.
   Search: def calculate_stage_12_friction_score
 
 NOTES:
@@ -596,7 +654,7 @@ NOTES:
 
 FUNCTION: calculate_stage_13_friction_score
 FILE: src/tennis_vision/friction.py
-LINE: 823
+LINE: 904
 AREA: Friction
 
 PURPOSE:
@@ -615,7 +673,7 @@ WHY PRODUCT OWNER CARES:
   Prevents failures and uncertainty from being hidden.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/friction.py and go to line 823.
+  Open src/tennis_vision/friction.py and go to line 904.
   Search: def calculate_stage_13_friction_score
 
 NOTES:
@@ -625,7 +683,7 @@ NOTES:
 
 FUNCTION: calculate_stage_14_friction_score
 FILE: src/tennis_vision/friction.py
-LINE: 865
+LINE: 946
 AREA: Friction
 
 PURPOSE:
@@ -644,7 +702,7 @@ WHY PRODUCT OWNER CARES:
   Prevents failures and uncertainty from being hidden.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/friction.py and go to line 865.
+  Open src/tennis_vision/friction.py and go to line 946.
   Search: def calculate_stage_14_friction_score
 
 NOTES:
@@ -654,7 +712,7 @@ NOTES:
 
 FUNCTION: calculate_stage_14_1_friction_score
 FILE: src/tennis_vision/friction.py
-LINE: 907
+LINE: 988
 AREA: Friction
 
 PURPOSE:
@@ -673,7 +731,7 @@ WHY PRODUCT OWNER CARES:
   Prevents failures and uncertainty from being hidden.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/friction.py and go to line 907.
+  Open src/tennis_vision/friction.py and go to line 988.
   Search: def calculate_stage_14_1_friction_score
 
 NOTES:
@@ -683,7 +741,7 @@ NOTES:
 
 FUNCTION: calculate_stage_14_2_friction_score
 FILE: src/tennis_vision/friction.py
-LINE: 949
+LINE: 1030
 AREA: Friction
 
 PURPOSE:
@@ -702,8 +760,37 @@ WHY PRODUCT OWNER CARES:
   Prevents failures and uncertainty from being hidden.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/friction.py and go to line 949.
+  Open src/tennis_vision/friction.py and go to line 1030.
   Search: def calculate_stage_14_2_friction_score
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: calculate_stage_14_3_friction_score
+FILE: src/tennis_vision/friction.py
+LINE: 1075
+AREA: Friction
+
+PURPOSE:
+  Calculates friction for Stage 14.3 validated-event side-view rendering.
+
+INPUTS:
+  - stage-specific warning/error/input flags
+
+OUTPUTS:
+  - friction score dictionary
+
+CALLED BY:
+  - scripts/run_stage_14_side_view_replay.py
+
+WHY PRODUCT OWNER CARES:
+  Prevents failures and uncertainty from being hidden.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/friction.py and go to line 1075.
+  Search: def calculate_stage_14_3_friction_score
 
 NOTES:
   None.
@@ -1495,6 +1582,268 @@ WHY PRODUCT OWNER CARES:
 HOW TO FIND IT:
   Open src/tennis_vision/timeline_validation.py and go to line 95.
   Search: def validate_timeline_events
+
+NOTES:
+  None.
+
+---
+
+## Stage 8.2 - Manual Event Labeling
+
+FUNCTION: collect_event_labels_interactively
+FILE: src/tennis_vision/event_labeling.py
+LINE: 240
+AREA: Stage 8.2 - Manual Event Labeling
+
+PURPOSE:
+  Lets the user label bounce, hit, no_event, uncertain, or skipped frames.
+
+INPUTS:
+  - video path
+  - selected frames
+  - ball labels
+  - automatic events
+  - OpenCV UI settings
+
+OUTPUTS:
+  - new manual event labels
+  - frames shown
+  - warnings
+  - errors
+
+CALLED BY:
+  - scripts/run_stage_8_2_event_labeling_helper.py
+
+WHY PRODUCT OWNER CARES:
+  This creates ground truth for event validation and prevents side-view replay from guessing event semantics.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/event_labeling.py and go to line 240.
+  Search: def collect_event_labels_interactively
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: compare_manual_events_to_auto_events
+FILE: src/tennis_vision/event_labeling.py
+LINE: 364
+AREA: Stage 8.2 - Manual Event Labeling
+
+PURPOSE:
+  Compares manual event labels against automatic event hypotheses.
+
+INPUTS:
+  - manual event labels
+  - automatic events
+  - candidate window
+
+OUTPUTS:
+  - comparison rows
+  - match summary
+
+CALLED BY:
+  - scripts/run_stage_8_2_event_labeling_helper.py
+
+WHY PRODUCT OWNER CARES:
+  This reveals whether the model is confusing hits, bounces, and uncertain interactions.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/event_labeling.py and go to line 364.
+  Search: def compare_manual_events_to_auto_events
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: load_durable_event_labels
+FILE: src/tennis_vision/event_labeling.py
+LINE: 104
+AREA: Stage 8.2 - Manual Event Labeling
+
+PURPOSE:
+  Loads persisted manual event labels or the latest timestamped session backup.
+
+INPUTS:
+  - manual event labels path
+
+OUTPUTS:
+  - labels
+  - source metadata
+  - warnings
+
+CALLED BY:
+  - scripts/run_stage_8_2_event_labeling_helper.py
+
+WHY PRODUCT OWNER CARES:
+  Manual event labels should persist and become the default validation source.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/event_labeling.py and go to line 104.
+  Search: def load_durable_event_labels
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: write_event_label_session_backup
+FILE: src/tennis_vision/event_labeling.py
+LINE: 431
+AREA: Stage 8.2 - Manual Event Labeling
+
+PURPOSE:
+  Writes timestamped backups for labels collected in an interactive session.
+
+INPUTS:
+  - session directory
+  - timestamp
+  - labels
+
+OUTPUTS:
+  - backup CSV and JSON paths
+
+CALLED BY:
+  - scripts/run_stage_8_2_event_labeling_helper.py
+
+WHY PRODUCT OWNER CARES:
+  Protects manual event labeling work from accidental overwrite.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/event_labeling.py and go to line 431.
+  Search: def write_event_label_session_backup
+
+NOTES:
+  None.
+
+---
+
+## Stage 8.3 - Event Validation
+
+FUNCTION: group_manual_event_windows
+FILE: src/tennis_vision/event_validation.py
+LINE: 72
+AREA: Stage 8.3 - Event Validation
+
+PURPOSE:
+  Groups adjacent manual bounce labels into one bounce window.
+
+INPUTS:
+  - manual event labels
+  - bounce window gap
+
+OUTPUTS:
+  - manual event window rows
+
+CALLED BY:
+  - scripts/run_stage_8_3_event_validation.py
+
+WHY PRODUCT OWNER CARES:
+  A real bounce can span several video frames, so nearby bounce labels should not become separate bounces.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/event_validation.py and go to line 72.
+  Search: def group_manual_event_windows
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: classify_validation_status
+FILE: src/tennis_vision/event_validation.py
+LINE: 206
+AREA: Stage 8.3 - Event Validation
+
+PURPOSE:
+  Compares one automatic event with nearby manual labels or windows.
+
+INPUTS:
+  - automatic event
+  - manual evidence
+  - manual hit count
+  - frame range
+  - validation window
+
+OUTPUTS:
+  - validation status
+  - reason
+
+CALLED BY:
+  - build_validation_results
+
+WHY PRODUCT OWNER CARES:
+  This makes the automatic event decision explainable before reclassification.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/event_validation.py and go to line 206.
+  Search: def classify_validation_status
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: reclassify_auto_event
+FILE: src/tennis_vision/event_reclassification.py
+LINE: 11
+AREA: Stage 8.3 - Event Validation
+
+PURPOSE:
+  Reclassifies automatic hit/bounce hypotheses using manual event labels.
+
+INPUTS:
+  - automatic event
+  - validation status
+  - nearest manual label
+  - manual hit count
+
+OUTPUTS:
+  - validated event type
+  - render role
+  - confidence adjustment
+  - reason
+
+CALLED BY:
+  - scripts/run_stage_8_3_event_validation.py
+
+WHY PRODUCT OWNER CARES:
+  This prevents the renderer from showing implausible hits when manual labels indicate bounce or no-event.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/event_reclassification.py and go to line 11.
+  Search: def reclassify_auto_event
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: build_validated_event_timeline
+FILE: src/tennis_vision/event_reclassification.py
+LINE: 77
+AREA: Stage 8.3 - Event Validation
+
+PURPOSE:
+  Builds the downstream validated event timeline from validation results.
+
+INPUTS:
+  - event validation result rows
+
+OUTPUTS:
+  - validated event timeline rows
+
+CALLED BY:
+  - scripts/run_stage_8_3_event_validation.py
+
+WHY PRODUCT OWNER CARES:
+  Stage 14.3 can consume this instead of raw possible_hit hypotheses.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/event_reclassification.py and go to line 77.
+  Search: def build_validated_event_timeline
 
 NOTES:
   None.
@@ -2695,7 +3044,7 @@ NOTES:
 
 FUNCTION: interpolate_side_view_motion
 FILE: src/tennis_vision/ball_flight_estimator.py
-LINE: 305
+LINE: 309
 AREA: Stage 14 - Side-View Replay
 
 PURPOSE:
@@ -2715,7 +3064,7 @@ WHY PRODUCT OWNER CARES:
   It smooths the animation while keeping interpolated positions distinct from measured keyframes.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/ball_flight_estimator.py and go to line 305.
+  Open src/tennis_vision/ball_flight_estimator.py and go to line 309.
   Search: def interpolate_side_view_motion
 
 NOTES:
@@ -2725,7 +3074,7 @@ NOTES:
 
 FUNCTION: render_side_view_frame
 FILE: src/tennis_vision/replay_renderer_side_view.py
-LINE: 221
+LINE: 253
 AREA: Stage 14 - Side-View Replay
 
 PURPOSE:
@@ -2748,7 +3097,7 @@ WHY PRODUCT OWNER CARES:
   This creates the first side-view replay visualization from analysis data.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/replay_renderer_side_view.py and go to line 221.
+  Open src/tennis_vision/replay_renderer_side_view.py and go to line 253.
   Search: def render_side_view_frame
 
 NOTES:
@@ -2758,7 +3107,7 @@ NOTES:
 
 FUNCTION: render_side_view_frames
 FILE: src/tennis_vision/replay_renderer_side_view.py
-LINE: 246
+LINE: 279
 AREA: Stage 14 - Side-View Replay
 
 PURPOSE:
@@ -2782,7 +3131,7 @@ WHY PRODUCT OWNER CARES:
   Frame rendering is the primary success condition for the side-view replay.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/replay_renderer_side_view.py and go to line 246.
+  Open src/tennis_vision/replay_renderer_side_view.py and go to line 279.
   Search: def render_side_view_frames
 
 NOTES:
@@ -2792,7 +3141,7 @@ NOTES:
 
 FUNCTION: export_side_view_video
 FILE: src/tennis_vision/replay_renderer_side_view.py
-LINE: 275
+LINE: 313
 AREA: Stage 14 - Side-View Replay
 
 PURPOSE:
@@ -2815,7 +3164,7 @@ WHY PRODUCT OWNER CARES:
   Video export is useful but codec-dependent, so it is not required for renderer success.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/replay_renderer_side_view.py and go to line 275.
+  Open src/tennis_vision/replay_renderer_side_view.py and go to line 313.
   Search: def export_side_view_video
 
 NOTES:
@@ -2975,7 +3324,7 @@ NOTES:
 
 FUNCTION: create_semantic_debug_image
 FILE: src/tennis_vision/replay_renderer_side_view.py
-LINE: 327
+LINE: 365
 AREA: Stage 14.1 - Side-View Patch
 
 PURPOSE:
@@ -2999,7 +3348,7 @@ WHY PRODUCT OWNER CARES:
   The Product Owner can inspect whether bounces are grounded and hits/interpolation are labeled clearly.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/replay_renderer_side_view.py and go to line 327.
+  Open src/tennis_vision/replay_renderer_side_view.py and go to line 365.
   Search: def create_semantic_debug_image
 
 NOTES:
@@ -3138,7 +3487,7 @@ NOTES:
 
 FUNCTION: assign_event_render_role
 FILE: src/tennis_vision/replay_renderer_side_view.py
-LINE: 415
+LINE: 490
 AREA: Stage 14.2 - Side-View Event Disambiguation
 
 PURPOSE:
@@ -3158,8 +3507,139 @@ WHY PRODUCT OWNER CARES:
   This makes the side-view easier to read and prevents ambiguous tennis interpretation.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/replay_renderer_side_view.py and go to line 415.
+  Open src/tennis_vision/replay_renderer_side_view.py and go to line 490.
   Search: def assign_event_render_role
+
+NOTES:
+  None.
+
+---
+
+## Stage 14.3 - Validated Events Side-View
+
+FUNCTION: load_validated_event_source
+FILE: src/tennis_vision/validated_event_source.py
+LINE: 18
+AREA: Stage 14.3 - Validated Events Side-View
+
+PURPOSE:
+  Loads Stage 8.3 validated events as the preferred source for side-view rendering.
+
+INPUTS:
+  - project root
+  - replay schema
+  - optional preferred Stage 8.3 path
+
+OUTPUTS:
+  - normalized events
+  - source metadata
+  - warnings
+  - errors
+  - render summary
+
+CALLED BY:
+  - scripts/run_stage_14_side_view_replay.py
+
+WHY PRODUCT OWNER CARES:
+  Prevents raw automatic possible hits from being rendered as physical events.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/validated_event_source.py and go to line 18.
+  Search: def load_validated_event_source
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: map_validated_event_to_render_role
+FILE: src/tennis_vision/validated_event_source.py
+LINE: 74
+AREA: Stage 14.3 - Validated Events Side-View
+
+PURPOSE:
+  Converts validated and reclassified event labels into physical or annotation render roles.
+
+INPUTS:
+  - event row
+  - source name
+  - replay schema
+
+OUTPUTS:
+  - normalized event record with render policy
+
+CALLED BY:
+  - load_validated_event_source
+
+WHY PRODUCT OWNER CARES:
+  Separates real visual contact markers from uncertain model guesses.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/validated_event_source.py and go to line 74.
+  Search: def map_validated_event_to_render_role
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: summarize_validated_render_events
+FILE: src/tennis_vision/validated_event_source.py
+LINE: 161
+AREA: Stage 14.3 - Validated Events Side-View
+
+PURPOSE:
+  Counts validated bounces, validated hits, downgraded hit annotations, rejected events, and unvalidated annotations.
+
+INPUTS:
+  - normalized event records
+
+OUTPUTS:
+  - render count summary
+
+CALLED BY:
+  - scripts/run_stage_14_side_view_replay.py
+
+WHY PRODUCT OWNER CARES:
+  The Product Owner can confirm that no unvalidated hit is being rendered as a physical contact.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/validated_event_source.py and go to line 161.
+  Search: def summarize_validated_render_events
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: create_validated_events_debug_image
+FILE: src/tennis_vision/replay_renderer_side_view.py
+LINE: 429
+AREA: Stage 14.3 - Validated Events Side-View
+
+PURPOSE:
+  Creates a debug image showing the main ball path, validated event source, and annotation policy.
+
+INPUTS:
+  - schema
+  - display points
+  - events
+  - players
+  - output path
+  - event source
+
+OUTPUTS:
+  - validated-event debug image
+
+CALLED BY:
+  - scripts/run_stage_14_side_view_replay.py
+
+WHY PRODUCT OWNER CARES:
+  This lets the Product Owner verify that validated bounces are grounded and unvalidated hits are annotations only.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/replay_renderer_side_view.py and go to line 429.
+  Search: def create_validated_events_debug_image
 
 NOTES:
   None.
@@ -3170,7 +3650,7 @@ NOTES:
 
 FUNCTION: update_lab_notebook
 FILE: src/tennis_vision/lab_notebook.py
-LINE: 2268
+LINE: 2530
 AREA: Lab Notebook
 
 PURPOSE:
@@ -3190,7 +3670,7 @@ WHY PRODUCT OWNER CARES:
   Keeps execution evidence current without manual documentation commands.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/lab_notebook.py and go to line 2268.
+  Open src/tennis_vision/lab_notebook.py and go to line 2530.
   Search: def update_lab_notebook
 
 NOTES:

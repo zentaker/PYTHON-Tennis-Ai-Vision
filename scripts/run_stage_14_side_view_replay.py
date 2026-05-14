@@ -15,16 +15,18 @@ if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
 from tennis_vision.ball_flight_estimator import build_side_view_keyframes, downgrade_implausible_hits  # noqa: E402
-from tennis_vision.friction import calculate_stage_14_1_friction_score, calculate_stage_14_2_friction_score, calculate_stage_14_friction_score  # noqa: E402
+from tennis_vision.friction import calculate_stage_14_1_friction_score, calculate_stage_14_2_friction_score, calculate_stage_14_3_friction_score, calculate_stage_14_friction_score  # noqa: E402
 from tennis_vision.replay_renderer_side_view import (  # noqa: E402
     create_semantic_debug_image,
     create_side_contact_sheet,
+    create_validated_events_debug_image,
     export_side_view_video,
     load_replay_schema,
     render_side_view_frames,
     write_side_view_manifest,
 )
 from tennis_vision.report import ensure_output_folders, utc_timestamp, write_json_report, write_markdown_report, write_timestamped_log  # noqa: E402
+from tennis_vision.validated_event_source import load_validated_event_source, summarize_validated_render_events  # noqa: E402
 
 
 def parse_args() -> argparse.Namespace:
@@ -36,6 +38,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--no-interpolate", dest="interpolate", action="store_false")
     parser.add_argument("--interpolation-steps", type=int, default=8)
     parser.add_argument("--no-video", action="store_true")
+    parser.add_argument("--validated-events", type=Path, default=PROJECT_ROOT / "outputs" / "timeline" / "stage_8_3_event_validation" / "validated_event_timeline.csv")
     return parser.parse_args()
 
 
@@ -117,6 +120,35 @@ def recommended_event_patch_next_step(report: dict[str, Any]) -> str:
     return "Fix Stage 14.2 blockers, then rerun the side-view patch."
 
 
+def determine_validated_events_verdict(report: dict[str, Any]) -> str:
+    """Return Stage 14.3 verdict from validated-event rendering flags."""
+    flags = report["flags"]
+    if flags["replay_schema_missing"] or flags["render_frames_failed"]:
+        return "blocked"
+    if flags["downgraded_hits_rendered_as_physical"]:
+        return "needs_more_side_view_tuning"
+    if not report["validated_event_source_available"]:
+        return "ready_with_warnings" if report["event_source_used"] != "missing" else "blocked"
+    if report["validated_hits_rendered_count"] == 0:
+        return "ready_with_warnings"
+    if flags["video_export_failed"] or report["warnings"]:
+        return "ready_with_warnings"
+    return "ready_for_stage_15"
+
+
+def recommended_validated_events_next_step(report: dict[str, Any]) -> str:
+    """Return Stage 14.3 next step text."""
+    if report["final_verdict"] == "ready_for_stage_15":
+        return "Proceed to Stage 15: Multi-Camera Analytical Replay."
+    if report["final_verdict"] == "ready_with_warnings" and report["validated_hits_rendered_count"] == 0:
+        return "Proceed to Stage 15 for multi-camera prototype, or collect manual hit labels before showing confident side-view hit markers."
+    if report["final_verdict"] == "needs_more_side_view_tuning":
+        return "Tune the side-view renderer so downgraded hits remain annotations only."
+    if report["event_source_used"] == "missing":
+        return "Regenerate Stage 8.3 event validation or a fallback event timeline, then rerun Stage 14.3."
+    return "Fix Stage 14.3 blockers, then rerun the side-view renderer."
+
+
 def field_block(rows: list[tuple[str, Any]]) -> str:
     lines: list[str] = []
     for key, value in rows:
@@ -172,6 +204,13 @@ def build_side_view_summary(report: dict[str, Any]) -> str:
         "  Bounce events remain grounded.",
         "  Player interaction cues are visually separated from hit and bounce labels.",
         "  Synthetic height is still estimated, not measured.",
+        "",
+        "VALIDATED EVENT SOURCE PATCH",
+        f"  Event source used: {report.get('event_source_used', 'Not available')}",
+        f"  Validated bounces rendered: {report.get('validated_bounces_rendered_count', 0)}",
+        f"  Validated hits rendered: {report.get('validated_hits_rendered_count', 0)}",
+        f"  Downgraded hits shown as annotation: {report.get('downgraded_hits_annotation_count', 0)}",
+        "  Rejected, unvalidated, and downgraded events are not physical ball-contact markers.",
         "",
         "OUTPUTS",
         f"  Frames: {outputs['frames_dir']}",
@@ -309,20 +348,56 @@ def build_event_patch_report_sections(report: dict[str, Any]) -> list[tuple[str,
     ]
 
 
+def build_validated_events_report_sections(report: dict[str, Any]) -> list[tuple[str, str]]:
+    """Build plain-text-friendly Stage 14.3 report sections."""
+    return [
+        ("VERDICT", field_block([("Final verdict", report["final_verdict"]), ("Friction", f"{report['friction']['score']} ({report['friction']['band']})"), ("Event source used", report["event_source_used"])])),
+        (
+            "VALIDATED EVENT SOURCE",
+            field_block(
+                [
+                    ("Stage 8.3 available", report["validated_event_source_available"]),
+                    ("Source path", report["event_source_path"]),
+                    ("Fallback used", report["fallback_used"]),
+                ]
+            ),
+        ),
+        (
+            "RENDERING BEHAVIOR",
+            field_block(
+                [
+                    ("Validated bounces rendered", report["validated_bounces_rendered_count"]),
+                    ("Validated hits rendered", report["validated_hits_rendered_count"]),
+                    ("Downgraded hits shown as annotation", report["downgraded_hits_annotation_count"]),
+                    ("Rejected events ignored", report["rejected_events_ignored_count"]),
+                    ("Unvalidated events shown as annotation", report["unvalidated_events_annotation_count"]),
+                    ("Main path physical-only", report["main_path_physical_events_only"]),
+                    ("Annotation band enabled", report["annotation_band_enabled"]),
+                ]
+            ),
+        ),
+        ("WHY THIS PATCH EXISTS", "Previous side-view versions rendered raw possible_hit hypotheses too strongly. Stage 8.3 now provides validated and reclassified event semantics, so the side-view uses that layer before drawing physical contact markers."),
+        ("LIMITATIONS", "- no validated hit labels yet\n- no true 3D height\n- side-view is still synthetic\n- bounces are validated from manual labels\n- hits remain unconfirmed until manually labeled"),
+        ("WARNINGS", bullet_list(report["warnings"], "No warnings.")),
+        ("ERRORS", bullet_list(report["errors"], "No errors.")),
+        ("NEXT STEP", report["recommended_next_step"]),
+    ]
+
+
 def update_lab_notebook_safely() -> tuple[dict[str, Path], str | None]:
     try:
         from tennis_vision.lab_notebook import lab_notebook_paths, update_lab_notebook
 
         update_lab_notebook(PROJECT_ROOT)
-        return lab_notebook_paths(PROJECT_ROOT, "stage_14_2"), None
+        return lab_notebook_paths(PROJECT_ROOT, "stage_14_3"), None
     except Exception as exc:
         try:
             from tennis_vision.lab_notebook import lab_notebook_paths
 
-            return lab_notebook_paths(PROJECT_ROOT, "stage_14_2"), f"Lab notebook update failed: {exc}"
+            return lab_notebook_paths(PROJECT_ROOT, "stage_14_3"), f"Lab notebook update failed: {exc}"
         except Exception:
             return {
-                "stage_page": PROJECT_ROOT / "docs" / "lab-notebook" / "stage_14_side_view_replay.md",
+                "stage_page": PROJECT_ROOT / "docs" / "lab-notebook" / "stage_14_3_validated_events_side_view.md",
                 "experiment_index": PROJECT_ROOT / "docs" / "lab-notebook" / "experiment_index.md",
             }, f"Lab notebook update failed: {exc}"
 
@@ -331,15 +406,16 @@ def print_summary(report: dict[str, Any], lab_paths: dict[str, Path]) -> None:
     rows = [
         ("Verdict", report["final_verdict"]),
         ("Friction", f"{report['friction']['score']} ({report['friction']['band']})"),
-        ("Player-aware hit validation", report.get("player_aware_hit_validation_enabled", True)),
-        ("Event render roles", report.get("event_render_roles_enabled", True)),
-        ("Implausible hits downgraded", report.get("implausible_hits_downgraded_count", 0)),
-        ("Plausible hits", report.get("plausible_hits_count", 0)),
-        ("Plausible bounces", report.get("plausible_bounces_count", 0)),
-        ("Uncertain events", report.get("uncertain_events_count", 0)),
+        ("Event source used", report.get("event_source_used", "")),
+        ("Stage 8.3 available", report.get("validated_event_source_available", False)),
+        ("Validated bounces rendered", report.get("validated_bounces_rendered_count", 0)),
+        ("Validated hits rendered", report.get("validated_hits_rendered_count", 0)),
+        ("Downgraded hit annotations", report.get("downgraded_hits_annotation_count", 0)),
+        ("Rejected events ignored", report.get("rejected_events_ignored_count", 0)),
+        ("Unvalidated annotations", report.get("unvalidated_events_annotation_count", 0)),
         ("Frames generated", report["frames_generated"]),
         ("Video generated", report["video_generated"]),
-        ("Semantic debug", report.get("semantic_debug_artifact", "")),
+        ("Validated debug", report.get("validated_events_debug_path", "")),
         ("Manifest", report.get("manifest_path") or report.get("output_paths", {}).get("manifest_path", "")),
         ("Lab notebook", lab_paths["stage_page"]),
         ("Recommended next step", report["recommended_next_step"]),
@@ -348,14 +424,14 @@ def print_summary(report: dict[str, Any], lab_paths: dict[str, Path]) -> None:
         from rich.console import Console
         from rich.table import Table
 
-        table = Table(title="Stage 14.2 Side-View Event Disambiguation")
+        table = Table(title="Stage 14.3 Side-View Validated Events")
         table.add_column("Field", style="cyan", no_wrap=True)
         table.add_column("Value", style="white")
         for field, value in rows:
             table.add_row(str(field), str(value))
         Console().print(table)
     except ImportError:
-        print("Stage 14.2 Side-View Event Disambiguation")
+        print("Stage 14.3 Side-View Validated Events")
         for field, value in rows:
             print(f"{field}: {value}")
 
@@ -366,6 +442,7 @@ def main() -> int:
     timestamp = utc_timestamp()
     schema_path = resolve_path(args.schema)
     output_dir = resolve_path(args.output_dir)
+    validated_events_path = resolve_path(args.validated_events)
     output_dir.mkdir(parents=True, exist_ok=True)
 
     schema, warnings, errors = load_replay_schema(schema_path)
@@ -373,8 +450,24 @@ def main() -> int:
     keyframes = list(schema.get("ball_trajectory", {}).get("replay_keyframes", [])) if schema else []
     events = list(schema.get("event_timeline", [])) if schema else []
     players = list(schema.get("players", [])) if schema else []
-    enriched_events, event_role_summary = downgrade_implausible_hits(events, players)
-    side_view_keyframes = build_side_view_keyframes(schema) if schema else []
+    event_source = load_validated_event_source(PROJECT_ROOT, schema, preferred_path=validated_events_path) if schema else {
+        "events": [],
+        "event_source_used": "missing",
+        "event_source_path": "",
+        "event_source_priority": [],
+        "validated_event_source_available": False,
+        "fallback_used": False,
+        "warnings": [],
+        "errors": [],
+        "summary": summarize_validated_render_events([]),
+    }
+    warnings.extend(event_source.get("warnings", []))
+    errors.extend(event_source.get("errors", []))
+    enriched_events = event_source.get("events", [])
+    event_role_summary = event_source.get("summary", summarize_validated_render_events(enriched_events))
+    if not enriched_events:
+        enriched_events, event_role_summary = downgrade_implausible_hits(events, players)
+    side_view_keyframes = build_side_view_keyframes(schema, event_rows=enriched_events) if schema else []
 
     frame_paths: list[Path] = []
     render_context: dict[str, Any] = {"side_view_keyframes": side_view_keyframes, "display_points": [], "players": players, "events": enriched_events, "event_render_role_summary": event_role_summary}
@@ -384,10 +477,11 @@ def main() -> int:
             output_dir=output_dir,
             interpolate=args.interpolate,
             interpolation_steps=args.interpolation_steps,
+            event_rows=enriched_events,
         )
         warnings.extend(frame_warnings)
         errors.extend(frame_errors)
-        event_role_summary = render_context.get("event_render_role_summary", event_role_summary)
+        event_role_summary = render_context.get("event_render_role_summary", event_role_summary) or summarize_validated_render_events(render_context.get("events", []))
         enriched_events = render_context.get("events", enriched_events)
 
     frames_dir = output_dir / "frames"
@@ -396,6 +490,7 @@ def main() -> int:
     final_frame_path = output_dir / "side_view_final_frame.jpg"
     arc_preview_path = output_dir / "side_view_arc_preview.jpg"
     semantic_debug_path = output_dir / "side_view_semantic_debug.jpg"
+    validated_events_debug_path = output_dir / "side_view_validated_events_debug.jpg"
     manifest_path = output_dir / "side_view_manifest.json"
     summary_path = output_dir / "side_view_summary.md"
 
@@ -409,6 +504,7 @@ def main() -> int:
 
     contact_sheet_generated = False
     semantic_debug_generated = False
+    validated_events_debug_generated = False
     if frame_paths:
         contact_sheet_generated, contact_warnings = create_side_contact_sheet(frame_paths, contact_sheet_path)
         warnings.extend(contact_warnings)
@@ -424,6 +520,15 @@ def main() -> int:
             output_path=semantic_debug_path,
         )
         warnings.extend(debug_warnings)
+        validated_events_debug_generated, validated_debug_warnings = create_validated_events_debug_image(
+            schema=schema,
+            display_points=render_context.get("display_points", []),
+            events=render_context.get("events", []),
+            players=render_context.get("players", []),
+            output_path=validated_events_debug_path,
+            event_source_used=event_source.get("event_source_used", "missing"),
+        )
+        warnings.extend(validated_debug_warnings)
 
     output_paths = {
         "frames_dir": str(frames_dir),
@@ -432,6 +537,7 @@ def main() -> int:
         "final_frame_path": str(final_frame_path),
         "arc_preview_path": str(arc_preview_path),
         "semantic_debug_path": str(semantic_debug_path),
+        "validated_events_debug_path": str(validated_events_debug_path),
         "manifest_path": str(manifest_path),
         "summary_path": str(summary_path),
     }
@@ -463,6 +569,15 @@ def main() -> int:
         "render_frames_failed": len(frame_paths) == 0,
         "video_export_failed": bool(frame_paths and not args.no_video and not video_generated),
     }
+    validated_event_flags = {
+        "replay_schema_missing": not bool(schema),
+        "event_source_missing": event_source.get("event_source_used") == "missing",
+        "validated_event_source_missing": not bool(event_source.get("validated_event_source_available")),
+        "render_frames_failed": len(frame_paths) == 0,
+        "video_export_failed": bool(frame_paths and not args.no_video and not video_generated),
+        "validated_debug_generation_failed": bool(frame_paths and not validated_events_debug_generated),
+        "downgraded_hits_rendered_as_physical": downgraded_hits_rendered_as_physical(enriched_events),
+    }
     friction = calculate_stage_14_friction_score(**flags, warnings_count=len(warnings), errors_count=len(errors))
     report: dict[str, Any] = {
         "timestamp": timestamp,
@@ -490,6 +605,12 @@ def main() -> int:
         "plausible_bounces_count": event_role_summary.get("plausible_bounces_count", 0),
         "uncertain_events_count": event_role_summary.get("uncertain_events_count", 0),
         "player_interactions_count": event_role_summary.get("player_interactions_count", 0),
+        "event_source_used": event_source.get("event_source_used", "missing"),
+        "validated_event_source_available": event_source.get("validated_event_source_available", False),
+        "fallback_used": event_source.get("fallback_used", False),
+        "validated_bounces_rendered_count": event_role_summary.get("validated_bounces_rendered_count", event_role_summary.get("plausible_bounces_count", 0)),
+        "validated_hits_rendered_count": event_role_summary.get("validated_hits_rendered_count", event_role_summary.get("plausible_hits_count", 0)),
+        "downgraded_hits_annotation_count": event_role_summary.get("downgraded_hits_annotation_count", event_role_summary.get("implausible_hits_downgraded_count", 0)),
         "warnings": warnings,
         "errors": errors,
         "flags": flags,
@@ -529,6 +650,16 @@ def main() -> int:
                 "plausible_hits_count": event_role_summary.get("plausible_hits_count", 0),
                 "plausible_bounces_count": event_role_summary.get("plausible_bounces_count", 0),
                 "uncertain_events_count": event_role_summary.get("uncertain_events_count", 0),
+                "validated_event_source_used": bool(event_source.get("validated_event_source_available")),
+                "event_source_path": event_source.get("event_source_path", ""),
+                "event_source_priority": event_source.get("event_source_priority", []),
+                "validated_bounces_rendered_count": event_role_summary.get("validated_bounces_rendered_count", 0),
+                "validated_hits_rendered_count": event_role_summary.get("validated_hits_rendered_count", 0),
+                "downgraded_hits_annotation_count": event_role_summary.get("downgraded_hits_annotation_count", 0),
+                "rejected_events_ignored_count": event_role_summary.get("rejected_events_ignored_count", 0),
+                "unvalidated_events_annotation_count": event_role_summary.get("unvalidated_events_annotation_count", 0),
+                "main_path_physical_events_only": True,
+                "annotation_band_enabled": True,
                 "height_anchor_summary": summarize_height_anchors(side_view_keyframes),
                 "semantic_warnings": semantic_warnings(side_view_keyframes),
                 "output_paths": output_paths,
@@ -606,6 +737,40 @@ def main() -> int:
     event_patch_report["final_verdict"] = determine_event_patch_verdict(event_patch_report)
     event_patch_report["recommended_next_step"] = recommended_event_patch_next_step(event_patch_report)
 
+    validated_event_friction = calculate_stage_14_3_friction_score(**validated_event_flags, warnings_count=len(warnings), errors_count=len(errors))
+    validated_event_report: dict[str, Any] = {
+        "timestamp": timestamp,
+        "stage": "stage_14_3_validated_events_side_view",
+        "source_stage": "8.3",
+        "event_source_used": event_source.get("event_source_used", "missing"),
+        "event_source_path": event_source.get("event_source_path", ""),
+        "event_source_priority": event_source.get("event_source_priority", []),
+        "validated_event_source_available": bool(event_source.get("validated_event_source_available")),
+        "fallback_used": bool(event_source.get("fallback_used")),
+        "validated_bounces_rendered_count": event_role_summary.get("validated_bounces_rendered_count", 0),
+        "validated_hits_rendered_count": event_role_summary.get("validated_hits_rendered_count", 0),
+        "downgraded_hits_annotation_count": event_role_summary.get("downgraded_hits_annotation_count", 0),
+        "rejected_events_ignored_count": event_role_summary.get("rejected_events_ignored_count", 0),
+        "unvalidated_events_annotation_count": event_role_summary.get("unvalidated_events_annotation_count", 0),
+        "main_path_physical_events_only": True,
+        "annotation_band_enabled": True,
+        "frames_generated": len(frame_paths),
+        "video_generated": video_generated,
+        "validated_events_debug_path": str(validated_events_debug_path) if validated_events_debug_path.exists() else "",
+        "warnings": warnings,
+        "errors": errors,
+        "flags": validated_event_flags,
+        "friction": validated_event_friction,
+        "final_verdict": "blocked",
+        "recommended_next_step": "",
+        "output_paths": output_paths,
+    }
+    if validated_event_report["validated_hits_rendered_count"] == 0:
+        validated_event_report["warnings"] = list(dict.fromkeys(validated_event_report["warnings"] + ["No validated hit labels are available yet; confident hit markers are not rendered."]))
+        validated_event_report["friction"] = calculate_stage_14_3_friction_score(**validated_event_flags, warnings_count=len(validated_event_report["warnings"]), errors_count=len(errors))
+    validated_event_report["final_verdict"] = determine_validated_events_verdict(validated_event_report)
+    validated_event_report["recommended_next_step"] = recommended_validated_events_next_step(validated_event_report)
+
     log_path = write_timestamped_log(
         PROJECT_ROOT,
         "stage_14_side_view_replay",
@@ -632,21 +797,28 @@ def main() -> int:
     event_patch_report["markdown_report_path"] = str(PROJECT_ROOT / "outputs" / "reports" / "stage_14_2_side_view_event_disambiguation_report.md")
     write_json_report(Path(event_patch_report["json_report_path"]), event_patch_report)
     write_markdown_report(Path(event_patch_report["markdown_report_path"]), "Stage 14.2 Side-View Event Disambiguation Report", build_event_patch_report_sections(event_patch_report))
+    validated_event_report["json_report_path"] = str(PROJECT_ROOT / "outputs" / "reports" / "stage_14_3_validated_events_side_view_report.json")
+    validated_event_report["markdown_report_path"] = str(PROJECT_ROOT / "outputs" / "reports" / "stage_14_3_validated_events_side_view_report.md")
+    write_json_report(Path(validated_event_report["json_report_path"]), validated_event_report)
+    write_markdown_report(Path(validated_event_report["markdown_report_path"]), "Stage 14.3 Side-View Replay with Validated Events Report", build_validated_events_report_sections(validated_event_report))
 
     lab_paths, notebook_warning = update_lab_notebook_safely()
     if notebook_warning:
         report["warnings"].append(notebook_warning)
         patch_report["warnings"].append(notebook_warning)
         event_patch_report["warnings"].append(notebook_warning)
+        validated_event_report["warnings"].append(notebook_warning)
         write_json_report(Path(report["json_report_path"]), report)
         write_markdown_report(Path(report["markdown_report_path"]), "Stage 14 Side-View Ball Flight Renderer Report", build_report_sections(report))
         write_json_report(Path(patch_report["json_report_path"]), patch_report)
         write_markdown_report(Path(patch_report["markdown_report_path"]), "Stage 14.1 Side-View Height Semantics Patch Report", build_patch_report_sections(patch_report))
         write_json_report(Path(event_patch_report["json_report_path"]), event_patch_report)
         write_markdown_report(Path(event_patch_report["markdown_report_path"]), "Stage 14.2 Side-View Event Disambiguation Report", build_event_patch_report_sections(event_patch_report))
+        write_json_report(Path(validated_event_report["json_report_path"]), validated_event_report)
+        write_markdown_report(Path(validated_event_report["markdown_report_path"]), "Stage 14.3 Side-View Replay with Validated Events Report", build_validated_events_report_sections(validated_event_report))
         print(f"Warning: {notebook_warning}")
-    print_summary(event_patch_report, lab_paths)
-    return 1 if event_patch_report["final_verdict"] == "blocked" else 0
+    print_summary(validated_event_report, lab_paths)
+    return 1 if validated_event_report["final_verdict"] == "blocked" else 0
 
 
 def summarize_height_anchors(side_view_keyframes: list[dict[str, Any]]) -> dict[str, int]:
@@ -684,7 +856,7 @@ def validate_player_aware_hit_validation(events: list[dict[str, Any]], players: 
         return True
     if not players:
         return False
-    return all(event.get("player_aware_plausibility_status") in {"plausible", "implausible"} for event in raw_hits)
+    return all(event.get("player_aware_plausibility_status") in {"plausible", "implausible", "validated", "not_physical"} for event in raw_hits)
 
 
 def validate_implausible_hit_downgrade(events: list[dict[str, Any]]) -> bool:
@@ -698,8 +870,19 @@ def validate_implausible_hit_downgrade(events: list[dict[str, Any]]) -> bool:
 
 
 def validate_render_role_assignment(events: list[dict[str, Any]]) -> bool:
-    valid_roles = {"hit_plausible", "bounce_plausible", "player_interaction", "uncertain_event", "interpolation_only"}
+    valid_roles = {"hit_plausible", "bounce_plausible", "player_interaction", "uncertain_event", "interpolation_only", "rejected_event", "trajectory_annotation"}
     return all(str(event.get("render_role") or "") in valid_roles for event in events)
+
+
+def downgraded_hits_rendered_as_physical(events: list[dict[str, Any]]) -> bool:
+    """Return true if a downgraded/unvalidated hit would be rendered as a physical hit."""
+    for event in events:
+        raw_type = str(event.get("raw_event_type") or event.get("event_type") or "").lower()
+        role = str(event.get("render_role") or "").lower()
+        validated_type = str(event.get("validated_event_type") or event.get("event_type") or "").lower()
+        if "hit" in raw_type and role == "hit_plausible" and "validated" not in validated_type and event.get("side_view_physical_event"):
+            return True
+    return False
 
 
 if __name__ == "__main__":
