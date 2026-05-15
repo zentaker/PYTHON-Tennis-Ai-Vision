@@ -2054,6 +2054,515 @@ NOTES:
 
 ---
 
+## Ball Tracking Model Benchmark
+
+FUNCTION: run_benchmark
+FILE: src/tennis_vision/ball_tracking_benchmark.py
+LINE: 82
+AREA: Ball Tracking Model Benchmark
+
+PURPOSE:
+  Runs requested ball tracking model adapters against manual full-rally event
+  timings, projects resolved positions, validates them with tennis-sequence
+  rules, and prepares benchmark summaries.
+
+INPUTS:
+  - project root
+  - manual annotation path
+  - source video path
+  - model names
+  - output directory
+
+OUTPUTS:
+  - per-event benchmark rows
+  - per-model summary rows
+  - benchmark report payload
+
+CALLED BY:
+  - scripts/run_ball_tracking_model_benchmark.py
+
+WHY PRODUCT OWNER CARES:
+  This separates detector/model feasibility from replay rendering so bad
+  spatial anchors do not get hidden inside generated videos.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/ball_tracking_benchmark.py and go to line 82.
+  Search: def run_benchmark
+
+NOTES:
+  Replay generation is intentionally not part of the default benchmark run.
+
+---
+
+FUNCTION: resolve_event_position
+FILE: src/tennis_vision/model_adapters/baseline_ball_adapter.py
+LINE: 54
+AREA: Ball Tracking Model Benchmark
+
+PURPOSE:
+  Resolves one manual event using the existing Stage 5.1 HSV/motion hybrid
+  local candidate generator.
+
+INPUTS:
+  - video path
+  - event row
+  - event search window
+  - precomputed baseline context
+
+OUTPUTS:
+  - image-space candidate position or unresolved status
+
+CALLED BY:
+  - run_benchmark
+
+WHY PRODUCT OWNER CARES:
+  This is the current detector family that failed replay feasibility, so it is
+  the baseline for any replacement.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/model_adapters/baseline_ball_adapter.py and go to line 54.
+  Search: def resolve_event_position
+
+NOTES:
+  Candidate output is later projected and validated by tennis-sequence rules.
+
+---
+
+FUNCTION: check_availability
+FILE: src/tennis_vision/model_adapters/tracknet_adapter.py
+LINE: 14
+AREA: Ball Tracking Model Benchmark
+
+PURPOSE:
+  Checks local folders for TrackNet-style implementation files and pretrained
+  weights without downloading anything.
+
+INPUTS:
+  - project root
+
+OUTPUTS:
+  - availability status and reason
+
+CALLED BY:
+  - run_benchmark
+
+WHY PRODUCT OWNER CARES:
+  TrackNet-style temporal heatmaps are a likely better model family for fast
+  tennis balls, but the benchmark must report honestly when the model is not
+  locally available.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/model_adapters/tracknet_adapter.py and go to line 14.
+  Search: def check_availability
+
+NOTES:
+  This adapter does not fake inference when weights or implementation are
+  missing.
+
+---
+
+FUNCTION: check_availability
+FILE: src/tennis_vision/model_adapters/sam_assisted_adapter.py
+LINE: 15
+AREA: Ball Tracking Model Benchmark
+
+PURPOSE:
+  Checks for local Segment Anything dependencies and weights without installing
+  or downloading heavy models.
+
+INPUTS:
+  - project root
+
+OUTPUTS:
+  - availability status and reason
+
+CALLED BY:
+  - run_benchmark
+
+WHY PRODUCT OWNER CARES:
+  SAM may help with segmentation, but this project needs to know whether it is
+  locally available and practical before building downstream assumptions.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/model_adapters/sam_assisted_adapter.py and go to line 15.
+  Search: def check_availability
+
+NOTES:
+  SAM is treated as unavailable unless local dependencies and weights are
+  already present.
+
+---
+
+## TrackNet Integration Readiness
+
+FUNCTION: load_tracknet_registry
+FILE: src/tennis_vision/model_adapters/tracknet_adapter.py
+LINE: 57
+AREA: TrackNet Replay Pipeline
+
+PURPOSE:
+  Loads the local registry of supported TrackNet, TrackNetV2, TrackNetV3,
+  TrackNetV4, and custom variants.
+
+INPUTS:
+  - project root
+
+OUTPUTS:
+  - registry payload and variant definitions
+
+CALLED BY:
+  - discover_tracknet_assets
+
+WHY PRODUCT OWNER CARES:
+  The project can now explain which TrackNet variant is missing architecture
+  code, weights, or inference wiring instead of returning a vague unavailable
+  status.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/model_adapters/tracknet_adapter.py and search:
+  def load_tracknet_registry
+
+NOTES:
+  The registry lives at configs/models/tracknet_registry.json.
+
+---
+
+FUNCTION: discover_tracknet_assets
+FILE: src/tennis_vision/model_adapters/tracknet_adapter.py
+LINE: 90
+AREA: TrackNet Replay Pipeline
+
+PURPOSE:
+  Checks each registered TrackNet variant for architecture availability and
+  matching local weights.
+
+INPUTS:
+  - project root
+  - optional explicit weights path
+
+OUTPUTS:
+  - variants checked
+  - architecture found status
+  - weights found status
+
+CALLED BY:
+  - select_tracknet_variant
+  - check_availability
+
+WHY PRODUCT OWNER CARES:
+  This is the bridge from scaffold to real model integration. It reports the
+  exact missing piece before replay is attempted.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/model_adapters/tracknet_adapter.py and search:
+  def discover_tracknet_assets
+
+NOTES:
+  It does not download weights or fake inference.
+
+---
+
+FUNCTION: select_tracknet_variant
+FILE: src/tennis_vision/model_adapters/tracknet_adapter.py
+LINE: 125
+AREA: TrackNet Replay Pipeline
+
+PURPOSE:
+  Selects the best registered TrackNet variant that has weights and architecture,
+  or reports why no variant is ready.
+
+INPUTS:
+  - project root
+  - optional explicit weights path
+
+OUTPUTS:
+  - selected variant metadata
+
+CALLED BY:
+  - check_availability
+
+WHY PRODUCT OWNER CARES:
+  The replay pipeline can move from manual setup to automatic variant choice
+  once real TrackNet assets are added.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/model_adapters/tracknet_adapter.py and search:
+  def select_tracknet_variant
+
+NOTES:
+  A selected variant is not the same as ready_for_inference.
+
+---
+
+FUNCTION: preprocess_clip
+FILE: src/tennis_vision/model_adapters/tracknet_adapter.py
+AREA: TrackNet Replay Pipeline
+
+PURPOSE:
+  Converts OpenCV BGR frames into common TrackNet temporal tensors.
+
+INPUTS:
+  - short list of video frames
+  - input size
+
+OUTPUTS:
+  - channel-stack tensor
+  - sequence tensor
+  - input and original image sizes
+
+CALLED BY:
+  - infer_clip
+
+WHY PRODUCT OWNER CARES:
+  TrackNet must operate on temporal clips instead of isolated blobs. This
+  function is the bridge from local video frames to temporal model input.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/model_adapters/tracknet_adapter.py and search:
+  def preprocess_clip
+
+NOTES:
+  This does not use YOLO/HSV fallback and does not create fake positions.
+
+---
+
+FUNCTION: infer_clip
+FILE: src/tennis_vision/model_adapters/tracknet_adapter.py
+AREA: TrackNet Replay Pipeline
+
+PURPOSE:
+  Runs a ready full PyTorch TrackNet-style model on a temporal clip and decodes
+  output into frame-level ball coordinates.
+
+INPUTS:
+  - loaded model
+  - video frames
+  - frame-index context
+
+OUTPUTS:
+  - ball x/y rows with confidence and source model
+
+CALLED BY:
+  - track_video_segment
+
+WHY PRODUCT OWNER CARES:
+  This is the real integration point that turns local TrackNet weights into
+  ball tracking outputs for replay feasibility.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/model_adapters/tracknet_adapter.py and search:
+  def infer_clip
+
+NOTES:
+  Full model files can run through the generic path. State-dict checkpoints
+  still require a matching architecture wrapper.
+
+---
+
+FUNCTION: decode_heatmap
+FILE: src/tennis_vision/model_adapters/tracknet_adapter.py
+AREA: TrackNet Replay Pipeline
+
+PURPOSE:
+  Converts TrackNet-style heatmap peaks or direct coordinate outputs into
+  image-space ball coordinates.
+
+INPUTS:
+  - model output tensor
+  - frame indices
+  - original and input image sizes
+
+OUTPUTS:
+  - normalized per-frame ball tracking rows
+
+CALLED BY:
+  - infer_clip
+
+WHY PRODUCT OWNER CARES:
+  Replay quality depends on measured ball x/y from the temporal model, not
+  guessed court anchors.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/model_adapters/tracknet_adapter.py and search:
+  def decode_heatmap
+
+NOTES:
+  Supports common heatmap and coordinate output shapes but does not pretend to
+  handle unknown architecture-specific formats.
+
+---
+
+FUNCTION: maybe_render_replays
+FILE: src/tennis_vision/tracknet_replay_pipeline.py
+AREA: TrackNet Replay Pipeline
+
+PURPOSE:
+  Generates top-view and side-view replays only when TrackNet validation
+  produces enough valid physical anchors.
+
+INPUTS:
+  - validated event rows
+  - output directory
+  - render toggle
+
+OUTPUTS:
+  - render status and replay artifact paths
+
+CALLED BY:
+  - run_tracknet_replay_pipeline
+
+WHY PRODUCT OWNER CARES:
+  The renderer must not draw fake tennis geometry when ball positions are
+  missing or suspicious.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/tracknet_replay_pipeline.py and search:
+  def maybe_render_replays
+
+NOTES:
+  Suspicious, invalid, or unresolved events stay annotation-only.
+
+---
+
+## SAM-Assisted Replay Pipeline
+
+FUNCTION: check_availability
+FILE: src/tennis_vision/model_adapters/sam_assisted_adapter.py
+AREA: SAM-Assisted Replay Pipeline
+
+PURPOSE:
+  Checks local SAM/SAM2 dependencies and weight files without downloading
+  anything.
+
+INPUTS:
+  - project root
+  - optional weights path
+
+OUTPUTS:
+  - dependency status
+  - weight status
+  - ready_for_inference status
+
+CALLED BY:
+  - scripts/check_sam_assisted_integration.py
+  - run_sam_assisted_replay_pipeline
+
+WHY PRODUCT OWNER CARES:
+  SAM/SAM2 is only useful if it is really available locally. This function
+  prevents the pipeline from silently pretending segmentation exists.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/model_adapters/sam_assisted_adapter.py and search:
+  def check_availability
+
+NOTES:
+  SAM/SAM2 is experimental for tennis balls and must not be treated as a
+  TrackNet replacement unless validation proves it.
+
+---
+
+FUNCTION: initialize_prompt
+FILE: src/tennis_vision/model_adapters/sam_assisted_adapter.py
+AREA: SAM-Assisted Replay Pipeline
+
+PURPOSE:
+  Looks for a trusted ball seed near a manual event window.
+
+INPUTS:
+  - manual event
+  - seed rows
+  - tolerance
+
+OUTPUTS:
+  - seed point x/y or seed_missing reason
+
+CALLED BY:
+  - track_events_with_sam
+
+WHY PRODUCT OWNER CARES:
+  SAM requires prompts. If there is no trusted ball seed, the system must
+  block instead of guessing.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/model_adapters/sam_assisted_adapter.py and search:
+  def initialize_prompt
+
+NOTES:
+  Missing seeds produce blocked_seed_missing in the pipeline.
+
+---
+
+FUNCTION: track_clip
+FILE: src/tennis_vision/model_adapters/sam_assisted_adapter.py
+AREA: SAM-Assisted Replay Pipeline
+
+PURPOSE:
+  Runs prompt-based SAM segmentation over a small event clip and converts mask
+  centroids into ball x/y rows.
+
+INPUTS:
+  - video path
+  - manual event
+  - search frame range
+  - loaded SAM predictor
+  - seed prompt
+
+OUTPUTS:
+  - tracked frame rows
+
+CALLED BY:
+  - track_events_with_sam
+
+WHY PRODUCT OWNER CARES:
+  This is the actual segmentation-assisted localization hook. It does not run
+  unless local SAM assets and a seed are available.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/model_adapters/sam_assisted_adapter.py and search:
+  def track_clip
+
+NOTES:
+  No YOLO/HSV fallback is used here.
+
+---
+
+FUNCTION: run_sam_assisted_replay_pipeline
+FILE: src/tennis_vision/sam_assisted_replay_pipeline.py
+AREA: SAM-Assisted Replay Pipeline
+
+PURPOSE:
+  Runs the SAM/SAM2-assisted feasibility pipeline or writes clean blocked
+  reports.
+
+INPUTS:
+  - video
+  - manual annotation
+  - optional SAM weights
+
+OUTPUTS:
+  - ball tracking CSV
+  - projected positions CSV
+  - event positions CSV
+  - replay schema
+  - SAM replay reports
+
+CALLED BY:
+  - scripts/run_sam_assisted_replay_pipeline.py
+
+WHY PRODUCT OWNER CARES:
+  This gives the project a second non-baseline path to test ball localization
+  without creating fake replay geometry.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/sam_assisted_replay_pipeline.py and search:
+  def run_sam_assisted_replay_pipeline
+
+NOTES:
+  Physical replays are generated only if enough valid anchors pass sequence
+  validation.
+
+---
+
 FUNCTION: collect_event_labels_timeline_viewer
 FILE: src/tennis_vision/event_labeling.py
 LINE: 665

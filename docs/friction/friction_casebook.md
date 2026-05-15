@@ -5,6 +5,64 @@ It uses case blocks instead of wide tables.
 
 ---
 
+CASE: F043 - Wrong detector family for tennis ball event localization
+AREA: Ball tracking / model selection / spatial replay feasibility
+
+WHAT HAPPENED:
+  The baseline detector found high-scoring local blobs that passed color and
+  motion criteria but failed tennis-sequence plausibility.
+
+ROOT CAUSE:
+  YOLO/HSV/local candidate detection is not enough for small, fast, temporally
+  dependent tennis ball tracking.
+
+IMPACT:
+  Manual timing could not be converted into trustworthy spatial ball positions.
+
+RESOLUTION:
+  Benchmark temporal ball tracking alternatives such as TrackNet-style heatmap
+  models and SAM-assisted tracking.
+
+REUSABLE RULE:
+  For fast sports balls, benchmark temporal trackers before building downstream
+  replay or coaching features.
+
+RELATED STAGES:
+  Stage 5.1
+  Manual Full-Rally Replay
+  Ball Tracking Model Benchmark
+
+---
+
+CASE: F044 - Baseline detector failed; TrackNet path became required
+AREA: Ball tracking / replay feasibility / model family selection
+
+WHAT HAPPENED:
+  The YOLO/HSV/local candidate detector failed spatial event localization even
+  with correct manual timing.
+
+ROOT CAUSE:
+  The detector identified high-scoring blobs without robust temporal ball
+  tracking and tennis-sequence understanding.
+
+IMPACT:
+  Top-view and side-view replay became spatially invalid.
+
+RESOLUTION:
+  Implement a TrackNet-style temporal ball tracking path as the new primary
+  feasibility route.
+
+REUSABLE RULE:
+  For tennis ball localization, temporal tracking must be benchmarked before
+  replay or coaching features.
+
+RELATED STAGES:
+  Manual Full-Rally Replay
+  Ball Tracking Model Benchmark
+  TrackNet Replay Pipeline
+
+---
+
 CASE: F034 - Bounce windows are not enough for future line calling
 AREA: Event labeling / spatial localization / future line calling
 
@@ -1174,3 +1232,155 @@ RELATED STAGES:
   Stage 9.1
   Stage 13
   Stage 14
+
+---
+
+CASE F043 - TrackNet became the primary replacement path for failed local detection
+
+AREA:
+  Ball tracking / replay feasibility / model integration
+
+WHAT HAPPENED:
+  Manual timing was reliable, but the YOLO/HSV/local candidate detector chose
+  high-scoring false positives and produced spatial anchors that failed tennis
+  sequence validation.
+
+ROOT CAUSE:
+  Small, fast tennis balls need temporal tracking. Isolated local color or
+  blob detection did not provide enough context to distinguish the ball from
+  plausible-looking false positives.
+
+IMPACT:
+  Top-view and side-view replay could become geometrically wrong even when the
+  event chronology was correct.
+
+RESOLUTION:
+  Make the TrackNet-style temporal tracker the primary replay feasibility path.
+  The pipeline now refuses fake anchors, runs only when local TrackNet assets
+  are ready, and produces blocked reports when weights or architecture are
+  missing.
+
+REUSABLE RULE:
+  For tennis replay, temporal tracking must be trusted before downstream
+  rendering. If model assets are missing, fail cleanly instead of substituting
+  weaker detector output.
+
+RELATED STAGES:
+  TrackNet Replay Pipeline
+  Ball Tracking Model Benchmark
+  Manual Full-Rally Replay
+  Stage 13
+  Stage 14
+
+---
+
+CASE F044 - SAM assistance needs prompts and must not become fake tracking
+
+AREA:
+  Ball tracking / segmentation assistance / replay feasibility
+
+WHAT HAPPENED:
+  TrackNet remained the preferred route, but local weights or architecture may
+  be missing. A second candidate path was needed to test whether segmentation
+  assistance can help localize the tennis ball.
+
+ROOT CAUSE:
+  SAM/SAM2 can segment prompted objects, but it is not automatically a tennis
+  ball tracker. Without a trusted prompt, it can create the same false
+  confidence problem as weaker local detectors.
+
+IMPACT:
+  If SAM/SAM2 were allowed to guess without seeds, replay could again render
+  invalid physical anchors.
+
+RESOLUTION:
+  Add a SAM-assisted replay scaffold that checks dependencies and weights,
+  requires trusted ball seeds, validates event positions, and refuses fake
+  anchors when unavailable.
+
+REUSABLE RULE:
+  Segmentation models used for tracking must have prompt provenance and
+  validation. Missing prompts are a blocked state, not a reason to invent
+  positions.
+
+RELATED STAGES:
+  SAM-Assisted Replay Pipeline
+  TrackNet Replay Pipeline
+  Ball Tracking Model Benchmark
+  Manual Full-Rally Replay
+
+---
+
+CASE F045 - Feasibility gate blocked by ball localization model availability and quality
+
+AREA:
+  Feasibility decision / ball localization / product gating
+
+WHAT HAPPENED:
+  The project had reliable manual full-rally timing, but none of the tested
+  localization paths produced a trustworthy full-rally replay. The baseline
+  detector failed spatial validation, TrackNet was blocked by missing weights,
+  and SAM/SAM2 was blocked by missing dependencies and weights.
+
+ROOT CAUSE:
+  Temporal event annotation, court calibration, and replay rendering were ahead
+  of reliable ball localization. The baseline detector could generate
+  plausible-looking but wrong anchors, while the better candidate model paths
+  were not yet available locally.
+
+IMPACT:
+  Product-stage replay, coaching, and future line-calling work cannot be
+  trusted yet. Continuing feature work before resolving localization would
+  risk building polished outputs on invalid spatial data.
+
+RESOLUTION:
+  Create a final feasibility decision report and pause product/replay expansion
+  until compatible TrackNet weights and architecture are integrated locally.
+  If TrackNet fails after integration, reassess capture quality and model
+  strategy.
+
+REUSABLE RULE:
+  Feasibility gates must stop downstream product work when the core measured
+  signal is unavailable or untrustworthy, even if the surrounding pipeline can
+  render attractive outputs.
+
+RELATED STAGES:
+  Manual Full-Rally Forensic Audit
+  Ball Tracking Model Benchmark
+  TrackNet Replay Pipeline
+  SAM-Assisted Replay Pipeline
+  Feasibility Decision Report
+
+---
+
+CASE F046 - Failed baseline path needed explicit quarantine
+
+AREA:
+  Safety guardrails / replay trust / baseline deprecation
+
+WHAT HAPPENED:
+  The baseline detector generated spatially invalid replays but remained
+  available in the codebase as runnable scripts.
+
+ROOT CAUSE:
+  Historical scripts can continue to run even after a feasibility failure unless
+  the failed path is explicitly quarantined.
+
+IMPACT:
+  Users may accidentally trust outputs from a failed model path, especially
+  when the renderer still produces polished videos and reports.
+
+RESOLUTION:
+  Add explicit failed-baseline warnings and require --allow-failed-baseline for
+  baseline replay generation or explicit baseline benchmark runs.
+
+REUSABLE RULE:
+  When a model path fails feasibility, quarantine it instead of silently leaving
+  it as a default path.
+
+RELATED STAGES:
+  Manual Full-Rally Replay
+  Stage 13
+  Stage 14
+  Ball Tracking Model Benchmark
+  Feasibility Decision Report

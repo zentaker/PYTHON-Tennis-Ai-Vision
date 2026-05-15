@@ -33,6 +33,33 @@ Stage 0 Environment Doctor
   -> Stage 14.1 Side-View Height Semantics Patch
   -> Stage 14.2 Side-View Event Disambiguation Patch
   -> Stage 14.3 Side-View Replay with Validated Events
+  -> Ball Tracking Model Benchmark
+  -> TrackNet Replay Pipeline
+  -> SAM-Assisted Replay Pipeline
+
+---
+
+FAILED BASELINE PATH
+
+STATUS:
+  Deprecated for trusted replay and core ball localization.
+
+WHY:
+  The YOLO/HSV/local detector failed the manual full-rally spatial feasibility
+  test. It produced invalid or suspicious ball anchors even when manual event
+  timing was correct.
+
+RULE:
+  Historical baseline scripts may remain for debugging and comparison, but
+  they must not be used for trusted replay, coaching, tactical depth, or line
+  calling.
+
+GUARDRAIL:
+  Replay scripts that use the failed baseline path require:
+    --allow-failed-baseline
+
+PREFERRED NEXT PATH:
+  TrackNet-style temporal ball tracking.
 
 ---
 
@@ -649,3 +676,87 @@ NOTES:
   resolves ball positions locally near each event, projects them to court
   coordinates, and renders side-view trajectories as synthetic curves. These
   curves are visual approximations, not measured 3D physics.
+
+---
+
+STAGE: Ball Tracking Model Benchmark
+NAME: Compare Ball Tracking Alternatives for Manual Rally Events
+STATUS: Current model feasibility benchmark
+MAIN SCRIPT: scripts/run_ball_tracking_model_benchmark.py
+MAIN MODULES:
+  - src/tennis_vision/ball_tracking_benchmark.py
+  - src/tennis_vision/model_adapters/baseline_ball_adapter.py
+  - src/tennis_vision/model_adapters/tracknet_adapter.py
+  - src/tennis_vision/model_adapters/sam_assisted_adapter.py
+READS:
+  - configs/manual_annotations/video_01_full_rally.json
+  - samples/video_01.mov
+  - outputs/reports/stage_3_court_calibration_probe_report.json
+WRITES:
+  - outputs/benchmarks/ball_tracking_model_benchmark/model_event_results.csv
+  - outputs/benchmarks/ball_tracking_model_benchmark/model_summary.csv
+  - outputs/reports/ball_tracking_model_benchmark_report.*
+NOTES:
+  Benchmarks local detector/model alternatives against manual event timing.
+  TrackNet and SAM adapters report unavailable when local code or weights are
+  missing; they do not fake results or download large models.
+
+---
+
+STAGE: TrackNet Replay Pipeline
+NAME: End-to-End TrackNet-Style Replay Path
+STATUS: Implemented integration path / blocked until local TrackNet weights exist
+MAIN SCRIPT: scripts/run_tracknet_replay_pipeline.py
+MAIN MODULES:
+  - src/tennis_vision/tracknet_replay_pipeline.py
+  - src/tennis_vision/model_adapters/tracknet_adapter.py
+  - src/tennis_vision/tennis_sequence_validator.py
+READS:
+  - samples/video_01.mov
+  - configs/manual_annotations/video_01_full_rally.json
+  - outputs/reports/stage_3_court_calibration_probe_report.json
+WRITES:
+  - outputs/tracknet_replay/video_01/ball_tracking_results.csv
+  - outputs/tracknet_replay/video_01/projected_ball_positions.csv
+  - outputs/tracknet_replay/video_01/event_position_results.csv
+  - outputs/tracknet_replay/video_01/top_view_replay.mp4
+  - outputs/tracknet_replay/video_01/side_view_replay.mp4
+  - outputs/tracknet_replay/video_01/replay_schema.json
+  - outputs/tracknet_replay/video_01/tracknet_replay_report.*
+  - outputs/reports/tracknet_replay_pipeline_report.*
+NOTES:
+  This command is the new primary replay feasibility path after the local
+  YOLO/HSV detector failed spatial validation. It does not fake TrackNet
+  results. If weights or dependencies are missing, it writes a blocked report
+  and clear placement instructions.
+  A full PyTorch TrackNet-style model can run through the generic temporal
+  clip adapter. State-dict checkpoints still require a matching architecture
+  wrapper.
+
+---
+
+STAGE: SAM-Assisted Replay Pipeline
+NAME: Experimental SAM/SAM2-Assisted Replay Path
+STATUS: Implemented scaffold / blocked until local SAM assets and seeds exist
+MAIN SCRIPT: scripts/run_sam_assisted_replay_pipeline.py
+MAIN MODULES:
+  - src/tennis_vision/sam_assisted_replay_pipeline.py
+  - src/tennis_vision/model_adapters/sam_assisted_adapter.py
+  - src/tennis_vision/tennis_sequence_validator.py
+READS:
+  - samples/video_01.mov
+  - configs/manual_annotations/video_01_full_rally.json
+  - configs/models/sam_assisted_config.json
+  - outputs/reports/stage_3_court_calibration_probe_report.json
+WRITES:
+  - outputs/sam_replay/video_01/ball_tracking_results.csv
+  - outputs/sam_replay/video_01/projected_ball_positions.csv
+  - outputs/sam_replay/video_01/event_position_results.csv
+  - outputs/sam_replay/video_01/replay_schema.json
+  - outputs/sam_replay/video_01/sam_replay_report.*
+  - outputs/reports/sam_assisted_replay_pipeline_report.*
+NOTES:
+  SAM/SAM2 is experimental for tennis ball localization and is not equivalent
+  to TrackNet unless it resolves positions correctly.
+  The pipeline requires a trusted ball seed point near event windows. Without
+  that seed, it reports blocked_seed_missing instead of guessing ball position.

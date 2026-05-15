@@ -1,0 +1,110 @@
+{
+  "registry_version": "tracknet_registry.v2",
+  "variants": {
+    "tracknet_v1": {
+      "model_family": "tracknet",
+      "architecture_module_expected": "tennis_vision.model_adapters.tracknet_architectures",
+      "architecture_class_expected": "TrackNetV1Model",
+      "expected_architecture_module": "tennis_vision.model_adapters.tracknet_architectures:TrackNetV1Model",
+      "weights_patterns": [
+        "models/tracknet/weights/tracknet.pt",
+        "models/tracknet/weights/tracknet.pth"
+      ],
+      "expected_weights_patterns": [
+        "models/tracknet/weights/tracknet.pt",
+        "models/tracknet/weights/tracknet.pth"
+      ],
+      "input_frames": 3,
+      "input_frame_count": 3,
+      "expected_input_shape": "temporal clip tensor, implementation-specific",
+      "output_type": "heatmap",
+      "expected_output_type": "heatmap",
+      "status": "not_installed",
+      "notes": "Classic TrackNet-style temporal heatmap tracker. Needs concrete architecture code and matching pretrained weights."
+    },
+    "tracknet_v2": {
+      "model_family": "tracknetv2",
+      "architecture_module_expected": "tennis_vision.model_adapters.tracknet_architectures",
+      "architecture_class_expected": "TrackNetV2Model",
+      "expected_architecture_module": "tennis_vision.model_adapters.tracknet_architectures:TrackNetV2Model",
+      "weights_patterns": [
+        "models/tracknet/weights/tracknetv2.pt",
+        "models/tracknet/weights/tracknetv2.pth"
+      ],
+      "expected_weights_patterns": [
+        "models/tracknet/weights/tracknetv2.pt",
+        "models/tracknet/weights/tracknetv2.pth"
+      ],
+      "input_frames": 3,
+      "input_frame_count": 3,
+      "expected_input_shape": "temporal clip tensor, implementation-specific",
+      "output_type": "heatmap",
+      "expected_output_type": "heatmap",
+      "status": "not_installed",
+      "notes": "TrackNetV2-style tracker. Needs concrete architecture code and matching pretrained weights."
+    },
+    "tracknet_v3": {
+      "model_family": "tracknetv3",
+      "architecture_module_expected": "tennis_vision.model_adapters.tracknet_architectures",
+      "architecture_class_expected": "TrackNetV3Model",
+      "expected_architecture_module": "tennis_vision.model_adapters.tracknet_architectures:TrackNetV3Model",
+      "weights_patterns": [
+        "models/tracknet/weights/tracknetv3.pt",
+        "models/tracknet/weights/tracknetv3.pth"
+      ],
+      "expected_weights_patterns": [
+        "models/tracknet/weights/tracknetv3.pt",
+        "models/tracknet/weights/tracknetv3.pth"
+      ],
+      "input_frames": 3,
+      "input_frame_count": 3,
+      "expected_input_shape": "temporal clip tensor, implementation-specific",
+      "output_type": "heatmap",
+      "expected_output_type": "heatmap",
+      "status": "not_installed",
+      "notes": "TrackNetV3-style tracker. Needs concrete architecture code and matching pretrained weights."
+    },
+    "tracknet_v4": {
+      "model_family": "tracknetv4",
+      "architecture_module_expected": "tennis_vision.model_adapters.tracknet_architectures",
+      "architecture_class_expected": "TrackNetV4Model",
+      "expected_architecture_module": "tennis_vision.model_adapters.tracknet_architectures:TrackNetV4Model",
+      "weights_patterns": [
+        "models/tracknet/weights/tracknetv4.pt",
+        "models/tracknet/weights/tracknetv4.pth"
+      ],
+      "expected_weights_patterns": [
+        "models/tracknet/weights/tracknetv4.pt",
+        "models/tracknet/weights/tracknetv4.pth"
+      ],
+      "input_frames": 3,
+      "input_frame_count": 3,
+      "expected_input_shape": "temporal clip tensor, implementation-specific",
+      "output_type": "unknown",
+      "expected_output_type": "unknown",
+      "status": "not_installed",
+      "notes": "TrackNetV4 is reserved for compatible future implementations. Needs exact preprocessing and decode details."
+    },
+    "custom_tracknet": {
+      "model_family": "custom_tracknet",
+      "architecture_module_expected": "tennis_vision.model_adapters.tracknet_architectures",
+      "architecture_class_expected": "TrackNetInferenceModel",
+      "expected_architecture_module": "tennis_vision.model_adapters.tracknet_architectures:TrackNetInferenceModel",
+      "weights_patterns": [
+        "models/tracknet/weights/custom_tracknet.pt",
+        "models/tracknet/weights/custom_tracknet.pth"
+      ],
+      "expected_weights_patterns": [
+        "models/tracknet/weights/custom_tracknet.pt",
+        "models/tracknet/weights/custom_tracknet.pth"
+      ],
+      "input_frames": 3,
+      "input_frame_count": 3,
+      "expected_input_shape": "temporal clip tensor, implementation-specific",
+      "output_type": "unknown",
+      "expected_output_type": "unknown",
+      "status": "architecture_missing",
+      "notes": "Base placeholder interface only. Replace with a concrete custom implementation before inference."
+    }
+  }
+}

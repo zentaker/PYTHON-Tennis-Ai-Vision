@@ -1,0 +1,58 @@
+{
+  "availability": {
+    "architecture_available": false,
+    "available": false,
+    "base_dependencies_available": true,
+    "dependencies_available": false,
+    "missing_dependencies": [],
+    "model_name": "sam_assisted_candidate",
+    "next_action": "Install local segment_anything or sam2 support, then add matching local weights. TrackNet remains the preferred primary path.",
+    "ready_for_inference": false,
+    "reason": "No local segment_anything or sam2 Python dependency is installed.",
+    "sam2_available": false,
+    "sam2_weights_found": false,
+    "sam2_weights_path": "",
+    "sam_family_available": false,
+    "sam_weights_found": false,
+    "sam_weights_path": "",
+    "searched_weight_paths": [
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\models\\sam\\weights\\sam.pt",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\models\\sam\\weights\\sam.pth",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\models\\sam\\weights\\sam_vit_b.pth",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\models\\sam\\weights\\sam_vit_l.pth",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\models\\sam\\weights\\sam_vit_h.pth",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\models\\sam\\weights",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\models\\sam2\\weights\\sam2.pt",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\models\\sam2\\weights\\sam2.pth",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\models\\sam2\\weights",
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\models\\sam2\\checkpoints"
+    ],
+    "seed_available": false,
+    "seed_prompt_strategy_available": true,
+    "seed_required": true,
+    "segment_anything_available": false,
+    "selected_backend": "none",
+    "status": "dependency_missing",
+    "status_values": [
+      "dependency_missing",
+      "weights_missing",
+      "seed_missing",
+      "inference_not_implemented",
+      "ready_for_inference",
+      "unsupported_backend",
+      "model_load_failed"
+    ],
+    "weights_found": false,
+    "weights_path": ""
+  },
+  "missing_requirements": [
+    "segment_anything or sam2 dependency",
+    "SAM .pt/.pth weights",
+    "SAM2 .pt/.pth weights"
+  ],
+  "next_action": "Install local segment_anything or sam2 support, then add matching local weights. TrackNet remains the preferred primary path.",
+  "recommended_next_step": "Install local segment_anything or sam2 support, then add matching local weights. TrackNet remains the preferred primary path.",
+  "stage": "sam_assisted_integration_check",
+  "status": "dependency_missing",
+  "timestamp": "2026-05-15T17:19:31.276564+00:00"
+}

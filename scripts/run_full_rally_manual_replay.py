@@ -20,6 +20,7 @@ if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
 from tennis_vision.court_zones import COURT_HEIGHT, COURT_WIDTH  # noqa: E402
+from tennis_vision.baseline_quarantine import annotate_report_with_failed_baseline_warning, failed_baseline_block_message, print_failed_baseline_warning  # noqa: E402
 from tennis_vision.manual_event_position_resolver import (  # noqa: E402
     load_manual_full_rally_annotation,
     normalize_manual_events,
@@ -44,6 +45,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--event-position-search-padding", type=int, default=3)
     parser.add_argument("--fallback-tolerance", type=int, default=8)
     parser.add_argument("--resize-width", type=int, default=1280)
+    parser.add_argument("--allow-failed-baseline", action="store_true", help="Allow the failed YOLO/HSV/local baseline replay path for explicit research only.")
     return parser.parse_args()
 
 
@@ -632,6 +634,10 @@ def to_float(value: Any) -> float | None:
 
 def main() -> int:
     args = parse_args()
+    if not args.allow_failed_baseline:
+        print(failed_baseline_block_message())
+        return 2
+    print_failed_baseline_warning()
     annotation_path = resolve(args.annotation)
     output_dir = resolve(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -707,6 +713,7 @@ Safety rule:
     side_result = render_side_view(timeline, output_dir, args.fps)
     write_json(output_dir / "replay_manifest.json", {"generated_at": datetime.now(timezone.utc).isoformat(), "manual_annotation": str(annotation_path), "resolution_summary": resolution_summary, "top_view": top_result, "side_view": side_result})
     report = build_report(annotation_path=annotation_path, annotation=annotation, resolved=resolved, timeline=timeline, top_result=top_result, side_result=side_result, summary=resolution_summary, output_dir=output_dir)
+    annotate_report_with_failed_baseline_warning(report)
     REPORT_DIR.mkdir(parents=True, exist_ok=True)
     write_json(REPORT_DIR / "manual_full_rally_replay_report.json", report)
     (REPORT_DIR / "manual_full_rally_replay_report.md").write_text(report_markdown(report), encoding="utf-8")

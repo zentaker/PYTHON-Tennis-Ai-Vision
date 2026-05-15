@@ -1,0 +1,37 @@
+{
+  "model_family": "tracknet",
+  "supported_variants": [
+    "tracknet",
+    "tracknetv2",
+    "tracknetv3"
+  ],
+  "default_weights_search_paths": [
+    "models/tracknet/weights/tracknet.pt",
+    "models/tracknet/weights/tracknet.pth",
+    "models/tracknet/weights/tracknetv2.pt",
+    "models/tracknet/weights/tracknetv2.pth",
+    "models/tracknet/weights/tracknetv3.pt",
+    "models/tracknet/weights/tracknetv3.pth",
+    "models/tracknet/weights/tracknetv4.pt",
+    "models/tracknet/weights/tracknetv4.pth"
+  ],
+  "expected_input": {
+    "type": "sequence of frames / temporal clip",
+    "notes": "TrackNet must use temporal context, not isolated single-frame detection."
+  },
+  "expected_output": {
+    "type": "heatmap or x/y ball coordinate",
+    "fields": [
+      "frame_index",
+      "ball_x",
+      "ball_y",
+      "confidence"
+    ]
+  },
+  "fps_default": 60,
+  "notes": [
+    "TrackNet must be used as temporal tracker, not isolated frame detector.",
+    "Do not fall back to YOLO/HSV in the TrackNet replay pipeline.",
+    "Do not fake ball positions when weights or architecture are missing."
+  ]
+}

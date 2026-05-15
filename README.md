@@ -8,6 +8,22 @@ Stage 9.1: court zone tuning and projection coverage.
 
 Stage 0 checks the local Python environment, required folders, required package imports, and whether `ffmpeg` is available from the terminal. Stage 1 loads a local sample video with OpenCV, reads metadata, extracts frames, and writes reports. Stage 2 runs a small local YOLO CPU baseline on sampled frames and saves annotated output. Stage 3 creates a manual court calibration reference frame and point overlay. Stage 3.1 helps read or select court point coordinates. Stage 4 probes simple local ball candidate detection. Stage 4.1 creates manual ball labels for ground truth. Stage 5 filters candidates and projects selected points into the calibrated court plane. Stage 5.1 improves candidate generation. Stage 6 smooths the trajectory. Stage 7 and 7.1 add player interaction and identity filtering. Stage 8 and 8.1 build and validate a hypothesis-only event timeline. Stage 9 creates first tactical metrics, and Stage 9.1 improves projection coverage so fewer validated ball labels become unknown zones.
 
+## Failed Baseline Path
+
+The YOLO/HSV/local detector path is deprecated for core tennis ball localization.
+It failed the manual full-rally spatial feasibility test and must not be used
+for trusted replay, coaching, tactical depth, or line calling.
+
+The code remains in the repository as historical baseline and debugging
+reference. Replay scripts that use this failed path require:
+
+```powershell
+--allow-failed-baseline
+```
+
+Use that flag only for explicit research or historical comparison. TrackNet is
+the preferred next path for proving tennis ball localization feasibility.
+
 ## Documentation Map
 
 Use these files when reviewing the project without reading source code first:

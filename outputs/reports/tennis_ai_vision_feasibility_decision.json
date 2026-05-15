@@ -1,0 +1,111 @@
+{
+  "answers": {
+    "baseline_worked": false,
+    "feasibility_proven": false,
+    "sam_run": false,
+    "tracknet_run": false,
+    "trustworthy_side_view_replay_exists": false,
+    "trustworthy_top_view_replay_exists": false
+  },
+  "critical_blockers": [
+    "TrackNet architecture missing",
+    "TrackNet weights missing",
+    "TrackNet ready_for_inference false",
+    "SAM/SAM2 dependencies missing",
+    "SAM/SAM2 weights missing",
+    "SAM/SAM2 ready_for_inference false"
+  ],
+  "do_not_continue": [
+    "line calling",
+    "coaching reports",
+    "product UI",
+    "second rally transfer"
+  ],
+  "friction_lessons": [
+    "model availability must be checked before building downstream stages",
+    "replay can render technically while being spatially invalid",
+    "manual timing is useful but not enough without reliable ball localization",
+    "YOLO/HSV baseline should not be used as the core bounce/localization model"
+  ],
+  "input_reports": {
+    "ball_tracking_model_benchmark": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\ball_tracking_model_benchmark_report.json",
+    "manual_full_rally_forensic_audit": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\manual_full_rally_forensic_audit.json",
+    "sam_assisted_replay_local": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\sam_replay\\video_01\\sam_replay_report.json",
+    "sam_assisted_replay_pipeline": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\sam_assisted_replay_pipeline_report.json",
+    "tracknet_replay_local": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tracknet_replay\\video_01\\tracknet_replay_report.json",
+    "tracknet_replay_pipeline": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\tracknet_replay_pipeline_report.json"
+  },
+  "model_path_results": {
+    "baseline": {
+      "reason": "Manual full-rally replay was not trustworthy. Valid positions: 6; suspicious positions: 6; wrong-side-likely events: 4.",
+      "status": "failed",
+      "trustworthy": false
+    },
+    "sam_assisted": {
+      "missing": [
+        "SAM/SAM2 dependencies missing",
+        "SAM/SAM2 weights missing",
+        "SAM/SAM2 ready_for_inference false"
+      ],
+      "ready_for_inference": false,
+      "reason": "No local segment_anything or sam2 Python dependency is installed.",
+      "replay_generated": false,
+      "side_view_generated": false,
+      "status": "blocked_dependency_missing",
+      "top_view_generated": false,
+      "tracked_frames": 0,
+      "trustworthy": false,
+      "valid_positions": 0
+    },
+    "tracknet": {
+      "missing": [
+        "TrackNet architecture missing",
+        "TrackNet weights missing",
+        "TrackNet ready_for_inference false"
+      ],
+      "ready_for_inference": false,
+      "reason": "No local TrackNet/TrackNetV2/TrackNetV3/TrackNetV4 weights found. Place weights under models/tracknet/weights/ or pass --tracknet-weights.",
+      "replay_generated": false,
+      "side_view_generated": false,
+      "status": "blocked_weights_missing",
+      "top_view_generated": false,
+      "tracked_frames": 0,
+      "trustworthy": false,
+      "valid_positions": 0
+    }
+  },
+  "next_action": {
+    "primary": "Get compatible TrackNet architecture + weights.",
+    "secondary": "Only test SAM/SAM2 if TrackNet remains unavailable."
+  },
+  "output_paths": {
+    "decision_json": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\tennis_ai_vision_feasibility_decision.json",
+    "decision_md": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\tennis_ai_vision_feasibility_decision.md",
+    "friction_summary": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\docs\\friction\\tennis_ai_vision_feasibility_summary.md"
+  },
+  "project_decision": {
+    "continue": false,
+    "pause": true,
+    "required_next_asset": "compatible TrackNet architecture + pretrained weights"
+  },
+  "recommended_next_step": "Get compatible TrackNet architecture and pretrained weights.",
+  "stage": "tennis_ai_vision_feasibility_decision",
+  "summary_verdict": {
+    "confidence": "high",
+    "decision": "pause_until_tracknet_model_available",
+    "reason": "Baseline failed, and TrackNet is the preferred next model family but is blocked by missing architecture or weights. SAM/SAM2 is optional and not the main path.",
+    "required_next_asset": "compatible TrackNet architecture + pretrained weights"
+  },
+  "timestamp": "2026-05-15T17:21:25.035311+00:00",
+  "what_failed": [
+    "baseline local detector",
+    "TrackNet real inference unavailable",
+    "SAM/SAM2 real inference unavailable"
+  ],
+  "what_worked": [
+    "manual DaVinci annotation",
+    "court/replay scaffolds",
+    "model adapter scaffolds",
+    "feasibility reporting"
+  ]
+}

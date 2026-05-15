@@ -17,6 +17,7 @@ if str(SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(SRC_ROOT))
 
 from tennis_vision.friction import calculate_stage_13_friction_score  # noqa: E402
+from tennis_vision.baseline_quarantine import annotate_report_with_failed_baseline_warning, failed_baseline_block_message, is_old_replay_schema, print_failed_baseline_warning  # noqa: E402
 from tennis_vision.replay_renderer_2d import (  # noqa: E402
     create_contact_sheet,
     export_replay_video,
@@ -40,6 +41,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--no-interpolate", dest="interpolate", action="store_false")
     parser.add_argument("--interpolation-steps", type=int, default=5)
     parser.add_argument("--no-video", action="store_true")
+    parser.add_argument("--allow-failed-baseline", action="store_true", help="Allow rendering from the failed baseline replay schema for explicit research only.")
     return parser.parse_args()
 
 
@@ -213,6 +215,11 @@ def main() -> int:
     ensure_output_folders(PROJECT_ROOT)
     timestamp = utc_timestamp()
     schema_path = resolve_path(args.schema)
+    if is_old_replay_schema(schema_path) and not args.allow_failed_baseline:
+        print(failed_baseline_block_message())
+        return 2
+    if is_old_replay_schema(schema_path):
+        print_failed_baseline_warning()
     output_dir = resolve_path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -297,6 +304,8 @@ def main() -> int:
         "recommended_next_step": "",
         "output_paths": output_paths,
     }
+    if is_old_replay_schema(schema_path):
+        annotate_report_with_failed_baseline_warning(report)
     report["final_verdict"] = determine_verdict(report)
     report["recommended_next_step"] = recommended_next_step(report)
     try:

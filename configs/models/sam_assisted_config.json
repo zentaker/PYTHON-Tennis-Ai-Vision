@@ -1,0 +1,52 @@
+{
+  "model_family": "sam_assisted",
+  "supported_backends": [
+    "segment_anything",
+    "sam2"
+  ],
+  "supported_variants": [
+    "segment_anything_sam",
+    "sam2"
+  ],
+  "expected_weight_paths": [
+    "models/sam/weights/sam.pt",
+    "models/sam/weights/sam.pth",
+    "models/sam2/weights/sam2.pt",
+    "models/sam2/weights/sam2.pth"
+  ],
+  "default_weights_search_paths": [
+    "models/sam/weights/sam.pt",
+    "models/sam/weights/sam.pth",
+    "models/sam/weights/sam_vit_b.pth",
+    "models/sam/weights/sam_vit_l.pth",
+    "models/sam/weights/sam_vit_h.pth",
+    "models/sam/weights",
+    "models/sam2/weights/sam2.pt",
+    "models/sam2/weights/sam2.pth",
+    "models/sam2/weights",
+    "models/sam2/checkpoints"
+  ],
+  "default_sam_model_type": "vit_b",
+  "requires_seed_prompt": true,
+  "expected_input": {
+    "type": "video frame plus point prompt",
+    "notes": "SAM-assisted tracking requires a trusted ball seed point. It is not a standalone tennis ball tracker."
+  },
+  "expected_output": {
+    "type": "segmentation mask centroid",
+    "fields": [
+      "frame_index",
+      "ball_x",
+      "ball_y",
+      "confidence"
+    ]
+  },
+  "fps_default": 60,
+  "notes": [
+    "SAM/SAM2 is experimental for tennis ball tracking.",
+    "It may require point prompts or an initial ball seed.",
+    "It is not the primary recommended path; TrackNet remains preferred for tennis ball tracking.",
+    "Do not fall back to YOLO/HSV in the SAM-assisted replay pipeline.",
+    "Do not fake ball positions when dependencies, weights, or seeds are missing."
+  ]
+}
