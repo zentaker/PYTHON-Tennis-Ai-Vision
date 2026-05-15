@@ -6,10 +6,10 @@ Stage:
   Stage 14.3 - Side-view replay with validated events
 
 Verdict:
-  ready_with_warnings
+  ready_for_stage_15
 
 Friction score:
-  2
+  0
 
 Friction level:
   low friction
@@ -21,10 +21,10 @@ Stage 8.3 available:
   yes
 
 Timestamp:
-  2026-05-14T19:06:59+00:00
+  2026-05-15T04:24:30+00:00
 
 Recommended next step:
-  Proceed to Stage 15 for multi-camera prototype, or collect manual hit labels before showing confident side-view hit markers.
+  Proceed to Stage 15: Multi-Camera Analytical Replay.
 
 ## Input
 
@@ -35,19 +35,19 @@ Fallback used:
   no
 
 Validated bounces rendered:
-  3
+  8
 
 Validated hits rendered:
-  0
+  8
 
 Downgraded hit annotations:
-  6
+  0
 
 Rejected events ignored:
-  2
+  0
 
 Unvalidated annotations:
-  13
+  0
 
 ## Output
 
@@ -72,7 +72,7 @@ Manifest:
 ## Console-equivalent table
 
 Frames generated:
-  100
+  136
 
 Video generated:
   yes
@@ -84,14 +84,14 @@ Annotation band enabled:
   yes
 
 Verdict:
-  ready_with_warnings
+  ready_for_stage_15
 
 Friction:
-  2 (low friction)
+  0 (low friction)
 
 ## Warnings
 
-- No validated hit labels are available yet; confident hit markers are not rendered.
+No warnings.
 
 ## Errors
 
@@ -103,9 +103,15 @@ Stage 14.3 makes the side-view renderer consume the Stage 8.3 validated event ti
 
 ## Next step
 
-Proceed to Stage 15 for multi-camera prototype, or collect manual hit labels before showing confident side-view hit markers.
+Proceed to Stage 15: Multi-Camera Analytical Replay.
 
 ## Run history
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
 
 Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
 
@@ -219,3 +225,22 @@ Friction level:
 
 Next step:
   Proceed to Stage 15 for multi-camera prototype, or collect manual hit labels before showing confident side-view hit markers.
+
+<!-- lab-entry:2026-05-15T04:24:30+00:00 -->
+
+### 2026-05-15T04:24:30+00:00
+
+Stage:
+  Stage 14.3 - Side-View Replay with Validated Events
+
+Verdict:
+  ready_for_stage_15
+
+Friction score:
+  0
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed to Stage 15: Multi-Camera Analytical Replay.

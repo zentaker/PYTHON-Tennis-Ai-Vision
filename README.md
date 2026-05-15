@@ -535,6 +535,9 @@ The recommended interactive workflow is the timeline viewer. It lets the user mo
 Commands:
 
 ```powershell
+python scripts\add_stage_8_2_event_window.py --list
+python scripts\add_stage_8_2_event_window.py --label bounce --start-frame 229 --end-frame 231 --confidence high --notes "second bounce window"
+python scripts\add_stage_8_2_event_window.py --label hit --start-frame 257 --end-frame 259 --confidence high --notes "player hit window"
 python scripts\run_stage_8_2_event_labeling_helper.py --no-interactive
 python scripts\run_stage_8_2_event_labeling_helper.py --interactive --start-frame 90 --interval 15 --max-frames 12
 python scripts\run_stage_8_2_event_labeling_helper.py --interactive --timeline-viewer --start-frame 190 --interval 1 --max-frames 90
@@ -554,8 +557,8 @@ python scripts\run_stage_8_2_event_labeling_helper.py --interactive --timeline-v
 Timeline viewer notes:
 
 - Use `a` and `d` or arrow keys to move backward and forward.
-- Use `b`, `h`, `n`, and `u` to label the current frame.
-- Use `x` to delete the current frame label.
+- In collapsed duplicate mode, use `b`, `h`, `n`, and `u` to label the current visual group as an event window.
+- Use `x` to delete the current group/window label in collapsed mode.
 - Use `s` to save while continuing to review.
 - Use `q` to save and quit.
 - Use `p` only if you want to show event point markers.
@@ -566,9 +569,16 @@ Timeline viewer notes:
 - Use `--audit-frames` to identify near-duplicate adjacent frames and visual frame groups.
 - Use `--audit-fast` for lightweight signature-only duplicate audits.
 - Use `--sequential-read` when MOV/random seek behavior makes adjacent frames confusing.
-- Use `--collapse-duplicates` to show one representative item per visual group.
+- Use `--collapse-duplicates` to show one representative item per visual group. This is the default for the timeline viewer.
 - Use `--expand-duplicates` to inspect every raw frame.
-- Press `W` in the timeline viewer to select the current visual group as an event window, then press `b`, `h`, `n`, or `u`.
+- Pressing `b`, `h`, `n`, or `u` in collapsed mode labels the current visual group directly. `W` remains available only for explicit manual window selection.
+
+Direct event-window labeling:
+
+- Use `scripts\add_stage_8_2_event_window.py` when the interactive viewer repeats frames or an event spans near-duplicate frames.
+- For bounce/hit events, short window labels are preferred over guessing one exact frame.
+- The command writes `manual_event_windows.csv` and compatible frame-level labels for Stage 8.3.
+- Use `--dry-run` to preview changes before writing.
 
 Expected outputs:
 
@@ -578,6 +588,41 @@ Expected outputs:
 - Label overlays under `outputs/timeline/stage_8_2_event_labels/event_label_overlays/`.
 - JSON report at `outputs/reports/stage_8_2_event_labeling_report.json`.
 - Markdown report at `outputs/reports/stage_8_2_event_labeling_report.md`.
+
+## Stage 8.2R - Event Labeling Workbench
+
+Stage 8.2R rebuilds event labeling as a dedicated workbench for training data quality.
+
+It separates frame decode audit, visual duplicate grouping, clean frame caching, group/window labeling, precise contact candidates, uncertainty tracking, integrity audit, and compatibility export for Stage 8.3.
+
+Use this instead of the old interactive viewer when adjacent frames are visually duplicated or when bounce/hit events should be labeled as temporal windows.
+
+Commands:
+
+```powershell
+python scripts\run_stage_8_2r_event_labeling_workbench.py --audit-decode --start-frame 198 --end-frame 288
+python scripts\run_stage_8_2r_event_labeling_workbench.py --build-cache --start-frame 198 --end-frame 288
+python scripts\run_stage_8_2r_event_labeling_workbench.py --label --start-frame 198 --end-frame 288
+python scripts\run_stage_8_2r_event_labeling_workbench.py --review --start-frame 198 --end-frame 288
+python scripts\run_stage_8_2r_event_labeling_workbench.py --export-compat
+python scripts\run_stage_8_2r_event_labeling_workbench.py --audit-labels
+```
+
+Expected outputs:
+
+- Decode audit at `outputs/timeline/stage_8_2r_event_labeling_workbench/frame_decode_audit.md`.
+- Clean frame cache under `outputs/timeline/stage_8_2r_event_labeling_workbench/frame_cache/`.
+- Event windows at `outputs/timeline/stage_8_2r_event_labeling_workbench/event_windows.csv`.
+- Contact candidates at `outputs/timeline/stage_8_2r_event_labeling_workbench/contact_candidates.csv`.
+- Label integrity report at `outputs/timeline/stage_8_2r_event_labeling_workbench/label_integrity_report.md`.
+- Stage report at `outputs/reports/stage_8_2r_event_labeling_workbench_report.md`.
+
+Important:
+
+- Event windows are valid temporal ground truth.
+- Bounce windows are not precise contact points.
+- Future line-calling work must use contact candidates with uncertainty, not broad bounce windows.
+- Stage 8.2R can export compatibility files for Stage 8.3.
 
 ## Stage 8.3 - Event Validation and Reclassification
 
@@ -616,6 +661,30 @@ Command:
 ```powershell
 python scripts\run_stage_8_4_bounce_candidate_propagation.py
 ```
+
+## Stage 8.5 - Precise Bounce Contact Localization
+
+Stage 8.5 converts manual bounce windows into best-estimated bounce contact
+points. It estimates the contact frame, image-space x/y, projected court x/y,
+uncertainty, confidence, and whether the contact is ready for future line-call
+logic.
+
+This is not official line calling. Broad or uncertain bounces are marked
+inconclusive or not line-call-ready.
+
+Command:
+
+```powershell
+python scripts\run_stage_8_5_bounce_contact_localization.py
+```
+
+Expected outputs:
+
+- Contact points at `outputs/timeline/stage_8_5_bounce_contact/bounce_contact_points.csv`.
+- Candidate frame scores at `outputs/timeline/stage_8_5_bounce_contact/bounce_contact_candidates.csv`.
+- Debug overlays under `outputs/timeline/stage_8_5_bounce_contact/bounce_contact_debug/`.
+- JSON report at `outputs/reports/stage_8_5_bounce_contact_localization_report.json`.
+- Markdown report at `outputs/reports/stage_8_5_bounce_contact_localization_report.md`.
 
 ## Stage 9 - Tactical Metrics and Shot Zone Prototype
 
@@ -835,6 +904,92 @@ Expected patch output:
 - Validated-events debug image at `outputs/replay/stage_14_side_view_replay/side_view_validated_events_debug.jpg`.
 - Patch report at `outputs/reports/stage_14_3_validated_events_side_view_report.md`.
 - Updated side-view manifest at `outputs/replay/stage_14_side_view_replay/side_view_manifest.json`.
+
+## Local Video Labeling Editor
+
+The local video labeling editor is a lightweight browser tool for timecode-based video annotation.
+
+Current recommendation:
+
+DaVinci Resolve or manual timecode notes are the preferred labeling UI when precise bounce/hit review matters. The project now treats DaVinci/manual timecodes as trusted visual labels and imports them with Stage LB1.
+
+Stage LB1 import command:
+
+```powershell
+python scripts\import_timecode_labels.py --input labels.csv --fps 60 --output-dir outputs\timeline\stage_8_2_event_labels
+```
+
+Expected CSV columns:
+
+```text
+label_type,timecode,time_seconds,start_timecode,end_timecode,confidence,notes
+```
+
+Supported point labels:
+
+- `bounce_contact`
+- `hit`
+- `pre_bounce`
+- `post_bounce`
+- `uncertain`
+- `no_event`
+
+Supported range labels:
+
+- `bounce_window`
+- `hit_window`
+- `uncertain_window`
+- `no_event_window`
+
+It is intended for clean manual review when the OpenCV frame viewer is too awkward for bounce/hit labeling. It uses an HTML video timeline, thumbnail strip, time ruler, playhead, marker lane, manual FPS, keyboard shortcuts, JSON import/export, and no automatic overlays by default.
+
+The center workspace keeps the video preview and timeline close together. Label buttons, confidence, notes, import/export, shortcuts, and label lists live in the right panel to reduce vertical clutter.
+
+Open:
+
+```text
+tools/labeling_editor/index.html
+```
+
+Typical workflow:
+
+```powershell
+python scripts\convert_timecode_labels.py --input outputs\labeling\video_01_labels.json --output-dir outputs\timeline\stage_8_2_event_labels --fps 60
+```
+
+Timeline controls:
+
+- `Alt + mouse wheel` zooms the timeline horizontally.
+- `Ctrl + mouse wheel` pans left/right through the timeline.
+- `+`, `-`, and `0` zoom in, zoom out, and fit the clip.
+- `A/D` and `,/.` step by estimated frames.
+- `[` and `]` set an event-window start/end.
+
+Primary event range types:
+
+- `bounce`
+- `hit`
+- `uncertain`
+- `no_event`
+
+Range workflow:
+
+- Press `B`, `H`, `U`, or `N` to add a range at the playhead.
+- Drag the center of the range block to move it.
+- Drag the left or right edge to resize it.
+- Contact estimate defaults to the center of the range.
+
+Marker semantics:
+
+- Event ranges render as draggable/resizable duration blocks.
+- Legacy point labels remain available only as an advanced path.
+
+Notes:
+
+- The editor stores `time_seconds` and a frame estimate.
+- `frame_estimate = round(time_seconds * fps)`.
+- Browser playback does not expose a guaranteed decoded frame index.
+- This is not official line calling.
 
 ## Lab Notebook
 

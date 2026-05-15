@@ -11,8 +11,8 @@ WHAT WAS RENDERED
 INPUT DATA
   Replay schema: C:\Users\MSI\Desktop\TennisAiVision\outputs\replay\stage_12_replay_schema\replay_schema.json
   Schema version: 0.1.0
-  Keyframes: 12
-  Events: 5
+  Keyframes: 16
+  Events: 16
 
 HEIGHT MODEL
   True height available:
@@ -40,9 +40,9 @@ EVENT DISAMBIGUATION PATCH
 
 VALIDATED EVENT SOURCE PATCH
   Event source used: stage_8_3_validated_event_timeline
-  Validated bounces rendered: 3
-  Validated hits rendered: 0
-  Downgraded hits shown as annotation: 6
+  Validated bounces rendered: 8
+  Validated hits rendered: 8
+  Downgraded hits shown as annotation: 0
   Rejected, unvalidated, and downgraded events are not physical ball-contact markers.
 
 OUTPUTS

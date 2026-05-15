@@ -2,13 +2,13 @@
   "errors": [],
   "event_disambiguation_patch_applied": true,
   "event_render_role_summary": {
-    "annotation_events_count": 13,
-    "downgraded_hits_annotation_count": 6,
-    "physical_events_count": 3,
-    "rejected_events_ignored_count": 2,
-    "unvalidated_events_annotation_count": 13,
-    "validated_bounces_rendered_count": 3,
-    "validated_hits_rendered_count": 0
+    "annotation_events_count": 0,
+    "downgraded_hits_annotation_count": 0,
+    "physical_events_count": 16,
+    "rejected_events_ignored_count": 0,
+    "unvalidated_events_annotation_count": 0,
+    "validated_bounces_rendered_count": 8,
+    "validated_hits_rendered_count": 8
   },
   "event_render_roles_enabled": true,
   "final_verdict": "ready_for_stage_15",
@@ -22,7 +22,7 @@
     "semantic_debug_generation_failed": false,
     "video_export_failed": false
   },
-  "frames_generated": 100,
+  "frames_generated": 136,
   "friction": {
     "band": "low friction",
     "inputs": {
@@ -62,7 +62,7 @@
   "semantic_warnings": [],
   "source_stage": 14.1,
   "stage": "stage_14_2_side_view_event_disambiguation",
-  "timestamp": "2026-05-14T19:06:59+00:00",
+  "timestamp": "2026-05-15T04:24:30+00:00",
   "uncertain_events_count": 0,
   "video_generated": true,
   "warnings": []

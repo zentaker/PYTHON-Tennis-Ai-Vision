@@ -18,7 +18,7 @@ Friction level:
   low friction
 
 Timestamp:
-  2026-05-14T19:06:59+00:00
+  2026-05-15T04:24:30+00:00
 
 Recommended next step:
   Proceed to Stage 15: Multi-Camera Analytical Replay.
@@ -75,7 +75,7 @@ Manifest:
 ## Console-equivalent table
 
 Frames generated:
-  100
+  136
 
 Video generated:
   yes
@@ -112,6 +112,12 @@ Stage 14.2 improves side-view event meaning. Raw possible_hit labels are filtere
 Proceed to Stage 15: Multi-Camera Analytical Replay.
 
 ## Run history
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
 
 Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
 
@@ -251,6 +257,25 @@ Next step:
 <!-- lab-entry:2026-05-14T19:06:59+00:00 -->
 
 ### 2026-05-14T19:06:59+00:00
+
+Stage:
+  Stage 14.2 - Side-View Event Disambiguation
+
+Verdict:
+  ready_for_stage_15
+
+Friction score:
+  0
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed to Stage 15: Multi-Camera Analytical Replay.
+
+<!-- lab-entry:2026-05-15T04:24:30+00:00 -->
+
+### 2026-05-15T04:24:30+00:00
 
 Stage:
   Stage 14.2 - Side-View Event Disambiguation

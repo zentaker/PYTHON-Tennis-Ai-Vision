@@ -147,3 +147,23 @@ If something fails, record the failure and provide the next local action.
 - If the user must manually inspect or correct model output, record human-loop friction.
 - If a stage creates new patch stages, record downstream correction friction.
 - ML/CV systems must measure whether outputs are useful, not only whether files were generated.
+- Visual grouping must change the UX, not just appear as metadata.
+- Manual event labeling should default to event windows when adjacent frames are near-duplicates.
+- If a labeling tool detects visual groups, navigation and b/h/n/u labeling should operate on those groups by default.
+- If interactive labeling UX becomes high-friction, provide a direct CLI fallback.
+- Do not force frame-perfect labels for duplicated frames.
+- Event-window labels are valid ground truth for temporal sports events.
+- Do not use bounce windows directly for line calling. Use localized bounce contact points with uncertainty.
+- Event labeling is training infrastructure. If a viewer becomes slow, confusing,
+  or visually ambiguous, rebuild the labeling workflow instead of repeatedly
+  patching around bad ground-truth collection.
+- Stage 8.2R separates decode audit, visual grouping, event windows, contact
+  candidates, uncertainty, and integrity audit. Preserve that separation in
+  future labeling work.
+- A bounce or hit window is temporal evidence. A precise contact candidate is
+  spatial evidence. Do not collapse those concepts into one label.
+- If frame-based labeling remains high-friction, use the local video labeling
+  editor before adding more OpenCV viewer patches. Timeline-based annotation is
+  the preferred abstraction for temporal video events.
+- Timecode labels are frame estimates. Preserve FPS and uncertainty when
+  converting them into pipeline labels.

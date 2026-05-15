@@ -20,10 +20,10 @@ Schema version:
   0.1.0
 
 Keyframes:
-  12
+  16
 
 Events:
-  5
+  16
 
 ## HEIGHT / ARC MODEL
 
@@ -39,7 +39,7 @@ Height estimation method:
 ## OUTPUTS
 
 Frames generated:
-  100
+  136
 
 Video generated:
   True

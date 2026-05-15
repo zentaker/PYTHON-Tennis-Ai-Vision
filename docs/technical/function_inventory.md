@@ -1769,6 +1769,255 @@ NOTES:
 
 ---
 
+FUNCTION: resolve_manual_event_positions
+FILE: src/tennis_vision/manual_event_position_resolver.py
+LINE: 83
+AREA: Manual Full-Rally Replay
+
+PURPOSE:
+  Resolves Product Owner manual event timings into image-space and projected
+  court positions using local ball candidate detection plus existing label
+  fallback data.
+
+INPUTS:
+  - manual full-rally annotation
+  - samples/video_01.mov
+  - Stage 3 court calibration
+  - Stage 8.1 expanded ball labels
+  - Stage 9.1 projected labels
+
+OUTPUTS:
+  - resolved manual event rows
+  - resolution summary
+  - warnings and errors
+
+CALLED BY:
+  - scripts/run_full_rally_manual_replay.py
+
+WHY PRODUCT OWNER CARES:
+  The user should only label when events happened. The system must resolve
+  where the ball was without asking for x/y coordinates.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/manual_event_position_resolver.py and go to line 83.
+  Search: def resolve_manual_event_positions
+
+NOTES:
+  Unresolved events are kept as annotations and are not rendered as known
+  physical court points.
+
+---
+
+FUNCTION: build_side_view_curve_segments
+FILE: src/tennis_vision/side_view_curve_model.py
+LINE: 75
+AREA: Manual Full-Rally Replay
+
+PURPOSE:
+  Builds synthetic cubic Bezier side-view curve segments between resolved
+  physical rally events.
+
+INPUTS:
+  - resolved full-rally event timeline
+  - shot_type metadata
+  - normalized court height
+
+OUTPUTS:
+  - side-view curve segment rows
+  - sampled curve points
+
+CALLED BY:
+  - scripts/run_full_rally_manual_replay.py
+
+WHY PRODUCT OWNER CARES:
+  Tennis ball flight should not be visualized as straight line segments. This
+  creates tennis-like visual arcs while preserving that height is synthetic.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/side_view_curve_model.py and go to line 75.
+  Search: def build_side_view_curve_segments
+
+NOTES:
+  Profiles are visual approximations for topspin, slice, flat, serve_topspin,
+  and adjusted/unknown shots. They are not measured 3D physics.
+
+---
+
+FUNCTION: render_top_view
+FILE: scripts/run_full_rally_manual_replay.py
+LINE: 185
+AREA: Manual Full-Rally Replay
+
+PURPOSE:
+  Renders the manual full-rally top-view replay from resolved projected ball
+  positions.
+
+WHY PRODUCT OWNER CARES:
+  Prevents replay from using placeholder or repeated positions after manual
+  timing is supplied.
+
+HOW TO FIND IT:
+  Open scripts/run_full_rally_manual_replay.py and go to line 185.
+  Search: def render_top_view
+
+---
+
+FUNCTION: render_side_view
+FILE: scripts/run_full_rally_manual_replay.py
+LINE: 247
+AREA: Manual Full-Rally Replay
+
+PURPOSE:
+  Renders the manual full-rally side-view replay from sampled curved trajectory
+  segments.
+
+WHY PRODUCT OWNER CARES:
+  Makes side-view replay read more like tennis by showing curved synthetic
+  ball flight instead of straight connectors.
+
+HOW TO FIND IT:
+  Open scripts/run_full_rally_manual_replay.py and go to line 247.
+  Search: def render_side_view
+
+---
+
+FUNCTION: read_bounce_windows
+FILE: src/tennis_vision/bounce_contact_localization.py
+LINE: 84
+AREA: Stage 8.5 - Bounce Contact Localization
+
+PURPOSE:
+  Loads manually supported bounce windows for contact localization.
+
+INPUTS:
+  - Stage 8.2 manual event windows
+  - Stage 8.3 manual event windows fallback
+
+OUTPUTS:
+  - normalized bounce window records
+  - source path used
+  - warnings
+
+CALLED BY:
+  - scripts/run_stage_8_5_bounce_contact_localization.py
+
+WHY PRODUCT OWNER CARES:
+  Uses bounce windows as temporal evidence without treating them as exact
+  contact points.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/bounce_contact_localization.py and go to line 84.
+  Search: def read_bounce_windows
+
+NOTES:
+  Stage 8.2 direct CLI windows are preferred over Stage 8.3 grouped fallback
+  windows.
+
+---
+
+FUNCTION: line_call_readiness
+FILE: src/tennis_vision/bounce_contact_localization.py
+LINE: 322
+AREA: Stage 8.5 - Bounce Contact Localization
+
+PURPOSE:
+  Decides whether a bounce contact estimate is safe for future line-call logic.
+
+INPUTS:
+  - contact status
+  - confidence
+  - projection availability
+  - projected uncertainty
+
+OUTPUTS:
+  - line_call_ready yes/no
+  - readiness reason
+
+CALLED BY:
+  - localize_bounce_contact
+
+WHY PRODUCT OWNER CARES:
+  Prevents an uncertain bounce window from becoming false in/out evidence.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/bounce_contact_localization.py and go to line 322.
+  Search: def line_call_readiness
+
+NOTES:
+  This does not perform line calling.
+
+---
+
+FUNCTION: localize_bounce_contact
+FILE: src/tennis_vision/bounce_contact_localization.py
+LINE: 346
+AREA: Stage 8.5 - Bounce Contact Localization
+
+PURPOSE:
+  Scores frames around a bounce window and estimates the best contact frame and
+  contact point.
+
+INPUTS:
+  - bounce window
+  - ball positions
+  - padding
+
+OUTPUTS:
+  - bounce contact point row
+  - candidate frame rows
+
+CALLED BY:
+  - scripts/run_stage_8_5_bounce_contact_localization.py
+
+WHY PRODUCT OWNER CARES:
+  Converts a broad temporal event into a spatial contact estimate with
+  uncertainty.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/bounce_contact_localization.py and go to line 346.
+  Search: def localize_bounce_contact
+
+NOTES:
+  The method is deterministic and does not claim official line-call precision.
+
+---
+
+FUNCTION: main
+FILE: scripts/run_stage_8_5_bounce_contact_localization.py
+LINE: 222
+AREA: Stage 8.5 - Bounce Contact Localization
+
+PURPOSE:
+  Runs Stage 8.5 end to end and writes contact outputs, reports, and lab
+  notebook documentation.
+
+INPUTS:
+  - CLI arguments
+  - manual bounce windows
+  - ball labels
+  - projected labels
+
+OUTPUTS:
+  - Stage 8.5 output folder
+  - Stage 8.5 JSON and Markdown reports
+  - Stage 8.5 lab notebook page
+
+CALLED BY:
+  - terminal command
+
+WHY PRODUCT OWNER CARES:
+  Provides one repeatable local command for contact localization.
+
+HOW TO FIND IT:
+  Open scripts/run_stage_8_5_bounce_contact_localization.py and go to line 222.
+  Search: def main
+
+NOTES:
+  The script avoids full-video processing and reads only selected contact
+  frames for debug overlays.
+
+---
+
 FUNCTION: collect_event_labels_interactively
 FILE: src/tennis_vision/event_labeling.py
 LINE: 295
@@ -4244,5 +4493,152 @@ HOW TO FIND IT:
 
 NOTES:
   None.
+
+---
+
+## Stage 8.2R - Event Labeling Workbench
+
+FUNCTION: run_frame_decode_audit
+FILE: src/tennis_vision/frame_decode_audit.py
+LINE: 161
+AREA: Stage 8.2R - Event Labeling Workbench
+
+PURPOSE:
+  Audits sequential frame decode, visual signatures, near-duplicate groups,
+  timestamps, and optional random-seek comparison.
+
+INPUTS:
+  - video path
+  - start frame
+  - end frame
+  - duplicate threshold
+  - signature width
+
+OUTPUTS:
+  - frame decode audit rows
+  - visual group summary
+  - warnings
+
+CALLED BY:
+  - scripts/run_stage_8_2r_event_labeling_workbench.py
+
+WHY PRODUCT OWNER CARES:
+  Determines whether repeated-looking frames should be labeled as one visual
+  event window instead of independent frame-perfect labels.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/frame_decode_audit.py and go to line 161.
+  Search: def run_frame_decode_audit
+
+NOTES:
+  Random-seek comparison is optional because it is slower than the default
+  sequential audit.
+
+---
+
+FUNCTION: build_frame_cache
+FILE: src/tennis_vision/event_labeling_workbench.py
+LINE: 63
+AREA: Stage 8.2R - Event Labeling Workbench
+
+PURPOSE:
+  Builds or reuses a clean resized frame cache for a selected labeling range.
+
+INPUTS:
+  - video path
+  - output directory
+  - start frame
+  - end frame
+  - resize width
+
+OUTPUTS:
+  - clean frame JPG files
+  - cache metadata JSON
+
+CALLED BY:
+  - scripts/run_stage_8_2r_event_labeling_workbench.py
+
+WHY PRODUCT OWNER CARES:
+  Keeps the workbench fast and avoids baking misleading overlays into frames.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/event_labeling_workbench.py and go to line 63.
+  Search: def build_frame_cache
+
+NOTES:
+  Uses sequential video decoding for contiguous frame ranges.
+
+---
+
+FUNCTION: run_review_or_label_viewer
+FILE: src/tennis_vision/event_labeling_workbench.py
+LINE: 193
+AREA: Stage 8.2R - Event Labeling Workbench
+
+PURPOSE:
+  Opens the clean OpenCV workbench for visual-group review and event-window
+  labeling.
+
+INPUTS:
+  - output directory
+  - cache metadata
+  - decode audit JSON
+  - review-only flag
+
+OUTPUTS:
+  - event windows
+  - contact candidates
+  - viewer timing
+  - warnings/errors
+
+CALLED BY:
+  - scripts/run_stage_8_2r_event_labeling_workbench.py
+
+WHY PRODUCT OWNER CARES:
+  Labels visual groups and temporal windows instead of forcing guesses between
+  duplicated frames.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/event_labeling_workbench.py and go to line 193.
+  Search: def run_review_or_label_viewer
+
+NOTES:
+  The default displayed frame is clean; automatic ball markers are not baked
+  into the cache.
+
+---
+
+FUNCTION: build_contact_candidate
+FILE: src/tennis_vision/event_contact_labels.py
+LINE: 156
+AREA: Stage 8.2R - Event Labeling Workbench
+
+PURPOSE:
+  Creates a precise contact candidate tied to an event window.
+
+INPUTS:
+  - related window id
+  - event type
+  - contact frame
+  - optional contact x/y
+  - visual group id and size
+
+OUTPUTS:
+  - contact candidate record
+
+CALLED BY:
+  - src/tennis_vision/event_labeling_workbench.py
+
+WHY PRODUCT OWNER CARES:
+  Future line calling needs contact candidates and uncertainty, not just broad
+  bounce windows.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/event_contact_labels.py and go to line 156.
+  Search: def build_contact_candidate
+
+NOTES:
+  Duplicate visual groups increase uncertainty and may prevent line-call-ready
+  status.
 
 ---

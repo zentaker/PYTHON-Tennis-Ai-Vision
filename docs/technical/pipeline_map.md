@@ -568,3 +568,84 @@ NOTES:
   Stage 14.3 uses validated event semantics before rendering physical side-view
   contact markers. Downgraded, rejected, and unvalidated hits are annotations
   only.
+
+---
+
+STAGE: Stage 8.5
+NAME: Precise Bounce Contact Localization
+STATUS: Current
+MAIN SCRIPT: scripts/run_stage_8_5_bounce_contact_localization.py
+MAIN MODULES:
+  - src/tennis_vision/bounce_contact_localization.py
+READS:
+  - outputs/timeline/stage_8_2_event_labels/manual_event_windows.csv
+  - outputs/timeline/stage_8_3_event_validation/manual_event_windows.csv
+  - outputs/timeline/stage_8_1_timeline_validation/expanded_ball_labels.csv
+  - outputs/tactical/stage_9_1_projection_coverage/projected_expanded_labels.csv
+  - samples/video_01.mov
+WRITES:
+  - outputs/timeline/stage_8_5_bounce_contact/bounce_contact_points.csv
+  - outputs/timeline/stage_8_5_bounce_contact/bounce_contact_candidates.csv
+  - outputs/timeline/stage_8_5_bounce_contact/bounce_contact_summary.json
+  - outputs/timeline/stage_8_5_bounce_contact/bounce_contact_debug/
+  - outputs/reports/stage_8_5_bounce_contact_localization_report.*
+NOTES:
+  Stage 8.5 separates temporal bounce windows from spatial contact
+  localization. It does not perform official line calling.
+
+---
+
+STAGE: Stage 8.2R
+NAME: Event Labeling Workbench Rebuild
+STATUS: Current labeling infrastructure
+MAIN SCRIPT: scripts/run_stage_8_2r_event_labeling_workbench.py
+MAIN MODULES:
+  - src/tennis_vision/frame_decode_audit.py
+  - src/tennis_vision/event_labeling_workbench.py
+  - src/tennis_vision/event_contact_labels.py
+READS:
+  - samples/video_01.mov
+  - outputs/timeline/stage_8_2r_event_labeling_workbench/event_windows.csv
+  - outputs/timeline/stage_8_2r_event_labeling_workbench/contact_candidates.csv
+WRITES:
+  - outputs/timeline/stage_8_2r_event_labeling_workbench/frame_decode_audit.*
+  - outputs/timeline/stage_8_2r_event_labeling_workbench/frame_cache/
+  - outputs/timeline/stage_8_2r_event_labeling_workbench/event_windows.*
+  - outputs/timeline/stage_8_2r_event_labeling_workbench/contact_candidates.*
+  - outputs/timeline/stage_8_2r_event_labeling_workbench/label_integrity_report.*
+  - outputs/reports/stage_8_2r_event_labeling_workbench_report.*
+  - docs/lab-notebook/stage_8_2r_event_labeling_workbench.md
+NOTES:
+  Stage 8.2R replaces frame-perfect event labeling with decode audit, visual
+  groups, temporal event windows, contact candidates, uncertainty, and label
+  integrity checks. It exports compatibility files for Stage 8.3 when labels
+  exist.
+
+---
+
+STAGE: Manual Full-Rally Replay
+NAME: Manual Timing, Resolved Positions, Curved Side View
+STATUS: Current replay calibration path for samples/video_01.mov
+MAIN SCRIPT: scripts/run_full_rally_manual_replay.py
+MAIN MODULES:
+  - src/tennis_vision/manual_event_position_resolver.py
+  - src/tennis_vision/side_view_curve_model.py
+READS:
+  - configs/manual_annotations/video_01_full_rally.json
+  - samples/video_01.mov
+  - outputs/reports/stage_3_court_calibration_probe_report.json
+  - outputs/timeline/stage_8_1_timeline_validation/expanded_ball_labels.csv
+  - outputs/tactical/stage_9_1_projection_coverage/projected_expanded_labels.csv
+WRITES:
+  - outputs/replay/manual_full_rally/resolved_manual_events.csv
+  - outputs/replay/manual_full_rally/full_rally_event_timeline.csv
+  - outputs/replay/manual_full_rally/replay_schema.json
+  - outputs/replay/manual_full_rally/top_view_replay.mp4
+  - outputs/replay/manual_full_rally/side_view_replay.mp4
+  - outputs/replay/manual_full_rally/side_view_curve_segments.csv
+  - outputs/reports/manual_full_rally_replay_report.*
+NOTES:
+  The Product Owner supplies event timing and shot type only. The system
+  resolves ball positions locally near each event, projects them to court
+  coordinates, and renders side-view trajectories as synthetic curves. These
+  curves are visual approximations, not measured 3D physics.

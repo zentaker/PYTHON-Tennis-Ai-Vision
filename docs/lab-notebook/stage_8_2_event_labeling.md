@@ -15,7 +15,7 @@ Friction level:
   low friction
 
 Timestamp:
-  2026-05-15T00:01:10+00:00
+  2026-05-15T00:34:14+00:00
 
 Recommended next step:
   Proceed to Stage 8.3: Event Validation and Reclassification.
@@ -32,7 +32,7 @@ Frames requested:
   198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287
 
 Frames shown:
-  173
+  141
 
 Frames loaded:
   90
@@ -44,13 +44,13 @@ Existing labels:
   104
 
 New labels:
-  1
+  0
 
 Labels created:
   0
 
 Labels updated:
-  1
+  0
 
 Labels deleted:
   0
@@ -82,7 +82,7 @@ Overlay folder:
   C:\Users\MSI\Desktop\TennisAiVision\outputs\timeline\stage_8_2_event_labels\event_label_overlays
 
 Session backup:
-  C:\Users\MSI\Desktop\TennisAiVision\outputs\timeline\stage_8_2_event_labels\event_label_sessions\stage_8_2_event_labels_stage_8_2_2026-05-15T000110Z0000.csv
+  Not available
 
 ## Console-equivalent table
 
@@ -127,6 +127,12 @@ Stage 8.2 creates human event labels for bounce, hit, no_event, and uncertain fr
 Proceed to Stage 8.3: Event Validation and Reclassification.
 
 ## Run history
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
 
 Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
 
@@ -566,6 +572,25 @@ Next step:
 <!-- lab-entry:2026-05-15T00:01:10+00:00 -->
 
 ### 2026-05-15T00:01:10+00:00
+
+Stage:
+  Stage 8.2 - Manual Event Labeling
+
+Verdict:
+  ready_for_stage_8_3
+
+Friction score:
+  0
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed to Stage 8.3: Event Validation and Reclassification.
+
+<!-- lab-entry:2026-05-15T00:34:14+00:00 -->
+
+### 2026-05-15T00:34:14+00:00
 
 Stage:
   Stage 8.2 - Manual Event Labeling

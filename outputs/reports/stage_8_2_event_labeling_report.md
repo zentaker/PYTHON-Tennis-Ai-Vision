@@ -21,10 +21,10 @@ Duplicate frames removed:
   0
 
 Near-duplicate pairs:
-  24
+  29
 
 Visual groups:
-  66
+  61
 
 Sequential read used:
   True
@@ -33,7 +33,7 @@ Audit runtime seconds:
   0
 
 Signature width:
-  160
+  128
 
 Collapse duplicates:
   True
@@ -44,13 +44,13 @@ Existing labels:
   104
 
 New labels:
-  1
+  0
 
 Labels created:
   0
 
 Labels updated:
-  1
+  0
 
 Labels deleted:
   0
@@ -120,7 +120,7 @@ Overlay folder:
   C:\Users\MSI\Desktop\TennisAiVision\outputs\timeline\stage_8_2_event_labels\event_label_overlays
 
 Session backup:
-  C:\Users\MSI\Desktop\TennisAiVision\outputs\timeline\stage_8_2_event_labels\event_label_sessions\stage_8_2_event_labels_stage_8_2_2026-05-15T000110Z0000.csv
+  Not available
 
 Label integrity report:
   C:\Users\MSI\Desktop\TennisAiVision\outputs\timeline\stage_8_2_event_labels\event_label_integrity_report.md
@@ -134,10 +134,10 @@ Enabled:
   True
 
 Near-duplicate pairs:
-  24
+  29
 
 Visual groups:
-  66
+  61
 
 Largest duplicate group:
   Not available
@@ -148,7 +148,7 @@ Audit path:
 ## LABEL INTEGRITY AUDIT
 
 no_event labels with points:
-  0
+  1
 
 Repeated point sequences:
   5

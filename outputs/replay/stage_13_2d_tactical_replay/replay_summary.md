@@ -10,9 +10,9 @@ WHAT WAS RENDERED
 INPUT DATA
   Replay schema: C:\Users\MSI\Desktop\TennisAiVision\outputs\replay\stage_12_replay_schema\replay_schema.json
   Schema version: 0.1.0
-  Keyframes: 12
+  Keyframes: 16
   Players: 2
-  Events: 5
+  Events: 16
 
 OUTPUTS
   Frames: C:\Users\MSI\Desktop\TennisAiVision\outputs\replay\stage_13_2d_tactical_replay\frames

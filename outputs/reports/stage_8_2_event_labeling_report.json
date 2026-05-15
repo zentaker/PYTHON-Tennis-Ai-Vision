@@ -1,6 +1,11 @@
 {
   "audit_fast": true,
   "audit_labels": false,
+  "audit_performance_friction": {
+    "band": "none",
+    "reason": "Frame audit runtime is within the desired interactive range.",
+    "score": 0
+  },
   "audit_runtime_seconds": 0,
   "ball_overlay_enabled": false,
   "bounce_count": 4,
@@ -39,10 +44,15 @@
     "audit_runtime_seconds": 0,
     "collapse_duplicates_recommended": false,
     "csv_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_2_event_labels\\frame_duplicate_audit.csv",
+    "frame_loading_seconds": 0,
+    "grouping_seconds": 0,
+    "json_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_2_event_labels\\frame_duplicate_audit.json",
     "largest_duplicate_group": "",
     "markdown_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_2_event_labels\\frame_duplicate_audit.md",
     "near_duplicate_pairs_count": 0,
-    "signature_width": 160,
+    "report_write_seconds": 0,
+    "signature_compute_seconds": 0,
+    "signature_width": 128,
     "total_frames": 0,
     "unique_visual_groups": 0,
     "visual_groups_with_more_than_one_frame": 0
@@ -140,7 +150,7 @@
     286,
     287
   ],
-  "frames_shown": 173,
+  "frames_shown": 141,
   "friction": {
     "band": "low friction",
     "inputs": {
@@ -179,7 +189,7 @@
     "semantic_model": {
       "band": "high friction",
       "reason": "Duplicate frame or label integrity issues need Product Owner-aware handling.",
-      "score": 60
+      "score": 68
     }
   },
   "hit_count": 3,
@@ -198,8 +208,9 @@
     "labels_outside_selected_frame_range_count": 0,
     "labels_without_point_count": 0,
     "labels_without_point_frames": [],
-    "no_event_labels_with_event_point_count": 0,
+    "no_event_labels_with_event_point_count": 1,
     "recommended_fixes": [
+      "Run --audit-labels --fix-labels to clear points from no_event labels.",
       "Review repeated point sequences; they may indicate stale point carryover."
     ],
     "repeated_point_sequences": [
@@ -279,31 +290,34 @@
       }
     ],
     "repeated_point_sequences_count": 5,
-    "suspicious_no_event_point_frames": [],
-    "suspicious_no_event_points_count": 0,
+    "suspicious_no_event_point_frames": [
+      227
+    ],
+    "suspicious_no_event_points_count": 1,
     "warnings": [
+      "Some no_event labels still have x/y event points.",
       "Some consecutive labels reuse identical event points."
     ]
   },
   "label_integrity_friction": {
-    "band": "medium friction",
+    "band": "high friction",
     "reason": "Label integrity audit found remaining issues.",
-    "score": 60
+    "score": 68
   },
   "label_integrity_report_json": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_2_event_labels\\event_label_integrity_report.json",
   "label_integrity_report_md": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_2_event_labels\\event_label_integrity_report.md",
   "label_source_used": "manual_event_labels",
   "labels_created": 0,
   "labels_deleted": 0,
-  "labels_updated": 1,
-  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_8_2_event_labeling_20260515T000438Z.log",
+  "labels_updated": 0,
+  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_8_2_event_labeling_20260515T003622Z.log",
   "manual_event_labels_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_2_event_labels\\manual_event_labels.csv",
   "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_8_2_event_labeling_report.md",
   "merged_labels_count": 104,
   "mismatches": 15,
   "mode": "interactive",
-  "near_duplicate_pairs": 24,
-  "new_labels_count": 1,
+  "near_duplicate_pairs": 29,
+  "new_labels_count": 0,
   "no_auto_event_nearby": 4,
   "no_event_count": 69,
   "output_paths": {
@@ -312,12 +326,13 @@
     "event_label_overlays": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_2_event_labels\\event_label_overlays",
     "fix_backup": "",
     "frame_duplicate_audit_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_2_event_labels\\frame_duplicate_audit.csv",
+    "frame_duplicate_audit_json": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_2_event_labels\\frame_duplicate_audit.json",
     "frame_duplicate_audit_md": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_2_event_labels\\frame_duplicate_audit.md",
     "label_integrity_report_json": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_2_event_labels\\event_label_integrity_report.json",
     "label_integrity_report_md": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_2_event_labels\\event_label_integrity_report.md",
     "manual_event_labels_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_2_event_labels\\manual_event_labels.csv",
     "manual_event_labels_json": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_2_event_labels\\manual_event_labels.json",
-    "session_backup": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_2_event_labels\\event_label_sessions\\stage_8_2_event_labels_stage_8_2_2026-05-15T000110Z0000.csv"
+    "session_backup": ""
   },
   "overlay_count": 0,
   "overlay_folder": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_2_event_labels\\event_label_overlays",
@@ -329,13 +344,13 @@
   "recommended_next_step": "Proceed to Stage 8.3: Event Validation and Reclassification.",
   "review_only": false,
   "sequential_read_used": true,
-  "session_backup_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_2_event_labels\\event_label_sessions\\stage_8_2_event_labels_stage_8_2_2026-05-15T000110Z0000.csv",
-  "signature_width": 160,
+  "session_backup_path": "",
+  "signature_width": 128,
   "skipped_count": 24,
   "stage": "stage_8_2_event_labeling",
-  "timestamp": "2026-05-15T00:01:10+00:00",
+  "timestamp": "2026-05-15T00:34:14+00:00",
   "uncertain_count": 4,
   "viewer_mode": "timeline_viewer",
-  "visual_groups_count": 66,
+  "visual_groups_count": 61,
   "warnings": []
 }

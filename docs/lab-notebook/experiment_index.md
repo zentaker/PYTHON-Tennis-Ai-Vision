@@ -239,10 +239,19 @@ NEXT STEP: Proceed to Stage 15: Multi-Camera Analytical Replay.
 
 STAGE: Stage 14.3
 NAME: Side-View Validated Events
-VERDICT: ready_with_warnings
-FRICTION: 2 low friction
+VERDICT: ready_for_stage_15
+FRICTION: 0 low friction
 MAIN OUTPUT: outputs/replay/stage_14_side_view_replay/side_view_validated_events_debug.jpg
-NEXT STEP: Proceed to Stage 15 for multi-camera prototype, or collect manual hit labels before showing confident side-view hit markers.
+NEXT STEP: Proceed to Stage 15: Multi-Camera Analytical Replay.
 
 ---
 
+
+---
+
+STAGE: Manual Full-Rally Replay
+NAME: Full Rally Manual Annotation Recalibration
+VERDICT: full_rally_replay_regenerated
+FRICTION: low
+MAIN OUTPUT: C:\Users\MSI\Desktop\TennisAiVision\outputs\replay\stage_13_2d_tactical_replay\tactical_replay.mp4
+NEXT STEP: Review regenerated top-view and side-view videos for full-rally chronology.

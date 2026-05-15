@@ -1,6 +1,6 @@
 {
   "annotation_band_enabled": true,
-  "downgraded_hits_annotation_count": 6,
+  "downgraded_hits_annotation_count": 0,
   "errors": [],
   "event_source_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_3_event_validation\\validated_event_timeline.csv",
   "event_source_priority": [
@@ -11,7 +11,7 @@
   ],
   "event_source_used": "stage_8_3_validated_event_timeline",
   "fallback_used": false,
-  "final_verdict": "ready_with_warnings",
+  "final_verdict": "ready_for_stage_15",
   "flags": {
     "downgraded_hits_rendered_as_physical": false,
     "event_source_missing": false,
@@ -21,7 +21,7 @@
     "validated_event_source_missing": false,
     "video_export_failed": false
   },
-  "frames_generated": 100,
+  "frames_generated": 136,
   "friction": {
     "band": "low friction",
     "inputs": {
@@ -33,9 +33,9 @@
       "validated_debug_generation_failed": false,
       "validated_event_source_missing": false,
       "video_export_failed": false,
-      "warnings_count": 1
+      "warnings_count": 0
     },
-    "score": 2
+    "score": 0
   },
   "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_14_3_validated_events_side_view_report.json",
   "main_path_physical_events_only": true,
@@ -51,18 +51,16 @@
     "validated_events_debug_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_validated_events_debug.jpg",
     "video_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_replay.mp4"
   },
-  "recommended_next_step": "Proceed to Stage 15 for multi-camera prototype, or collect manual hit labels before showing confident side-view hit markers.",
-  "rejected_events_ignored_count": 2,
+  "recommended_next_step": "Proceed to Stage 15: Multi-Camera Analytical Replay.",
+  "rejected_events_ignored_count": 0,
   "source_stage": "8.3",
   "stage": "stage_14_3_validated_events_side_view",
-  "timestamp": "2026-05-14T19:06:59+00:00",
-  "unvalidated_events_annotation_count": 13,
-  "validated_bounces_rendered_count": 3,
+  "timestamp": "2026-05-15T04:24:30+00:00",
+  "unvalidated_events_annotation_count": 0,
+  "validated_bounces_rendered_count": 8,
   "validated_event_source_available": true,
   "validated_events_debug_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_validated_events_debug.jpg",
-  "validated_hits_rendered_count": 0,
+  "validated_hits_rendered_count": 8,
   "video_generated": true,
-  "warnings": [
-    "No validated hit labels are available yet; confident hit markers are not rendered."
-  ]
+  "warnings": []
 }

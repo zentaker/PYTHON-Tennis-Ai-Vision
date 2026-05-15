@@ -1,7 +1,7 @@
 {
   "annotation_band_enabled": true,
   "bounce_grounding_enabled": true,
-  "downgraded_hits_annotation_count": 6,
+  "downgraded_hits_annotation_count": 0,
   "errors": [],
   "event_render_roles_enabled": true,
   "event_source_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_3_event_validation\\validated_event_timeline.csv",
@@ -11,13 +11,13 @@
     "stage_8_event_timeline",
     "stage_6_trajectory_events"
   ],
-  "events_used": 5,
+  "events_used": 16,
   "fps": 12,
-  "frames_generated": 100,
-  "generated_at": "2026-05-14T19:06:59+00:00",
+  "frames_generated": 136,
+  "generated_at": "2026-05-15T04:24:30+00:00",
   "height_anchor_summary": {
-    "arc_estimate": 11,
-    "bounce_grounded": 1
+    "bounce_grounded": 8,
+    "hit_contact": 8
   },
   "height_estimation_method": "event-aware synthetic arc from 2D projected keyframes",
   "hit_contact_band_enabled": true,
@@ -26,7 +26,7 @@
   "interpolated_points_marked": true,
   "interpolation_enabled": true,
   "interpolation_steps": 8,
-  "keyframes_used": 12,
+  "keyframes_used": 16,
   "limitations": [
     "No true 3D reconstruction.",
     "No measured ball height.",
@@ -49,7 +49,7 @@
   "plausible_bounces_count": 0,
   "plausible_hits_count": 0,
   "player_aware_hit_validation_enabled": true,
-  "rejected_events_ignored_count": 2,
+  "rejected_events_ignored_count": 0,
   "renderer_type": "side_view_ball_flight",
   "schema_version": "0.1.0",
   "semantic_height_patch_applied": true,
@@ -58,10 +58,10 @@
   "synthetic_height_enabled": true,
   "true_height_available": false,
   "uncertain_events_count": 0,
-  "unvalidated_events_annotation_count": 13,
-  "validated_bounces_rendered_count": 3,
+  "unvalidated_events_annotation_count": 0,
+  "validated_bounces_rendered_count": 8,
   "validated_event_source_used": true,
-  "validated_hits_rendered_count": 0,
+  "validated_hits_rendered_count": 8,
   "video_generated": true,
   "warnings": []
 }

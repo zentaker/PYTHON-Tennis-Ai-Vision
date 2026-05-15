@@ -1,7 +1,7 @@
 {
   "contact_sheet_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_13_2d_tactical_replay\\tactical_replay_contact_sheet.jpg",
   "errors": [],
-  "events_count": 5,
+  "events_count": 16,
   "final_frame_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_13_2d_tactical_replay\\tactical_replay_final_frame.jpg",
   "final_verdict": "ready_for_stage_14",
   "flags": {
@@ -13,7 +13,7 @@
     "replay_schema_missing": false,
     "video_export_failed": false
   },
-  "frames_generated": 67,
+  "frames_generated": 91,
   "friction": {
     "band": "low friction",
     "inputs": {
@@ -31,8 +31,8 @@
   },
   "input_schema_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_12_replay_schema\\replay_schema.json",
   "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_13_2d_tactical_replay_report.json",
-  "keyframes_count": 12,
-  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_13_2d_tactical_replay_20260514T034517Z.log",
+  "keyframes_count": 16,
+  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_13_2d_tactical_replay_20260515T042431Z.log",
   "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_13_2d_tactical_replay_report.md",
   "output_paths": {
     "contact_sheet_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_13_2d_tactical_replay\\tactical_replay_contact_sheet.jpg",
@@ -47,7 +47,7 @@
   "renderer_manifest_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_13_2d_tactical_replay\\renderer_manifest.json",
   "schema_version": "0.1.0",
   "stage": "stage_13_2d_tactical_replay",
-  "timestamp": "2026-05-14T03:45:14+00:00",
+  "timestamp": "2026-05-15T04:24:27+00:00",
   "video_generated": true,
   "video_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_13_2d_tactical_replay\\tactical_replay.mp4",
   "warnings": []

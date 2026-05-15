@@ -1,0 +1,2615 @@
+{
+  "ball_trajectory": {
+    "manual_full_rally_keyframes": true,
+    "raw_ball_points": [
+      {
+        "confidence_like_score": 0.65,
+        "depth": "deep",
+        "frame_index": 120,
+        "image_x": 2175.0,
+        "image_y": 492.0,
+        "is_interpolated": false,
+        "lateral_lane": "center",
+        "notes": "Tuned approximate court zone; not official line calling.",
+        "projected_x": 180.71,
+        "projected_y": -59.098,
+        "source": "raw_trajectory",
+        "timestamp_seconds": null,
+        "zone": "far_deep_center"
+      },
+      {
+        "confidence_like_score": 0.85,
+        "depth": "mid",
+        "frame_index": 135,
+        "image_x": 2038.5,
+        "image_y": 759.0,
+        "is_interpolated": false,
+        "lateral_lane": "center",
+        "notes": "Tuned approximate court zone; not official line calling.",
+        "projected_x": 146.86,
+        "projected_y": 234.546,
+        "source": "raw_trajectory",
+        "timestamp_seconds": null,
+        "zone": "far_mid_center"
+      },
+      {
+        "confidence_like_score": 0.85,
+        "depth": "short",
+        "frame_index": 150,
+        "image_x": 1906.5,
+        "image_y": 1147.5,
+        "is_interpolated": false,
+        "lateral_lane": "center",
+        "notes": "Tuned approximate court zone; not official line calling.",
+        "projected_x": 127.727,
+        "projected_y": 517.18,
+        "source": "raw_trajectory",
+        "timestamp_seconds": null,
+        "zone": "near_short_center"
+      },
+      {
+        "confidence_like_score": 0.85,
+        "depth": "mid",
+        "frame_index": 165,
+        "image_x": 1792.5,
+        "image_y": 1162.5,
+        "is_interpolated": false,
+        "lateral_lane": "left",
+        "notes": "Tuned approximate court zone; not official line calling.",
+        "projected_x": 105.186,
+        "projected_y": 527.08,
+        "source": "raw_trajectory",
+        "timestamp_seconds": null,
+        "zone": "near_mid_left"
+      },
+      {
+        "confidence_like_score": 0.85,
+        "depth": "mid",
+        "frame_index": 180,
+        "image_x": 1671.0,
+        "image_y": 1248.0,
+        "is_interpolated": false,
+        "lateral_lane": "left",
+        "notes": "Tuned approximate court zone; not official line calling.",
+        "projected_x": 85.083,
+        "projected_y": 574.978,
+        "source": "raw_trajectory",
+        "timestamp_seconds": null,
+        "zone": "near_mid_left"
+      }
+    ],
+    "replay_keyframes": [
+      {
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "hit",
+        "frame_index": 100,
+        "image_x": null,
+        "image_y": null,
+        "is_interpolated": false,
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 260,
+        "projected_y": 80,
+        "shot_type": "serve_topspin",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 1.667,
+        "zone": "manual_full_rally"
+      },
+      {
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "bounce",
+        "frame_index": 154,
+        "image_x": null,
+        "image_y": null,
+        "is_interpolated": false,
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 235,
+        "projected_y": 510,
+        "shot_type": "",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 2.567,
+        "zone": "manual_full_rally"
+      },
+      {
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "hit",
+        "frame_index": 196,
+        "image_x": null,
+        "image_y": null,
+        "is_interpolated": false,
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 255,
+        "projected_y": 710,
+        "shot_type": "forehand_flat",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 3.267,
+        "zone": "manual_full_rally"
+      },
+      {
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "bounce",
+        "frame_index": 240,
+        "image_x": null,
+        "image_y": null,
+        "is_interpolated": false,
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 120,
+        "projected_y": 210,
+        "shot_type": "",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 4.0,
+        "zone": "manual_full_rally"
+      },
+      {
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "hit",
+        "frame_index": 258,
+        "image_x": null,
+        "image_y": null,
+        "is_interpolated": false,
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 125,
+        "projected_y": 90,
+        "shot_type": "forehand_slice",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 4.3,
+        "zone": "manual_full_rally"
+      },
+      {
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "bounce",
+        "frame_index": 328,
+        "image_x": null,
+        "image_y": null,
+        "is_interpolated": false,
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 300,
+        "projected_y": 620,
+        "shot_type": "",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 5.467,
+        "zone": "manual_full_rally"
+      },
+      {
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "hit",
+        "frame_index": 362,
+        "image_x": null,
+        "image_y": null,
+        "is_interpolated": false,
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 285,
+        "projected_y": 705,
+        "shot_type": "forehand_topspin",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 6.033,
+        "zone": "manual_full_rally"
+      },
+      {
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "bounce",
+        "frame_index": 418,
+        "image_x": null,
+        "image_y": null,
+        "is_interpolated": false,
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 90,
+        "projected_y": 185,
+        "shot_type": "",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 6.967,
+        "zone": "manual_full_rally"
+      },
+      {
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "hit",
+        "frame_index": 463,
+        "image_x": null,
+        "image_y": null,
+        "is_interpolated": false,
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 110,
+        "projected_y": 85,
+        "shot_type": "backhand_slice",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 7.717,
+        "zone": "manual_full_rally"
+      },
+      {
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "bounce",
+        "frame_index": 540,
+        "image_x": null,
+        "image_y": null,
+        "is_interpolated": false,
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 305,
+        "projected_y": 630,
+        "shot_type": "",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 9.0,
+        "zone": "manual_full_rally"
+      },
+      {
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "hit",
+        "frame_index": 571,
+        "image_x": null,
+        "image_y": null,
+        "is_interpolated": false,
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 300,
+        "projected_y": 705,
+        "shot_type": "backhand_topspin",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 9.517,
+        "zone": "manual_full_rally"
+      },
+      {
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "bounce",
+        "frame_index": 603,
+        "image_x": null,
+        "image_y": null,
+        "is_interpolated": false,
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 75,
+        "projected_y": 170,
+        "shot_type": "",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 10.05,
+        "zone": "manual_full_rally"
+      },
+      {
+        "confidence_like_score": 0.8,
+        "depth": "manual_replay_depth",
+        "event_type": "hit",
+        "frame_index": 658,
+        "image_x": null,
+        "image_y": null,
+        "is_interpolated": false,
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 85,
+        "projected_y": 95,
+        "shot_type": "forehand_topspin_adjusted",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 10.967,
+        "zone": "manual_full_rally"
+      },
+      {
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "bounce",
+        "frame_index": 722,
+        "image_x": null,
+        "image_y": null,
+        "is_interpolated": false,
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 280,
+        "projected_y": 620,
+        "shot_type": "",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 12.033,
+        "zone": "manual_full_rally"
+      },
+      {
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "hit",
+        "frame_index": 762,
+        "image_x": null,
+        "image_y": null,
+        "is_interpolated": false,
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 290,
+        "projected_y": 705,
+        "shot_type": "inside_out_forehand_topspin",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 12.7,
+        "zone": "manual_full_rally"
+      },
+      {
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "bounce",
+        "frame_index": 810,
+        "image_x": null,
+        "image_y": null,
+        "is_interpolated": false,
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 75,
+        "projected_y": 180,
+        "shot_type": "",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 13.5,
+        "zone": "manual_full_rally"
+      }
+    ],
+    "smoothed_ball_points": [
+      {
+        "confidence_like_score": 0.65,
+        "depth": "deep",
+        "frame_index": 120,
+        "image_x": 2170.45,
+        "image_y": 500.9,
+        "is_interpolated": false,
+        "lateral_lane": "center",
+        "notes": "Tuned approximate court zone; not official line calling.",
+        "projected_x": 179.582,
+        "projected_y": -49.31,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "far_deep_center"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 121,
+        "image_x": 2165.9,
+        "image_y": 509.8,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 178.453,
+        "projected_y": -39.522,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 122,
+        "image_x": 2156.8,
+        "image_y": 527.6,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 176.197,
+        "projected_y": -19.945,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 123,
+        "image_x": 2147.7,
+        "image_y": 545.4,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 173.94,
+        "projected_y": -0.369,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 124,
+        "image_x": 2138.6,
+        "image_y": 563.2,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 171.683,
+        "projected_y": 19.207,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 125,
+        "image_x": 2129.5,
+        "image_y": 581.0,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 169.427,
+        "projected_y": 38.783,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 126,
+        "image_x": 2120.4,
+        "image_y": 598.8,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 167.17,
+        "projected_y": 58.36,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 127,
+        "image_x": 2111.3,
+        "image_y": 616.6,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 164.913,
+        "projected_y": 77.936,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 128,
+        "image_x": 2102.2,
+        "image_y": 634.4,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 162.657,
+        "projected_y": 97.512,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 129,
+        "image_x": 2093.1,
+        "image_y": 652.2,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 160.4,
+        "projected_y": 117.088,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 130,
+        "image_x": 2084.0,
+        "image_y": 670.0,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 158.143,
+        "projected_y": 136.665,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 131,
+        "image_x": 2074.9,
+        "image_y": 687.8,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 155.887,
+        "projected_y": 156.241,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 132,
+        "image_x": 2065.8,
+        "image_y": 705.6,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 153.63,
+        "projected_y": 175.817,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 133,
+        "image_x": 2056.7,
+        "image_y": 723.4,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 151.373,
+        "projected_y": 195.393,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 134,
+        "image_x": 2047.6,
+        "image_y": 741.2,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 149.117,
+        "projected_y": 214.97,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": 0.85,
+        "depth": "mid",
+        "frame_index": 135,
+        "image_x": 2038.6,
+        "image_y": 761.7,
+        "is_interpolated": false,
+        "lateral_lane": "center",
+        "notes": "Tuned approximate court zone; not official line calling.",
+        "projected_x": 147.187,
+        "projected_y": 234.301,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "far_mid_center"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 136,
+        "image_x": 2029.7,
+        "image_y": 784.9,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 145.584,
+        "projected_y": 253.388,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 137,
+        "image_x": 2020.9,
+        "image_y": 810.8,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 144.309,
+        "projected_y": 272.231,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 138,
+        "image_x": 2012.1,
+        "image_y": 836.7,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 143.033,
+        "projected_y": 291.073,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 139,
+        "image_x": 2003.3,
+        "image_y": 862.6,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 141.758,
+        "projected_y": 309.915,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 140,
+        "image_x": 1994.5,
+        "image_y": 888.5,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 140.482,
+        "projected_y": 328.757,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 141,
+        "image_x": 1985.7,
+        "image_y": 914.4,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 139.207,
+        "projected_y": 347.6,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 142,
+        "image_x": 1976.9,
+        "image_y": 940.3,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 137.931,
+        "projected_y": 366.442,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 143,
+        "image_x": 1968.1,
+        "image_y": 966.2,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 136.656,
+        "projected_y": 385.284,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 144,
+        "image_x": 1959.3,
+        "image_y": 992.1,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 135.38,
+        "projected_y": 404.126,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 145,
+        "image_x": 1950.5,
+        "image_y": 1018.0,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 134.105,
+        "projected_y": 422.969,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 146,
+        "image_x": 1941.7,
+        "image_y": 1043.9,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 132.829,
+        "projected_y": 441.811,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 147,
+        "image_x": 1932.9,
+        "image_y": 1069.8,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 131.554,
+        "projected_y": 460.653,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 148,
+        "image_x": 1924.1,
+        "image_y": 1095.7,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 130.278,
+        "projected_y": 479.495,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 149,
+        "image_x": 1915.3,
+        "image_y": 1121.6,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 129.003,
+        "projected_y": 498.338,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": 0.85,
+        "depth": "short",
+        "frame_index": 150,
+        "image_x": 1906.9,
+        "image_y": 1139.2,
+        "is_interpolated": false,
+        "lateral_lane": "center",
+        "notes": "Tuned approximate court zone; not official line calling.",
+        "projected_x": 127.651,
+        "projected_y": 511.119,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "near_short_center"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 151,
+        "image_x": 1898.9,
+        "image_y": 1148.5,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 126.224,
+        "projected_y": 517.84,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 152,
+        "image_x": 1891.3,
+        "image_y": 1149.5,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 124.722,
+        "projected_y": 518.5,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 153,
+        "image_x": 1883.7,
+        "image_y": 1150.5,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 123.219,
+        "projected_y": 519.16,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 154,
+        "image_x": 1876.1,
+        "image_y": 1151.5,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 121.716,
+        "projected_y": 519.82,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 155,
+        "image_x": 1868.5,
+        "image_y": 1152.5,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 120.213,
+        "projected_y": 520.48,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 156,
+        "image_x": 1860.9,
+        "image_y": 1153.5,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 118.711,
+        "projected_y": 521.14,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 157,
+        "image_x": 1853.3,
+        "image_y": 1154.5,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 117.208,
+        "projected_y": 521.8,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 158,
+        "image_x": 1845.7,
+        "image_y": 1155.5,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 115.705,
+        "projected_y": 522.46,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 159,
+        "image_x": 1838.1,
+        "image_y": 1156.5,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 114.202,
+        "projected_y": 523.12,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 160,
+        "image_x": 1830.5,
+        "image_y": 1157.5,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 112.7,
+        "projected_y": 523.78,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 161,
+        "image_x": 1822.9,
+        "image_y": 1158.5,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 111.197,
+        "projected_y": 524.44,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 162,
+        "image_x": 1815.3,
+        "image_y": 1159.5,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 109.694,
+        "projected_y": 525.1,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 163,
+        "image_x": 1807.7,
+        "image_y": 1160.5,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 108.191,
+        "projected_y": 525.76,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 164,
+        "image_x": 1800.1,
+        "image_y": 1161.5,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 106.689,
+        "projected_y": 526.42,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": 0.85,
+        "depth": "mid",
+        "frame_index": 165,
+        "image_x": 1792.333,
+        "image_y": 1164.067,
+        "is_interpolated": false,
+        "lateral_lane": "left",
+        "notes": "Tuned approximate court zone; not official line calling.",
+        "projected_x": 105.24,
+        "projected_y": 527.924,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "near_mid_left"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 166,
+        "image_x": 1784.4,
+        "image_y": 1168.2,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 103.846,
+        "projected_y": 530.273,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 167,
+        "image_x": 1776.3,
+        "image_y": 1173.9,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 102.506,
+        "projected_y": 533.466,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 168,
+        "image_x": 1768.2,
+        "image_y": 1179.6,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 101.165,
+        "projected_y": 536.66,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 169,
+        "image_x": 1760.1,
+        "image_y": 1185.3,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 99.825,
+        "projected_y": 539.853,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 170,
+        "image_x": 1752.0,
+        "image_y": 1191.0,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 98.485,
+        "projected_y": 543.046,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 171,
+        "image_x": 1743.9,
+        "image_y": 1196.7,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 97.145,
+        "projected_y": 546.239,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 172,
+        "image_x": 1735.8,
+        "image_y": 1202.4,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 95.805,
+        "projected_y": 549.432,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 173,
+        "image_x": 1727.7,
+        "image_y": 1208.1,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 94.464,
+        "projected_y": 552.626,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 174,
+        "image_x": 1719.6,
+        "image_y": 1213.8,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 93.124,
+        "projected_y": 555.819,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 175,
+        "image_x": 1711.5,
+        "image_y": 1219.5,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 91.784,
+        "projected_y": 559.012,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 176,
+        "image_x": 1703.4,
+        "image_y": 1225.2,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 90.444,
+        "projected_y": 562.205,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 177,
+        "image_x": 1695.3,
+        "image_y": 1230.9,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 89.104,
+        "projected_y": 565.398,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 178,
+        "image_x": 1687.2,
+        "image_y": 1236.6,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 87.763,
+        "projected_y": 568.592,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": null,
+        "depth": "unknown",
+        "frame_index": 179,
+        "image_x": 1679.1,
+        "image_y": 1242.3,
+        "is_interpolated": true,
+        "lateral_lane": "unknown",
+        "notes": "",
+        "projected_x": 86.423,
+        "projected_y": 571.785,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "unknown"
+      },
+      {
+        "confidence_like_score": 0.85,
+        "depth": "mid",
+        "frame_index": 180,
+        "image_x": 1675.05,
+        "image_y": 1245.15,
+        "is_interpolated": false,
+        "lateral_lane": "left",
+        "notes": "Tuned approximate court zone; not official line calling.",
+        "projected_x": 85.753,
+        "projected_y": 573.381,
+        "source": "smoothed_trajectory",
+        "timestamp_seconds": null,
+        "zone": "near_mid_left"
+      }
+    ]
+  },
+  "camera_profiles": [
+    {
+      "camera_id": "top_tactical",
+      "coordinate_space": "normalized_court",
+      "name": "Top Tactical",
+      "purpose": "Overhead tactical replay from normalized court coordinates.",
+      "renderer_notes": "Best first renderer because Stage 3 homography and Stage 9.1 zones use normalized court coordinates.",
+      "supported_now": true,
+      "view_type": "2d_top_down"
+    },
+    {
+      "camera_id": "sideline_low",
+      "coordinate_space": "normalized_court_plus_estimated_height",
+      "name": "Sideline Low",
+      "purpose": "Future side-view ball flight interpretation.",
+      "renderer_notes": "Requires ball height estimation that does not exist yet.",
+      "supported_now": false,
+      "view_type": "synthetic_side_view"
+    },
+    {
+      "camera_id": "baseline_near",
+      "coordinate_space": "normalized_court",
+      "name": "Near Baseline",
+      "purpose": "Future baseline replay from near player perspective.",
+      "renderer_notes": "Renderer hint only; no true near-baseline camera exists.",
+      "supported_now": false,
+      "view_type": "synthetic_baseline"
+    },
+    {
+      "camera_id": "baseline_far",
+      "coordinate_space": "normalized_court",
+      "name": "Far Baseline",
+      "purpose": "Future baseline replay from far player perspective.",
+      "renderer_notes": "Renderer hint only; player identity is independent of side state.",
+      "supported_now": false,
+      "view_type": "synthetic_baseline"
+    },
+    {
+      "camera_id": "audience_side",
+      "coordinate_space": "normalized_court",
+      "name": "Audience Side",
+      "purpose": "Future stylized side/audience tactical replay.",
+      "renderer_notes": "Requires a renderer to map normalized court data into an oblique scene.",
+      "supported_now": false,
+      "view_type": "synthetic_oblique"
+    },
+    {
+      "camera_id": "mini_court",
+      "coordinate_space": "normalized_court",
+      "name": "Mini Court",
+      "purpose": "Compact tactical visualization for reports and UI cards.",
+      "renderer_notes": "Can consume replay keyframes and tactical zones immediately.",
+      "supported_now": true,
+      "view_type": "2d_mini_court"
+    }
+  ],
+  "confidence": {
+    "confidence_level": "manual_event_timeline_high",
+    "confidence_reasons": [
+      "12 visible expanded ball labels are available.",
+      "All visible labels have projected court coordinates and no unknown zones.",
+      "Candidate validation distance is low on matched frames (2.797 px average).",
+      "All timeline events in the validated timeline are label-supported.",
+      "Two main player identities are available from Stage 7.1.",
+      "Full rally event chronology supplied by Product Owner visual review."
+    ],
+    "limiting_factors": [
+      "No major limiting factors detected for this prototype report."
+    ],
+    "recommended_validation_steps": [
+      "Proceed to Stage 11 while preserving uncertainty in report wording."
+    ],
+    "upstream_friction_notes": [
+      "Stage 11 package friction was low."
+    ]
+  },
+  "court_model": {
+    "available_zones": [
+      "far_deep_center",
+      "far_deep_right",
+      "far_mid_center",
+      "far_short_center",
+      "near_deep_left",
+      "near_mid_left",
+      "near_short_center",
+      "out_of_bounds"
+    ],
+    "calibration_basis": "doubles court outer boundary",
+    "calibration_points": {
+      "far_left_corner": [
+        1566,
+        528
+      ],
+      "far_right_corner": [
+        2781,
+        549
+      ],
+      "near_left_corner": [
+        1008,
+        1719
+      ],
+      "near_right_corner": [
+        3312,
+        1770
+      ]
+    },
+    "calibration_type": "full_doubles_boundary_homography",
+    "court_zone_model": "simple_normalized_doubles_court_zones_v0",
+    "homography_status": {
+      "computed": true,
+      "error": null,
+      "target_size": [
+        360,
+        780
+      ]
+    },
+    "limitations": [
+      "Tennis has singles and doubles lines; this calibration uses the doubles outer boundary.",
+      "Singles and service-box geometry may be derived later.",
+      "This is not official line calling."
+    ],
+    "normalized_court_height": 780.0,
+    "normalized_court_width": 360.0,
+    "zone_definitions": {
+      "depth": [
+        "short",
+        "mid",
+        "deep",
+        "unknown"
+      ],
+      "lateral_lane": [
+        "left",
+        "center",
+        "right",
+        "unknown"
+      ],
+      "side": [
+        "near",
+        "far",
+        "unknown"
+      ],
+      "special": [
+        "out_of_bounds"
+      ]
+    }
+  },
+  "event_timeline": [
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_001",
+      "event_type": "validated_hit",
+      "frame_index": 100,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "hit",
+      "player_id": "player_a",
+      "possible_event": false,
+      "projected_position": {
+        "x": 260,
+        "y": 80
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "serve_topspin",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 1.667,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    },
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_002",
+      "event_type": "validated_bounce",
+      "frame_index": 154,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "bounce",
+      "player_id": "none",
+      "possible_event": false,
+      "projected_position": {
+        "x": 235,
+        "y": 510
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 2.567,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    },
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_003",
+      "event_type": "validated_hit",
+      "frame_index": 196,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "hit",
+      "player_id": "player_b",
+      "possible_event": false,
+      "projected_position": {
+        "x": 255,
+        "y": 710
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "forehand_flat",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 3.267,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    },
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_004",
+      "event_type": "validated_bounce",
+      "frame_index": 240,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "bounce",
+      "player_id": "none",
+      "possible_event": false,
+      "projected_position": {
+        "x": 120,
+        "y": 210
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 4.0,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    },
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_005",
+      "event_type": "validated_hit",
+      "frame_index": 258,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "hit",
+      "player_id": "player_a",
+      "possible_event": false,
+      "projected_position": {
+        "x": 125,
+        "y": 90
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "forehand_slice",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 4.3,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    },
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_006",
+      "event_type": "validated_bounce",
+      "frame_index": 328,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "bounce",
+      "player_id": "none",
+      "possible_event": false,
+      "projected_position": {
+        "x": 300,
+        "y": 620
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 5.467,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    },
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_007",
+      "event_type": "validated_hit",
+      "frame_index": 362,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "hit",
+      "player_id": "player_b",
+      "possible_event": false,
+      "projected_position": {
+        "x": 285,
+        "y": 705
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "forehand_topspin",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 6.033,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    },
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_008",
+      "event_type": "validated_bounce",
+      "frame_index": 418,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "bounce",
+      "player_id": "none",
+      "possible_event": false,
+      "projected_position": {
+        "x": 90,
+        "y": 185
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 6.967,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    },
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_009",
+      "event_type": "validated_hit",
+      "frame_index": 463,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "hit",
+      "player_id": "player_a",
+      "possible_event": false,
+      "projected_position": {
+        "x": 110,
+        "y": 85
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "backhand_slice",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 7.717,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    },
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_010",
+      "event_type": "validated_bounce",
+      "frame_index": 540,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "bounce",
+      "player_id": "none",
+      "possible_event": false,
+      "projected_position": {
+        "x": 305,
+        "y": 630
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 9.0,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    },
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_011",
+      "event_type": "validated_hit",
+      "frame_index": 571,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "hit",
+      "player_id": "player_b",
+      "possible_event": false,
+      "projected_position": {
+        "x": 300,
+        "y": 705
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "backhand_topspin",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 9.517,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    },
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_012",
+      "event_type": "validated_bounce",
+      "frame_index": 603,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "bounce",
+      "player_id": "none",
+      "possible_event": false,
+      "projected_position": {
+        "x": 75,
+        "y": 170
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 10.05,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    },
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 0.8,
+      "event_id": "manual_full_rally_013",
+      "event_type": "validated_hit",
+      "frame_index": 658,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "hit",
+      "player_id": "player_a",
+      "possible_event": false,
+      "projected_position": {
+        "x": 85,
+        "y": 95
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "forehand_topspin_adjusted",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 10.967,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    },
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_014",
+      "event_type": "validated_bounce",
+      "frame_index": 722,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "bounce",
+      "player_id": "none",
+      "possible_event": false,
+      "projected_position": {
+        "x": 280,
+        "y": 620
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 12.033,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    },
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_015",
+      "event_type": "validated_hit",
+      "frame_index": 762,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "hit",
+      "player_id": "player_b",
+      "possible_event": false,
+      "projected_position": {
+        "x": 290,
+        "y": 705
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "inside_out_forehand_topspin",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 12.7,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    },
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_016",
+      "event_type": "validated_bounce",
+      "frame_index": 810,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "bounce",
+      "player_id": "none",
+      "possible_event": false,
+      "projected_position": {
+        "x": 75,
+        "y": 180
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 13.5,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    }
+  ],
+  "limitations": [
+    "limited sample video",
+    "limited labels",
+    "possible_* events are hypotheses",
+    "player identity is clothing/track heuristic",
+    "no official line calling",
+    "no official scoring",
+    "no verified ball height",
+    "no real 3D reconstruction yet",
+    "no multi-angle camera support yet",
+    "no real-time support yet",
+    "Manual full-rally event timing is authoritative; replay court positions are deterministic visualization anchors, not measured line-call coordinates."
+  ],
+  "metadata": {
+    "generated_at": "2026-05-14T03:30:16+00:00",
+    "input_package": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\package_manifest.json",
+    "intended_use": "Deterministic replay from authoritative full-rally manual event chronology.",
+    "manual_annotation_override": true,
+    "manual_annotation_source": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\configs\\manual_annotations\\video_01_full_rally.json",
+    "non_goals": [
+      "photorealistic video generation",
+      "official scoring",
+      "official line calling",
+      "confirmed coaching analysis"
+    ],
+    "project_name": "Tennis AI Vision",
+    "schema_name": "tennis_ai_vision.synthetic_rally_replay",
+    "schema_version": "0.1.0",
+    "source_pipeline_stage": "manual_full_rally_authoritative_replay_patch",
+    "stage": "stage_12_replay_schema"
+  },
+  "players": [
+    {
+      "confidence": 0.7196,
+      "dominant_colors_summary": "upper #b46445, #b46344; lower #bc794e, #bb734d",
+      "identity_basis": "clothing_color_heuristic / track_filtering",
+      "initial_side_state": "far_side",
+      "limitations": [
+        "Near/far side is a state, not identity.",
+        "Identity is not biometric re-identification."
+      ],
+      "player_id": "player_a",
+      "side_states": [
+        {
+          "frame_index": 120,
+          "projected_x": 212.54,
+          "projected_y": 4.603,
+          "side_state": "far_side",
+          "x": 2282.138,
+          "y": 477.16
+        },
+        {
+          "frame_index": 121,
+          "projected_x": 212.594,
+          "projected_y": 4.412,
+          "side_state": "far_side",
+          "x": 2282.313,
+          "y": 477.141
+        },
+        {
+          "frame_index": 122,
+          "projected_x": 213.035,
+          "projected_y": 3.319,
+          "side_state": "far_side",
+          "x": 2283.745,
+          "y": 475.518
+        },
+        {
+          "frame_index": 123,
+          "projected_x": 213.148,
+          "projected_y": 2.14,
+          "side_state": "far_side",
+          "x": 2284.059,
+          "y": 475.044
+        },
+        {
+          "frame_index": 124,
+          "projected_x": 213.617,
+          "projected_y": 2.439,
+          "side_state": "far_side",
+          "x": 2285.664,
+          "y": 475.95
+        },
+        {
+          "frame_index": 125,
+          "projected_x": 213.586,
+          "projected_y": 0.539,
+          "side_state": "far_side",
+          "x": 2285.449,
+          "y": 474.538
+        },
+        {
+          "frame_index": 126,
+          "projected_x": 213.579,
+          "projected_y": 0.523,
+          "side_state": "far_side",
+          "x": 2285.426,
+          "y": 474.535
+        },
+        {
+          "frame_index": 127,
+          "projected_x": 212.557,
+          "projected_y": -1.071,
+          "side_state": "far_side",
+          "x": 2281.884,
+          "y": 472.401
+        },
+        {
+          "frame_index": 128,
+          "projected_x": 212.546,
+          "projected_y": -1.041,
+          "side_state": "far_side",
+          "x": 2281.849,
+          "y": 472.399
+        },
+        {
+          "frame_index": 129,
+          "projected_x": 211.114,
+          "projected_y": 6.699,
+          "side_state": "far_side",
+          "x": 2277.418,
+          "y": 473.235
+        },
+        {
+          "frame_index": 130,
+          "projected_x": 211.427,
+          "projected_y": 16.406,
+          "side_state": "far_side",
+          "x": 2278.997,
+          "y": 474.074
+        },
+        {
+          "frame_index": 131,
+          "projected_x": 211.423,
+          "projected_y": 16.429,
+          "side_state": "far_side",
+          "x": 2278.985,
+          "y": 473.988
+        },
+        {
+          "frame_index": 132,
+          "projected_x": 211.943,
+          "projected_y": 17.427,
+          "side_state": "far_side",
+          "x": 2280.813,
+          "y": 471.505
+        },
+        {
+          "frame_index": 133,
+          "projected_x": 211.972,
+          "projected_y": 17.585,
+          "side_state": "far_side",
+          "x": 2280.921,
+          "y": 471.509
+        },
+        {
+          "frame_index": 134,
+          "projected_x": 214.306,
+          "projected_y": 15.862,
+          "side_state": "far_side",
+          "x": 2288.788,
+          "y": 469.059
+        },
+        {
+          "frame_index": 135,
+          "projected_x": 214.854,
+          "projected_y": 16.585,
+          "side_state": "far_side",
+          "x": 2290.701,
+          "y": 467.469
+        },
+        {
+          "frame_index": 136,
+          "projected_x": 214.844,
+          "projected_y": 16.614,
+          "side_state": "far_side",
+          "x": 2290.668,
+          "y": 467.434
+        },
+        {
+          "frame_index": 150,
+          "projected_x": 217.295,
+          "projected_y": 17.931,
+          "side_state": "far_side",
+          "x": 2299.122,
+          "y": 464.875
+        },
+        {
+          "frame_index": 165,
+          "projected_x": 217.52,
+          "projected_y": 18.402,
+          "side_state": "far_side",
+          "x": 2299.92,
+          "y": 462.478
+        },
+        {
+          "frame_index": 180,
+          "projected_x": 216.045,
+          "projected_y": 18.337,
+          "side_state": "far_side",
+          "x": 2294.878,
+          "y": 468.398
+        }
+      ],
+      "source_track_ids": "player_2"
+    },
+    {
+      "confidence": 0.6964,
+      "dominant_colors_summary": "upper #aa6a4a, #ac6c4a; lower #ad5e37, #ae5e37",
+      "identity_basis": "clothing_color_heuristic / track_filtering",
+      "initial_side_state": "near_side",
+      "limitations": [
+        "Near/far side is a state, not identity.",
+        "Identity is not biometric re-identification."
+      ],
+      "player_id": "player_b",
+      "side_states": [
+        {
+          "frame_index": 120,
+          "projected_x": 66.526,
+          "projected_y": 843.909,
+          "side_state": "near_side",
+          "x": 1370.443,
+          "y": 1738.225
+        },
+        {
+          "frame_index": 121,
+          "projected_x": 66.529,
+          "projected_y": 843.917,
+          "side_state": "near_side",
+          "x": 1370.451,
+          "y": 1738.121
+        },
+        {
+          "frame_index": 122,
+          "projected_x": 66.587,
+          "projected_y": 843.686,
+          "side_state": "near_side",
+          "x": 1371.084,
+          "y": 1737.419
+        },
+        {
+          "frame_index": 123,
+          "projected_x": 66.849,
+          "projected_y": 843.519,
+          "side_state": "near_side",
+          "x": 1373.052,
+          "y": 1737.688
+        },
+        {
+          "frame_index": 124,
+          "projected_x": 67.382,
+          "projected_y": 843.519,
+          "side_state": "near_side",
+          "x": 1376.71,
+          "y": 1736.821
+        },
+        {
+          "frame_index": 125,
+          "projected_x": 67.49,
+          "projected_y": 843.611,
+          "side_state": "near_side",
+          "x": 1377.359,
+          "y": 1736.502
+        },
+        {
+          "frame_index": 126,
+          "projected_x": 67.487,
+          "projected_y": 843.613,
+          "side_state": "near_side",
+          "x": 1377.334,
+          "y": 1736.349
+        },
+        {
+          "frame_index": 127,
+          "projected_x": 67.555,
+          "projected_y": 843.568,
+          "side_state": "near_side",
+          "x": 1377.849,
+          "y": 1736.967
+        },
+        {
+          "frame_index": 128,
+          "projected_x": 67.57,
+          "projected_y": 843.561,
+          "side_state": "near_side",
+          "x": 1377.96,
+          "y": 1736.979
+        },
+        {
+          "frame_index": 129,
+          "projected_x": 68.067,
+          "projected_y": 843.439,
+          "side_state": "near_side",
+          "x": 1381.486,
+          "y": 1737.565
+        },
+        {
+          "frame_index": 130,
+          "projected_x": 68.199,
+          "projected_y": 843.155,
+          "side_state": "near_side",
+          "x": 1382.679,
+          "y": 1736.662
+        },
+        {
+          "frame_index": 131,
+          "projected_x": 68.19,
+          "projected_y": 843.136,
+          "side_state": "near_side",
+          "x": 1382.635,
+          "y": 1736.603
+        },
+        {
+          "frame_index": 132,
+          "projected_x": 68.108,
+          "projected_y": 842.786,
+          "side_state": "near_side",
+          "x": 1382.421,
+          "y": 1737.22
+        },
+        {
+          "frame_index": 133,
+          "projected_x": 68.102,
+          "projected_y": 842.772,
+          "side_state": "near_side",
+          "x": 1382.395,
+          "y": 1737.073
+        },
+        {
+          "frame_index": 134,
+          "projected_x": 69.01,
+          "projected_y": 843.07,
+          "side_state": "near_side",
+          "x": 1388.322,
+          "y": 1737.659
+        },
+        {
+          "frame_index": 135,
+          "projected_x": 69.387,
+          "projected_y": 843.548,
+          "side_state": "near_side",
+          "x": 1390.438,
+          "y": 1742.91
+        },
+        {
+          "frame_index": 136,
+          "projected_x": 69.383,
+          "projected_y": 843.581,
+          "side_state": "near_side",
+          "x": 1390.38,
+          "y": 1742.766
+        },
+        {
+          "frame_index": 150,
+          "projected_x": 58.169,
+          "projected_y": 843.481,
+          "side_state": "near_side",
+          "x": 1313.56,
+          "y": 1735.509
+        },
+        {
+          "frame_index": 165,
+          "projected_x": 60.1,
+          "projected_y": 823.841,
+          "side_state": "near_side",
+          "x": 1347.282,
+          "y": 1668.365
+        },
+        {
+          "frame_index": 180,
+          "projected_x": 63.807,
+          "projected_y": 821.034,
+          "side_state": "near_side",
+          "x": 1374.874,
+          "y": 1660.942
+        }
+      ],
+      "source_track_ids": "player_1"
+    }
+  ],
+  "projected_trajectory": {
+    "court_zone_sequence": [
+      "out_of_bounds",
+      "out_of_bounds",
+      "far_deep_center",
+      "far_mid_center",
+      "near_short_center",
+      "near_mid_left",
+      "near_mid_left",
+      "near_deep_left",
+      "far_short_center",
+      "far_mid_center",
+      "far_mid_center",
+      "far_deep_right"
+    ],
+    "depth_sequence": [
+      "deep",
+      "deep",
+      "deep",
+      "mid",
+      "short",
+      "mid",
+      "mid",
+      "deep",
+      "short",
+      "mid",
+      "mid",
+      "deep"
+    ],
+    "lateral_sequence": [
+      "center",
+      "center",
+      "center",
+      "center",
+      "center",
+      "left",
+      "left",
+      "left",
+      "center",
+      "center",
+      "center",
+      "right"
+    ],
+    "projected_points_count": 12,
+    "projection_status_summary": {
+      "outside_expected_range": 2,
+      "projected": 10
+    },
+    "trajectory_bounds": {
+      "max_x": 248.243,
+      "max_y": 660.861,
+      "min_x": 76.532,
+      "min_y": -487.826
+    },
+    "unknown_zone_count": 0
+  },
+  "rally_segments": [
+    {
+      "confidence_like_score": 1.0,
+      "duration_seconds": 11.833,
+      "end_frame": 810,
+      "event_count": 16,
+      "players_involved": [
+        "player_a",
+        "player_b"
+      ],
+      "possible_bounce_count": 0,
+      "possible_hit_count": 0,
+      "rally_id": "manual_full_rally_001",
+      "segmentation_reason": "Authoritative full-rally manual annotation from first serve contact to final bounce.",
+      "start_frame": 100,
+      "validated_bounce_count": 8,
+      "validated_hit_count": 8
+    }
+  ],
+  "renderer_hints": {
+    "avoid_initial_generation_ai": true,
+    "future_generation_ai_layer": "optional_later",
+    "interpolation_policy": "Use interpolated points for visualization only; mark them clearly.",
+    "preferred_initial_rendering": "deterministic_code_generated",
+    "recommended_first_renderer": "2d_tactical_replay",
+    "suggested_animation_fps": 30,
+    "suggested_output_duration_seconds": null,
+    "uncertainty_display_policy": [
+      "show dashed lines for interpolated points",
+      "show possible events with question markers",
+      "show confidence labels",
+      "avoid hiding uncertainty"
+    ]
+  },
+  "source_artifacts": {
+    "analytical_report_json": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports_final\\stage_10_analytical_report\\analytical_report.json",
+    "calibration_config": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\configs\\court_calibration_sample.json",
+    "confidence_summary": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports_final\\stage_10_analytical_report\\confidence_summary.json",
+    "directions": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_1_projection_coverage\\tuned_shot_direction_estimates.csv",
+    "event_timeline": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_event_timeline\\event_timeline.csv",
+    "expanded_labels": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_1_timeline_validation\\expanded_ball_labels.csv",
+    "key_findings": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports_final\\stage_10_analytical_report\\key_findings.md",
+    "main_players": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_1_player_filtering\\main_players.csv",
+    "manual_full_rally_annotation": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\configs\\manual_annotations\\video_01_full_rally.json",
+    "player_event_attribution": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_event_timeline\\player_event_attribution.csv",
+    "player_identity_profiles": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_1_player_filtering\\player_identity_profiles.json",
+    "player_side_states": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_1_player_filtering\\player_side_states.csv",
+    "projected_labels": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_1_projection_coverage\\projected_expanded_labels.csv",
+    "rally_segments": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_event_timeline\\rally_segments.csv",
+    "rally_tactical_summary": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_1_projection_coverage\\tuned_rally_tactical_summary.csv",
+    "raw_trajectory": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_6_trajectory_smoothing\\raw_trajectory.csv",
+    "refined_ball_player_distances": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_1_player_filtering\\refined_ball_player_distances.csv",
+    "smoothed_trajectory": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_6_trajectory_smoothing\\smoothed_trajectory.csv",
+    "stage11_manifest": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\package_manifest.json",
+    "stage1_report": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_1_video_probe_report.json",
+    "stage3_report": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_3_court_calibration_probe_report.json",
+    "trajectory_events": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\ball_tracking\\stage_6_trajectory_smoothing\\trajectory_events.csv",
+    "tuned_zones": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_1_projection_coverage\\tuned_ball_zone_assignments.csv",
+    "validated_timeline": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_1_timeline_validation\\validated_event_timeline.csv"
+  },
+  "source_video": {
+    "analyzed_frame_range": [
+      120,
+      180
+    ],
+    "frame_rate": 60.0,
+    "height": 2160,
+    "label_frame_range": [
+      90,
+      255
+    ],
+    "total_labeled_points": 12,
+    "video_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\samples\\video_01.mov",
+    "width": 3840
+  },
+  "tactical_metrics": {
+    "depth_distribution": {
+      "deep": 5,
+      "mid": 5,
+      "short": 2
+    },
+    "direction_estimates": [
+      {
+        "confidence_like_score": "0.35",
+        "direction_type": "center_like",
+        "from_frame": "90",
+        "from_zone": "out_of_bounds",
+        "reason": "Consecutive points are on the same side, so shot direction is weak evidence.",
+        "to_frame": "105",
+        "to_zone": "out_of_bounds"
+      },
+      {
+        "confidence_like_score": "0.55",
+        "direction_type": "down_the_line_like",
+        "from_frame": "105",
+        "from_zone": "out_of_bounds",
+        "reason": "Ball moved between court sides while staying in the same lateral lane.",
+        "to_frame": "120",
+        "to_zone": "far_deep_center"
+      },
+      {
+        "confidence_like_score": "0.35",
+        "direction_type": "center_like",
+        "from_frame": "120",
+        "from_zone": "far_deep_center",
+        "reason": "Consecutive points are on the same side, so shot direction is weak evidence.",
+        "to_frame": "135",
+        "to_zone": "far_mid_center"
+      },
+      {
+        "confidence_like_score": "0.55",
+        "direction_type": "down_the_line_like",
+        "from_frame": "135",
+        "from_zone": "far_mid_center",
+        "reason": "Ball moved between court sides while staying in the same lateral lane.",
+        "to_frame": "150",
+        "to_zone": "near_short_center"
+      },
+      {
+        "confidence_like_score": "0.35",
+        "direction_type": "unknown",
+        "from_frame": "150",
+        "from_zone": "near_short_center",
+        "reason": "Consecutive points are on the same side, so shot direction is weak evidence.",
+        "to_frame": "165",
+        "to_zone": "near_mid_left"
+      },
+      {
+        "confidence_like_score": "0.35",
+        "direction_type": "center_like",
+        "from_frame": "165",
+        "from_zone": "near_mid_left",
+        "reason": "Consecutive points are on the same side, so shot direction is weak evidence.",
+        "to_frame": "180",
+        "to_zone": "near_mid_left"
+      },
+      {
+        "confidence_like_score": "0.35",
+        "direction_type": "center_like",
+        "from_frame": "180",
+        "from_zone": "near_mid_left",
+        "reason": "Consecutive points are on the same side, so shot direction is weak evidence.",
+        "to_frame": "195",
+        "to_zone": "near_deep_left"
+      },
+      {
+        "confidence_like_score": "0.45",
+        "direction_type": "center_like",
+        "from_frame": "195",
+        "from_zone": "near_deep_left",
+        "reason": "Ball moved through the center lane; direction is approximate.",
+        "to_frame": "210",
+        "to_zone": "far_short_center"
+      },
+      {
+        "confidence_like_score": "0.35",
+        "direction_type": "center_like",
+        "from_frame": "210",
+        "from_zone": "far_short_center",
+        "reason": "Consecutive points are on the same side, so shot direction is weak evidence.",
+        "to_frame": "225",
+        "to_zone": "far_mid_center"
+      },
+      {
+        "confidence_like_score": "0.35",
+        "direction_type": "center_like",
+        "from_frame": "225",
+        "from_zone": "far_mid_center",
+        "reason": "Consecutive points are on the same side, so shot direction is weak evidence.",
+        "to_frame": "240",
+        "to_zone": "far_mid_center"
+      },
+      {
+        "confidence_like_score": "0.35",
+        "direction_type": "unknown",
+        "from_frame": "240",
+        "from_zone": "far_mid_center",
+        "reason": "Consecutive points are on the same side, so shot direction is weak evidence.",
+        "to_frame": "255",
+        "to_zone": "far_deep_right"
+      }
+    ],
+    "dominant_depth": "deep",
+    "dominant_lateral_lane": "center",
+    "dominant_zone": "far_mid_center",
+    "key_findings": [
+      "The report analyzed 12 visible ball labels.",
+      "12 labels have projected court coordinates.",
+      "Unknown tactical zones: 0.",
+      "Confidence level: medium-high.",
+      "Most frequent prototype zone: far_mid_center (3 points).",
+      "Rally segments summarized: 1."
+    ],
+    "lateral_distribution": {
+      "center": 8,
+      "left": 3,
+      "right": 1
+    },
+    "tactical_summary": [
+      {
+        "confidence_like_score": "0.79",
+        "dominant_depth": "mid",
+        "dominant_lateral_lane": "center",
+        "dominant_zone": "near_mid_left",
+        "duration_seconds": "1.0",
+        "end_frame": "180",
+        "event_count": "5",
+        "notes": "Prototype tactical summary from validated timeline and approximate zones.",
+        "possible_bounce_count": "0",
+        "possible_hit_count": "3",
+        "rally_id": "rally_001",
+        "start_frame": "120"
+      }
+    ],
+    "zone_distribution": {
+      "far_deep_center": 1,
+      "far_deep_right": 1,
+      "far_mid_center": 3,
+      "far_short_center": 1,
+      "near_deep_left": 1,
+      "near_mid_left": 2,
+      "near_short_center": 1,
+      "out_of_bounds": 2
+    }
+  },
+  "visual_layers": [
+    {
+      "layer_id": "court_layer",
+      "notes": "Uses doubles court outer boundary as the current calibration baseline.",
+      "optional_data": [
+        "court_zone_model"
+      ],
+      "purpose": "Draw normalized doubles court boundary and optional zone grid.",
+      "required_data": [
+        "court_model"
+      ],
+      "supported_now": true
+    },
+    {
+      "layer_id": "player_layer",
+      "notes": "Player identity is clothing/track heuristic, not biometric re-identification.",
+      "optional_data": [
+        "side_states"
+      ],
+      "purpose": "Render approximate player identity markers and side states.",
+      "required_data": [
+        "players"
+      ],
+      "supported_now": true
+    },
+    {
+      "layer_id": "ball_layer",
+      "notes": "No verified 3D ball height yet.",
+      "optional_data": [
+        "confidence_like_score"
+      ],
+      "purpose": "Render ball positions at replay keyframes.",
+      "required_data": [
+        "ball_trajectory.replay_keyframes"
+      ],
+      "supported_now": true
+    },
+    {
+      "layer_id": "trajectory_layer",
+      "notes": "Interpolated points should be dashed or visually distinct.",
+      "optional_data": [
+        "is_interpolated"
+      ],
+      "purpose": "Draw trajectory sequence through projected points.",
+      "required_data": [
+        "projected_trajectory"
+      ],
+      "supported_now": true
+    },
+    {
+      "layer_id": "event_marker_layer",
+      "notes": "Use question markers for hypotheses.",
+      "optional_data": [
+        "player_id",
+        "validation_status"
+      ],
+      "purpose": "Display possible_* event markers.",
+      "required_data": [
+        "event_timeline"
+      ],
+      "supported_now": true
+    },
+    {
+      "layer_id": "tactical_zone_layer",
+      "notes": "Not official line calling.",
+      "optional_data": [
+        "zone_confidence"
+      ],
+      "purpose": "Display tactical zone assignments and depth/lane context.",
+      "required_data": [
+        "tactical_metrics"
+      ],
+      "supported_now": true
+    },
+    {
+      "layer_id": "timeline_layer",
+      "notes": "Useful for 2D replay controls.",
+      "optional_data": [
+        "confidence_like_score"
+      ],
+      "purpose": "Show event sequence along frame/time axis.",
+      "required_data": [
+        "event_timeline",
+        "rally_segments"
+      ],
+      "supported_now": true
+    },
+    {
+      "layer_id": "confidence_overlay_layer",
+      "notes": "Should remain visible in early renderers.",
+      "optional_data": [
+        "limitations"
+      ],
+      "purpose": "Expose uncertainty and confidence labels.",
+      "required_data": [
+        "confidence"
+      ],
+      "supported_now": true
+    }
+  ]
+}

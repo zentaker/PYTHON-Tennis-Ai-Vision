@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tennis AI Vision Local Labeling Editor</title>
+    <link rel="stylesheet" href="labeling_editor.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="editor-main">
+        <header class="topbar">
+          <div>
+            <h1>Local Video Labeling Editor</h1>
+            <p>DaVinci-style local timeline labeling. No uploads. No automatic overlays.</p>
+          </div>
+        </header>
+
+        <section class="preview-section">
+          <div class="video-frame">
+            <video id="video" controls preload="metadata"></video>
+          </div>
+          <div class="transport">
+            <button id="playPauseButton" type="button">Play</button>
+            <button id="stepBackButton" type="button">Step back 1 frame</button>
+            <button id="stepForwardButton" type="button">Step forward 1 frame</button>
+            <button id="jumpBackButton" type="button">Jump back</button>
+            <button id="jumpForwardButton" type="button">Jump forward</button>
+            <label>
+              FPS
+              <input id="fpsInput" type="number" min="1" max="240" step="1" value="60" />
+            </label>
+          </div>
+          <div class="time-readout">
+            <span id="currentTimeText">00:00.000</span>
+            <span id="durationText">00:00.000</span>
+            <span id="frameText">frame est. 0</span>
+          </div>
+        </section>
+
+        <section class="timeline-editor" aria-label="video labeling timeline">
+          <header class="timeline-toolbar">
+            <div class="timeline-buttons">
+              <button id="zoomOutButton" type="button">Zoom out</button>
+              <button id="zoomInButton" type="button">Zoom in</button>
+              <button id="fitClipButton" type="button">Fit clip</button>
+            </div>
+            <div class="timeline-status">
+              <span id="zoomText">Timeline zoom: 1.0x</span>
+              <span id="visibleRangeText">Visible: 00:00.000 - 00:00.000</span>
+              <span id="ppsText">0 px/s</span>
+            </div>
+          </header>
+
+          <div id="timelineViewport" class="timeline-viewport">
+            <div id="timelineContent" class="timeline-content">
+              <div id="rulerLane" class="ruler-lane"></div>
+              <div id="windowLane" class="window-lane"></div>
+              <div id="markerLane" class="marker-lane"></div>
+              <div id="thumbnailStrip" class="thumbnail-strip"></div>
+              <div id="playhead" class="playhead"></div>
+            </div>
+          </div>
+
+          <footer class="timeline-help">
+            <span>Alt+wheel zoom</span>
+            <span>Ctrl+wheel pan</span>
+            <span>Click/drag timeline to scrub</span>
+            <span>+/- zoom</span>
+            <span>0 fit</span>
+          </footer>
+        </section>
+
+        <section class="window-controls">
+          <span id="windowSelectionText">Range workflow: add a range, drag the center to move it, drag edges to resize it.</span>
+        </section>
+      </section>
+
+      <aside class="label-panel">
+        <header>
+          <h2>Labels</h2>
+          <p id="videoNameText">No video loaded</p>
+        </header>
+        <section class="side-section">
+          <h3>Files</h3>
+          <div class="file-controls side-file-controls">
+            <label class="file-button">
+              Open video
+              <input id="videoInput" type="file" accept="video/*" />
+            </label>
+            <label class="file-button secondary">
+              Import labels
+              <input id="labelInput" type="file" accept="application/json,.json" />
+            </label>
+          </div>
+        </section>
+        <section class="side-section">
+          <h3>Label tools</h3>
+          <p class="semantic-help">
+            Main workflow: add a bounce/hit range at the playhead, then drag its edges like a clip. Contact estimate defaults to the range center.
+          </p>
+          <div class="label-actions side-label-actions">
+            <button data-range-label="bounce" type="button" class="primary">Add bounce range</button>
+            <button data-range-label="hit" type="button" class="hit">Add hit range</button>
+            <button data-range-label="uncertain" type="button">Add uncertain range</button>
+            <button data-range-label="no_event" type="button">Add no-event range</button>
+          </div>
+          <details class="advanced-label-tools">
+            <summary>Advanced legacy point labels</summary>
+            <div class="label-actions side-label-actions">
+              <button data-label="pre_bounce" type="button">Pre-bounce point</button>
+              <button data-label="bounce_contact" type="button" class="primary">Bounce contact point</button>
+              <button data-label="post_bounce" type="button">Post-bounce point</button>
+              <button data-label="hit" type="button" class="hit">Hit point</button>
+              <button data-label="no_event" type="button">No-event point</button>
+              <button data-label="uncertain" type="button">Uncertain point</button>
+            </div>
+          </details>
+          <label class="side-field">
+            Confidence
+            <select id="confidenceInput">
+              <option value="high">high</option>
+              <option value="medium">medium</option>
+              <option value="low">low</option>
+            </select>
+          </label>
+          <label class="side-field">
+            Notes
+            <input id="notesInput" type="text" placeholder="optional note" />
+          </label>
+          <div class="export-row">
+            <button id="exportJsonButton" type="button">Export JSON</button>
+            <button id="exportCsvButton" type="button">Export CSV</button>
+          </div>
+          <p id="statusText" class="status-text">Ready</p>
+          <p id="rangeDebugText" class="range-debug-text">Range count: 0 | Last action: Ready</p>
+          <button id="smokeTestButton" type="button" class="dev-button" hidden>Test add range</button>
+          <p id="semanticWarningText" class="semantic-warning" hidden></p>
+        </section>
+        <div class="shortcut-card">
+          <strong>Shortcuts</strong>
+          <span>Space play/pause</span>
+          <span>A/D or ,/. step one frame estimate</span>
+          <span>Shift+A/D jump</span>
+          <span>Home/End clip start/end</span>
+          <span>Alt+wheel zoom timeline</span>
+          <span>Ctrl+wheel pan timeline</span>
+          <span>B/H/U/N add event ranges</span>
+          <span>S export JSON</span>
+          <span>Delete removes selected item</span>
+        </div>
+        <h3>Event ranges</h3>
+        <ol id="windowList" class="label-list"></ol>
+        <h3>Advanced / legacy point labels</h3>
+        <ol id="labelList" class="label-list"></ol>
+      </aside>
+    </main>
+
+    <script src="labeling_editor.js"></script>
+  </body>
+</html>

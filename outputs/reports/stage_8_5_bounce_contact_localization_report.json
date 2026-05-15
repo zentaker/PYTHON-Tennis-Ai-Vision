@@ -1,0 +1,56 @@
+{
+  "ambiguous_contacts": 0,
+  "average_uncertainty_frames": 3.0,
+  "average_uncertainty_px": 39.2,
+  "bounce_windows_processed": 1,
+  "contact_points_estimated": 1,
+  "contact_points_localized": 0,
+  "errors": [],
+  "estimated_contacts": 1,
+  "final_verdict": "ready_with_warnings",
+  "flags": {
+    "contact_ambiguous": false,
+    "high_uncertainty": false,
+    "no_ball_labels_in_window": false,
+    "no_bounce_windows": false,
+    "no_line_call_ready_contacts": true,
+    "projection_missing": false
+  },
+  "friction": {
+    "band": "low friction",
+    "inputs": {
+      "contact_ambiguous": false,
+      "errors_count": 0,
+      "high_uncertainty": false,
+      "no_ball_labels_in_window": false,
+      "no_bounce_windows": false,
+      "no_line_call_ready_contacts": true,
+      "projection_missing": false,
+      "warnings_count": 1
+    },
+    "score": 10
+  },
+  "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_8_5_bounce_contact_localization_report.json",
+  "line_call_ready_count": 0,
+  "localized_contacts": 0,
+  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_8_5_bounce_contact_localization_20260515T004745Z.log",
+  "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_8_5_bounce_contact_localization_report.md",
+  "output_paths": {
+    "candidate_frames": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_5_bounce_contact\\bounce_contact_candidates.csv",
+    "contact_points": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_5_bounce_contact\\bounce_contact_points.csv",
+    "debug_dir": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_5_bounce_contact\\bounce_contact_debug",
+    "debug_overlays": [
+      "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_5_bounce_contact\\bounce_contact_debug\\bounce_contact_001_contact_overlay.jpg"
+    ],
+    "summary_json": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_5_bounce_contact\\bounce_contact_summary.json",
+    "timeline_preview": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_5_bounce_contact\\bounce_contact_timeline_preview.jpg"
+  },
+  "padding": 3,
+  "recommended_next_step": "Use localized/estimated contact points for Stage 14.4, but reserve future line calling for line_call_ready contacts only.",
+  "stage": "stage_8_5_bounce_contact_localization",
+  "timestamp": "2026-05-15T00:47:44+00:00",
+  "warnings": [
+    "Stage 8.2 manual_event_windows.csv had no bounce windows; Stage 8.5 used Stage 8.3 manual_event_windows.csv as fallback."
+  ],
+  "window_source_used": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_3_event_validation\\manual_event_windows.csv"
+}

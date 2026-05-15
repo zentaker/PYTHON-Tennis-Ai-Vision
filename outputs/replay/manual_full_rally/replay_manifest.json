@@ -1,0 +1,34 @@
+{
+  "generated_at": "2026-05-15T04:47:37.857227+00:00",
+  "manual_annotation": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\configs\\manual_annotations\\video_01_full_rally.json",
+  "resolution_summary": {
+    "calibration_available": true,
+    "candidate_count": 1344,
+    "candidate_frames_processed": 112,
+    "errors": [],
+    "manual_events": 16,
+    "positions_resolved": 16,
+    "positions_unresolved": 0,
+    "project_root": "C:\\Users\\MSI\\Desktop\\TennisAiVision",
+    "projected_positions": 16,
+    "warnings": []
+  },
+  "side_view": {
+    "arc_preview": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\manual_full_rally\\side_view_arc_preview.jpg",
+    "contact_sheet": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\manual_full_rally\\side_view_contact_sheet.jpg",
+    "curve_segments": 15,
+    "final_frame": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\manual_full_rally\\side_view_final_frame.jpg",
+    "frames": 360,
+    "net_clearance_adjustments": 2,
+    "straight_segments_used": 0,
+    "video_generated": true,
+    "video_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\manual_full_rally\\side_view_replay.mp4"
+  },
+  "top_view": {
+    "contact_sheet": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\manual_full_rally\\top_view_contact_sheet.jpg",
+    "final_frame": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\manual_full_rally\\top_view_final_frame.jpg",
+    "frames": 16,
+    "video_generated": true,
+    "video_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\manual_full_rally\\top_view_replay.mp4"
+  }
+}

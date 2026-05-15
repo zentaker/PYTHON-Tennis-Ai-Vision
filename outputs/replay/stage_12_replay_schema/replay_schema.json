@@ -1,5 +1,6 @@
 {
   "ball_trajectory": {
+    "manual_full_rally_keyframes": true,
     "raw_ball_points": [
       {
         "confidence_like_score": 0.65,
@@ -79,184 +80,276 @@
     ],
     "replay_keyframes": [
       {
-        "confidence_like_score": 0.35,
-        "depth": "deep",
-        "frame_index": 90,
-        "image_x": 2331.0,
-        "image_y": 234.0,
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "hit",
+        "frame_index": 100,
+        "image_x": null,
+        "image_y": null,
         "is_interpolated": false,
-        "lateral_lane": "center",
-        "notes": "Projected point is outside the tuned court tolerance; not a confident tactical zone.",
-        "projected_x": 239.299,
-        "projected_y": -487.826,
-        "source": "tuned_zone_assignment",
-        "timestamp_seconds": null,
-        "zone": "out_of_bounds"
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 260,
+        "projected_y": 80,
+        "shot_type": "serve_topspin",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 1.667,
+        "zone": "manual_full_rally"
       },
       {
-        "confidence_like_score": 0.35,
-        "depth": "deep",
-        "frame_index": 105,
-        "image_x": 2304.0,
-        "image_y": 345.0,
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "bounce",
+        "frame_index": 154,
+        "image_x": null,
+        "image_y": null,
         "is_interpolated": false,
-        "lateral_lane": "center",
-        "notes": "Projected point is outside the tuned court tolerance; not a confident tactical zone.",
-        "projected_x": 224.761,
-        "projected_y": -280.756,
-        "source": "tuned_zone_assignment",
-        "timestamp_seconds": null,
-        "zone": "out_of_bounds"
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 235,
+        "projected_y": 510,
+        "shot_type": "",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 2.567,
+        "zone": "manual_full_rally"
       },
       {
-        "confidence_like_score": 0.65,
-        "depth": "deep",
-        "frame_index": 120,
-        "image_x": 2175.0,
-        "image_y": 492.0,
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "hit",
+        "frame_index": 196,
+        "image_x": null,
+        "image_y": null,
         "is_interpolated": false,
-        "lateral_lane": "center",
-        "notes": "Tuned approximate court zone; not official line calling.",
-        "projected_x": 180.71,
-        "projected_y": -59.098,
-        "source": "tuned_zone_assignment",
-        "timestamp_seconds": null,
-        "zone": "far_deep_center"
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 255,
+        "projected_y": 710,
+        "shot_type": "forehand_flat",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 3.267,
+        "zone": "manual_full_rally"
       },
       {
-        "confidence_like_score": 0.85,
-        "depth": "mid",
-        "frame_index": 135,
-        "image_x": 2043.0,
-        "image_y": 759.0,
-        "is_interpolated": false,
-        "lateral_lane": "center",
-        "notes": "Tuned approximate court zone; not official line calling.",
-        "projected_x": 148.003,
-        "projected_y": 234.472,
-        "source": "tuned_zone_assignment",
-        "timestamp_seconds": null,
-        "zone": "far_mid_center"
-      },
-      {
-        "confidence_like_score": 0.85,
-        "depth": "short",
-        "frame_index": 150,
-        "image_x": 1911.0,
-        "image_y": 1146.0,
-        "is_interpolated": false,
-        "lateral_lane": "center",
-        "notes": "Tuned approximate court zone; not official line calling.",
-        "projected_x": 128.598,
-        "projected_y": 516.26,
-        "source": "tuned_zone_assignment",
-        "timestamp_seconds": null,
-        "zone": "near_short_center"
-      },
-      {
-        "confidence_like_score": 0.85,
-        "depth": "mid",
-        "frame_index": 165,
-        "image_x": 1797.0,
-        "image_y": 1161.0,
-        "is_interpolated": false,
-        "lateral_lane": "left",
-        "notes": "Tuned approximate court zone; not official line calling.",
-        "projected_x": 106.032,
-        "projected_y": 526.175,
-        "source": "tuned_zone_assignment",
-        "timestamp_seconds": null,
-        "zone": "near_mid_left"
-      },
-      {
-        "confidence_like_score": 0.85,
-        "depth": "mid",
-        "frame_index": 180,
-        "image_x": 1671.0,
-        "image_y": 1248.0,
-        "is_interpolated": false,
-        "lateral_lane": "left",
-        "notes": "Tuned approximate court zone; not official line calling.",
-        "projected_x": 85.083,
-        "projected_y": 574.978,
-        "source": "tuned_zone_assignment",
-        "timestamp_seconds": null,
-        "zone": "near_mid_left"
-      },
-      {
-        "confidence_like_score": 0.85,
-        "depth": "deep",
-        "frame_index": 195,
-        "image_x": 1578.0,
-        "image_y": 1425.0,
-        "is_interpolated": false,
-        "lateral_lane": "left",
-        "notes": "Tuned approximate court zone; not official line calling.",
-        "projected_x": 76.532,
-        "projected_y": 660.861,
-        "source": "tuned_zone_assignment",
-        "timestamp_seconds": null,
-        "zone": "near_deep_left"
-      },
-      {
-        "confidence_like_score": 0.85,
-        "depth": "short",
-        "frame_index": 210,
-        "image_x": 1941.0,
-        "image_y": 942.0,
-        "is_interpolated": false,
-        "lateral_lane": "center",
-        "notes": "Tuned approximate court zone; not official line calling.",
-        "projected_x": 128.759,
-        "projected_y": 383.846,
-        "source": "tuned_zone_assignment",
-        "timestamp_seconds": null,
-        "zone": "far_short_center"
-      },
-      {
-        "confidence_like_score": 0.85,
-        "depth": "mid",
-        "frame_index": 225,
-        "image_x": 2169.0,
-        "image_y": 744.0,
-        "is_interpolated": false,
-        "lateral_lane": "center",
-        "notes": "Tuned approximate court zone; not official line calling.",
-        "projected_x": 179.985,
-        "projected_y": 218.692,
-        "source": "tuned_zone_assignment",
-        "timestamp_seconds": null,
-        "zone": "far_mid_center"
-      },
-      {
-        "confidence_like_score": 0.85,
-        "depth": "mid",
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "bounce",
         "frame_index": 240,
-        "image_x": 2307.0,
-        "image_y": 708.0,
+        "image_x": null,
+        "image_y": null,
         "is_interpolated": false,
-        "lateral_lane": "center",
-        "notes": "Tuned approximate court zone; not official line calling.",
-        "projected_x": 216.191,
-        "projected_y": 182.282,
-        "source": "tuned_zone_assignment",
-        "timestamp_seconds": null,
-        "zone": "far_mid_center"
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 120,
+        "projected_y": 210,
+        "shot_type": "",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 4.0,
+        "zone": "manual_full_rally"
       },
       {
-        "confidence_like_score": 0.65,
-        "depth": "deep",
-        "frame_index": 255,
-        "image_x": 2397.0,
-        "image_y": 507.0,
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "hit",
+        "frame_index": 258,
+        "image_x": null,
+        "image_y": null,
         "is_interpolated": false,
-        "lateral_lane": "right",
-        "notes": "Tuned approximate court zone; not official line calling.",
-        "projected_x": 248.243,
-        "projected_y": -44.495,
-        "source": "tuned_zone_assignment",
-        "timestamp_seconds": null,
-        "zone": "far_deep_right"
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 125,
+        "projected_y": 90,
+        "shot_type": "forehand_slice",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 4.3,
+        "zone": "manual_full_rally"
+      },
+      {
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "bounce",
+        "frame_index": 328,
+        "image_x": null,
+        "image_y": null,
+        "is_interpolated": false,
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 300,
+        "projected_y": 620,
+        "shot_type": "",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 5.467,
+        "zone": "manual_full_rally"
+      },
+      {
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "hit",
+        "frame_index": 362,
+        "image_x": null,
+        "image_y": null,
+        "is_interpolated": false,
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 285,
+        "projected_y": 705,
+        "shot_type": "forehand_topspin",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 6.033,
+        "zone": "manual_full_rally"
+      },
+      {
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "bounce",
+        "frame_index": 418,
+        "image_x": null,
+        "image_y": null,
+        "is_interpolated": false,
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 90,
+        "projected_y": 185,
+        "shot_type": "",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 6.967,
+        "zone": "manual_full_rally"
+      },
+      {
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "hit",
+        "frame_index": 463,
+        "image_x": null,
+        "image_y": null,
+        "is_interpolated": false,
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 110,
+        "projected_y": 85,
+        "shot_type": "backhand_slice",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 7.717,
+        "zone": "manual_full_rally"
+      },
+      {
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "bounce",
+        "frame_index": 540,
+        "image_x": null,
+        "image_y": null,
+        "is_interpolated": false,
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 305,
+        "projected_y": 630,
+        "shot_type": "",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 9.0,
+        "zone": "manual_full_rally"
+      },
+      {
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "hit",
+        "frame_index": 571,
+        "image_x": null,
+        "image_y": null,
+        "is_interpolated": false,
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 300,
+        "projected_y": 705,
+        "shot_type": "backhand_topspin",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 9.517,
+        "zone": "manual_full_rally"
+      },
+      {
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "bounce",
+        "frame_index": 603,
+        "image_x": null,
+        "image_y": null,
+        "is_interpolated": false,
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 75,
+        "projected_y": 170,
+        "shot_type": "",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 10.05,
+        "zone": "manual_full_rally"
+      },
+      {
+        "confidence_like_score": 0.8,
+        "depth": "manual_replay_depth",
+        "event_type": "hit",
+        "frame_index": 658,
+        "image_x": null,
+        "image_y": null,
+        "is_interpolated": false,
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 85,
+        "projected_y": 95,
+        "shot_type": "forehand_topspin_adjusted",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 10.967,
+        "zone": "manual_full_rally"
+      },
+      {
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "bounce",
+        "frame_index": 722,
+        "image_x": null,
+        "image_y": null,
+        "is_interpolated": false,
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 280,
+        "projected_y": 620,
+        "shot_type": "",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 12.033,
+        "zone": "manual_full_rally"
+      },
+      {
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "hit",
+        "frame_index": 762,
+        "image_x": null,
+        "image_y": null,
+        "is_interpolated": false,
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 290,
+        "projected_y": 705,
+        "shot_type": "inside_out_forehand_topspin",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 12.7,
+        "zone": "manual_full_rally"
+      },
+      {
+        "confidence_like_score": 1.0,
+        "depth": "manual_replay_depth",
+        "event_type": "bounce",
+        "frame_index": 810,
+        "image_x": null,
+        "image_y": null,
+        "is_interpolated": false,
+        "lateral_lane": "manual_replay_lane",
+        "notes": "Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.",
+        "projected_x": 75,
+        "projected_y": 180,
+        "shot_type": "",
+        "source": "manual_full_rally_authoritative_event_keyframe",
+        "timestamp_seconds": 13.5,
+        "zone": "manual_full_rally"
       }
     ],
     "smoothed_ball_points": [
@@ -1234,13 +1327,14 @@
     }
   ],
   "confidence": {
-    "confidence_level": "medium-high",
+    "confidence_level": "manual_event_timeline_high",
     "confidence_reasons": [
       "12 visible expanded ball labels are available.",
       "All visible labels have projected court coordinates and no unknown zones.",
       "Candidate validation distance is low on matched frames (2.797 px average).",
       "All timeline events in the validated timeline are label-supported.",
-      "Two main player identities are available from Stage 7.1."
+      "Two main player identities are available from Stage 7.1.",
+      "Full rally event chronology supplied by Product Owner visual review."
     ],
     "limiting_factors": [
       "No major limiting factors detected for this prototype report."
@@ -1325,123 +1419,435 @@
   "event_timeline": [
     {
       "ball_position": {
-        "x": 2170.45,
-        "y": 500.9
+        "x": null,
+        "y": null
       },
-      "confidence_like_score": 0.9,
-      "event_id": "evt_001",
-      "event_type": "ball_near_player",
-      "frame_index": 120,
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_001",
+      "event_type": "validated_hit",
+      "frame_index": 100,
       "limitations": [
-        "Hypothesis only; not a confirmed tennis event."
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
       ],
+      "manual_event_type": "hit",
       "player_id": "player_a",
-      "possible_event": true,
+      "possible_event": false,
       "projected_position": {
-        "x": 179.582,
-        "y": -49.31
+        "x": 260,
+        "y": 80
       },
-      "reason": "Ball is near the expanded player bbox or close to player center. | High-confidence smoothed trajectory anchor. | Refined nearest player identity from Stage 7.1.",
-      "side_state": "far_side",
-      "source": "stage_6_smoothed_trajectory+stage_7_1_refined_association+stage_7_interactions",
-      "timestamp_seconds": 2.0,
-      "validation_status": "supported_by_label"
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "serve_topspin",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 1.667,
+      "validation_status": "validated_by_manual_full_rally_annotation"
     },
     {
       "ball_position": {
-        "x": 2038.6,
-        "y": 761.7
+        "x": null,
+        "y": null
       },
-      "confidence_like_score": 0.965,
-      "event_id": "evt_002",
-      "event_type": "possible_hit",
-      "frame_index": 135,
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_002",
+      "event_type": "validated_bounce",
+      "frame_index": 154,
       "limitations": [
-        "Hypothesis only; not a confirmed tennis event."
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
       ],
-      "player_id": "player_a",
-      "possible_event": true,
+      "manual_event_type": "bounce",
+      "player_id": "none",
+      "possible_event": false,
       "projected_position": {
-        "x": 147.187,
-        "y": 234.301
+        "x": 235,
+        "y": 510
       },
-      "reason": "Ball is near the expanded player bbox or close to player center. | Ball-player distance increased between trajectory points. | High-confidence smoothed trajectory anchor. | Image-space speed increased sharply. | Refined nearest player identity from Stage 7.1. | Stage 6 event `speed_spike` occurs near a player.",
-      "side_state": "far_side",
-      "source": "stage_6_smoothed_trajectory+stage_6_trajectory_events+stage_7_1_refined_association+stage_7_interactions",
-      "timestamp_seconds": 2.25,
-      "validation_status": "supported_by_label"
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 2.567,
+      "validation_status": "validated_by_manual_full_rally_annotation"
     },
     {
       "ball_position": {
-        "x": 1906.9,
-        "y": 1139.2
+        "x": null,
+        "y": null
       },
-      "confidence_like_score": 0.9,
-      "event_id": "evt_003",
-      "event_type": "possible_hit",
-      "frame_index": 150,
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_003",
+      "event_type": "validated_hit",
+      "frame_index": 196,
       "limitations": [
-        "Hypothesis only; not a confirmed tennis event."
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
       ],
-      "player_id": "player_a",
-      "possible_event": true,
-      "projected_position": {
-        "x": 127.651,
-        "y": 511.119
-      },
-      "reason": "Ball-player distance increased between trajectory points. | Direction and speed changed together; hypothesis only. | High-confidence smoothed trajectory anchor. | Image-space speed dropped sharply. | Refined nearest player identity from Stage 7.1. | Trajectory direction changed by 63.7 degrees. | Vertical image motion changed; hypothesis only.",
-      "side_state": "far_side",
-      "source": "stage_6_smoothed_trajectory+stage_6_trajectory_events+stage_7_1_refined_association+stage_7_interactions",
-      "timestamp_seconds": 2.5,
-      "validation_status": "supported_by_label"
-    },
-    {
-      "ball_position": {
-        "x": 1792.333,
-        "y": 1164.067
-      },
-      "confidence_like_score": 0.9,
-      "event_id": "evt_004",
-      "event_type": "possible_hit",
-      "frame_index": 165,
-      "limitations": [
-        "Hypothesis only; not a confirmed tennis event."
-      ],
+      "manual_event_type": "hit",
       "player_id": "player_b",
-      "possible_event": true,
+      "possible_event": false,
       "projected_position": {
-        "x": 105.24,
-        "y": 527.924
+        "x": 255,
+        "y": 710
       },
-      "reason": "Ball-player distance decreased between trajectory points. | Direction and speed changed together; hypothesis only. | High-confidence smoothed trajectory anchor. | Refined nearest player identity from Stage 7.1.",
-      "side_state": "near_side",
-      "source": "stage_6_smoothed_trajectory+stage_6_trajectory_events+stage_7_1_refined_association+stage_7_interactions",
-      "timestamp_seconds": 2.75,
-      "validation_status": "supported_by_label"
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "forehand_flat",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 3.267,
+      "validation_status": "validated_by_manual_full_rally_annotation"
     },
     {
       "ball_position": {
-        "x": 1675.05,
-        "y": 1245.15
+        "x": null,
+        "y": null
       },
-      "confidence_like_score": 0.9,
-      "event_id": "evt_005",
-      "event_type": "ball_near_player",
-      "frame_index": 180,
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_004",
+      "event_type": "validated_bounce",
+      "frame_index": 240,
       "limitations": [
-        "Hypothesis only; not a confirmed tennis event."
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
       ],
-      "player_id": "player_b",
-      "possible_event": true,
+      "manual_event_type": "bounce",
+      "player_id": "none",
+      "possible_event": false,
       "projected_position": {
-        "x": 85.753,
-        "y": 573.381
+        "x": 120,
+        "y": 210
       },
-      "reason": "Ball-player distance decreased between trajectory points. | High-confidence smoothed trajectory anchor. | Refined nearest player identity from Stage 7.1.",
-      "side_state": "near_side",
-      "source": "stage_6_smoothed_trajectory+stage_7_1_refined_association+stage_7_interactions",
-      "timestamp_seconds": 3.0,
-      "validation_status": "supported_by_label"
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 4.0,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    },
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_005",
+      "event_type": "validated_hit",
+      "frame_index": 258,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "hit",
+      "player_id": "player_a",
+      "possible_event": false,
+      "projected_position": {
+        "x": 125,
+        "y": 90
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "forehand_slice",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 4.3,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    },
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_006",
+      "event_type": "validated_bounce",
+      "frame_index": 328,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "bounce",
+      "player_id": "none",
+      "possible_event": false,
+      "projected_position": {
+        "x": 300,
+        "y": 620
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 5.467,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    },
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_007",
+      "event_type": "validated_hit",
+      "frame_index": 362,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "hit",
+      "player_id": "player_b",
+      "possible_event": false,
+      "projected_position": {
+        "x": 285,
+        "y": 705
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "forehand_topspin",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 6.033,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    },
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_008",
+      "event_type": "validated_bounce",
+      "frame_index": 418,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "bounce",
+      "player_id": "none",
+      "possible_event": false,
+      "projected_position": {
+        "x": 90,
+        "y": 185
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 6.967,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    },
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_009",
+      "event_type": "validated_hit",
+      "frame_index": 463,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "hit",
+      "player_id": "player_a",
+      "possible_event": false,
+      "projected_position": {
+        "x": 110,
+        "y": 85
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "backhand_slice",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 7.717,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    },
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_010",
+      "event_type": "validated_bounce",
+      "frame_index": 540,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "bounce",
+      "player_id": "none",
+      "possible_event": false,
+      "projected_position": {
+        "x": 305,
+        "y": 630
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 9.0,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    },
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_011",
+      "event_type": "validated_hit",
+      "frame_index": 571,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "hit",
+      "player_id": "player_b",
+      "possible_event": false,
+      "projected_position": {
+        "x": 300,
+        "y": 705
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "backhand_topspin",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 9.517,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    },
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_012",
+      "event_type": "validated_bounce",
+      "frame_index": 603,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "bounce",
+      "player_id": "none",
+      "possible_event": false,
+      "projected_position": {
+        "x": 75,
+        "y": 170
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 10.05,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    },
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 0.8,
+      "event_id": "manual_full_rally_013",
+      "event_type": "validated_hit",
+      "frame_index": 658,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "hit",
+      "player_id": "player_a",
+      "possible_event": false,
+      "projected_position": {
+        "x": 85,
+        "y": 95
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "forehand_topspin_adjusted",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 10.967,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    },
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_014",
+      "event_type": "validated_bounce",
+      "frame_index": 722,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "bounce",
+      "player_id": "none",
+      "possible_event": false,
+      "projected_position": {
+        "x": 280,
+        "y": 620
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 12.033,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    },
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_015",
+      "event_type": "validated_hit",
+      "frame_index": 762,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "hit",
+      "player_id": "player_b",
+      "possible_event": false,
+      "projected_position": {
+        "x": 290,
+        "y": 705
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "inside_out_forehand_topspin",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 12.7,
+      "validation_status": "validated_by_manual_full_rally_annotation"
+    },
+    {
+      "ball_position": {
+        "x": null,
+        "y": null
+      },
+      "confidence_like_score": 1.0,
+      "event_id": "manual_full_rally_016",
+      "event_type": "validated_bounce",
+      "frame_index": 810,
+      "limitations": [
+        "Manual event timing is authoritative for replay chronology.",
+        "Court position is deterministic replay placement, not measured line-call position."
+      ],
+      "manual_event_type": "bounce",
+      "player_id": "none",
+      "possible_event": false,
+      "projected_position": {
+        "x": 75,
+        "y": 180
+      },
+      "reason": "Authoritative full-rally manual annotation from Product Owner visual review.",
+      "shot_type": "",
+      "side_state": "manual_full_rally",
+      "source": "manual_full_rally_davinci_annotation",
+      "timestamp_seconds": 13.5,
+      "validation_status": "validated_by_manual_full_rally_annotation"
     }
   ],
   "limitations": [
@@ -1454,12 +1860,16 @@
     "no verified ball height",
     "no real 3D reconstruction yet",
     "no multi-angle camera support yet",
-    "no real-time support yet"
+    "no real-time support yet",
+    "Manual full-rally event timing is authoritative; replay court positions are deterministic visualization anchors, not measured line-call coordinates.",
+    "Manual full-rally event timing is authoritative; replay court positions are deterministic visualization anchors, not measured line-call coordinates."
   ],
   "metadata": {
     "generated_at": "2026-05-14T03:30:16+00:00",
     "input_package": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\report_packages\\stage_11_report_package\\package_manifest.json",
-    "intended_use": "Data contract for deterministic analytical replay renderers.",
+    "intended_use": "Deterministic replay from authoritative full-rally manual event chronology.",
+    "manual_annotation_override": true,
+    "manual_annotation_source": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\configs\\manual_annotations\\video_01_full_rally.json",
     "non_goals": [
       "photorealistic video generation",
       "official scoring",
@@ -1469,7 +1879,7 @@
     "project_name": "Tennis AI Vision",
     "schema_name": "tennis_ai_vision.synthetic_rally_replay",
     "schema_version": "0.1.0",
-    "source_pipeline_stage": "stage_11_report_package",
+    "source_pipeline_stage": "manual_full_rally_authoritative_replay_patch",
     "stage": "stage_12_replay_schema"
   },
   "players": [
@@ -1880,19 +2290,21 @@
   },
   "rally_segments": [
     {
-      "confidence_like_score": 0.79,
-      "duration_seconds": 1.0,
-      "end_frame": 180,
-      "event_count": 5,
+      "confidence_like_score": 1.0,
+      "duration_seconds": 11.833,
+      "end_frame": 810,
+      "event_count": 16,
       "players_involved": [
         "player_a",
         "player_b"
       ],
       "possible_bounce_count": 0,
-      "possible_hit_count": 3,
-      "rally_id": "rally_001",
-      "segmentation_reason": "First prototype segment from first to last high-confidence trajectory anchor.",
-      "start_frame": 120
+      "possible_hit_count": 0,
+      "rally_id": "manual_full_rally_001",
+      "segmentation_reason": "Authoritative full-rally manual annotation from first serve contact to final bounce.",
+      "start_frame": 100,
+      "validated_bounce_count": 8,
+      "validated_hit_count": 8
     }
   ],
   "renderer_hints": {
@@ -1919,6 +2331,7 @@
     "expanded_labels": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_1_timeline_validation\\expanded_ball_labels.csv",
     "key_findings": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports_final\\stage_10_analytical_report\\key_findings.md",
     "main_players": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_1_player_filtering\\main_players.csv",
+    "manual_full_rally_annotation": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\configs\\manual_annotations\\video_01_full_rally.json",
     "player_event_attribution": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_event_timeline\\player_event_attribution.csv",
     "player_identity_profiles": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_1_player_filtering\\player_identity_profiles.json",
     "player_side_states": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\player_tracking\\stage_7_1_player_filtering\\player_side_states.csv",

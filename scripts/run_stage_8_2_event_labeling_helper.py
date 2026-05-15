@@ -63,7 +63,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--audit-fast", dest="audit_fast", action="store_true", help="Use lightweight signature-only frame audit.")
     parser.add_argument("--no-audit-fast", dest="audit_fast", action="store_false", help="Disable lightweight signature-only frame audit.")
     parser.set_defaults(audit_fast=True)
-    parser.add_argument("--signature-width", type=int, default=160, help="Width for downscaled grayscale frame signatures.")
+    parser.add_argument("--signature-width", type=int, default=128, help="Width for downscaled grayscale frame signatures.")
+    parser.add_argument("--lab-notebook", dest="lab_notebook", action="store_true", help="Update lab notebook even for audit-only runs.")
+    parser.add_argument("--no-lab-notebook", dest="lab_notebook", action="store_false", help="Skip lab notebook update for fast audit-only runs.")
+    parser.set_defaults(lab_notebook=None)
     parser.add_argument("--duplicate-threshold", type=float, default=0.0006, help="Mean absolute visual diff threshold for near-duplicate frames.")
     parser.add_argument("--sequential-read", dest="sequential_read", action="store_true", help="Decode selected frame window sequentially.")
     parser.add_argument("--random-seek", dest="sequential_read", action="store_false", help="Seek each selected frame independently.")
@@ -256,6 +259,11 @@ def print_summary(report: dict[str, Any], lab_paths: dict[str, Path]) -> None:
     rows = [
         ("Verdict", report["final_verdict"]),
         ("Friction", f"{report['friction']['score']} ({report['friction']['band']})"),
+        ("Execution friction", f"{report['friction_breakdown']['execution']['score']} ({report['friction_breakdown']['execution']['band']})"),
+        ("Duplicate-frame friction", f"{report['duplicate_frame_friction']['score']} ({report['duplicate_frame_friction']['band']})"),
+        ("Audit performance friction", f"{report['audit_performance_friction']['score']} ({report['audit_performance_friction']['band']})"),
+        ("Label integrity friction", f"{report['label_integrity_friction']['score']} ({report['label_integrity_friction']['band']})"),
+        ("Human-loop friction", f"{report['human_loop_friction']['score']} ({report['human_loop_friction']['band']})"),
         ("Mode", report["mode"]),
         ("Viewer mode", report["viewer_mode"]),
         ("Frames loaded", report["frames_loaded"]),
@@ -374,13 +382,18 @@ def main() -> int:
         "largest_duplicate_group": "",
         "csv_path": str(output_dir / "frame_duplicate_audit.csv"),
         "markdown_path": str(output_dir / "frame_duplicate_audit.md"),
+        "json_path": str(output_dir / "frame_duplicate_audit.json"),
         "audit_runtime_seconds": 0,
+        "frame_loading_seconds": 0,
+        "signature_compute_seconds": 0,
+        "grouping_seconds": 0,
+        "report_write_seconds": 0,
         "signature_width": args.signature_width,
         "collapse_duplicates_recommended": False,
     }
     if args.audit_frames and video_readable:
         audit_start = time.perf_counter()
-        frame_rows, _group_meta, _payloads, frame_warnings = analyze_frame_duplicates(
+        frame_rows, _group_meta, _payloads, frame_warnings, audit_profile = analyze_frame_duplicates(
             video_path=video_path,
             frame_indices=frame_indices,
             resize_width=args.resize_width,
@@ -398,7 +411,10 @@ def main() -> int:
             sequential_read=sequential_read_used,
             signature_width=args.signature_width,
             audit_runtime_seconds=audit_runtime,
+            profile=audit_profile,
         )
+        if float(frame_audit_summary.get("audit_runtime_seconds") or 0) > 10:
+            warnings.append("Audit runtime is high for selected frame count.")
     elif args.audit_frames and not video_readable:
         errors.append("Frame duplicate audit requested but video is not readable.")
 
@@ -423,6 +439,8 @@ def main() -> int:
             warnings_count=len(warnings),
         )
         duplicate_frame_friction = 20 if near_duplicate_pairs else 0
+        audit_runtime_seconds = float(frame_audit_summary.get("audit_runtime_seconds") or 0)
+        audit_performance_score = 45 if audit_runtime_seconds > 10 else (10 if audit_runtime_seconds > 5 else 0)
         label_integrity_friction = 0 if integrity_issue_count == 0 else min(70, 20 + integrity_issue_count * 8)
         friction_breakdown = build_friction_breakdown(
             execution_score=friction["score"],
@@ -460,6 +478,7 @@ def main() -> int:
             "frame_duplicate_audit": frame_audit_summary,
             "audit_runtime_seconds": frame_audit_summary.get("audit_runtime_seconds", 0),
             "duplicate_frame_friction": {"score": duplicate_frame_friction, "band": "low friction" if duplicate_frame_friction else "none", "reason": "Near-duplicate visual frames found; collapsed mode is recommended." if near_duplicate_pairs else "No near-duplicate visual frames found."},
+            "audit_performance_friction": {"score": audit_performance_score, "band": "medium friction" if audit_performance_score >= 31 else ("low friction" if audit_performance_score else "none"), "reason": "Fast audit exceeded the desired interactive threshold." if audit_runtime_seconds > 10 else "Fast audit runtime is within the desired interactive range."},
             "label_integrity_friction": {"score": label_integrity_friction, "band": "high friction" if label_integrity_friction >= 61 else ("medium friction" if label_integrity_friction >= 31 else ("low friction" if label_integrity_friction else "none")), "reason": "Label integrity audit found remaining issues." if integrity_issue_count else "Label integrity audit did not find stale point issues."},
             "human_loop_friction": friction_breakdown["human_loop"],
             "product_validation_status": friction_breakdown["product_validation"]["status"],
@@ -518,6 +537,7 @@ def main() -> int:
                 "label_integrity_report_json": str(integrity_paths["json"]),
                 "label_integrity_report_md": str(integrity_paths["markdown"]),
                 "frame_duplicate_audit_csv": str(frame_audit_summary.get("csv_path") or ""),
+                "frame_duplicate_audit_json": str(frame_audit_summary.get("json_path") or ""),
                 "frame_duplicate_audit_md": str(frame_audit_summary.get("markdown_path") or ""),
             },
         }
@@ -674,6 +694,8 @@ def main() -> int:
         + int(integrity_audit.get("duplicate_frame_labels_count", 0))
     )
     label_integrity_score = 0 if integrity_issue_count == 0 else min(70, 20 + integrity_issue_count * 8)
+    audit_runtime_seconds = float(frame_audit_summary.get("audit_runtime_seconds") or 0)
+    audit_performance_score = 45 if audit_runtime_seconds > 10 else (10 if audit_runtime_seconds > 5 else 0)
     duplicate_frame_friction = 0
     if near_duplicate_pairs > 0:
         duplicate_frame_friction = 20 if args.collapse_duplicates else 45
@@ -719,6 +741,11 @@ def main() -> int:
             "score": duplicate_frame_friction,
             "band": "medium friction" if duplicate_frame_friction >= 31 else ("low friction" if duplicate_frame_friction else "none"),
             "reason": "Near-duplicate visual frames found; collapsed mode reduces frame-perfect labeling friction." if near_duplicate_pairs else "No near-duplicate visual frames found.",
+        },
+        "audit_performance_friction": {
+            "score": audit_performance_score,
+            "band": "medium friction" if audit_performance_score >= 31 else ("low friction" if audit_performance_score else "none"),
+            "reason": "Fast audit exceeded the desired interactive threshold." if audit_runtime_seconds > 10 else "Frame audit runtime is within the desired interactive range.",
         },
         "label_integrity_friction": {
             "score": label_integrity_friction,
@@ -779,6 +806,7 @@ def main() -> int:
             "label_integrity_report_md": str(integrity_paths["markdown"]),
             "fix_backup": fix_backup_path,
             "frame_duplicate_audit_csv": str(frame_audit_summary.get("csv_path") or ""),
+            "frame_duplicate_audit_json": str(frame_audit_summary.get("json_path") or ""),
             "frame_duplicate_audit_md": str(frame_audit_summary.get("markdown_path") or ""),
         },
     }
@@ -804,7 +832,13 @@ def main() -> int:
     write_json_report(Path(report["json_report_path"]), report)
     write_markdown_report(Path(report["markdown_report_path"]), "Stage 8.2 Manual Bounce / Hit Event Labeling Report", build_markdown_sections(report))
 
-    if args.audit_frames and not args.interactive and not args.audit_labels:
+    if args.audit_frames and not args.interactive and not args.audit_labels and args.lab_notebook is not True:
+        lab_paths = {
+            "stage_page": PROJECT_ROOT / "docs" / "lab-notebook" / "stage_8_2_event_labeling.md",
+            "experiment_index": PROJECT_ROOT / "docs" / "lab-notebook" / "experiment_index.md",
+        }
+        notebook_warning = None
+    elif args.lab_notebook is False:
         lab_paths = {
             "stage_page": PROJECT_ROOT / "docs" / "lab-notebook" / "stage_8_2_event_labeling.md",
             "experiment_index": PROJECT_ROOT / "docs" / "lab-notebook" / "experiment_index.md",

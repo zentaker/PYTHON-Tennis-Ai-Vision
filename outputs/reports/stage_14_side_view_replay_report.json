@@ -1,11 +1,11 @@
 {
   "arc_preview_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_arc_preview.jpg",
   "contact_sheet_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_contact_sheet.jpg",
-  "downgraded_hits_annotation_count": 6,
+  "downgraded_hits_annotation_count": 0,
   "errors": [],
   "event_render_roles_enabled": true,
   "event_source_used": "stage_8_3_validated_event_timeline",
-  "events_count": 5,
+  "events_count": 16,
   "fallback_used": false,
   "final_frame_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_final_frame.jpg",
   "final_verdict": "ready_for_stage_15",
@@ -18,7 +18,7 @@
     "side_view_keyframes_missing": false,
     "video_export_failed": false
   },
-  "frames_generated": 100,
+  "frames_generated": 136,
   "friction": {
     "band": "low friction",
     "inputs": {
@@ -38,8 +38,8 @@
   "implausible_hits_downgraded_count": 0,
   "input_schema_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_12_replay_schema\\replay_schema.json",
   "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_14_side_view_replay_report.json",
-  "keyframes_count": 12,
-  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_14_side_view_replay_20260514T190702Z.log",
+  "keyframes_count": 16,
+  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_14_side_view_replay_20260515T042435Z.log",
   "manifest_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_manifest.json",
   "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_14_side_view_replay_report.md",
   "output_paths": {
@@ -60,15 +60,15 @@
   "recommended_next_step": "Proceed to Stage 15: Multi-Camera Analytical Replay.",
   "schema_version": "0.1.0",
   "semantic_debug_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_semantic_debug.jpg",
-  "side_view_keyframes_count": 12,
+  "side_view_keyframes_count": 16,
   "stage": "stage_14_side_view_replay",
   "synthetic_height_enabled": true,
-  "timestamp": "2026-05-14T19:06:59+00:00",
+  "timestamp": "2026-05-15T04:24:30+00:00",
   "true_height_available": false,
   "uncertain_events_count": 0,
-  "validated_bounces_rendered_count": 3,
+  "validated_bounces_rendered_count": 8,
   "validated_event_source_available": true,
-  "validated_hits_rendered_count": 0,
+  "validated_hits_rendered_count": 8,
   "video_generated": true,
   "video_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\stage_14_side_view_replay\\side_view_replay.mp4",
   "warnings": []

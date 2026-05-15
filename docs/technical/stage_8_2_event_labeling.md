@@ -234,11 +234,16 @@ COLLAPSED VISUAL GROUP LABELING:
     group size 2
     representative frame 204
 
-  Pressing b/h/n/u on a multi-frame visual group writes an event window:
+  Pressing b/h/n/u in collapsed mode writes an event window for the current
+  visual group, even when the group has only one representative frame:
     bounce_window
     hit_window
     no_event_window
     uncertain_window
+
+  This means visual groups are the navigation and labeling unit. The viewer no
+  longer merely displays visual grouping metadata while asking the user to make
+  frame-perfect decisions.
 
   Expanded raw-frame mode:
     --expand-duplicates
@@ -259,6 +264,43 @@ EVENT WINDOW LABELS:
 
   For compatibility, the viewer can also write frame-level labels for frames in
   a window. Those labels include source_window_id and event_window_label.
+
+DIRECT EVENT-WINDOW CLI:
+  SCRIPT:
+    scripts/add_stage_8_2_event_window.py
+
+  PURPOSE:
+    Adds or updates a manual event window without opening the OpenCV viewer.
+    This is the recommended fallback when duplicated frames make the visual
+    viewer high-friction.
+
+  EXAMPLES:
+    python scripts/add_stage_8_2_event_window.py --label bounce --start-frame 229 --end-frame 231 --confidence high --notes "second bounce window"
+
+    python scripts/add_stage_8_2_event_window.py --label hit --start-frame 257 --end-frame 259 --confidence high --notes "player hit window"
+
+    python scripts/add_stage_8_2_event_window.py --list
+
+  BEHAVIOR:
+    - writes manual_event_windows.csv
+    - writes manual_event_windows.json
+    - updates compatible frame-level labels in manual_event_labels.csv/json
+    - marks those frame rows with source_window_id and event_window_label
+    - creates timestamped CSV backups before modifying existing label files
+    - updates the existing window instead of duplicating it when the same
+      label/start/end already exists
+
+  WHY PRODUCT OWNER CARES:
+    Bounce and hit events can span several near-identical frames. A direct
+    event-window command lets the user record the correct temporal event range
+    without fighting the interactive viewer.
+
+STAGE 8.3 COMPATIBILITY:
+  Stage 8.3 reads:
+    outputs/timeline/stage_8_2_event_labels/manual_event_windows.csv
+
+  When user-created windows are available, Stage 8.3 treats them as preferred
+  manual event-window evidence before falling back to regrouping frame labels.
 
 SEQUENTIAL READ VS RANDOM SEEK:
   Sequential read:

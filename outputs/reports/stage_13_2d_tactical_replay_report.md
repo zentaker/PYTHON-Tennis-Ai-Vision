@@ -20,18 +20,18 @@ Schema version:
   0.1.0
 
 Keyframes:
-  12
+  16
 
 Players:
   2
 
 Events:
-  5
+  16
 
 ## OUTPUTS
 
 Frames generated:
-  67
+  91
 
 Video generated:
   True

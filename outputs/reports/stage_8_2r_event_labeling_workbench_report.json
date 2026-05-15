@@ -1,0 +1,90 @@
+{
+  "ambiguous_contacts_count": 0,
+  "audit_paths": {
+    "csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_2r_event_labeling_workbench\\frame_decode_audit.csv",
+    "json": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_2r_event_labeling_workbench\\frame_decode_audit.json",
+    "markdown": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_2r_event_labeling_workbench\\frame_decode_audit.md"
+  },
+  "audited_frames": 91,
+  "bounce_windows_count": 0,
+  "cache_status": "available",
+  "compatibility_export": {
+    "backups": {},
+    "frame_labels_exported": 0,
+    "status": "not_run_no_windows",
+    "windows_exported": 0
+  },
+  "compatibility_export_status": "not_run_no_windows",
+  "contact_candidates_count": 0,
+  "errors": [],
+  "event_windows_count": 0,
+  "final_verdict": "ready_for_contact_review",
+  "friction": {
+    "band": "medium friction",
+    "score": 35
+  },
+  "friction_breakdown": {
+    "duplicate_frame": {
+      "band": "medium friction",
+      "reason": "29 near-duplicate pairs found",
+      "score": 35
+    },
+    "execution": {
+      "band": "low friction",
+      "reason": "stage commands ran",
+      "score": 0
+    },
+    "human_loop": {
+      "band": "medium friction",
+      "reason": "visual duplicates require group/window labeling",
+      "score": 35
+    },
+    "label_integrity": {
+      "band": "low friction",
+      "reason": "no integrity issues found",
+      "score": 0
+    },
+    "line_call_readiness": {
+      "band": "low friction",
+      "reason": "line-call candidate status acceptable for current labels",
+      "score": 0
+    },
+    "performance": {
+      "band": "low friction",
+      "reason": "performance timing acceptable",
+      "score": 0
+    },
+    "product_validation": {
+      "reason": "Product Owner must validate labels/contact candidates visually.",
+      "status": "pending_review"
+    }
+  },
+  "hit_windows_count": 0,
+  "integrity_issues_count": 0,
+  "integrity_paths": {
+    "json": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_2r_event_labeling_workbench\\label_integrity_report.json",
+    "markdown": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_2r_event_labeling_workbench\\label_integrity_report.md"
+  },
+  "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_8_2r_event_labeling_workbench_report.json",
+  "line_call_candidates_count": 0,
+  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_8_2r_event_labeling_workbench_20260515T010528Z.log",
+  "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_8_2r_event_labeling_workbench_report.md",
+  "mode": "export_compat",
+  "near_duplicate_pairs": 29,
+  "performance_timings": {
+    "audit_seconds": 3.71,
+    "cache_build_seconds": 0.0,
+    "frame_loading_seconds": 2.88,
+    "grouping_seconds": 0.003,
+    "random_seek_seconds": 0.0,
+    "report_seconds": 0.004,
+    "save_seconds": 0.0,
+    "signature_compute_seconds": 0.826,
+    "viewer_start_seconds": 0.0
+  },
+  "recommended_next_step": "Use the workbench to add event windows/contact candidates, then export compatibility.",
+  "stage": "stage_8_2r_event_labeling_workbench",
+  "timestamp": "2026-05-15T01:05:28+00:00",
+  "visual_groups": 62,
+  "warnings": []
+}

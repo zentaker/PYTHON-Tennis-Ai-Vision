@@ -1,13 +1,17 @@
-frame_index,timestamp_seconds,image_x,image_y,projected_x,projected_y,zone,depth,lateral_lane,source,confidence_like_score,is_interpolated,notes
-90,,2331.0,234.0,239.299,-487.826,out_of_bounds,deep,center,tuned_zone_assignment,0.35,False,Projected point is outside the tuned court tolerance; not a confident tactical zone.
-105,,2304.0,345.0,224.761,-280.756,out_of_bounds,deep,center,tuned_zone_assignment,0.35,False,Projected point is outside the tuned court tolerance; not a confident tactical zone.
-120,,2175.0,492.0,180.71,-59.098,far_deep_center,deep,center,tuned_zone_assignment,0.65,False,Tuned approximate court zone; not official line calling.
-135,,2043.0,759.0,148.003,234.472,far_mid_center,mid,center,tuned_zone_assignment,0.85,False,Tuned approximate court zone; not official line calling.
-150,,1911.0,1146.0,128.598,516.26,near_short_center,short,center,tuned_zone_assignment,0.85,False,Tuned approximate court zone; not official line calling.
-165,,1797.0,1161.0,106.032,526.175,near_mid_left,mid,left,tuned_zone_assignment,0.85,False,Tuned approximate court zone; not official line calling.
-180,,1671.0,1248.0,85.083,574.978,near_mid_left,mid,left,tuned_zone_assignment,0.85,False,Tuned approximate court zone; not official line calling.
-195,,1578.0,1425.0,76.532,660.861,near_deep_left,deep,left,tuned_zone_assignment,0.85,False,Tuned approximate court zone; not official line calling.
-210,,1941.0,942.0,128.759,383.846,far_short_center,short,center,tuned_zone_assignment,0.85,False,Tuned approximate court zone; not official line calling.
-225,,2169.0,744.0,179.985,218.692,far_mid_center,mid,center,tuned_zone_assignment,0.85,False,Tuned approximate court zone; not official line calling.
-240,,2307.0,708.0,216.191,182.282,far_mid_center,mid,center,tuned_zone_assignment,0.85,False,Tuned approximate court zone; not official line calling.
-255,,2397.0,507.0,248.243,-44.495,far_deep_right,deep,right,tuned_zone_assignment,0.65,False,Tuned approximate court zone; not official line calling.
+frame_index,timestamp_seconds,image_x,image_y,projected_x,projected_y,zone,depth,lateral_lane,source,confidence_like_score,is_interpolated,notes,event_type,shot_type
+100,1.667,,,260,80,manual_full_rally,manual_replay_depth,manual_replay_lane,manual_full_rally_authoritative_event_keyframe,1.0,False,Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.,hit,serve_topspin
+154,2.567,,,235,510,manual_full_rally,manual_replay_depth,manual_replay_lane,manual_full_rally_authoritative_event_keyframe,1.0,False,Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.,bounce,
+196,3.267,,,255,710,manual_full_rally,manual_replay_depth,manual_replay_lane,manual_full_rally_authoritative_event_keyframe,1.0,False,Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.,hit,forehand_flat
+240,4.0,,,120,210,manual_full_rally,manual_replay_depth,manual_replay_lane,manual_full_rally_authoritative_event_keyframe,1.0,False,Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.,bounce,
+258,4.3,,,125,90,manual_full_rally,manual_replay_depth,manual_replay_lane,manual_full_rally_authoritative_event_keyframe,1.0,False,Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.,hit,forehand_slice
+328,5.467,,,300,620,manual_full_rally,manual_replay_depth,manual_replay_lane,manual_full_rally_authoritative_event_keyframe,1.0,False,Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.,bounce,
+362,6.033,,,285,705,manual_full_rally,manual_replay_depth,manual_replay_lane,manual_full_rally_authoritative_event_keyframe,1.0,False,Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.,hit,forehand_topspin
+418,6.967,,,90,185,manual_full_rally,manual_replay_depth,manual_replay_lane,manual_full_rally_authoritative_event_keyframe,1.0,False,Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.,bounce,
+463,7.717,,,110,85,manual_full_rally,manual_replay_depth,manual_replay_lane,manual_full_rally_authoritative_event_keyframe,1.0,False,Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.,hit,backhand_slice
+540,9.0,,,305,630,manual_full_rally,manual_replay_depth,manual_replay_lane,manual_full_rally_authoritative_event_keyframe,1.0,False,Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.,bounce,
+571,9.517,,,300,705,manual_full_rally,manual_replay_depth,manual_replay_lane,manual_full_rally_authoritative_event_keyframe,1.0,False,Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.,hit,backhand_topspin
+603,10.05,,,75,170,manual_full_rally,manual_replay_depth,manual_replay_lane,manual_full_rally_authoritative_event_keyframe,1.0,False,Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.,bounce,
+658,10.967,,,85,95,manual_full_rally,manual_replay_depth,manual_replay_lane,manual_full_rally_authoritative_event_keyframe,0.8,False,Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.,hit,forehand_topspin_adjusted
+722,12.033,,,280,620,manual_full_rally,manual_replay_depth,manual_replay_lane,manual_full_rally_authoritative_event_keyframe,1.0,False,Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.,bounce,
+762,12.7,,,290,705,manual_full_rally,manual_replay_depth,manual_replay_lane,manual_full_rally_authoritative_event_keyframe,1.0,False,Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.,hit,inside_out_forehand_topspin
+810,13.5,,,75,180,manual_full_rally,manual_replay_depth,manual_replay_lane,manual_full_rally_authoritative_event_keyframe,1.0,False,Event-driven replay keyframe from manual full-rally annotation; not a measured tracked ball point.,bounce,

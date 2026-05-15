@@ -3,10 +3,10 @@
 ## VERDICT
 
 Final verdict:
-  ready_with_warnings
+  ready_for_stage_15
 
 Friction:
-  2 (low friction)
+  0 (low friction)
 
 Event source used:
   stage_8_3_validated_event_timeline
@@ -25,19 +25,19 @@ Fallback used:
 ## RENDERING BEHAVIOR
 
 Validated bounces rendered:
-  3
+  8
 
 Validated hits rendered:
-  0
+  8
 
 Downgraded hits shown as annotation:
-  6
+  0
 
 Rejected events ignored:
-  2
+  0
 
 Unvalidated events shown as annotation:
-  13
+  0
 
 Main path physical-only:
   True
@@ -59,7 +59,7 @@ Previous side-view versions rendered raw possible_hit hypotheses too strongly. S
 
 ## WARNINGS
 
-- No validated hit labels are available yet; confident hit markers are not rendered.
+No warnings.
 
 ## ERRORS
 
@@ -67,4 +67,4 @@ No errors.
 
 ## NEXT STEP
 
-Proceed to Stage 15 for multi-camera prototype, or collect manual hit labels before showing confident side-view hit markers.
+Proceed to Stage 15: Multi-Camera Analytical Replay.

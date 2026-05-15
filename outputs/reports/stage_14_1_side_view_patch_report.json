@@ -11,7 +11,7 @@
     "side_view_source_missing": false,
     "video_export_failed": false
   },
-  "frames_generated": 100,
+  "frames_generated": 136,
   "friction": {
     "band": "medium friction",
     "inputs": {
@@ -28,8 +28,8 @@
     "score": 35
   },
   "height_anchor_summary": {
-    "arc_estimate": 11,
-    "bounce_grounded": 1
+    "bounce_grounded": 8,
+    "hit_contact": 8
   },
   "hit_contact_band_enabled": true,
   "interpolated_points_marked": true,
@@ -52,7 +52,7 @@
   "semantic_warnings": [],
   "source_stage": 14,
   "stage": "stage_14_1_side_view_patch",
-  "timestamp": "2026-05-14T19:06:59+00:00",
+  "timestamp": "2026-05-15T04:24:30+00:00",
   "video_generated": true,
   "warnings": []
 }

@@ -18,7 +18,7 @@ Friction level:
   medium friction
 
 Timestamp:
-  2026-05-14T19:06:59+00:00
+  2026-05-15T04:24:30+00:00
 
 Recommended next step:
   Tune side-view semantics further before Stage 15.
@@ -38,7 +38,7 @@ Interpolated points marked:
   yes
 
 Height anchor summary:
-  {'arc_estimate': 11, 'bounce_grounded': 1}
+  {'bounce_grounded': 8, 'hit_contact': 8}
 
 ## Output
 
@@ -69,7 +69,7 @@ Manifest:
 ## Console-equivalent table
 
 Frames generated:
-  100
+  136
 
 Video generated:
   yes
@@ -109,6 +109,12 @@ Stage 14.1 improves the side-view semantics. Bounce-like events are forced near 
 Tune side-view semantics further before Stage 15.
 
 ## Run history
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
 
 Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
 
@@ -292,6 +298,25 @@ Next step:
 <!-- lab-entry:2026-05-14T19:06:59+00:00 -->
 
 ### 2026-05-14T19:06:59+00:00
+
+Stage:
+  Stage 14.1 - Side-View Patch
+
+Verdict:
+  needs_more_side_view_tuning
+
+Friction score:
+  35
+
+Friction level:
+  medium friction
+
+Next step:
+  Tune side-view semantics further before Stage 15.
+
+<!-- lab-entry:2026-05-15T04:24:30+00:00 -->
+
+### 2026-05-15T04:24:30+00:00
 
 Stage:
   Stage 14.1 - Side-View Patch

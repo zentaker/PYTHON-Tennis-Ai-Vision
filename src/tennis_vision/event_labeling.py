@@ -62,6 +62,7 @@ FRAME_DUPLICATE_AUDIT_FIELDS = [
     "is_near_duplicate_of_previous",
     "visual_group_id",
     "visual_group_range",
+    "representative_frame_index",
 ]
 
 COVERAGE_FIELDS = [
@@ -112,18 +113,18 @@ def print_timeline_viewer_controls() -> None:
                 "EVENT LABELING TIMELINE VIEWER",
                 "",
                 "Navigation:",
-                "  a / left arrow  = previous frame",
-                "  d / right arrow = next frame",
+                "  a / left arrow  = previous group in collapsed mode, previous frame in expanded mode",
+                "  d / right arrow = next group in collapsed mode, next frame in expanded mode",
                 "  page keys or A/D = jump 10 frames if supported",
                 "  g / G = first / last frame in current visual group",
                 "  [ / ] = previous / next visual group",
                 "",
                 "Labels:",
-                "  b = bounce",
-                "  h = hit",
-                "  n = no_event",
-                "  u = uncertain",
-                "  x = delete label",
+                "  b = bounce_window in collapsed mode, bounce frame in expanded mode",
+                "  h = hit_window in collapsed mode, hit frame in expanded mode",
+                "  n = no_event_window in collapsed mode, no_event frame in expanded mode",
+                "  u = uncertain_window in collapsed mode, uncertain frame in expanded mode",
+                "  x = delete current group/window label in collapsed mode",
                 "  w = start/end manual event window selection",
                 "  W = select current visual group as event window",
                 "",
@@ -142,6 +143,7 @@ def print_timeline_viewer_controls() -> None:
                 "",
                 "Default:",
                 "  automatic ball marker overlay is OFF.",
+                "  collapse-duplicates mode labels visual groups as event windows.",
                 "",
             ]
         )
@@ -176,6 +178,8 @@ def read_event_labels(path: Path, *, source: str = "stage_8_2_existing") -> tupl
                     "nearest_auto_event_type": row.get("nearest_auto_event_type") or "",
                     "nearest_auto_event_frame": int_or_none(row.get("nearest_auto_event_frame")),
                     "frame_delta_to_auto_event": int_or_none(row.get("frame_delta_to_auto_event")),
+                    "source_window_id": row.get("source_window_id") or "",
+                    "event_window_label": str(row.get("event_window_label") or "").lower() in {"true", "1", "yes"},
                     "notes": row.get("notes") or "",
                 }
             )
@@ -358,6 +362,9 @@ def load_frame_payloads_sequential(
             if current in requested:
                 display, scale = resize_frame(frame, resize_width) if keep_display else (None, 1.0)
                 original_h, original_w = frame.shape[:2]
+                signature_start = time.perf_counter()
+                signature = compute_frame_signature(frame, signature_width=signature_width)
+                signature_seconds = time.perf_counter() - signature_start
                 payloads[current] = {
                     "frame_index": current,
                     "decoded_frame_index": int(round(decoded_position - 1)) if decoded_position and decoded_position >= 1 else None,
@@ -366,7 +373,8 @@ def load_frame_payloads_sequential(
                     "scale": scale,
                     "original_width": original_w,
                     "original_height": original_h,
-                    "signature": compute_frame_signature(frame, signature_width=signature_width),
+                    "signature": signature,
+                    "signature_compute_seconds": signature_seconds,
                 }
             current += 1
     finally:
@@ -391,6 +399,9 @@ def load_frame_payload_random(
         return None, frame_error or f"Could not load frame {frame_index}."
     display, scale = resize_frame(frame, resize_width) if keep_display else (None, 1.0)
     original_h, original_w = frame.shape[:2]
+    signature_start = time.perf_counter()
+    signature = compute_frame_signature(frame, signature_width=signature_width)
+    signature_seconds = time.perf_counter() - signature_start
     return {
         "frame_index": frame_index,
         "decoded_frame_index": None,
@@ -399,7 +410,8 @@ def load_frame_payload_random(
         "scale": scale,
         "original_width": original_w,
         "original_height": original_h,
-        "signature": compute_frame_signature(frame, signature_width=signature_width),
+        "signature": signature,
+        "signature_compute_seconds": signature_seconds,
     }, None
 
 
@@ -437,12 +449,15 @@ def build_visual_frame_groups(payloads_by_frame: dict[int, dict[str, Any]], fram
     group_meta: dict[int, dict[str, Any]] = {}
     for row in rows:
         frames = groups_by_id[str(row["visual_group_id"])]
+        representative = frames[len(frames) // 2]
         group_range = f"{min(frames)}-{max(frames)}" if min(frames) != max(frames) else str(frames[0])
         row["visual_group_range"] = group_range
+        row["representative_frame_index"] = representative
         group_meta[int(row["frame_index"])] = {
             "visual_group_id": row["visual_group_id"],
             "start_frame": min(frames),
             "end_frame": max(frames),
+            "representative_frame_index": representative,
             "frame_indices": frames,
             "visual_group_range": group_range,
             "visual_diff_from_previous": row["visual_diff_from_previous"],
@@ -460,10 +475,11 @@ def analyze_frame_duplicates(
     sequential_read: bool,
     signature_width: int = 160,
     keep_display: bool = True,
-) -> tuple[list[dict[str, Any]], dict[int, dict[str, Any]], dict[int, dict[str, Any]], list[str]]:
+) -> tuple[list[dict[str, Any]], dict[int, dict[str, Any]], dict[int, dict[str, Any]], list[str], dict[str, Any]]:
     """Load selected frames and analyze near-duplicate visual groups."""
     warnings: list[str] = []
     unique_frames, _duplicates_removed = dedupe_sorted_frame_indices(frame_indices)
+    load_start = time.perf_counter()
     if sequential_read:
         payloads, seq_warnings = load_frame_payloads_sequential(
             video_path,
@@ -487,8 +503,16 @@ def analyze_frame_duplicates(
                 payloads[frame_index] = payload
             elif error:
                 warnings.append(error)
+    frame_loading_seconds = time.perf_counter() - load_start
+    grouping_start = time.perf_counter()
     rows, group_meta = build_visual_frame_groups(payloads, unique_frames, duplicate_threshold=duplicate_threshold)
-    return rows, group_meta, payloads, warnings
+    grouping_seconds = time.perf_counter() - grouping_start
+    profile = {
+        "frame_loading_seconds": round(frame_loading_seconds, 3),
+        "signature_compute_seconds": round(sum(float(payload.get("signature_compute_seconds") or 0) for payload in payloads.values()), 3),
+        "grouping_seconds": round(grouping_seconds, 3),
+    }
+    return rows, group_meta, payloads, warnings, profile
 
 
 def write_frame_duplicate_audit(
@@ -499,11 +523,12 @@ def write_frame_duplicate_audit(
     sequential_read: bool,
     signature_width: int,
     audit_runtime_seconds: float,
+    profile: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Write frame duplicate audit CSV/Markdown and return summary."""
     csv_path = output_dir / "frame_duplicate_audit.csv"
+    json_path = output_dir / "frame_duplicate_audit.json"
     md_path = output_dir / "frame_duplicate_audit.md"
-    write_csv(csv_path, rows, FRAME_DUPLICATE_AUDIT_FIELDS)
     near_duplicate_pairs = sum(1 for row in rows if row.get("is_near_duplicate_of_previous"))
     groups: dict[str, list[int]] = {}
     for row in rows:
@@ -516,34 +541,53 @@ def write_frame_duplicate_audit(
         "near_duplicate_pairs_count": near_duplicate_pairs,
         "visual_groups_with_more_than_one_frame": len(multi_groups),
         "largest_duplicate_group": f"{min(largest)}-{max(largest)}" if len(largest) > 1 else (str(largest[0]) if largest else ""),
+        "largest_visual_group": f"{min(largest)}-{max(largest)}" if len(largest) > 1 else (str(largest[0]) if largest else ""),
         "duplicate_threshold": duplicate_threshold,
         "signature_width": signature_width,
         "audit_runtime_seconds": round(audit_runtime_seconds, 3),
+        "frame_loading_seconds": (profile or {}).get("frame_loading_seconds", 0),
+        "signature_compute_seconds": (profile or {}).get("signature_compute_seconds", 0),
+        "grouping_seconds": (profile or {}).get("grouping_seconds", 0),
+        "report_write_seconds": 0,
         "sequential_read_used": sequential_read,
         "collapse_duplicates_recommended": near_duplicate_pairs > 0,
         "csv_path": str(csv_path),
+        "json_path": str(json_path),
         "markdown_path": str(md_path),
     }
-    lines = [
-        "# Stage 8.2 Frame Duplicate Audit",
-        "",
-        "SUMMARY",
-        f"  Total frames: {summary['total_frames']}",
-        f"  Unique visual groups: {summary['unique_visual_groups']}",
-        f"  Near-duplicate pairs: {summary['near_duplicate_pairs_count']}",
-        f"  Visual groups with more than one frame: {summary['visual_groups_with_more_than_one_frame']}",
-        f"  Largest duplicate group: {summary['largest_duplicate_group'] or 'Not available'}",
-        f"  Audit runtime seconds: {summary['audit_runtime_seconds']}",
-        f"  Signature width: {signature_width}",
-        f"  Duplicate threshold: {duplicate_threshold}",
-        f"  Sequential read used: {sequential_read}",
-        f"  Collapse duplicates recommended: {summary['collapse_duplicates_recommended']}",
-        "",
-        "RECOMMENDED LABELING APPROACH",
-        "  If a bounce or hit spans visually duplicated frames, label it as an event window instead of guessing one exact frame.",
-        "  In the timeline viewer, press W on a visual group, then press b/h/n/u.",
-    ]
-    md_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+    def audit_markdown() -> list[str]:
+        return [
+            "# Stage 8.2 Frame Duplicate Audit",
+            "",
+            "SUMMARY",
+            f"  Total frames: {summary['total_frames']}",
+            f"  Unique visual groups: {summary['unique_visual_groups']}",
+            f"  Near-duplicate pairs: {summary['near_duplicate_pairs_count']}",
+            f"  Visual groups with more than one frame: {summary['visual_groups_with_more_than_one_frame']}",
+            f"  Largest duplicate group: {summary['largest_duplicate_group'] or 'Not available'}",
+            f"  Audit runtime seconds: {summary['audit_runtime_seconds']}",
+            f"  Frame loading seconds: {summary['frame_loading_seconds']}",
+            f"  Signature compute seconds: {summary['signature_compute_seconds']}",
+            f"  Grouping seconds: {summary['grouping_seconds']}",
+            f"  Report write seconds: {summary['report_write_seconds']}",
+            f"  Signature width: {signature_width}",
+            f"  Duplicate threshold: {duplicate_threshold}",
+            f"  Sequential read used: {sequential_read}",
+            f"  Collapse duplicates recommended: {summary['collapse_duplicates_recommended']}",
+            "",
+            "RECOMMENDED LABELING APPROACH",
+            "  If a bounce or hit spans visually duplicated frames, label it as an event window instead of guessing one exact frame.",
+            "  In collapsed timeline viewer mode, press b/h/n/u to label the current visual group as a window.",
+        ]
+
+    write_start = time.perf_counter()
+    write_csv(csv_path, rows, FRAME_DUPLICATE_AUDIT_FIELDS)
+    json_path.write_text(json.dumps({"summary": summary, "frames": rows}, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    md_path.write_text("\n".join(audit_markdown()) + "\n", encoding="utf-8")
+    summary["report_write_seconds"] = round(time.perf_counter() - write_start, 3)
+    json_path.write_text(json.dumps({"summary": summary, "frames": rows}, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    md_path.write_text("\n".join(audit_markdown()) + "\n", encoding="utf-8")
     return summary
 
 
@@ -767,7 +811,7 @@ def collect_event_labels_timeline_viewer(
             "errors": [f"OpenCV GUI unavailable: {exc}"],
         }
 
-    visual_rows, visual_group_meta, analyzed_payloads, analysis_warnings = analyze_frame_duplicates(
+    visual_rows, visual_group_meta, analyzed_payloads, analysis_warnings, _analysis_profile = analyze_frame_duplicates(
         video_path=video_path,
         frame_indices=unique_frames,
         resize_width=resize_width,
@@ -786,8 +830,8 @@ def collect_event_labels_timeline_viewer(
             if group_id in seen_groups:
                 continue
             seen_groups.add(group_id)
-            group_frames = visual_group_meta[int(row["frame_index"])]["frame_indices"]
-            display_frame_indices.append(group_frames[0])
+            group_meta = visual_group_meta[int(row["frame_index"])]
+            display_frame_indices.append(int(group_meta.get("representative_frame_index") or group_meta["frame_indices"][0]))
         frames = [{"frame_index": frame_index} for frame_index in display_frame_indices]
     else:
         frames = [{"frame_index": row["frame_index"]} for row in visual_rows] or [{"frame_index": frame_index} for frame_index in unique_frames]
@@ -850,7 +894,7 @@ def collect_event_labels_timeline_viewer(
                 "errors": errors or ["No selected frames could be loaded."],
             }
 
-    selected_frames = {int(frame["frame_index"]) for frame in frames}
+    selected_frames = set(all_frame_indices)
     existing_by_frame = {int(label["frame_index"]): dict(label) for label in existing_labels if int(label["frame_index"]) in selected_frames}
     if not preserve_no_event_points:
         for label in existing_by_frame.values():
@@ -872,6 +916,7 @@ def collect_event_labels_timeline_viewer(
     existing_windows, window_warnings = read_manual_event_windows(output_dir / "manual_event_windows.csv")
     warnings.extend(window_warnings)
     session_windows: list[dict[str, Any]] = []
+    deleted_window_ids: set[str] = set()
     pending_window_start: int | None = None
     pending_window_range: tuple[int, int] | None = None
     current_index = 0
@@ -895,6 +940,50 @@ def collect_event_labels_timeline_viewer(
             return None
         return pending_points.get(current_frame_index())
 
+    def current_display_label(frame_index: int) -> dict[str, Any] | None:
+        label = working_by_frame.get(frame_index)
+        if collapse_duplicates:
+            group = current_visual_group()
+            start = int(group.get("start_frame", frame_index))
+            end = int(group.get("end_frame", frame_index))
+            visual_group_id = str(group.get("visual_group_id") or "")
+            matching_window = next(
+                (
+                    window
+                    for window in reversed(session_windows)
+                    if (
+                        int(window.get("start_frame", -1)) == start
+                        and int(window.get("end_frame", -1)) == end
+                    )
+                    or (visual_group_id and str(window.get("visual_group_id") or "") == visual_group_id)
+                ),
+                None,
+            )
+            if matching_window is None:
+                matching_window = next(
+                    (
+                        window
+                        for window in reversed(existing_windows)
+                        if str(window.get("window_id")) not in deleted_window_ids
+                        and (
+                            int(window.get("start_frame", -1)) == start
+                            and int(window.get("end_frame", -1)) == end
+                            or (visual_group_id and str(window.get("visual_group_id") or "") == visual_group_id)
+                        )
+                    ),
+                    None,
+                )
+            if matching_window is not None:
+                return {
+                    "event_label": matching_window.get("event_label") or "uncertain_window",
+                    "confidence": matching_window.get("confidence") or "medium",
+                }
+        if label and label.get("event_window_label"):
+            display = dict(label)
+            display["event_label"] = f"{display.get('event_label')}_window"
+            return display
+        return label
+
     def session_changed_labels() -> list[dict[str, Any]]:
         return [working_by_frame[frame] for frame in sorted(changed_frames) if frame in working_by_frame and frame not in deleted_frames]
 
@@ -909,7 +998,8 @@ def collect_event_labels_timeline_viewer(
         merged = merge_event_labels(existing_labels, session_labels, deleted_frames=sorted(deleted_frames))
         write_event_labels_csv(labels_csv, merged)
         write_event_labels_json(labels_json, merged)
-        merged_windows = merge_event_windows(existing_windows, session_windows)
+        retained_existing_windows = [window for window in existing_windows if str(window.get("window_id")) not in deleted_window_ids]
+        merged_windows = merge_event_windows(retained_existing_windows, session_windows)
         write_manual_event_windows_csv(output_dir / "manual_event_windows.csv", merged_windows)
         write_manual_event_windows_json(output_dir / "manual_event_windows.json", merged_windows)
         if session_labels:
@@ -953,6 +1043,20 @@ def collect_event_labels_timeline_viewer(
         frames_in_window = [frame for frame in all_frame_indices if start <= frame <= end]
         if not frames_in_window:
             frames_in_window = list(range(start, end + 1))
+        for existing in existing_windows:
+            if int(existing.get("start_frame", -1)) == start and int(existing.get("end_frame", -1)) == end:
+                deleted_window_ids.add(str(existing.get("window_id")))
+            elif visual_group_id and str(existing.get("visual_group_id") or "") == visual_group_id:
+                deleted_window_ids.add(str(existing.get("window_id")))
+        session_windows[:] = [
+            window
+            for window in session_windows
+            if not (
+                int(window.get("start_frame", -1)) == start
+                and int(window.get("end_frame", -1)) == end
+                or (visual_group_id and str(window.get("visual_group_id") or "") == visual_group_id)
+            )
+        ]
         window_id = f"stage_8_2_window_{label_session}_{len(existing_windows) + len(session_windows) + 1:03d}"
         confidence = "low" if event_label == "uncertain" else "high"
         window = {
@@ -994,6 +1098,37 @@ def collect_event_labels_timeline_viewer(
         pending_window_start = None
         nonlocal_set_unsaved()
 
+    def delete_current_group_label(frame_index: int) -> None:
+        group = current_visual_group()
+        if collapse_duplicates:
+            start = int(group.get("start_frame", frame_index))
+            end = int(group.get("end_frame", frame_index))
+            frames_in_group = [frame for frame in all_frame_indices if start <= frame <= end] or [frame_index]
+            visual_group_id = str(group.get("visual_group_id") or "")
+            for existing in existing_windows:
+                if int(existing.get("start_frame", -1)) == start and int(existing.get("end_frame", -1)) == end:
+                    deleted_window_ids.add(str(existing.get("window_id")))
+                elif visual_group_id and str(existing.get("visual_group_id") or "") == visual_group_id:
+                    deleted_window_ids.add(str(existing.get("window_id")))
+            session_windows[:] = [
+                window
+                for window in session_windows
+                if not (
+                    int(window.get("start_frame", -1)) == start
+                    and int(window.get("end_frame", -1)) == end
+                    or (visual_group_id and str(window.get("visual_group_id") or "") == visual_group_id)
+                )
+            ]
+        else:
+            frames_in_group = [frame_index]
+        for frame in frames_in_group:
+            working_by_frame.pop(frame, None)
+            pending_points.pop(frame, None)
+            changed_frames.discard(frame)
+            if frame in existing_by_frame:
+                deleted_frames.add(frame)
+        nonlocal_set_unsaved()
+
     cv2.setMouseCallback(window_name, on_mouse)
     frames_shown = 0
     try:
@@ -1007,7 +1142,7 @@ def collect_event_labels_timeline_viewer(
                 current_index = min(len(frames) - 1, current_index + 1)
                 continue
             frame_index = int(payload["frame_index"])
-            label = working_by_frame.get(frame_index)
+            label = current_display_label(frame_index)
             shown = draw_timeline_viewer_overlay(
                 payload["display"].copy(),
                 frame_index=frame_index,
@@ -1026,8 +1161,13 @@ def collect_event_labels_timeline_viewer(
                 fps=fps,
                 visual_group=current_visual_group(),
                 event_windows_count=len(existing_windows) + len(session_windows),
+                collapsed_mode=collapse_duplicates,
             )
-            cv2.setWindowTitle(window_name, f"Frame {frame_index} ({current_index + 1}/{len(frames)})")
+            if collapse_duplicates:
+                group = current_visual_group()
+                cv2.setWindowTitle(window_name, f"Frame group {group.get('visual_group_range')} ({current_index + 1}/{len(frames)})")
+            else:
+                cv2.setWindowTitle(window_name, f"Frame {frame_index} ({current_index + 1}/{len(frames)})")
             cv2.imshow(window_name, shown)
             frames_shown += 1
             key = cv2.waitKeyEx(0)
@@ -1078,7 +1218,7 @@ def collect_event_labels_timeline_viewer(
                 if pending_window_range is not None:
                     apply_window_label(pending_window_range[0], pending_window_range[1], event_label, str(group.get("visual_group_id") or ""))
                     continue
-                if collapse_duplicates and int(group.get("end_frame", frame_index)) > int(group.get("start_frame", frame_index)):
+                if collapse_duplicates:
                     apply_window_label(int(group["start_frame"]), int(group["end_frame"]), event_label, str(group.get("visual_group_id") or ""))
                     continue
                 confidence = "low" if event_label == "uncertain" else "high"
@@ -1106,12 +1246,7 @@ def collect_event_labels_timeline_viewer(
                 deleted_frames.discard(frame_index)
                 nonlocal_set_unsaved()
             elif key == ord("x"):
-                working_by_frame.pop(frame_index, None)
-                pending_points.pop(frame_index, None)
-                changed_frames.discard(frame_index)
-                if frame_index in existing_by_frame:
-                    deleted_frames.add(frame_index)
-                nonlocal_set_unsaved()
+                delete_current_group_label(frame_index)
             elif key == ord("c"):
                 pending_points.pop(frame_index, None)
                 if frame_index in working_by_frame:
@@ -1412,6 +1547,7 @@ def draw_timeline_viewer_overlay(
     fps: float | None,
     visual_group: dict[str, Any],
     event_windows_count: int,
+    collapsed_mode: bool = False,
 ) -> np.ndarray:
     """Draw unobtrusive timeline viewer context on a frame."""
     event_label = str(label.get("event_label")) if label else "unlabeled"
@@ -1423,7 +1559,11 @@ def draw_timeline_viewer_overlay(
         group_range = visual_group.get("visual_group_range") or str(frame_index)
         group_frames = visual_group.get("frame_indices") or [frame_index]
         group_size = len(group_frames)
-        if group_size > 1:
+        if collapsed_mode:
+            label_text = f"Frame group {group_range} | group {position}/{total} | size {group_size} | representative frame: {frame_index} | label: {event_label}"
+            if group_size > 1:
+                label_text += " | label as window"
+        elif group_size > 1:
             label_text = f"Frame group {group_range} | group {position}/{total} | size {group_size} | representative frame: {frame_index} | label: {event_label}"
         else:
             label_text = f"Frame {frame_index} | {position}/{total} | label: {event_label}"
@@ -1439,8 +1579,12 @@ def draw_timeline_viewer_overlay(
         cv2.putText(frame, label_text, (18, 28), cv2.FONT_HERSHEY_SIMPLEX, 0.62, color, 2, cv2.LINE_AA)
         if save_status:
             controls = save_status
+        elif collapsed_mode:
+            controls = "a/d prev/next group | b bounce_window | h hit_window | n no_event_window | u uncertain_window | x delete window | s save | q save+quit"
+            if group_size > 1:
+                controls = "Near-duplicate group. Label this as a window. " + controls
         elif group_size > 1:
-            controls = "Near-duplicate group. b/h/n/u labels this as a window | a/d prev/next group | q save+quit"
+            controls = "Near-duplicate group. W selects group window | a/d prev/next frame | q save+quit"
         else:
             controls = "a/d prev/next | b bounce | h hit | n no_event | u uncertain | x delete | s save | q save+quit"
         cv2.putText(frame, controls, (18, height - 14), cv2.FONT_HERSHEY_SIMPLEX, 0.48, (235, 235, 235), 1, cv2.LINE_AA)

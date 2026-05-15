@@ -5,6 +5,94 @@ It uses case blocks instead of wide tables.
 
 ---
 
+CASE: F034 - Bounce windows are not enough for future line calling
+AREA: Event labeling / spatial localization / future line calling
+
+WHAT HAPPENED:
+  Event windows helped identify that a bounce occurred, but future in/out logic
+  requires a precise contact point.
+
+ROOT CAUSE:
+  Temporal event labeling and spatial line-calling require different precision
+  levels.
+
+IMPACT:
+  A broad bounce window can be useful for replay, but not reliable for in/out
+  decisions.
+
+RESOLUTION:
+  Add precise bounce contact localization with uncertainty and line-call
+  readiness.
+
+REUSABLE RULE:
+  Separate temporal event detection from spatial contact localization when
+  building sports analysis systems.
+
+RELATED STAGES:
+  Stage 8.2
+  Stage 8.3
+  Stage 8.5
+
+---
+
+CASE: F033 - Interactive viewer remained high-friction, requiring direct event-window CLI
+AREA: Manual labeling / UX fallback / event windows
+
+WHAT HAPPENED:
+  The interactive event labeling viewer still showed repeated visual frames and
+  forced the Product Owner to choose between nearly identical frames.
+
+ROOT CAUSE:
+  Some video frames are visually duplicated or too similar for frame-perfect
+  labeling, and the viewer UX remained too heavy.
+
+IMPACT:
+  Manual labeling became slow, frustrating, and unreliable.
+
+RESOLUTION:
+  Add a direct event-window CLI so the Product Owner can label a range of frames
+  as one bounce, hit, no_event, or uncertain event.
+
+REUSABLE RULE:
+  Always provide a low-friction non-visual fallback for human labeling
+  workflows.
+
+RELATED STAGES:
+  Stage 8.2
+  Stage 8.3
+
+---
+
+CASE: F032 - Visual groups were detected but not used as the labeling unit
+AREA: Manual labeling / timeline viewer / visual-group UX
+
+WHAT HAPPENED:
+  The system detected near-duplicate frame groups like 204-205, but the viewer
+  still made the user navigate and label individual raw frames.
+
+ROOT CAUSE:
+  Visual grouping was implemented as metadata, not as the primary labeling and
+  navigation model.
+
+IMPACT:
+  The Product Owner still had to make frame-perfect decisions on visually
+  duplicated moments, creating high human-loop friction.
+
+RESOLUTION:
+  Make visual groups the default navigation and labeling unit in timeline viewer
+  mode. In collapsed mode, b/h/n/u labels the current visual group as an event
+  window.
+
+REUSABLE RULE:
+  If a tool detects visual groups, the UX must operate on those groups;
+  metadata alone does not reduce labeling friction.
+
+RELATED STAGES:
+  Stage 8.2
+  Stage 8.3
+
+---
+
 CASE: F031 - Duplicate visual frames made frame-perfect event labeling unreliable
 AREA: Manual labeling / visual grouping / event windows
 
@@ -840,3 +928,249 @@ REUSABLE RULE:
 RELATED STAGES:
   Stage 8.3
   Future temporal event validation stages
+
+---
+
+CASE F035 - Event labeling needed a dedicated workbench, not incremental viewer patches
+
+AREA:
+  Manual labeling / training-data infrastructure / temporal sports events
+
+WHAT HAPPENED:
+  Repeated patches to the Stage 8.2 viewer did not solve the core problem:
+  precise tennis event labeling requires frame audit, visual-group navigation,
+  event windows, contact candidates, uncertainty tracking, and fast save/audit
+  behavior.
+
+ROOT CAUSE:
+  The original labeling tool was designed as a simple frame-by-frame helper,
+  but bounce/hit labeling for future line calling requires a dedicated
+  workbench.
+
+IMPACT:
+  The Product Owner could not reliably create trustworthy ground truth. That
+  blocks event validation, model training, side-view replay correction, and
+  future line-calling work.
+
+RESOLUTION:
+  Build Stage 8.2R Event Labeling Workbench with decode audit, visual groups,
+  clean frame cache, event-window labels, contact candidates, uncertainty, label
+  integrity audit, and Stage 8.3 compatibility export.
+
+REUSABLE RULE:
+  For ML/CV training, labeling infrastructure must be treated as first-class
+  product infrastructure, not a quick helper script.
+
+RELATED STAGES:
+  Stage 8.2
+  Stage 8.2R
+  Stage 8.3
+  Stage 8.5
+  Future event and line-calling stages
+
+---
+
+CASE F037 - Frame viewer was the wrong abstraction for precise video event labeling
+
+AREA:
+  Manual labeling / annotation UX / video ML tooling
+
+WHAT HAPPENED:
+  The OpenCV frame viewer forced frame-by-frame navigation and struggled with
+  duplicated or near-duplicated frames, making bounce/hit labeling frustrating.
+
+ROOT CAUSE:
+  The tool was built as a frame inspection helper, but the user needed a video
+  timeline editor.
+
+IMPACT:
+  The Product Owner could not confidently label events, blocking reliable
+  training data and future line-calling.
+
+RESOLUTION:
+  Add a local video labeling editor based on timecode and timeline interaction.
+
+REUSABLE RULE:
+  For video ML workflows, annotation UX should match the medium: use
+  timeline-based tools for temporal events.
+
+RELATED STAGES:
+  Stage 8.2
+  Stage 8.2R
+  Stage LB0
+  Future labeling and line-calling stages
+
+---
+
+CASE F038 - Labeling editor needed a DaVinci-style visual timeline
+
+AREA:
+  Manual labeling / annotation UX / video timeline tooling
+
+WHAT HAPPENED:
+  The first HTML labeling editor improved basic playback but still looked like
+  a simple player with a line. It did not provide a real visual timeline with
+  thumbnails, zoom, playhead, and marker lanes.
+
+ROOT CAUSE:
+  The labeling tool did not match how users inspect video events in real
+  editors such as DaVinci Resolve.
+
+IMPACT:
+  The Product Owner could not comfortably identify precise bounce/hit moments.
+
+RESOLUTION:
+  Add a visual thumbnail timeline, Alt+wheel zoom, Ctrl+wheel horizontal
+  navigation, playhead, label markers, and event windows.
+
+REUSABLE RULE:
+  Video ML annotation tools should match video editing mental models for
+  temporal precision.
+
+RELATED STAGES:
+  Stage LB0
+  Stage 8.2
+  Stage 8.2R
+  Future labeling stages
+
+---
+
+CASE F039 - Point labels looked like windows on the timeline
+
+AREA:
+  Manual labeling / annotation UX / timeline marker semantics
+
+WHAT HAPPENED:
+  The editor rendered bounce_contact as a wide rectangular marker, which made
+  it look like a range instead of an exact contact point.
+
+ROOT CAUSE:
+  Timeline marker rendering did not distinguish point labels from window
+  labels.
+
+IMPACT:
+  The Product Owner could not tell whether a bounce_contact was an exact moment
+  or a duration, creating confusion for future line-calling labels.
+
+RESOLUTION:
+  Render point labels as precise fixed-width markers and window labels as
+  duration blocks.
+
+REUSABLE RULE:
+  Annotation UIs must visually distinguish instant events from temporal
+  windows.
+
+RELATED STAGES:
+  Stage LB0
+  Stage 8.2
+  Stage 8.5
+  Future line-calling stages
+
+---
+
+CASE F040 - Point-based bounce labeling was too complex for practical annotation
+
+AREA:
+  Manual labeling / annotation UX / event range semantics
+
+WHAT HAPPENED:
+  The editor asked the user to combine pre_bounce, bounce_contact, and
+  post_bounce point labels. This was confusing and did not match the user's
+  video-editing workflow.
+
+ROOT CAUSE:
+  The labeling model exposed internal event-phase semantics instead of giving
+  the user a simple editable event range.
+
+IMPACT:
+  The Product Owner could not confidently annotate bounces/hits and became
+  blocked.
+
+RESOLUTION:
+  Switch the main labeling UX to draggable/resizable event ranges, with contact
+  estimate derived from the range center.
+
+REUSABLE RULE:
+  Annotation tools should expose the simplest human action and derive technical
+  details internally.
+
+RELATED STAGES:
+  Stage LB0
+  Stage 8.2
+  Stage 8.5
+  Future line-calling stages
+
+---
+
+CASE F041 - Trusted event labeling moved to DaVinci/manual timecodes
+
+AREA:
+  Manual labeling / annotation tooling / timecode import
+
+WHAT HAPPENED:
+  The custom local HTML labeling editor did not reliably create visible
+  timeline range labels, and the Product Owner needed a trusted labeling path
+  immediately.
+
+ROOT CAUSE:
+  The browser editor was still becoming its own video editing surface, while
+  DaVinci Resolve already provides the review, scrubbing, and timeline
+  interaction needed for precise manual event notes.
+
+IMPACT:
+  Bounce/hit labeling remained blocked by tooling friction instead of moving
+  forward through trusted visual review.
+
+RESOLUTION:
+  Add Stage LB1 timecode label import so DaVinci/manual CSV notes can become
+  Stage 8.2-compatible manual event labels and windows.
+
+REUSABLE RULE:
+  When custom annotation UI becomes the bottleneck, support import from the
+  trusted tool the Product Owner already uses.
+
+RELATED STAGES:
+  Stage LB0
+  Stage LB1
+  Stage 8.2
+  Stage 8.3
+
+---
+
+CASE F042 - Manual timing needs automatic position resolution and curved replay
+
+AREA:
+  Replay / event semantics / spatial localization / side-view modeling
+
+WHAT HAPPENED:
+  Manual rally annotation provided reliable event timing, but early replay
+  regeneration still placed events in repeated or unrealistic court positions
+  and side-view trajectories looked too straight.
+
+ROOT CAUSE:
+  Event timing, spatial localization, and visual trajectory modeling are
+  separate responsibilities. The pipeline used timing without resolving ball
+  x/y from the video at those times, and side-view replay connected anchors too
+  directly.
+
+IMPACT:
+  Top-view replay looked spatially wrong and side-view replay did not resemble
+  tennis ball flight.
+
+RESOLUTION:
+  Use manual timing as temporal ground truth, automatically resolve ball
+  positions with local ball detection and label fallbacks, then render
+  side-view trajectories as shot-type-influenced Bezier curves.
+
+REUSABLE RULE:
+  In sports CV, the user labels time; the system resolves position; the
+  renderer models plausible motion while preserving uncertainty.
+
+RELATED STAGES:
+  Manual Full-Rally Replay
+  Stage 3
+  Stage 5.1
+  Stage 8.1
+  Stage 9.1
+  Stage 13
+  Stage 14

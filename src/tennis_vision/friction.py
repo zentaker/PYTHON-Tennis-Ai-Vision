@@ -730,6 +730,45 @@ def calculate_stage_8_4_friction_score(
     }
 
 
+def calculate_stage_8_5_friction_score(
+    *,
+    no_bounce_windows: bool = False,
+    no_ball_labels_in_window: bool = False,
+    projection_missing: bool = False,
+    contact_ambiguous: bool = False,
+    high_uncertainty: bool = False,
+    no_line_call_ready_contacts: bool = False,
+    errors_count: int = 0,
+    warnings_count: int = 0,
+) -> dict[str, Any]:
+    """Calculate Stage 8.5 bounce contact localization friction."""
+    score = 0
+    score += 45 if no_bounce_windows else 0
+    score += 35 if no_ball_labels_in_window else 0
+    score += 20 if projection_missing else 0
+    score += 20 if contact_ambiguous else 0
+    score += 18 if high_uncertainty else 0
+    score += 8 if no_line_call_ready_contacts else 0
+    score += min(errors_count * 10, 30)
+    score += min(warnings_count * 2, 12)
+    score = max(0, min(score, 100))
+
+    return {
+        "score": score,
+        "band": friction_band(score),
+        "inputs": {
+            "no_bounce_windows": no_bounce_windows,
+            "no_ball_labels_in_window": no_ball_labels_in_window,
+            "projection_missing": projection_missing,
+            "contact_ambiguous": contact_ambiguous,
+            "high_uncertainty": high_uncertainty,
+            "no_line_call_ready_contacts": no_line_call_ready_contacts,
+            "errors_count": errors_count,
+            "warnings_count": warnings_count,
+        },
+    }
+
+
 def calculate_stage_9_friction_score(
     *,
     validated_timeline_missing: bool = False,

@@ -18,7 +18,7 @@ Friction level:
   low friction
 
 Timestamp:
-  2026-05-14T03:45:14+00:00
+  2026-05-15T04:24:27+00:00
 
 Recommended next step:
   Proceed to Stage 14: Side-View Ball Flight Renderer.
@@ -29,13 +29,13 @@ Replay schema:
   C:\Users\MSI\Desktop\TennisAiVision\outputs\replay\stage_12_replay_schema\replay_schema.json
 
 Keyframes:
-  12
+  16
 
 Players:
   2
 
 Events:
-  5
+  16
 
 Renderer:
   2d_tactical_replay
@@ -49,7 +49,7 @@ Markdown report path:
   C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\stage_13_2d_tactical_replay_report.md
 
 Log:
-  C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\stage_13_2d_tactical_replay_20260514T034517Z.log
+  C:\Users\MSI\Desktop\TennisAiVision\outputs\logs\stage_13_2d_tactical_replay_20260515T042431Z.log
 
 Frames:
   C:\Users\MSI\Desktop\TennisAiVision\outputs\replay\stage_13_2d_tactical_replay\frames
@@ -72,19 +72,19 @@ Replay summary:
 ## Console-equivalent table
 
 Frames generated:
-  67
+  91
 
 Video generated:
   yes
 
 Keyframes:
-  12
+  16
 
 Players:
   2
 
 Events:
-  5
+  16
 
 Verdict:
   ready_for_stage_14
@@ -206,6 +206,12 @@ Older entries are preserved as originally written. Some historical entries may u
 
 Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
 
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
 <!-- lab-entry:2026-05-14T03:41:35+00:00 -->
 
 ### 2026-05-14T03:41:35+00:00
@@ -228,6 +234,25 @@ Next step:
 <!-- lab-entry:2026-05-14T03:45:14+00:00 -->
 
 ### 2026-05-14T03:45:14+00:00
+
+Stage:
+  Stage 13 - 2D Tactical Replay
+
+Verdict:
+  ready_for_stage_14
+
+Friction score:
+  0
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed to Stage 14: Side-View Ball Flight Renderer.
+
+<!-- lab-entry:2026-05-15T04:24:27+00:00 -->
+
+### 2026-05-15T04:24:27+00:00
 
 Stage:
   Stage 13 - 2D Tactical Replay
