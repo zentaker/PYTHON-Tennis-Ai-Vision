@@ -1,0 +1,126 @@
+{
+  "ball_sequence_points_count": 12,
+  "candidate_frames_proposed": 0,
+  "candidate_windows_proposed": 0,
+  "candidates_excluded_by_hit_labels": 1,
+  "candidates_excluded_by_no_event_labels": 0,
+  "errors": [],
+  "event_sequence_constraints": {
+    "candidates_excluded_by_hit_labels": 1,
+    "candidates_excluded_by_no_event_labels": 0,
+    "candidates_penalized_by_uncertain_labels": 0,
+    "excluded_candidate_frames": [
+      90,
+      105,
+      120,
+      135,
+      165,
+      180,
+      195
+    ],
+    "insufficient_post_hit_trajectory": true,
+    "post_hit_points_count": 4,
+    "post_hit_search_enabled": true,
+    "post_hit_search_frame": 197
+  },
+  "final_verdict": "needs_more_post_hit_ball_labels",
+  "flags": {
+    "manual_bounce_missing": false,
+    "no_candidates_found": true,
+    "only_one_bounce_window": true,
+    "preview_generation_failed": false,
+    "review_queue_failed": false,
+    "trajectory_missing": false
+  },
+  "frame_195_excluded_as_bounce_candidate": true,
+  "friction": {
+    "band": "medium friction",
+    "inputs": {
+      "errors_count": 0,
+      "manual_bounce_missing": false,
+      "no_candidates_found": true,
+      "only_one_bounce_window": true,
+      "preview_generation_failed": false,
+      "review_queue_failed": false,
+      "trajectory_missing": false,
+      "warnings_count": 3
+    },
+    "score": 31
+  },
+  "friction_breakdown": {
+    "downstream_correction": {
+      "band": "medium friction",
+      "reason": "Stage 8.4 exists because earlier side-view/event semantics needed extra repair and active validation.",
+      "score": 50
+    },
+    "execution": {
+      "band": "medium friction",
+      "reason": "Stage 8.4 script ran and generated its expected output files.",
+      "score": 31
+    },
+    "human_loop": {
+      "band": "medium friction",
+      "reason": "manual labels required; new manual or validation stage required; user already inspected and labeled the mistaken hit-region candidate.",
+      "score": 45
+    },
+    "product_validation": {
+      "reason": "The previous top candidate was near a manual hit and is now excluded.",
+      "status": "failed_previous_candidate"
+    },
+    "semantic_model": {
+      "band": "high friction",
+      "reason": "Bounce candidates are event-sequence constrained; prior motion-only candidate frames near manual hits are excluded.",
+      "score": 70
+    }
+  },
+  "friction_breakdown_summary": "execution=medium friction; semantic_model=high friction; human_loop=medium friction; product_validation=failed_previous_candidate; downstream_correction=medium friction",
+  "inputs_used": {
+    "ball_sequence": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\tactical\\stage_9_1_projection_coverage\\projected_expanded_labels.csv",
+    "manual_labels": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_2_event_labels\\manual_event_labels.csv",
+    "manual_windows": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_3_event_validation\\manual_event_windows.csv",
+    "validated_event_timeline": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_3_event_validation\\validated_event_timeline.csv"
+  },
+  "insufficient_post_hit_trajectory": true,
+  "json_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_8_4_bounce_candidate_propagation_report.json",
+  "log_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\logs\\stage_8_4_bounce_candidate_propagation_20260514T194248Z.log",
+  "manual_bounce_labels_count": 3,
+  "manual_bounce_windows_count": 1,
+  "manual_hit_labels_count": 1,
+  "manual_no_event_count": 27,
+  "markdown_report_path": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\stage_8_4_bounce_candidate_propagation_report.md",
+  "output_paths": {
+    "bounce_candidate_frames": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_4_bounce_candidates\\bounce_candidate_frames.csv",
+    "bounce_candidate_timeline_preview": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_4_bounce_candidates\\bounce_candidate_timeline_preview.jpg",
+    "bounce_candidate_windows": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_4_bounce_candidates\\bounce_candidate_windows.csv",
+    "bounce_review_queue": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_4_bounce_candidates\\bounce_review_queue.csv",
+    "proposed_bounce_events": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\timeline\\stage_8_4_bounce_candidates\\proposed_bounce_events.csv"
+  },
+  "pattern_summary": {
+    "direction_change_rows": 0,
+    "manual_feature_rows": 3,
+    "mean_height_proxy_score": 0.159,
+    "notes": "Only one bounce window is available; propagation is a review aid, not validation.",
+    "pattern_confidence": "weak",
+    "signature": {
+      "available": true,
+      "feature_rows": 3,
+      "manual_window_count": 1,
+      "mean_proxy_score": 0.159,
+      "mean_speed": 273.907,
+      "notes": "Only one manual bounce window exists; treat proposals as active-review candidates.",
+      "pattern_confidence": "weak"
+    }
+  },
+  "post_hit_search_enabled": true,
+  "recommended_next_step": "Collect more post-hit ball/event labels after the manual hit, then rerun Stage 8.4.",
+  "review_queue_count": 0,
+  "stage": "stage_8_4_bounce_candidate_propagation",
+  "timestamp": "2026-05-14T19:42:48+00:00",
+  "top_candidate_frame": "",
+  "top_candidate_score": "",
+  "warnings": [
+    "Only one manual bounce window is available; candidate propagation confidence is limited.",
+    "Post-hit next-bounce search is enabled from manual hit labels.",
+    "insufficient_post_hit_trajectory: not enough post-hit ball points are available to propose a reliable next bounce."
+  ]
+}

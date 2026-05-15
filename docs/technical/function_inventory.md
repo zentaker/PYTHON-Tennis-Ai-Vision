@@ -188,6 +188,125 @@ NOTES:
 
 ---
 
+FUNCTION: build_friction_breakdown
+FILE: src/tennis_vision/friction_semantics.py
+LINE: 10
+AREA: Friction
+
+PURPOSE:
+  Builds a multi-dimensional friction breakdown for stage reports.
+
+INPUTS:
+  - execution, semantic/model, human-loop, product validation, and downstream correction scores/reasons
+
+OUTPUTS:
+  - friction_breakdown dictionary
+
+CALLED BY:
+  - future ML/CV stage scripts
+  - scripts/run_stage_8_4_bounce_candidate_propagation.py
+
+WHY PRODUCT OWNER CARES:
+  Prevents successful script execution from being mistaken for successful product or model validation.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/friction_semantics.py and go to line 10.
+  Search: def build_friction_breakdown
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: summarize_friction_breakdown
+FILE: src/tennis_vision/friction_semantics.py
+LINE: 36
+AREA: Friction
+
+PURPOSE:
+  Summarizes multi-dimensional friction in one plain-language sentence.
+
+INPUTS:
+  - friction_breakdown dictionary
+
+OUTPUTS:
+  - summary string
+
+CALLED BY:
+  - stage scripts
+
+WHY PRODUCT OWNER CARES:
+  Makes semantic/product friction visible in reports and console summaries.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/friction_semantics.py and go to line 36.
+  Search: def summarize_friction_breakdown
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: classify_product_validation_status
+FILE: src/tennis_vision/friction_semantics.py
+LINE: 52
+AREA: Friction
+
+PURPOSE:
+  Normalizes product validation status labels.
+
+INPUTS:
+  - status text
+
+OUTPUTS:
+  - normalized status
+
+CALLED BY:
+  - build_friction_breakdown
+
+WHY PRODUCT OWNER CARES:
+  Visual/model outputs need explicit Product Owner validation status.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/friction_semantics.py and go to line 52.
+  Search: def classify_product_validation_status
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: classify_human_loop_level
+FILE: src/tennis_vision/friction_semantics.py
+LINE: 67
+AREA: Friction
+
+PURPOSE:
+  Classifies human-loop friction from manual labeling and review requirements.
+
+INPUTS:
+  - manual labels required flag
+  - manual review required flag
+  - new manual stage required flag
+
+OUTPUTS:
+  - human-loop friction dimension
+
+CALLED BY:
+  - scripts/run_stage_8_4_bounce_candidate_propagation.py
+
+WHY PRODUCT OWNER CARES:
+  Manual review burden should be visible even when a script runs cleanly.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/friction_semantics.py and go to line 67.
+  Search: def classify_human_loop_level
+
+NOTES:
+  None.
+
+---
+
 FUNCTION: calculate_stage_1_friction_score
 FILE: src/tennis_vision/friction.py
 LINE: 52
@@ -507,9 +626,38 @@ NOTES:
 
 ---
 
-FUNCTION: calculate_stage_9_friction_score
+FUNCTION: calculate_stage_8_4_friction_score
 FILE: src/tennis_vision/friction.py
 LINE: 694
+AREA: Friction
+
+PURPOSE:
+  Calculates friction for Stage 8.4 bounce candidate propagation.
+
+INPUTS:
+  - stage-specific warning/error/input flags
+
+OUTPUTS:
+  - friction score dictionary
+
+CALLED BY:
+  - scripts/run_stage_8_4_bounce_candidate_propagation.py
+
+WHY PRODUCT OWNER CARES:
+  Prevents failures and uncertainty from being hidden.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/friction.py and go to line 694.
+  Search: def calculate_stage_8_4_friction_score
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: calculate_stage_9_friction_score
+FILE: src/tennis_vision/friction.py
+LINE: 733
 AREA: Friction
 
 PURPOSE:
@@ -528,7 +676,7 @@ WHY PRODUCT OWNER CARES:
   Prevents failures and uncertainty from being hidden.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/friction.py and go to line 694.
+  Open src/tennis_vision/friction.py and go to line 733.
   Search: def calculate_stage_9_friction_score
 
 NOTES:
@@ -538,7 +686,7 @@ NOTES:
 
 FUNCTION: calculate_stage_9_1_friction_score
 FILE: src/tennis_vision/friction.py
-LINE: 739
+LINE: 778
 AREA: Friction
 
 PURPOSE:
@@ -557,7 +705,7 @@ WHY PRODUCT OWNER CARES:
   Prevents failures and uncertainty from being hidden.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/friction.py and go to line 739.
+  Open src/tennis_vision/friction.py and go to line 778.
   Search: def calculate_stage_9_1_friction_score
 
 NOTES:
@@ -567,7 +715,7 @@ NOTES:
 
 FUNCTION: calculate_stage_10_friction_score
 FILE: src/tennis_vision/friction.py
-LINE: 778
+LINE: 817
 AREA: Friction
 
 PURPOSE:
@@ -586,7 +734,7 @@ WHY PRODUCT OWNER CARES:
   Prevents failures and uncertainty from being hidden.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/friction.py and go to line 778.
+  Open src/tennis_vision/friction.py and go to line 817.
   Search: def calculate_stage_10_friction_score
 
 NOTES:
@@ -596,7 +744,7 @@ NOTES:
 
 FUNCTION: calculate_stage_11_friction_score
 FILE: src/tennis_vision/friction.py
-LINE: 820
+LINE: 859
 AREA: Friction
 
 PURPOSE:
@@ -615,7 +763,7 @@ WHY PRODUCT OWNER CARES:
   Prevents failures and uncertainty from being hidden.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/friction.py and go to line 820.
+  Open src/tennis_vision/friction.py and go to line 859.
   Search: def calculate_stage_11_friction_score
 
 NOTES:
@@ -625,7 +773,7 @@ NOTES:
 
 FUNCTION: calculate_stage_12_friction_score
 FILE: src/tennis_vision/friction.py
-LINE: 862
+LINE: 901
 AREA: Friction
 
 PURPOSE:
@@ -644,7 +792,7 @@ WHY PRODUCT OWNER CARES:
   Prevents failures and uncertainty from being hidden.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/friction.py and go to line 862.
+  Open src/tennis_vision/friction.py and go to line 901.
   Search: def calculate_stage_12_friction_score
 
 NOTES:
@@ -654,7 +802,7 @@ NOTES:
 
 FUNCTION: calculate_stage_13_friction_score
 FILE: src/tennis_vision/friction.py
-LINE: 904
+LINE: 943
 AREA: Friction
 
 PURPOSE:
@@ -673,7 +821,7 @@ WHY PRODUCT OWNER CARES:
   Prevents failures and uncertainty from being hidden.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/friction.py and go to line 904.
+  Open src/tennis_vision/friction.py and go to line 943.
   Search: def calculate_stage_13_friction_score
 
 NOTES:
@@ -683,7 +831,7 @@ NOTES:
 
 FUNCTION: calculate_stage_14_friction_score
 FILE: src/tennis_vision/friction.py
-LINE: 946
+LINE: 985
 AREA: Friction
 
 PURPOSE:
@@ -702,7 +850,7 @@ WHY PRODUCT OWNER CARES:
   Prevents failures and uncertainty from being hidden.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/friction.py and go to line 946.
+  Open src/tennis_vision/friction.py and go to line 985.
   Search: def calculate_stage_14_friction_score
 
 NOTES:
@@ -712,7 +860,7 @@ NOTES:
 
 FUNCTION: calculate_stage_14_1_friction_score
 FILE: src/tennis_vision/friction.py
-LINE: 988
+LINE: 1027
 AREA: Friction
 
 PURPOSE:
@@ -731,7 +879,7 @@ WHY PRODUCT OWNER CARES:
   Prevents failures and uncertainty from being hidden.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/friction.py and go to line 988.
+  Open src/tennis_vision/friction.py and go to line 1027.
   Search: def calculate_stage_14_1_friction_score
 
 NOTES:
@@ -741,7 +889,7 @@ NOTES:
 
 FUNCTION: calculate_stage_14_2_friction_score
 FILE: src/tennis_vision/friction.py
-LINE: 1030
+LINE: 1069
 AREA: Friction
 
 PURPOSE:
@@ -760,7 +908,7 @@ WHY PRODUCT OWNER CARES:
   Prevents failures and uncertainty from being hidden.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/friction.py and go to line 1030.
+  Open src/tennis_vision/friction.py and go to line 1069.
   Search: def calculate_stage_14_2_friction_score
 
 NOTES:
@@ -770,7 +918,7 @@ NOTES:
 
 FUNCTION: calculate_stage_14_3_friction_score
 FILE: src/tennis_vision/friction.py
-LINE: 1075
+LINE: 1114
 AREA: Friction
 
 PURPOSE:
@@ -789,7 +937,7 @@ WHY PRODUCT OWNER CARES:
   Prevents failures and uncertainty from being hidden.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/friction.py and go to line 1075.
+  Open src/tennis_vision/friction.py and go to line 1114.
   Search: def calculate_stage_14_3_friction_score
 
 NOTES:
@@ -1590,9 +1738,40 @@ NOTES:
 
 ## Stage 8.2 - Manual Event Labeling
 
+FUNCTION: dedupe_sorted_frame_indices
+FILE: src/tennis_vision/event_labeling.py
+LINE: 62
+AREA: Stage 8.2 - Manual Event Labeling
+
+PURPOSE:
+  Sorts selected frame indices and removes duplicates before timeline review.
+
+INPUTS:
+  - requested frame indices
+
+OUTPUTS:
+  - sorted unique frame indices
+  - duplicate count
+
+CALLED BY:
+  - scripts/run_stage_8_2_event_labeling_helper.py
+  - collect_event_labels_timeline_viewer
+
+WHY PRODUCT OWNER CARES:
+  Prevents confusing repeated frames and makes frame order clear during manual labeling.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/event_labeling.py and go to line 62.
+  Search: def dedupe_sorted_frame_indices
+
+NOTES:
+  Added for Stage 8.2.1 timeline viewer UX patch.
+
+---
+
 FUNCTION: collect_event_labels_interactively
 FILE: src/tennis_vision/event_labeling.py
-LINE: 240
+LINE: 295
 AREA: Stage 8.2 - Manual Event Labeling
 
 PURPOSE:
@@ -1618,7 +1797,7 @@ WHY PRODUCT OWNER CARES:
   This creates ground truth for event validation and prevents side-view replay from guessing event semantics.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/event_labeling.py and go to line 240.
+  Open src/tennis_vision/event_labeling.py and go to line 295.
   Search: def collect_event_labels_interactively
 
 NOTES:
@@ -1626,9 +1805,203 @@ NOTES:
 
 ---
 
+FUNCTION: collect_event_labels_timeline_viewer
+FILE: src/tennis_vision/event_labeling.py
+LINE: 665
+AREA: Stage 8.2 - Manual Event Labeling
+
+PURPOSE:
+  Lets the user review a sorted frame window as an editable timeline before saving labels.
+  It lazy-loads frames by default, keeps a small resized-frame cache, supports
+  review-only navigation, and keeps event point markers hidden unless toggled.
+
+INPUTS:
+  - video path
+  - selected frames
+  - existing manual labels
+  - ball labels
+  - automatic events
+  - overlay settings
+
+OUTPUTS:
+  - changed labels
+  - deleted frame labels
+  - frames loaded
+  - duplicate frames removed
+  - created/updated/deleted label counts
+  - session backup path
+
+CALLED BY:
+  - scripts/run_stage_8_2_event_labeling_helper.py
+
+WHY PRODUCT OWNER CARES:
+  Tennis bounce/hit labeling requires watching motion before and after an event, then correcting labels when the exact frame becomes clear.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/event_labeling.py and go to line 403.
+  Search: def collect_event_labels_timeline_viewer
+
+NOTES:
+  Automatic ball marker overlays are off by default in this viewer.
+
+---
+
+FUNCTION: audit_event_labels
+FILE: src/tennis_vision/event_labeling.py
+LINE: 1459
+AREA: Stage 8.2 - Manual Event Labeling
+
+PURPOSE:
+  Audits manual event labels for stale points, duplicate frame labels, repeated points, and missing event points.
+
+INPUTS:
+  - manual event labels
+  - optional selected frame list
+
+OUTPUTS:
+  - label integrity audit dictionary
+
+CALLED BY:
+  - scripts/run_stage_8_2_event_labeling_helper.py
+
+WHY PRODUCT OWNER CARES:
+  Bad manual labels become bad ground truth. The audit catches no_event points and stale repeated points before they poison event validation.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/event_labeling.py and go to line 1058.
+  Search: def audit_event_labels
+
+NOTES:
+  Added for Stage 8.2.2 event labeling UX performance and label integrity patch.
+
+---
+
+FUNCTION: compute_frame_difference
+FILE: src/tennis_vision/event_labeling.py
+LINE: 320
+AREA: Stage 8.2 - Manual Event Labeling
+
+PURPOSE:
+  Computes a lightweight visual difference score between adjacent selected frames.
+
+INPUTS:
+  - previous frame signature
+  - current frame signature
+
+OUTPUTS:
+  - mean absolute visual difference score
+
+CALLED BY:
+  - build_visual_frame_groups
+
+WHY PRODUCT OWNER CARES:
+  Helps identify adjacent frames that are visually identical or nearly identical.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/event_labeling.py and search: def compute_frame_difference
+
+NOTES:
+  Uses resized grayscale frame signatures, not a trained model.
+
+---
+
+FUNCTION: build_visual_frame_groups
+FILE: src/tennis_vision/event_labeling.py
+LINE: 394
+AREA: Stage 8.2 - Manual Event Labeling
+
+PURPOSE:
+  Groups selected frames into near-duplicate visual groups.
+
+INPUTS:
+  - selected frame payloads
+  - duplicate threshold
+
+OUTPUTS:
+  - frame duplicate audit rows
+  - per-frame visual group metadata
+
+CALLED BY:
+  - analyze_frame_duplicates
+  - collect_event_labels_timeline_viewer
+
+WHY PRODUCT OWNER CARES:
+  Lets the user label a temporal event window instead of guessing one exact frame.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/event_labeling.py and search: def build_visual_frame_groups
+
+NOTES:
+  Added for Stage 8.2.3 frame deduplication and event window labeling.
+
+---
+
+FUNCTION: write_frame_duplicate_audit
+FILE: src/tennis_vision/event_labeling.py
+LINE: 468
+AREA: Stage 8.2 - Manual Event Labeling
+
+PURPOSE:
+  Writes frame duplicate audit CSV and Markdown files.
+
+INPUTS:
+  - visual frame rows
+  - duplicate threshold
+  - sequential read flag
+
+OUTPUTS:
+  - frame_duplicate_audit.csv
+  - frame_duplicate_audit.md
+  - audit summary
+
+CALLED BY:
+  - scripts/run_stage_8_2_event_labeling_helper.py
+
+WHY PRODUCT OWNER CARES:
+  Shows whether confusing adjacent frames are truly near-duplicates.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/event_labeling.py and search: def write_frame_duplicate_audit
+
+NOTES:
+  Plain-text friendly output.
+
+---
+
+FUNCTION: clean_event_labels_for_integrity
+FILE: src/tennis_vision/event_labeling.py
+LINE: 1545
+AREA: Stage 8.2 - Manual Event Labeling
+
+PURPOSE:
+  Clears no_event points and collapses duplicate frame labels after a backup is created.
+
+INPUTS:
+  - manual event labels
+  - preserve_no_event_points flag
+
+OUTPUTS:
+  - cleaned labels
+  - cleanup summary
+
+CALLED BY:
+  - scripts/run_stage_8_2_event_labeling_helper.py
+
+WHY PRODUCT OWNER CARES:
+  Keeps no_event labels from looking like physical ball contact events.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/event_labeling.py and go to line 1144.
+  Search: def clean_event_labels_for_integrity
+
+NOTES:
+  Requires --audit-labels --fix-labels and creates a backup first.
+
+---
+
 FUNCTION: compare_manual_events_to_auto_events
 FILE: src/tennis_vision/event_labeling.py
-LINE: 364
+LINE: 689
 AREA: Stage 8.2 - Manual Event Labeling
 
 PURPOSE:
@@ -1650,7 +2023,7 @@ WHY PRODUCT OWNER CARES:
   This reveals whether the model is confusing hits, bounces, and uncertain interactions.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/event_labeling.py and go to line 364.
+  Open src/tennis_vision/event_labeling.py and go to line 689.
   Search: def compare_manual_events_to_auto_events
 
 NOTES:
@@ -1660,7 +2033,7 @@ NOTES:
 
 FUNCTION: load_durable_event_labels
 FILE: src/tennis_vision/event_labeling.py
-LINE: 104
+LINE: 159
 AREA: Stage 8.2 - Manual Event Labeling
 
 PURPOSE:
@@ -1681,7 +2054,7 @@ WHY PRODUCT OWNER CARES:
   Manual event labels should persist and become the default validation source.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/event_labeling.py and go to line 104.
+  Open src/tennis_vision/event_labeling.py and go to line 159.
   Search: def load_durable_event_labels
 
 NOTES:
@@ -1691,7 +2064,7 @@ NOTES:
 
 FUNCTION: write_event_label_session_backup
 FILE: src/tennis_vision/event_labeling.py
-LINE: 431
+LINE: 756
 AREA: Stage 8.2 - Manual Event Labeling
 
 PURPOSE:
@@ -1712,7 +2085,7 @@ WHY PRODUCT OWNER CARES:
   Protects manual event labeling work from accidental overwrite.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/event_labeling.py and go to line 431.
+  Open src/tennis_vision/event_labeling.py and go to line 756.
   Search: def write_event_label_session_backup
 
 NOTES:
@@ -1844,6 +2217,202 @@ WHY PRODUCT OWNER CARES:
 HOW TO FIND IT:
   Open src/tennis_vision/event_reclassification.py and go to line 77.
   Search: def build_validated_event_timeline
+
+NOTES:
+  None.
+
+---
+
+## Stage 8.4 - Bounce Candidate Propagation
+
+FUNCTION: build_manual_hit_windows
+FILE: src/tennis_vision/bounce_candidate_propagation.py
+LINE: 65
+AREA: Stage 8.4 - Bounce Candidate Propagation
+
+PURPOSE:
+  Groups manual hit labels into conservative exclusion windows.
+
+INPUTS:
+  - manual event label rows
+  - hit window gap
+  - padding
+
+OUTPUTS:
+  - manual hit windows
+
+CALLED BY:
+  - scripts/run_stage_8_4_bounce_candidate_propagation.py
+
+WHY PRODUCT OWNER CARES:
+  Prevents the system from proposing a manually reviewed hit region as a bounce.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/bounce_candidate_propagation.py and go to line 65.
+  Search: def build_manual_hit_windows
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: learn_bounce_window_signature
+FILE: src/tennis_vision/bounce_candidate_propagation.py
+LINE: 39
+AREA: Stage 8.4 - Bounce Candidate Propagation
+
+PURPOSE:
+  Extracts a local motion signature from manually labeled bounce windows.
+
+INPUTS:
+  - motion feature rows
+  - manual bounce windows
+
+OUTPUTS:
+  - weak bounce signature dictionary
+
+CALLED BY:
+  - scripts/run_stage_8_4_bounce_candidate_propagation.py
+
+WHY PRODUCT OWNER CARES:
+  This is the first step toward using one manual bounce label to find other bounce candidates automatically.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/bounce_candidate_propagation.py and go to line 39.
+  Search: def learn_bounce_window_signature
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: apply_event_sequence_constraints
+FILE: src/tennis_vision/bounce_candidate_propagation.py
+LINE: 209
+AREA: Stage 8.4 - Bounce Candidate Propagation
+
+PURPOSE:
+  Applies hit, no_event, uncertain, and post-hit sequence rules to candidate bounce frames.
+
+INPUTS:
+  - candidate rows
+  - bounce windows
+  - hit windows
+  - no_event zones
+  - uncertain labels
+  - features
+
+OUTPUTS:
+  - accepted candidate rows
+  - constraint summary
+
+CALLED BY:
+  - propose_bounce_candidates
+
+WHY PRODUCT OWNER CARES:
+  Keeps candidate propagation aligned with tennis event order instead of only local visual similarity.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/bounce_candidate_propagation.py and go to line 209.
+  Search: def apply_event_sequence_constraints
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: search_next_bounce_after_hit
+FILE: src/tennis_vision/bounce_candidate_propagation.py
+LINE: 280
+AREA: Stage 8.4 - Bounce Candidate Propagation
+
+PURPOSE:
+  Finds a manual hit after the known bounce and starts next-bounce search after that hit window.
+
+INPUTS:
+  - manual bounce windows
+  - manual hit windows
+  - feature rows
+
+OUTPUTS:
+  - post-hit search context
+
+CALLED BY:
+  - apply_event_sequence_constraints
+
+WHY PRODUCT OWNER CARES:
+  The next bounce should be searched after the player hit, not at the hit frame.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/bounce_candidate_propagation.py and go to line 280.
+  Search: def search_next_bounce_after_hit
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: propose_bounce_candidates
+FILE: src/tennis_vision/bounce_candidate_propagation.py
+LINE: 178
+AREA: Stage 8.4 - Bounce Candidate Propagation
+
+PURPOSE:
+  Scores the rest of the trajectory for likely bounce candidates after event-sequence constraints.
+
+INPUTS:
+  - motion feature rows
+  - manual bounce windows
+  - manual hit windows
+  - no_event zones
+  - uncertain labels
+  - score threshold
+  - candidate window gap
+  - max candidates
+
+OUTPUTS:
+  - candidate windows
+  - candidate frame rows
+  - constraint summary
+
+CALLED BY:
+  - scripts/run_stage_8_4_bounce_candidate_propagation.py
+
+WHY PRODUCT OWNER CARES:
+  Reduces manual labeling burden by suggesting events for review.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/bounce_candidate_propagation.py and go to line 178.
+  Search: def propose_bounce_candidates
+
+NOTES:
+  None.
+
+---
+
+FUNCTION: compute_local_motion_features
+FILE: src/tennis_vision/bounce_pattern_features.py
+LINE: 36
+AREA: Stage 8.4 - Bounce Candidate Propagation
+
+PURPOSE:
+  Computes proxy movement features for projected ball points.
+
+INPUTS:
+  - ball sequence rows
+
+OUTPUTS:
+  - feature rows with delta, speed, acceleration proxy, and direction-change signals
+
+CALLED BY:
+  - scripts/run_stage_8_4_bounce_candidate_propagation.py
+
+WHY PRODUCT OWNER CARES:
+  Bounce propagation needs local motion evidence without claiming physical truth.
+
+HOW TO FIND IT:
+  Open src/tennis_vision/bounce_pattern_features.py and go to line 36.
+  Search: def compute_local_motion_features
 
 NOTES:
   None.
@@ -3650,7 +4219,7 @@ NOTES:
 
 FUNCTION: update_lab_notebook
 FILE: src/tennis_vision/lab_notebook.py
-LINE: 2530
+LINE: 2613
 AREA: Lab Notebook
 
 PURPOSE:
@@ -3670,7 +4239,7 @@ WHY PRODUCT OWNER CARES:
   Keeps execution evidence current without manual documentation commands.
 
 HOW TO FIND IT:
-  Open src/tennis_vision/lab_notebook.py and go to line 2530.
+  Open src/tennis_vision/lab_notebook.py and go to line 2613.
   Search: def update_lab_notebook
 
 NOTES:

@@ -56,6 +56,14 @@ This repository is a local-first research project for tennis video analysis.
 - When hit/bounce semantics are ambiguous, collect manual event labels before tuning visual renderers. Do not infer confirmed hits or bounces from trajectory heuristics alone.
 - Video events like bounces may span a short frame window. Do not assume event labels are single-frame truths. Use event windows when manual labels cluster around the same action.
 - Side-view replay must use validated event sources when available. Raw possible_hit events must not be rendered as physical contact markers unless validated by manual labels or stronger evidence.
+- Manual labels should be used as active-learning signals when possible. If the user labels one event, the system should try to propose similar events instead of requiring every event to be manually labeled from scratch.
+- Manual event labels must be treated as constraints. A candidate near a manually labeled hit must not be proposed as a bounce. Event propagation must respect tennis sequence.
+- Manual labeling tools for temporal events must support correction and timeline review. Do not force one-way label-and-advance workflows for bounce/hit labeling.
+- Manual labeling overlays should be optional and off by default when they may obscure the target being labeled.
+- Manual labeling tools are model-training infrastructure. They must be fast, reversible, auditable, and visually clean. Do not show automated overlays by default if they can obscure the target being labeled.
+- Manual event labeling should support event windows. Do not force frame-perfect labels when adjacent frames are visually duplicated or temporal event boundaries are ambiguous.
+- Use sequential video decoding when random seeking creates duplicate or confusing frames.
+- If near-duplicate frames exist, manual labeling should default to visual-group/window labeling. Do not force frame-perfect decisions when video content is visually duplicated.
 
 ## Repository hygiene rules
 
@@ -130,3 +138,12 @@ Every script that performs a check or experiment should write:
 - Clear warnings, errors, recommended fixes, and friction score.
 
 If something fails, record the failure and provide the next local action.
+
+## Friction scoring rules
+
+- Do not treat successful script execution as full success.
+- Always distinguish execution success from semantic/product success.
+- If a stage produces a visual output, product validation is required.
+- If the user must manually inspect or correct model output, record human-loop friction.
+- If a stage creates new patch stages, record downstream correction friction.
+- ML/CV systems must measure whether outputs are useful, not only whether files were generated.

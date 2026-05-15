@@ -21,6 +21,27 @@ RELATED STAGES:
 
 ---
 
+LESSON: Use manual labels as active-learning signals
+
+SOURCE FRICTION:
+  F025 - Manual labels should become active candidates, not isolated corrections
+
+RULE:
+  When a user labels one ambiguous event, use that label to propose similar
+  events for review. Do not force every future event to be discovered from
+  scratch.
+
+WHY IT MATTERS:
+  Manual labeling is expensive. Candidate propagation keeps the Product Owner
+  in control while reducing repeated review work.
+
+RELATED STAGES:
+  Stage 8.2
+  Stage 8.3
+  Stage 8.4
+
+---
+
 LESSON: Render from validated semantic layers
 
 SOURCE FRICTION:

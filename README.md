@@ -32,6 +32,17 @@ Terminal output may use Rich tables because it is read directly in PowerShell.
 Documentation files should remain plain-text friendly because they are often
 opened as raw TXT or Markdown source.
 
+Friction now has multiple dimensions:
+
+- execution friction: whether scripts run and files are generated;
+- semantic/model friction: whether outputs are useful and meaningful;
+- human-loop friction: how much manual review or labeling is required;
+- product validation friction: whether visuals/reports make sense to the Product Owner;
+- downstream correction friction: whether a stage forces patches or repair stages.
+
+Low execution friction does not mean low product friction. Visual and model
+outputs still require Product Owner validation.
+
 ## Local Setup
 
 From the repository root:
@@ -519,12 +530,45 @@ Stage 8.2 creates ground truth for tennis event semantics. It lets the user labe
 
 These labels support Stage 8.3 event validation and later side-view replay correction. Stage 8.2 does not train a model and does not claim confirmed automatic event detection.
 
+The recommended interactive workflow is the timeline viewer. It lets the user move backward and forward through a frame window, revise labels, delete labels, and save at the end. Automatic ball marker overlays are off by default so they do not cover the ball during manual review.
+
 Commands:
 
 ```powershell
 python scripts\run_stage_8_2_event_labeling_helper.py --no-interactive
 python scripts\run_stage_8_2_event_labeling_helper.py --interactive --start-frame 90 --interval 15 --max-frames 12
+python scripts\run_stage_8_2_event_labeling_helper.py --interactive --timeline-viewer --start-frame 190 --interval 1 --max-frames 90
+python scripts\run_stage_8_2_event_labeling_helper.py --interactive --timeline-viewer --start-frame 198 --interval 1 --max-frames 90
+python scripts\run_stage_8_2_event_labeling_helper.py --interactive --timeline-viewer --review-only --start-frame 198 --interval 1 --max-frames 90
+python scripts\run_stage_8_2_event_labeling_helper.py --interactive --timeline-viewer --frames 193,194,195,196,197
+python scripts\run_stage_8_2_event_labeling_helper.py --interactive --timeline-viewer --frames 210,211,212,213,214
+python scripts\run_stage_8_2_event_labeling_helper.py --audit-labels
+python scripts\run_stage_8_2_event_labeling_helper.py --audit-labels --fix-labels
+python scripts\run_stage_8_2_event_labeling_helper.py --audit-frames --start-frame 198 --interval 1 --max-frames 90
+python scripts\run_stage_8_2_event_labeling_helper.py --audit-frames --audit-fast --start-frame 198 --interval 1 --max-frames 90
+python scripts\run_stage_8_2_event_labeling_helper.py --interactive --timeline-viewer --sequential-read --start-frame 198 --interval 1 --max-frames 90
+python scripts\run_stage_8_2_event_labeling_helper.py --interactive --timeline-viewer --collapse-duplicates --start-frame 198 --interval 1 --max-frames 90
+python scripts\run_stage_8_2_event_labeling_helper.py --interactive --timeline-viewer --expand-duplicates --start-frame 198 --interval 1 --max-frames 90
 ```
+
+Timeline viewer notes:
+
+- Use `a` and `d` or arrow keys to move backward and forward.
+- Use `b`, `h`, `n`, and `u` to label the current frame.
+- Use `x` to delete the current frame label.
+- Use `s` to save while continuing to review.
+- Use `q` to save and quit.
+- Use `p` only if you want to show event point markers.
+- Use `m` only if you want to show the nearest ball marker overlay.
+- Use `--review-only` to scan a frame window before committing labels.
+- Use `--audit-labels` to find stale no_event points, duplicate frame labels, repeated points, or bounce/hit labels missing points.
+- Use `--audit-labels --fix-labels` to clean safe issues after a backup is created.
+- Use `--audit-frames` to identify near-duplicate adjacent frames and visual frame groups.
+- Use `--audit-fast` for lightweight signature-only duplicate audits.
+- Use `--sequential-read` when MOV/random seek behavior makes adjacent frames confusing.
+- Use `--collapse-duplicates` to show one representative item per visual group.
+- Use `--expand-duplicates` to inspect every raw frame.
+- Press `W` in the timeline viewer to select the current visual group as an event window, then press `b`, `h`, `n`, or `u`.
 
 Expected outputs:
 
@@ -555,6 +599,23 @@ Expected outputs:
 - Event validation summary at `outputs/timeline/stage_8_3_event_validation/event_validation_summary.json`.
 - JSON report at `outputs/reports/stage_8_3_event_validation_report.json`.
 - Markdown report at `outputs/reports/stage_8_3_event_validation_report.md`.
+
+## Stage 8.4 - Bounce Candidate Propagation
+
+Stage 8.4 uses manual bounce labels to propose additional bounce candidates.
+It does not validate them automatically.
+It creates a review queue for the user.
+Inferred candidates must be confirmed before being rendered as physical bounces.
+Stage 8.4 now also uses manual hit and no_event labels as constraints.
+Bounce candidates near manual hits are excluded.
+If labels do not extend far enough after a hit, the system asks for more
+post-hit labels instead of proposing the hit region as a bounce.
+
+Command:
+
+```powershell
+python scripts\run_stage_8_4_bounce_candidate_propagation.py
+```
 
 ## Stage 9 - Tactical Metrics and Shot Zone Prototype
 

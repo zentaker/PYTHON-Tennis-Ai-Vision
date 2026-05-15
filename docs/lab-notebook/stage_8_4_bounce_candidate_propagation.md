@@ -1,97 +1,90 @@
-# Stage 14.3 - Side-View Replay with Validated Events
+# Stage 8.4 - Bounce Candidate Propagation
 
 ## Summary
 
 Stage:
-  Stage 14.3 - Side-view replay with validated events
+  Stage 8.4 - Bounce candidate propagation
 
 Verdict:
-  ready_with_warnings
+  needs_more_post_hit_ball_labels
 
 Friction score:
-  2
+  31
 
 Friction level:
-  low friction
-
-Event source used:
-  stage_8_3_validated_event_timeline
-
-Stage 8.3 available:
-  yes
+  medium friction
 
 Timestamp:
-  2026-05-14T19:06:59+00:00
+  2026-05-14T19:42:48+00:00
 
 Recommended next step:
-  Proceed to Stage 15 for multi-camera prototype, or collect manual hit labels before showing confident side-view hit markers.
+  Collect more post-hit ball/event labels after the manual hit, then rerun Stage 8.4.
 
 ## Input
 
-Source path:
-  C:\Users\MSI\Desktop\TennisAiVision\outputs\timeline\stage_8_3_event_validation\validated_event_timeline.csv
+Manual bounce windows:
+  1
 
-Fallback used:
-  no
-
-Validated bounces rendered:
+Manual bounce labels:
   3
 
-Validated hits rendered:
-  0
+Ball sequence points:
+  12
 
-Downgraded hit annotations:
-  6
-
-Rejected events ignored:
-  2
-
-Unvalidated annotations:
-  13
+Pattern confidence:
+  weak
 
 ## Output
 
 JSON report path:
-  C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\stage_14_3_validated_events_side_view_report.json
+  C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\stage_8_4_bounce_candidate_propagation_report.json
 
 Markdown report path:
-  C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\stage_14_3_validated_events_side_view_report.md
+  C:\Users\MSI\Desktop\TennisAiVision\outputs\reports\stage_8_4_bounce_candidate_propagation_report.md
 
-Validated events debug:
-  C:\Users\MSI\Desktop\TennisAiVision\outputs\replay\stage_14_side_view_replay\side_view_validated_events_debug.jpg
+Candidate windows:
+  C:\Users\MSI\Desktop\TennisAiVision\outputs\timeline\stage_8_4_bounce_candidates\bounce_candidate_windows.csv
 
-Video:
-  C:\Users\MSI\Desktop\TennisAiVision\outputs\replay\stage_14_side_view_replay\side_view_replay.mp4
+Candidate frames:
+  C:\Users\MSI\Desktop\TennisAiVision\outputs\timeline\stage_8_4_bounce_candidates\bounce_candidate_frames.csv
 
-Frames:
-  C:\Users\MSI\Desktop\TennisAiVision\outputs\replay\stage_14_side_view_replay\frames
+Review queue:
+  C:\Users\MSI\Desktop\TennisAiVision\outputs\timeline\stage_8_4_bounce_candidates\bounce_review_queue.csv
 
-Manifest:
-  C:\Users\MSI\Desktop\TennisAiVision\outputs\replay\stage_14_side_view_replay\side_view_manifest.json
+Proposed bounce events:
+  C:\Users\MSI\Desktop\TennisAiVision\outputs\timeline\stage_8_4_bounce_candidates\proposed_bounce_events.csv
+
+Timeline preview:
+  C:\Users\MSI\Desktop\TennisAiVision\outputs\timeline\stage_8_4_bounce_candidates\bounce_candidate_timeline_preview.jpg
 
 ## Console-equivalent table
 
-Frames generated:
-  100
+Candidate windows:
+  0
 
-Video generated:
-  yes
+Candidate frames:
+  0
 
-Main path physical-only:
-  yes
+Top candidate frame:
+  Not available
 
-Annotation band enabled:
-  yes
+Top candidate score:
+  Not available
+
+Review queue:
+  0
 
 Verdict:
-  ready_with_warnings
+  needs_more_post_hit_ball_labels
 
 Friction:
-  2 (low friction)
+  31 (medium friction)
 
 ## Warnings
 
-- No validated hit labels are available yet; confident hit markers are not rendered.
+- Only one manual bounce window is available; candidate propagation confidence is limited.
+- Post-hit next-bounce search is enabled from manual hit labels.
+- insufficient_post_hit_trajectory: not enough post-hit ball points are available to propose a reliable next bounce.
 
 ## Errors
 
@@ -99,11 +92,11 @@ No errors.
 
 ## Interpretation
 
-Stage 14.3 makes the side-view renderer consume the Stage 8.3 validated event timeline first. Validated bounces are physical grounded markers. Raw, downgraded, unvalidated, or rejected hit hypotheses are rendered only as secondary annotations, so the replay no longer presents unconfirmed hits as contacts.
+Stage 8.4 uses manual bounce windows as active-learning signals. It proposes likely additional bounce candidates for review, but it does not validate them or render them as physical bounces.
 
 ## Next step
 
-Proceed to Stage 15 for multi-camera prototype, or collect manual hit labels before showing confident side-view hit markers.
+Collect more post-hit ball/event labels after the manual hit, then rerun Stage 8.4.
 
 ## Run history
 
@@ -155,67 +148,116 @@ Older entries are preserved as originally written. Some historical entries may u
 
 Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
 
-Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+<!-- lab-entry:2026-05-14T19:20:47+00:00 -->
 
-Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
-
-Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
-
-Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
-
-<!-- lab-entry:2026-05-14T05:51:30+00:00 -->
-
-### 2026-05-14T05:51:30+00:00
+### 2026-05-14T19:20:47+00:00
 
 Stage:
-  Stage 14.3 - Side-View Replay with Validated Events
+  Stage 8.4 - Bounce Candidate Propagation
 
 Verdict:
-  needs_more_side_view_tuning
+  ready_for_manual_bounce_review
 
 Friction score:
-  32
+  12
+
+Friction level:
+  low friction
+
+Next step:
+  Review proposed bounce candidates with Stage 8.2 interactive labeling, then rerun Stage 8.3 event validation.
+
+<!-- lab-entry:2026-05-14T19:23:06+00:00 -->
+
+### 2026-05-14T19:23:06+00:00
+
+Stage:
+  Stage 8.4 - Bounce Candidate Propagation
+
+Verdict:
+  ready_for_manual_bounce_review
+
+Friction score:
+  12
+
+Friction level:
+  low friction
+
+Next step:
+  Review proposed bounce candidates with Stage 8.2 interactive labeling, then rerun Stage 8.3 event validation.
+
+<!-- lab-entry:2026-05-14T19:33:19+00:00 -->
+
+### 2026-05-14T19:33:19+00:00
+
+Stage:
+  Stage 8.4 - Bounce Candidate Propagation
+
+Verdict:
+  ready_for_manual_bounce_review
+
+Friction score:
+  12
+
+Friction level:
+  low friction
+
+Next step:
+  Review proposed bounce candidates with Stage 8.2 interactive labeling, then rerun Stage 8.3 event validation.
+
+<!-- lab-entry:2026-05-14T19:37:58+00:00 -->
+
+### 2026-05-14T19:37:58+00:00
+
+Stage:
+  Stage 8.4 - Bounce Candidate Propagation
+
+Verdict:
+  ready_with_warnings
+
+Friction score:
+  29
 
 Friction level:
   medium friction
 
 Next step:
-  Tune the side-view renderer so downgraded hits remain annotations only.
+  Review warnings, then add more manual bounce labels or lower the candidate threshold.
 
-<!-- lab-entry:2026-05-14T05:52:04+00:00 -->
+<!-- lab-entry:2026-05-14T19:38:46+00:00 -->
 
-### 2026-05-14T05:52:04+00:00
-
-Stage:
-  Stage 14.3 - Side-View Replay with Validated Events
-
-Verdict:
-  ready_with_warnings
-
-Friction score:
-  2
-
-Friction level:
-  low friction
-
-Next step:
-  Proceed to Stage 15 for multi-camera prototype, or collect manual hit labels before showing confident side-view hit markers.
-
-<!-- lab-entry:2026-05-14T19:06:59+00:00 -->
-
-### 2026-05-14T19:06:59+00:00
+### 2026-05-14T19:38:46+00:00
 
 Stage:
-  Stage 14.3 - Side-View Replay with Validated Events
+  Stage 8.4 - Bounce Candidate Propagation
 
 Verdict:
-  ready_with_warnings
+  needs_more_post_hit_ball_labels
 
 Friction score:
-  2
+  31
 
 Friction level:
-  low friction
+  medium friction
 
 Next step:
-  Proceed to Stage 15 for multi-camera prototype, or collect manual hit labels before showing confident side-view hit markers.
+  Collect more post-hit ball/event labels after the manual hit, then rerun Stage 8.4.
+
+<!-- lab-entry:2026-05-14T19:42:48+00:00 -->
+
+### 2026-05-14T19:42:48+00:00
+
+Stage:
+  Stage 8.4 - Bounce Candidate Propagation
+
+Verdict:
+  needs_more_post_hit_ball_labels
+
+Friction score:
+  31
+
+Friction level:
+  medium friction
+
+Next step:
+  Collect more post-hit ball/event labels after the manual hit, then rerun Stage 8.4.

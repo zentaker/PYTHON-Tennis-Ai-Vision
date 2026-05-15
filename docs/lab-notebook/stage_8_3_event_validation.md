@@ -9,13 +9,13 @@ Verdict:
   ready_with_warnings
 
 Friction score:
-  31
+  3
 
 Friction level:
-  medium friction
+  low friction
 
 Timestamp:
-  2026-05-14T05:34:56+00:00
+  2026-05-14T19:33:53+00:00
 
 Recommended next step:
   Proceed to Stage 14.3 using validated events, but collect manual hit labels before confirming hits.
@@ -23,16 +23,16 @@ Recommended next step:
 ## Input
 
 Manual labels:
-  53
+  58
 
 Bounce labels:
   3
 
 Hit labels:
-  0
+  1
 
 No-event labels:
-  23
+  27
 
 Uncertain labels:
   3
@@ -78,17 +78,16 @@ Rejected events:
   2
 
 Unvalidated events:
-  11
+  9
 
 Verdict:
   ready_with_warnings
 
 Friction:
-  31 (medium friction)
+  3 (low friction)
 
 ## Warnings
 
-- No hit events are confirmed because no manual hit labels were provided.
 - Adjacent manual bounce labels were grouped into bounce windows.
 
 ## Errors
@@ -104,6 +103,56 @@ Stage 8.3 uses manual event labels to validate or downgrade automatic event hypo
 Proceed to Stage 14.3 using validated events, but collect manual hit labels before confirming hits.
 
 ## Run history
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
 
 Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
 
@@ -153,6 +202,44 @@ Friction score:
 
 Friction level:
   medium friction
+
+Next step:
+  Proceed to Stage 14.3 using validated events, but collect manual hit labels before confirming hits.
+
+<!-- lab-entry:2026-05-14T19:31:24+00:00 -->
+
+### 2026-05-14T19:31:24+00:00
+
+Stage:
+  Stage 8.3 - Event Validation
+
+Verdict:
+  ready_with_warnings
+
+Friction score:
+  3
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed to Stage 14.3 using validated events, but collect manual hit labels before confirming hits.
+
+<!-- lab-entry:2026-05-14T19:33:53+00:00 -->
+
+### 2026-05-14T19:33:53+00:00
+
+Stage:
+  Stage 8.3 - Event Validation
+
+Verdict:
+  ready_with_warnings
+
+Friction score:
+  3
+
+Friction level:
+  low friction
 
 Next step:
   Proceed to Stage 14.3 using validated events, but collect manual hit labels before confirming hits.

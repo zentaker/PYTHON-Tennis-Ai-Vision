@@ -15,7 +15,7 @@ Friction level:
   low friction
 
 Timestamp:
-  2026-05-14T05:15:15+00:00
+  2026-05-15T00:01:10+00:00
 
 Recommended next step:
   Proceed to Stage 8.3: Event Validation and Reclassification.
@@ -25,20 +25,41 @@ Recommended next step:
 Mode:
   interactive
 
+Viewer mode:
+  timeline_viewer
+
 Frames requested:
-  130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179
+  198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287
 
 Frames shown:
-  50
+  173
+
+Frames loaded:
+  90
+
+Duplicate frames removed:
+  0
 
 Existing labels:
-  6
+  104
 
 New labels:
-  50
+  1
+
+Labels created:
+  0
+
+Labels updated:
+  1
+
+Labels deleted:
+  0
 
 Merged labels:
-  53
+  104
+
+Ball overlay enabled:
+  no
 
 ## Output
 
@@ -60,19 +81,22 @@ Event coverage:
 Overlay folder:
   C:\Users\MSI\Desktop\TennisAiVision\outputs\timeline\stage_8_2_event_labels\event_label_overlays
 
+Session backup:
+  C:\Users\MSI\Desktop\TennisAiVision\outputs\timeline\stage_8_2_event_labels\event_label_sessions\stage_8_2_event_labels_stage_8_2_2026-05-15T000110Z0000.csv
+
 ## Console-equivalent table
 
 Bounce labels:
-  3
+  4
 
 Hit labels:
-  0
+  3
 
 No-event labels:
-  23
+  69
 
 Uncertain labels:
-  3
+  4
 
 Compatible matches:
   0
@@ -103,6 +127,56 @@ Stage 8.2 creates human event labels for bounce, hit, no_event, and uncertain fr
 Proceed to Stage 8.3: Event Validation and Reclassification.
 
 ## Run history
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
+
+Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
 
 Older entries are preserved as originally written. Some historical entries may use legacy Markdown tables so prior run evidence is not erased.
 
@@ -188,6 +262,310 @@ Next step:
 <!-- lab-entry:2026-05-14T05:15:15+00:00 -->
 
 ### 2026-05-14T05:15:15+00:00
+
+Stage:
+  Stage 8.2 - Manual Event Labeling
+
+Verdict:
+  ready_for_stage_8_3
+
+Friction score:
+  0
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed to Stage 8.3: Event Validation and Reclassification.
+
+<!-- lab-entry:2026-05-14T19:28:24+00:00 -->
+
+### 2026-05-14T19:28:24+00:00
+
+Stage:
+  Stage 8.2 - Manual Event Labeling
+
+Verdict:
+  ready_for_stage_8_3
+
+Friction score:
+  0
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed to Stage 8.3: Event Validation and Reclassification.
+
+<!-- lab-entry:2026-05-14T19:43:06+00:00 -->
+
+### 2026-05-14T19:43:06+00:00
+
+Stage:
+  Stage 8.2 - Manual Event Labeling
+
+Verdict:
+  ready_for_stage_8_3
+
+Friction score:
+  0
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed to Stage 8.3: Event Validation and Reclassification.
+
+<!-- lab-entry:2026-05-14T19:59:31+00:00 -->
+
+### 2026-05-14T19:59:31+00:00
+
+Stage:
+  Stage 8.2 - Manual Event Labeling
+
+Verdict:
+  ready_for_stage_8_3
+
+Friction score:
+  0
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed to Stage 8.3: Event Validation and Reclassification.
+
+<!-- lab-entry:2026-05-14T20:01:12+00:00 -->
+
+### 2026-05-14T20:01:12+00:00
+
+Stage:
+  Stage 8.2 - Manual Event Labeling
+
+Verdict:
+  ready_for_stage_8_3
+
+Friction score:
+  0
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed to Stage 8.3: Event Validation and Reclassification.
+
+<!-- lab-entry:2026-05-14T20:04:50+00:00 -->
+
+### 2026-05-14T20:04:50+00:00
+
+Stage:
+  Stage 8.2 - Manual Event Labeling
+
+Verdict:
+  ready_for_stage_8_3
+
+Friction score:
+  0
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed to Stage 8.3: Event Validation and Reclassification.
+
+<!-- lab-entry:2026-05-14T20:21:23+00:00 -->
+
+### 2026-05-14T20:21:23+00:00
+
+Stage:
+  Stage 8.2 - Manual Event Labeling
+
+Verdict:
+  ready_for_stage_8_3
+
+Friction score:
+  0
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed to Stage 8.3: Event Validation and Reclassification.
+
+<!-- lab-entry:2026-05-14T20:21:42+00:00 -->
+
+### 2026-05-14T20:21:42+00:00
+
+Stage:
+  Stage 8.2 - Manual Event Labeling
+
+Verdict:
+  ready_for_stage_8_3
+
+Friction score:
+  0
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed to Stage 8.3: Event Validation and Reclassification.
+
+<!-- lab-entry:2026-05-14T20:23:32+00:00 -->
+
+### 2026-05-14T20:23:32+00:00
+
+Stage:
+  Stage 8.2 - Manual Event Labeling
+
+Verdict:
+  ready_for_stage_8_3
+
+Friction score:
+  0
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed to Stage 8.3: Event Validation and Reclassification.
+
+<!-- lab-entry:2026-05-14T21:00:49+00:00 -->
+
+### 2026-05-14T21:00:49+00:00
+
+Stage:
+  Stage 8.2 - Manual Event Labeling
+
+Verdict:
+  ready_for_stage_8_3
+
+Friction score:
+  0
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed to Stage 8.3: Event Validation and Reclassification.
+
+<!-- lab-entry:2026-05-14T21:01:13+00:00 -->
+
+### 2026-05-14T21:01:13+00:00
+
+Stage:
+  Stage 8.2 - Manual Event Labeling
+
+Verdict:
+  ready_for_stage_8_3
+
+Friction score:
+  0
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed to Stage 8.3: Event Validation and Reclassification.
+
+<!-- lab-entry:2026-05-14T21:13:57+00:00 -->
+
+### 2026-05-14T21:13:57+00:00
+
+Stage:
+  Stage 8.2 - Manual Event Labeling
+
+Verdict:
+  ready_for_stage_8_3
+
+Friction score:
+  0
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed to Stage 8.3: Event Validation and Reclassification.
+
+<!-- lab-entry:2026-05-14T21:15:32+00:00 -->
+
+### 2026-05-14T21:15:32+00:00
+
+Stage:
+  Stage 8.2 - Manual Event Labeling
+
+Verdict:
+  ready_for_stage_8_3
+
+Friction score:
+  0
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed to Stage 8.3: Event Validation and Reclassification.
+
+<!-- lab-entry:2026-05-14T21:20:19+00:00 -->
+
+### 2026-05-14T21:20:19+00:00
+
+Stage:
+  Stage 8.2 - Manual Event Labeling
+
+Verdict:
+  ready_for_stage_8_3
+
+Friction score:
+  0
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed to Stage 8.3: Event Validation and Reclassification.
+
+<!-- lab-entry:2026-05-14T21:21:38+00:00 -->
+
+### 2026-05-14T21:21:38+00:00
+
+Stage:
+  Stage 8.2 - Manual Event Labeling
+
+Verdict:
+  ready_for_stage_8_3
+
+Friction score:
+  0
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed to Stage 8.3: Event Validation and Reclassification.
+
+<!-- lab-entry:2026-05-14T21:27:06+00:00 -->
+
+### 2026-05-14T21:27:06+00:00
+
+Stage:
+  Stage 8.2 - Manual Event Labeling
+
+Verdict:
+  ready_for_stage_8_3
+
+Friction score:
+  0
+
+Friction level:
+  low friction
+
+Next step:
+  Proceed to Stage 8.3: Event Validation and Reclassification.
+
+<!-- lab-entry:2026-05-15T00:01:10+00:00 -->
+
+### 2026-05-15T00:01:10+00:00
 
 Stage:
   Stage 8.2 - Manual Event Labeling

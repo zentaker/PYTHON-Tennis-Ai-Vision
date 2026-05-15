@@ -27,6 +27,7 @@ STAGE_NOTEBOOK_FILES = {
     "stage_8_1": "stage_8_1_timeline_validation.md",
     "stage_8_2": "stage_8_2_event_labeling.md",
     "stage_8_3": "stage_8_3_event_validation.md",
+    "stage_8_4": "stage_8_4_bounce_candidate_propagation.md",
     "stage_9": "stage_9_tactical_metrics.md",
     "stage_9_1": "stage_9_1_projection_coverage.md",
     "stage_10": "stage_10_analytical_report.md",
@@ -333,6 +334,21 @@ def stage_8_3_next_step(report: dict[str, Any]) -> str:
     if verdict == "needs_more_event_labels":
         return "Return to Stage 8.2 and collect more manual event labels."
     return "Fix Stage 8.3 blockers, then rerun event validation."
+
+
+def stage_8_4_next_step(report: dict[str, Any]) -> str:
+    """Return Stage 8.4 next-step text."""
+    next_step = report.get("recommended_next_step")
+    if next_step:
+        return str(next_step)
+    verdict = report.get("final_verdict")
+    if verdict == "ready_for_manual_bounce_review":
+        return "Review proposed bounce candidates with Stage 8.2 interactive labeling, then rerun Stage 8.3."
+    if verdict == "needs_more_manual_bounce_labels":
+        return "Return to Stage 8.2 and label at least one bounce window."
+    if verdict == "needs_more_ball_trajectory":
+        return "Regenerate projected ball trajectory before candidate propagation."
+    return "Review warnings, then collect more labels or rerun Stage 8.4 with adjusted threshold."
 
 
 def stage_9_next_step(report: dict[str, Any]) -> str:
@@ -1545,11 +1561,18 @@ def build_stage_8_2_document(report: dict[str, Any], project_root: Path) -> dict
     input_table = markdown_table(
         [
             ("Mode", report.get("mode")),
+            ("Viewer mode", report.get("viewer_mode")),
             ("Frames requested", ", ".join(str(frame) for frame in report.get("frames_requested", []))),
             ("Frames shown", report.get("frames_shown")),
+            ("Frames loaded", report.get("frames_loaded")),
+            ("Duplicate frames removed", report.get("duplicate_frames_removed")),
             ("Existing labels", report.get("existing_labels_count")),
             ("New labels", report.get("new_labels_count")),
+            ("Labels created", report.get("labels_created")),
+            ("Labels updated", report.get("labels_updated")),
+            ("Labels deleted", report.get("labels_deleted")),
             ("Merged labels", report.get("merged_labels_count")),
+            ("Ball overlay enabled", report.get("ball_overlay_enabled")),
         ]
     )
     output_table = markdown_table(
@@ -1560,6 +1583,7 @@ def build_stage_8_2_document(report: dict[str, Any], project_root: Path) -> dict
             ("Event comparison", report.get("event_label_comparison_path")),
             ("Event coverage", report.get("event_label_coverage_path")),
             ("Overlay folder", report.get("overlay_folder")),
+            ("Session backup", report.get("session_backup_path")),
         ]
     )
     console_table = markdown_table(
@@ -1661,6 +1685,73 @@ def build_stage_8_3_document(report: dict[str, Any], project_root: Path) -> dict
         next_step=next_step,
     )
     entry = history_entry(report, "Stage 8.3 - Event Validation", summary, next_step)
+    return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
+
+
+def build_stage_8_4_document(report: dict[str, Any], project_root: Path) -> dict[str, str]:
+    """Build Stage 8.4 notebook content."""
+    json_path = report_path(project_root, "stage_8_4_bounce_candidate_propagation_report.json")
+    markdown_path = report_path(project_root, "stage_8_4_bounce_candidate_propagation_report.md")
+    next_step = stage_8_4_next_step(report)
+    friction = report.get("friction", {})
+    outputs = report.get("output_paths", {})
+
+    summary = markdown_table(
+        [
+            ("Stage", "Stage 8.4 - Bounce candidate propagation"),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction score", friction.get("score")),
+            ("Friction level", friction.get("band")),
+            ("Timestamp", report.get("timestamp")),
+            ("Recommended next step", next_step),
+        ]
+    )
+    input_table = markdown_table(
+        [
+            ("Manual bounce windows", report.get("manual_bounce_windows_count")),
+            ("Manual bounce labels", report.get("manual_bounce_labels_count")),
+            ("Ball sequence points", report.get("ball_sequence_points_count")),
+            ("Pattern confidence", nested_get(report, ("pattern_summary", "pattern_confidence"))),
+        ]
+    )
+    output_table = markdown_table(
+        [
+            ("JSON report path", json_path),
+            ("Markdown report path", markdown_path),
+            ("Candidate windows", outputs.get("bounce_candidate_windows")),
+            ("Candidate frames", outputs.get("bounce_candidate_frames")),
+            ("Review queue", outputs.get("bounce_review_queue")),
+            ("Proposed bounce events", outputs.get("proposed_bounce_events")),
+            ("Timeline preview", outputs.get("bounce_candidate_timeline_preview")),
+        ]
+    )
+    console_table = markdown_table(
+        [
+            ("Candidate windows", report.get("candidate_windows_proposed")),
+            ("Candidate frames", report.get("candidate_frames_proposed")),
+            ("Top candidate frame", report.get("top_candidate_frame")),
+            ("Top candidate score", report.get("top_candidate_score")),
+            ("Review queue", report.get("review_queue_count")),
+            ("Verdict", report.get("final_verdict")),
+            ("Friction", f"{not_available(friction.get('score'))} ({not_available(friction.get('band'))})"),
+        ]
+    )
+    interpretation = (
+        "Stage 8.4 uses manual bounce windows as active-learning signals. It proposes likely additional "
+        "bounce candidates for review, but it does not validate them or render them as physical bounces."
+    )
+    body = stage_document(
+        title="Stage 8.4 - Bounce Candidate Propagation",
+        summary=summary,
+        input_section=input_table,
+        output_section=output_table,
+        console_table=console_table,
+        warnings=bullet_list(report.get("warnings"), "No warnings."),
+        errors=bullet_list(report.get("errors"), "No errors."),
+        interpretation=interpretation,
+        next_step=next_step,
+    )
+    entry = history_entry(report, "Stage 8.4 - Bounce Candidate Propagation", summary, next_step)
     return {"body": body, "entry": entry, "entry_id": not_available(report.get("timestamp"))}
 
 
@@ -2863,6 +2954,22 @@ def update_lab_notebook(project_root: Path) -> list[Path]:
                 "friction": f"{not_available(nested_get(stage_8_3_report, ('friction', 'score')))} {not_available(nested_get(stage_8_3_report, ('friction', 'band')))}",
                 "main_output": "outputs/timeline/stage_8_3_event_validation/validated_event_timeline.csv",
                 "next_step": stage_8_3_next_step(stage_8_3_report),
+            }
+        )
+
+    stage_8_4_report = read_json_report(report_path(project_root, "stage_8_4_bounce_candidate_propagation_report.json"))
+    if stage_8_4_report is not None:
+        document = build_stage_8_4_document(stage_8_4_report, project_root)
+        stage_path = notebook_dir / "stage_8_4_bounce_candidate_propagation.md"
+        written.append(write_stage_notebook(stage_path, document["body"], document["entry"], document["entry_id"]))
+        stage_summaries.append(
+            {
+                "stage": "Stage 8.4",
+                "name": "Bounce Candidate Propagation",
+                "verdict": not_available(stage_8_4_report.get("final_verdict")),
+                "friction": f"{not_available(nested_get(stage_8_4_report, ('friction', 'score')))} {not_available(nested_get(stage_8_4_report, ('friction', 'band')))}",
+                "main_output": "outputs/timeline/stage_8_4_bounce_candidates/bounce_review_queue.csv",
+                "next_step": stage_8_4_next_step(stage_8_4_report),
             }
         )
 

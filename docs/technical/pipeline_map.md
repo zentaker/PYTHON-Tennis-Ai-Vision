@@ -22,6 +22,7 @@ Stage 0 Environment Doctor
   -> Stage 8.1 Timeline Validation
   -> Stage 8.2 Manual Event Labeling
   -> Stage 8.3 Event Validation and Reclassification
+  -> Stage 8.4 Bounce Candidate Propagation
   -> Stage 9 Tactical Metrics and Shot Zones
   -> Stage 9.1 Projection Coverage
   -> Stage 10 Analytical Report
@@ -285,16 +286,27 @@ READS:
   - Stage 7 player interactions
 WRITES:
   - manual event labels
+  - manual event windows
   - event label comparison
   - event label coverage
   - event label overlays
+  - frame duplicate audit
   - Stage 8.2 reports
+NOTES:
+  - Interactive mode now supports a timeline viewer for bounce/hit labeling.
+  - Timeline viewer mode sorts and deduplicates selected frames.
+  - Automatic ball marker overlays are off by default so manual review is not obscured.
+  - Timeline viewer mode lazy-loads frames by default for faster startup.
+  - --audit-labels writes label integrity reports for stale no_event points,
+    repeated points, duplicate frame labels, and missing bounce/hit points.
+  - --audit-frames writes visual duplicate analysis for selected frame windows.
+  - Stage 8.3 can consume user-created Stage 8.2 event windows when available.
 
 ---
 
 STAGE: Stage 8.3
 NAME: Event Validation and Reclassification
-STATUS: Current
+STATUS: Implemented
 MAIN SCRIPT: scripts/run_stage_8_3_event_validation.py
 MAIN MODULES:
   - src/tennis_vision/event_validation.py
@@ -310,6 +322,32 @@ WRITES:
   - validated event timeline
   - event validation preview
   - Stage 8.3 reports
+
+---
+
+STAGE: Stage 8.4
+NAME: Bounce Candidate Propagation
+STATUS: Current
+MAIN SCRIPT: scripts/run_stage_8_4_bounce_candidate_propagation.py
+MAIN MODULES:
+  - src/tennis_vision/bounce_pattern_features.py
+  - src/tennis_vision/bounce_candidate_propagation.py
+  - src/tennis_vision/friction_semantics.py
+READS:
+  - Stage 8.3 manual bounce windows
+  - Stage 8.2 manual event labels
+  - Stage 9.1 projected expanded labels
+WRITES:
+  - bounce candidate windows
+  - bounce candidate frames
+  - bounce review queue
+  - proposed unvalidated bounce events
+  - Stage 8.4 reports
+NOTES:
+  Inferred bounce candidates are review proposals only. They are not validated
+  bounces and should not be rendered as physical events until manual review.
+  The report separates execution friction from semantic/model, human-loop,
+  product validation, and downstream correction friction.
 
 ---
 

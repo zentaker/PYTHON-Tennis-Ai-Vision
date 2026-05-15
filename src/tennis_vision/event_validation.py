@@ -88,6 +88,36 @@ def group_manual_event_windows(labels: list[dict[str, Any]], *, bounce_window_ga
     return windows
 
 
+def read_manual_event_windows(path: Path) -> tuple[list[dict[str, Any]], list[str]]:
+    """Read user-created Stage 8.2 manual event windows when available."""
+    if not path.exists():
+        return [], []
+    windows: list[dict[str, Any]] = []
+    with path.open("r", newline="", encoding="utf-8") as handle:
+        reader = csv.DictReader(handle)
+        for row_index, row in enumerate(reader, start=1):
+            start = int_or_none(row.get("start_frame"))
+            end = int_or_none(row.get("end_frame"))
+            if start is None or end is None:
+                continue
+            event_label = normalize_manual_event_label(row.get("event_label"))
+            frames_text = row.get("frame_indices") or ""
+            windows.append(
+                {
+                    "window_id": row.get("window_id") or f"manual_window_{row_index:03d}",
+                    "event_label": event_label,
+                    "start_frame": start,
+                    "end_frame": end,
+                    "center_frame": int_or_none(row.get("center_frame")) or int(round((start + end) / 2)),
+                    "label_count": int_or_none(row.get("label_count")) or len([item for item in frames_text.split(",") if item.strip()]) or (end - start + 1),
+                    "confidence": row.get("confidence") or "medium",
+                    "source_frames": frames_text or ",".join(str(frame) for frame in range(start, end + 1)),
+                    "notes": row.get("notes") or "User-created Stage 8.2 event window.",
+                }
+            )
+    return windows, []
+
+
 def build_window(labels: list[dict[str, Any]], index: int) -> dict[str, Any]:
     """Build one manual event window row."""
     frames = [int(label["frame_index"]) for label in labels]

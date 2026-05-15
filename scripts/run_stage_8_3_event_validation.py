@@ -31,6 +31,7 @@ from tennis_vision.event_validation import (  # noqa: E402
     nearest_manual_evidence,
     read_automatic_events,
     read_manual_event_labels,
+    read_manual_event_windows,
     summarize_manual_event_labels,
     write_manual_event_windows_csv,
 )
@@ -41,6 +42,7 @@ from tennis_vision.report import ensure_output_folders, utc_timestamp, write_jso
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Stage 8.3 event validation and reclassification.")
     parser.add_argument("--manual-labels", type=Path, default=PROJECT_ROOT / "outputs" / "timeline" / "stage_8_2_event_labels" / "manual_event_labels.csv")
+    parser.add_argument("--manual-windows", type=Path, default=PROJECT_ROOT / "outputs" / "timeline" / "stage_8_2_event_labels" / "manual_event_windows.csv")
     parser.add_argument("--timeline", type=Path, default=PROJECT_ROOT / "outputs" / "timeline" / "stage_8_event_timeline" / "event_timeline.csv")
     parser.add_argument("--stage6-events", type=Path, default=PROJECT_ROOT / "outputs" / "ball_tracking" / "stage_6_trajectory_smoothing" / "trajectory_events.csv")
     parser.add_argument("--stage7-interactions", type=Path, default=PROJECT_ROOT / "outputs" / "player_tracking" / "stage_7_player_interaction" / "ball_player_interactions.csv")
@@ -352,8 +354,12 @@ def main() -> int:
 
     manual_labels, manual_errors = read_manual_event_labels(manual_path)
     errors.extend(manual_errors)
-    windows = group_manual_event_windows(manual_labels, bounce_window_gap=args.bounce_window_gap)
+    user_windows, window_warnings = read_manual_event_windows(resolve_path(args.manual_windows))
+    warnings.extend(window_warnings)
+    windows = user_windows if user_windows else group_manual_event_windows(manual_labels, bounce_window_gap=args.bounce_window_gap)
     manual_summary = summarize_manual_event_labels(manual_labels, windows)
+    if user_windows:
+        warnings.append("Stage 8.3 used user-created Stage 8.2 manual event windows directly.")
 
     auto_events, auto_warnings = read_automatic_events(
         [

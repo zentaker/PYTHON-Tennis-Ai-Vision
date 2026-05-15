@@ -5,6 +5,228 @@ It uses case blocks instead of wide tables.
 
 ---
 
+CASE: F031 - Duplicate visual frames made frame-perfect event labeling unreliable
+AREA: Manual labeling / visual grouping / event windows
+
+WHAT HAPPENED:
+  The viewer showed adjacent frames that were visually identical or nearly
+  identical, such as 204-205 and 257-259. The user could not know which exact
+  frame should be labeled as hit or bounce.
+
+ROOT CAUSE:
+  The video has near-duplicate visual frames and the tool treated each frame
+  index as a separate semantic decision.
+
+IMPACT:
+  The user had to guess between duplicated frames, causing high human-loop
+  friction and unstable ground truth.
+
+RESOLUTION:
+  Add visual-group navigation, collapsed duplicate groups, and group-level
+  event window labels.
+
+REUSABLE RULE:
+  In sports video labeling, temporal events should support visual-group/window
+  labels instead of forcing frame-perfect decisions.
+
+RELATED STAGES:
+  Stage 8.2
+  Stage 8.3
+
+---
+
+CASE: F030 - Frame-level labeling failed when adjacent video frames were visually duplicated
+AREA: Manual labeling / frame decoding / temporal event windows
+
+WHAT HAPPENED:
+  The user saw adjacent frames that looked identical or nearly identical,
+  making it impossible to decide which exact frame should receive the hit or
+  bounce label.
+
+ROOT CAUSE:
+  The labeling tool treated frame indices as independent even when the video
+  content did not visually change. It also lacked event-window labeling.
+
+IMPACT:
+  The user had to guess between near-identical frames, creating bad labeling UX
+  and unstable event ground truth.
+
+RESOLUTION:
+  Add visual duplicate detection, visual frame groups, sequential-read mode,
+  and event-window labeling.
+
+REUSABLE RULE:
+  Temporal sports events should support window-level labels, especially when
+  frame-perfect labeling is ambiguous.
+
+RELATED STAGES:
+  Stage 8.2
+  Stage 8.3
+
+---
+
+CASE: F029 - Labeling UI performance and stale overlays created human-loop friction
+AREA: Manual labeling / UX performance / label integrity
+
+WHAT HAPPENED:
+  The event labeling viewer loaded slowly, saved slowly, and showed point
+  markers that obscured or confused ball/event review. Some no_event frames
+  showed points, creating label ambiguity.
+
+ROOT CAUSE:
+  The labeling tool mixed viewing, overlay display, label persistence, and
+  reporting too tightly. It also allowed event points to appear where they were
+  not semantically needed.
+
+IMPACT:
+  The Product Owner could not confidently label bounce/hit events. Bad UX
+  risked bad ground truth and downstream model errors.
+
+RESOLUTION:
+  Add lazy loading, review-only mode, save feedback, overlay toggles, label
+  integrity audit, and no_event point cleanup.
+
+REUSABLE RULE:
+  Human labeling tools must prioritize reviewability, reversibility, speed, and
+  clean visual context over automated overlays.
+
+RELATED STAGES:
+  Stage 8.2
+  Stage 8.3
+  Stage 8.4
+
+---
+
+CASE: F028 - Linear frame labeling is poor UX for tennis bounce/hit annotation
+AREA: Manual labeling / temporal event UX
+
+WHAT HAPPENED:
+  The user needed to inspect frames before and after a bounce/hit, but the
+  labeling tool forced a linear label-and-advance workflow.
+
+ROOT CAUSE:
+  Tennis events are temporal and require timeline review, not isolated frame
+  decisions.
+
+IMPACT:
+  The user could mislabel a near-bounce frame and then realize the true event
+  was later, creating bad ground truth and high human-loop friction.
+
+RESOLUTION:
+  Add a timeline viewer with backward/forward navigation, editable labels,
+  save-at-end workflow, and overlays off by default.
+
+REUSABLE RULE:
+  For temporal event labeling, provide timeline navigation and editing before
+  asking for final labels.
+
+RELATED STAGES:
+  Stage 8.2
+  Stage 8.3
+  Stage 8.4
+
+---
+
+CASE: F027 - Bounce propagation confused a manually reviewed hit as bounce candidate
+AREA: Event sequence modeling / active validation
+
+WHAT HAPPENED:
+  Stage 8.4 proposed frame 195 as top bounce candidate, but user inspection
+  showed frames 193-197 were the first player hit region.
+
+ROOT CAUSE:
+  Bounce propagation used local motion similarity without event sequence
+  constraints and without excluding manual hit windows.
+
+IMPACT:
+  The model appeared confident but proposed the wrong semantic event,
+  increasing human validation friction.
+
+RESOLUTION:
+  Add hit-aware and no_event-aware bounce propagation, with post-hit
+  next-bounce search.
+
+REUSABLE RULE:
+  In sports event modeling, candidate propagation must respect event sequence
+  and manual exclusions, not just visual similarity.
+
+RELATED STAGES:
+  Stage 8.2
+  Stage 8.3
+  Stage 8.4
+
+---
+
+CASE: F026 - Execution friction looked low while semantic/product friction was high
+AREA: Model validation / event semantics / replay visualization
+
+WHAT HAPPENED:
+  Stage 8.4 reported low friction because the script ran and generated outputs,
+  but the larger workflow had high friction because the system failed to infer
+  the second bounce without additional manual validation and new stages.
+
+ROOT CAUSE:
+  Friction scoring was focused on script execution instead of semantic
+  usefulness and Product Owner validation.
+
+IMPACT:
+  The system appeared ready from the console output, but the generated
+  side-view replay was still semantically wrong or incomplete.
+
+RESOLUTION:
+  Add separate friction dimensions:
+  - execution friction
+  - semantic/model friction
+  - human-loop friction
+  - product validation friction
+  - downstream correction friction
+
+REUSABLE RULE:
+  In ML/computer-vision projects, a script that runs successfully can still
+  produce high-friction output if the result does not satisfy the visual/product
+  objective.
+
+RELATED STAGES:
+  Stage 8.2
+  Stage 8.3
+  Stage 8.4
+  Stage 14
+  Stage 14.1
+  Stage 14.2
+  Stage 14.3
+
+---
+
+CASE: F025 - Manual labels should become active candidates, not isolated corrections
+AREA: Event validation and active review
+
+WHAT HAPPENED:
+  The system only used manually labeled bounces directly and did not infer
+  later bounce candidates.
+
+ROOT CAUSE:
+  Manual labels were treated as fixed corrections rather than training signals
+  for candidate propagation.
+
+IMPACT:
+  The Product Owner would need to manually label every bounce even when the
+  trajectory contains similar local patterns.
+
+RESOLUTION:
+  Stage 8.4 uses manual bounce windows to propose additional bounce candidates
+  and writes a review queue for Stage 8.2 manual confirmation.
+
+REUSABLE RULE:
+  In active-learning workflows, manual labels should inform future candidate
+  discovery.
+
+RELATED STAGES:
+  Stage 8.2
+  Stage 8.3
+  Stage 8.4
+
+---
+
 CASE: F024 - Renderers should use validated event sources, not raw event hypotheses
 AREA: Side-view replay semantics
 

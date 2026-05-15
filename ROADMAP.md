@@ -107,13 +107,23 @@ Possible next paths:
 
 ## Stage 8.3: Event Validation And Reclassification
 
-Current inserted validation stage. Use Stage 8.2 manual event labels to group bounce windows, validate automatic hypotheses, downgrade contradicted hits, and write a validated event timeline for replay correction.
+Implemented inserted validation stage. Use Stage 8.2 manual event labels to group bounce windows, validate automatic hypotheses, downgrade contradicted hits, and write a validated event timeline for replay correction.
 
 Possible next paths:
 
-- Stage 14.3: Side-view replay with validated events.
+- Stage 8.4: infer/propose additional bounce candidates.
 - Stage 8.2 repeat: collect manual hit labels if hit confirmation is needed.
 - Stage 8.3 repeat: rerun validation after more manual labels.
+
+## Stage 8.4: Bounce Candidate Propagation
+
+Current inserted validation stage. Use the manual bounce window from Stage 8.3 as an active-learning signal to propose additional likely bounce candidates for manual review.
+
+Possible next paths:
+
+- Stage 8.5: manual review of proposed bounce candidates.
+- Stage 8.3 repeat: rerun event validation after confirming candidates.
+- Stage 14.3/14.4: side-view rendering with validated and proposed event layers.
 
 ## Stage 9: Tactical Metrics And Shot Zone Prototype
 

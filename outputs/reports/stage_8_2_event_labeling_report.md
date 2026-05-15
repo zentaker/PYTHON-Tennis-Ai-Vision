@@ -11,28 +11,82 @@ Friction:
 Mode:
   interactive
 
+Viewer mode:
+  timeline_viewer
+
+Frames loaded:
+  90
+
+Duplicate frames removed:
+  0
+
+Near-duplicate pairs:
+  24
+
+Visual groups:
+  66
+
+Sequential read used:
+  True
+
+Audit runtime seconds:
+  0
+
+Signature width:
+  160
+
+Collapse duplicates:
+  True
+
 ## LABEL SUMMARY
 
 Existing labels:
-  6
+  104
 
 New labels:
-  50
+  1
 
-Merged labels:
-  53
-
-Bounce:
-  3
-
-Hit:
+Labels created:
   0
 
+Labels updated:
+  1
+
+Labels deleted:
+  0
+
+Event windows created:
+  0
+
+Event windows updated:
+  0
+
+Merged labels:
+  104
+
+Ball overlay enabled:
+  False
+
+Event point marker default off:
+  True
+
+Review only:
+  False
+
+Preload:
+  False
+
+Bounce:
+  4
+
+Hit:
+  3
+
 No event:
-  23
+  69
 
 Uncertain:
-  3
+  4
 
 Skipped:
   24
@@ -49,7 +103,7 @@ Mismatches:
   15
 
 No auto event nearby:
-  0
+  4
 
 ## OUTPUTS
 
@@ -64,6 +118,49 @@ Event coverage:
 
 Overlay folder:
   C:\Users\MSI\Desktop\TennisAiVision\outputs\timeline\stage_8_2_event_labels\event_label_overlays
+
+Session backup:
+  C:\Users\MSI\Desktop\TennisAiVision\outputs\timeline\stage_8_2_event_labels\event_label_sessions\stage_8_2_event_labels_stage_8_2_2026-05-15T000110Z0000.csv
+
+Label integrity report:
+  C:\Users\MSI\Desktop\TennisAiVision\outputs\timeline\stage_8_2_event_labels\event_label_integrity_report.md
+
+Frame duplicate audit:
+  C:\Users\MSI\Desktop\TennisAiVision\outputs\timeline\stage_8_2_event_labels\frame_duplicate_audit.md
+
+## FRAME DUPLICATE ANALYSIS
+
+Enabled:
+  True
+
+Near-duplicate pairs:
+  24
+
+Visual groups:
+  66
+
+Largest duplicate group:
+  Not available
+
+Audit path:
+  C:\Users\MSI\Desktop\TennisAiVision\outputs\timeline\stage_8_2_event_labels\frame_duplicate_audit.md
+
+## LABEL INTEGRITY AUDIT
+
+no_event labels with points:
+  0
+
+Repeated point sequences:
+  5
+
+Duplicate frame labels:
+  0
+
+Bounce/hit labels without point:
+  0
+
+Cleaned no_event points:
+  0
 
 ## PRODUCT OWNER INTERPRETATION
 

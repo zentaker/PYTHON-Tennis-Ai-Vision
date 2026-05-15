@@ -6,21 +6,21 @@ Final verdict:
   ready_with_warnings
 
 Friction:
-  31 (medium friction)
+  3 (low friction)
 
 ## MANUAL LABEL SUMMARY
 
 Manual labels:
-  53
+  58
 
 Bounce labels:
   3
 
 Hit labels:
-  0
+  1
 
 No-event labels:
-  23
+  27
 
 Uncertain labels:
   3
@@ -46,10 +46,10 @@ Rejected events:
   2
 
 Unvalidated events:
-  11
+  9
 
 Outside manual coverage:
-  4
+  2
 
 ## WHAT CHANGED
 
@@ -57,7 +57,7 @@ Stage 8.3 grouped 3 manual bounce labels into 1 bounce window(s). Automatic even
 
 ## IMPORTANT LIMITATION
 
-No hit events are confirmed because no manual hit labels were provided.
+Manual hit labels are available for hit validation.
 
 ## OUTPUTS
 
@@ -79,7 +79,6 @@ This stage gives side-view replay a better event truth layer. It prevents raw po
 
 ## WARNINGS
 
-- No hit events are confirmed because no manual hit labels were provided.
 - Adjacent manual bounce labels were grouped into bounce windows.
 
 ## ERRORS

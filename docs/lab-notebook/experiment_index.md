@@ -141,9 +141,18 @@ NEXT STEP: Proceed to Stage 8.3: Event Validation and Reclassification.
 STAGE: Stage 8.3
 NAME: Event Validation
 VERDICT: ready_with_warnings
-FRICTION: 31 medium friction
+FRICTION: 3 low friction
 MAIN OUTPUT: outputs/timeline/stage_8_3_event_validation/validated_event_timeline.csv
 NEXT STEP: Proceed to Stage 14.3 using validated events, but collect manual hit labels before confirming hits.
+
+---
+
+STAGE: Stage 8.4
+NAME: Bounce Candidate Propagation
+VERDICT: needs_more_post_hit_ball_labels
+FRICTION: 31 medium friction
+MAIN OUTPUT: outputs/timeline/stage_8_4_bounce_candidates/bounce_review_queue.csv
+NEXT STEP: Collect more post-hit ball/event labels after the manual hit, then rerun Stage 8.4.
 
 ---
 

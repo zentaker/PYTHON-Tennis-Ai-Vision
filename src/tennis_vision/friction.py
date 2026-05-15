@@ -691,6 +691,45 @@ def calculate_stage_8_3_friction_score(
     }
 
 
+def calculate_stage_8_4_friction_score(
+    *,
+    manual_bounce_missing: bool = False,
+    only_one_bounce_window: bool = False,
+    trajectory_missing: bool = False,
+    no_candidates_found: bool = False,
+    review_queue_failed: bool = False,
+    preview_generation_failed: bool = False,
+    errors_count: int = 0,
+    warnings_count: int = 0,
+) -> dict[str, Any]:
+    """Calculate Stage 8.4 bounce candidate propagation friction."""
+    score = 0
+    score += 40 if manual_bounce_missing else 0
+    score += 10 if only_one_bounce_window else 0
+    score += 45 if trajectory_missing else 0
+    score += 15 if no_candidates_found else 0
+    score += 25 if review_queue_failed else 0
+    score += 8 if preview_generation_failed else 0
+    score += min(errors_count * 10, 30)
+    score += min(warnings_count * 2, 12)
+    score = max(0, min(score, 100))
+
+    return {
+        "score": score,
+        "band": friction_band(score),
+        "inputs": {
+            "manual_bounce_missing": manual_bounce_missing,
+            "only_one_bounce_window": only_one_bounce_window,
+            "trajectory_missing": trajectory_missing,
+            "no_candidates_found": no_candidates_found,
+            "review_queue_failed": review_queue_failed,
+            "preview_generation_failed": preview_generation_failed,
+            "errors_count": errors_count,
+            "warnings_count": warnings_count,
+        },
+    }
+
+
 def calculate_stage_9_friction_score(
     *,
     validated_timeline_missing: bool = False,
