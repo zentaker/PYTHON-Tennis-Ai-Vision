@@ -27,6 +27,7 @@ from tennis_vision.manual_event_position_resolver import (  # noqa: E402
     write_resolved_manual_events,
 )
 from tennis_vision.side_view_curve_model import build_side_view_curve_segments, write_side_view_curve_segments  # noqa: E402
+from tennis_vision.tennis_sequence_validator import validate_manual_event_sequence  # noqa: E402
 
 
 ANNOTATION_PATH = PROJECT_ROOT / "configs" / "manual_annotations" / "video_01_full_rally.json"
@@ -63,11 +64,50 @@ def write_csv(path: Path, rows: list[dict[str, Any]], fields: list[str]) -> None
         writer.writerows(rows)
 
 
+def write_sequence_validation_audit(path: Path, rows: list[dict[str, Any]]) -> None:
+    """Write tennis-sequence position validation audit rows."""
+    fields = [
+        "event_id",
+        "event_type",
+        "shot_type",
+        "projected_x",
+        "projected_y",
+        "court_zone",
+        "original_position_source",
+        "position_trust",
+        "validation_status",
+        "validation_reason",
+        "render_as_physical_event",
+    ]
+    audit_rows = [
+        {
+            "event_id": row.get("event_id", ""),
+            "event_type": row.get("event_type", ""),
+            "shot_type": row.get("shot_type", ""),
+            "projected_x": row.get("projected_x", ""),
+            "projected_y": row.get("projected_y", ""),
+            "court_zone": row.get("court_zone", ""),
+            "original_position_source": row.get("event_position_source", ""),
+            "position_trust": row.get("position_trust", ""),
+            "validation_status": row.get("position_validation_status", ""),
+            "validation_reason": row.get("sequence_validation_reason", ""),
+            "render_as_physical_event": row.get("should_render_as_physical_event", "no"),
+        }
+        for row in rows
+    ]
+    write_csv(path, audit_rows, fields)
+
+
 def build_full_rally_event_timeline(resolved_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Build renderer-facing full-rally event timeline from resolved manual events."""
     rows: list[dict[str, Any]] = []
     for row in resolved_rows:
-        resolved = row["event_position_status"] == "resolved" and row["projection_status"] == "projected"
+        trust = row.get("position_trust") or "unresolved"
+        resolved = (
+            row["event_position_status"] == "resolved"
+            and row["projection_status"] == "projected"
+            and trust == "valid"
+        )
         event_type = row["event_type"]
         rows.append(
             {
@@ -87,10 +127,13 @@ def build_full_rally_event_timeline(resolved_rows: list[dict[str, Any]]) -> list
                 "depth": row.get("depth", "unknown"),
                 "lateral_lane": row.get("lateral_lane", "unknown"),
                 "position_status": row["event_position_status"],
+                "position_trust": trust,
+                "position_validation_status": row.get("position_validation_status", ""),
+                "sequence_validation_reason": row.get("sequence_validation_reason", ""),
                 "confidence": row["confidence"],
                 "render_role": "validated_hit" if event_type == "hit" and resolved else "validated_bounce" if event_type == "bounce" and resolved else "unresolved_annotation",
-                "should_render_as_physical_event": "yes" if resolved else "no",
-                "should_render_as_annotation": "yes",
+                "should_render_as_physical_event": row.get("should_render_as_physical_event", "yes" if resolved else "no") if resolved else "no",
+                "should_render_as_annotation": row.get("should_render_as_annotation", "yes"),
                 "notes": row.get("position_notes") or row.get("notes") or "",
             }
         )
@@ -368,10 +411,27 @@ def build_report(
     hits = [row for row in timeline if row["event_type"] == "hit"]
     bounces = [row for row in timeline if row["event_type"] == "bounce"]
     unresolved = [row["event_id"] for row in timeline if row["position_status"] != "resolved"]
+    valid_positions = [row for row in timeline if row.get("position_trust") == "valid"]
+    suspicious_positions = [row for row in timeline if row.get("position_trust") == "suspicious"]
+    invalid_positions = [row for row in timeline if row.get("position_trust") == "invalid"]
+    unresolved_trust = [row for row in timeline if row.get("position_trust") == "unresolved"]
+    physical_anchors = [row for row in timeline if row.get("should_render_as_physical_event") == "yes"]
+    annotations = [row for row in timeline if row.get("should_render_as_annotation") == "yes"]
+    unsafe_rendered = [
+        row
+        for row in timeline
+        if row.get("position_trust") != "valid" and row.get("should_render_as_physical_event") == "yes"
+    ]
     warnings = list(summary.get("warnings", []))
     errors = list(summary.get("errors", []))
     if unresolved:
         warnings.append(f"Unresolved events: {', '.join(unresolved)}")
+    if suspicious_positions:
+        warnings.append(f"Suspicious positions blocked from physical rendering: {', '.join(row['event_id'] for row in suspicious_positions)}")
+    if invalid_positions:
+        warnings.append(f"Invalid positions blocked from physical rendering: {', '.join(row['event_id'] for row in invalid_positions)}")
+    if unsafe_rendered:
+        errors.append(f"Unsafe render gate failure: {', '.join(row['event_id'] for row in unsafe_rendered)}")
     if side_result["straight_segments_used"]:
         warnings.append("Side-view still used straight segments.")
     projected_count = sum(1 for row in resolved if row["projection_status"] == "projected")
@@ -381,14 +441,15 @@ def build_report(
         errors.append("Side-view replay was not generated.")
     if errors:
         verdict = "blocked"
-    elif unresolved and len(unresolved) >= len(timeline) / 2:
+    elif len(physical_anchors) < 6 or (len(suspicious_positions) + len(invalid_positions) + len(unresolved_trust)) >= len(timeline) / 2:
         verdict = "needs_better_ball_position_resolution"
     elif side_result["straight_segments_used"]:
         verdict = "needs_side_view_curve_review"
-    elif unresolved:
+    elif unresolved or suspicious_positions or invalid_positions:
         verdict = "ready_with_warnings"
     else:
         verdict = "ready_for_review"
+    replay_trustworthy = verdict == "ready_for_review" and len(valid_positions) == len(timeline) and not unsafe_rendered
     return {
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "stage": "manual_full_rally_replay",
@@ -399,6 +460,14 @@ def build_report(
         "shot_types_found": sorted({row["shot_type"] for row in hits if row["shot_type"]}),
         "positions_resolved_count": sum(1 for row in resolved if row["event_position_status"] == "resolved"),
         "positions_unresolved_count": sum(1 for row in resolved if row["event_position_status"] == "unresolved"),
+        "sequence_valid_positions_count": len(valid_positions),
+        "suspicious_positions_count": len(suspicious_positions),
+        "invalid_positions_count": len(invalid_positions),
+        "unresolved_positions_count": len(unresolved_trust),
+        "physical_anchors_rendered_count": len(physical_anchors),
+        "annotations_rendered_count": len(annotations),
+        "replay_trustworthy": replay_trustworthy,
+        "replay_trust_reason": "All physical anchors passed tennis-sequence validation." if replay_trustworthy else "One or more resolved local detections failed tennis-sequence validation and were blocked from physical rendering.",
         "projected_positions_count": projected_count,
         "unresolved_event_list": unresolved,
         "top_view_generated": bool(top_result["video_generated"]),
@@ -411,11 +480,12 @@ def build_report(
         "warnings": warnings,
         "errors": errors,
         "final_verdict": verdict,
-        "recommended_next_step": "Review manual full-rally top-view and curved side-view replay outputs.",
+        "recommended_next_step": "Improve ball position resolution before trusting full-rally spatial replay." if not replay_trustworthy else "Review manual full-rally top-view and curved side-view replay outputs.",
         "output_folder": str(output_dir),
         "output_paths": {
             "resolved_manual_events_csv": str(output_dir / "resolved_manual_events.csv"),
             "full_rally_event_timeline_csv": str(output_dir / "full_rally_event_timeline.csv"),
+            "sequence_validation_audit_csv": str(output_dir / "sequence_validation_audit.csv"),
             "replay_schema_json": str(output_dir / "replay_schema.json"),
             "top_view_replay": top_result["video_path"],
             "side_view_replay": side_result["video_path"],
@@ -447,6 +517,13 @@ SUMMARY
   Positions resolved: {report["positions_resolved_count"]}
   Positions unresolved: {report["positions_unresolved_count"]}
   Projected positions: {report["projected_positions_count"]}
+  Sequence-valid positions: {report["sequence_valid_positions_count"]}
+  Suspicious positions: {report["suspicious_positions_count"]}
+  Invalid positions: {report["invalid_positions_count"]}
+  Physical anchors rendered: {report["physical_anchors_rendered_count"]}
+  Annotation events rendered: {report["annotations_rendered_count"]}
+  Replay trustworthy: {report["replay_trustworthy"]}
+  Trust reason: {report["replay_trust_reason"]}
 
 SHOT TYPES
 {shot_types}
@@ -516,32 +593,30 @@ def print_summary(report: dict[str, Any]) -> None:
     rows = [
         ("Verdict", report["final_verdict"]),
         ("Manual events", report["manual_events_count"]),
-        ("Hits", report["hits_count"]),
-        ("Bounces", report["bounces_count"]),
-        ("Positions resolved", report["positions_resolved_count"]),
-        ("Positions unresolved", report["positions_unresolved_count"]),
-        ("Projected positions", report["projected_positions_count"]),
+        ("Local detections", report["positions_resolved_count"]),
+        ("Valid positions", report["sequence_valid_positions_count"]),
+        ("Suspicious positions", report["suspicious_positions_count"]),
+        ("Invalid positions", report["invalid_positions_count"]),
+        ("Unresolved positions", report["unresolved_positions_count"]),
+        ("Physical anchors rendered", report["physical_anchors_rendered_count"]),
+        ("Annotation events", report["annotations_rendered_count"]),
+        ("Replay trustworthy", report["replay_trustworthy"]),
         ("Top-view replay", report["top_view_generated"]),
         ("Side-view replay", report["side_view_generated"]),
-        ("Curved side-view", report["curved_side_view_enabled"]),
-        ("Curve segments", report["curve_segments_count"]),
-        ("Net clearance adjustments", report["net_clearance_adjustments_count"]),
-        ("Shot types preserved", report["shot_types_preserved"]),
-        ("Output folder", report["output_folder"]),
         ("Recommended next step", report["recommended_next_step"]),
     ]
     try:
         from rich.console import Console
         from rich.table import Table
 
-        table = Table(title="Manual Full Rally Replay Regeneration")
+        table = Table(title="Manual Full Rally Position Validation")
         table.add_column("Field", style="cyan", no_wrap=True)
         table.add_column("Value", style="white")
         for field, value in rows:
             table.add_row(str(field), str(value))
         Console().print(table)
     except ImportError:
-        print("Manual Full Rally Replay Regeneration")
+        print("Manual Full Rally Position Validation")
         for field, value in rows:
             print(f"{field}: {value}")
 
@@ -573,8 +648,10 @@ def main() -> int:
         fallback_tolerance=args.fallback_tolerance,
         resize_width=args.resize_width,
     )
+    resolved = validate_manual_event_sequence(resolved)
     write_resolved_manual_events(output_dir / "resolved_manual_events.csv", resolved)
     write_json(output_dir / "resolved_manual_events.json", resolved)
+    write_sequence_validation_audit(output_dir / "sequence_validation_audit.csv", resolved)
     timeline = build_full_rally_event_timeline(resolved)
     timeline_fields = [
         "event_id",
@@ -593,6 +670,9 @@ def main() -> int:
         "depth",
         "lateral_lane",
         "position_status",
+        "position_trust",
+        "position_validation_status",
+        "sequence_validation_reason",
         "confidence",
         "render_role",
         "should_render_as_physical_event",
@@ -603,7 +683,26 @@ def main() -> int:
     write_json(output_dir / "full_rally_event_timeline.json", timeline)
     schema = build_replay_schema(annotation, timeline, resolution_summary)
     write_json(output_dir / "replay_schema.json", schema)
-    (output_dir / "replay_schema_pretty.md").write_text(report_markdown({"final_verdict": "schema_generated", "source_video": annotation.get("source_video"), "manual_annotation_source": str(annotation_path), "manual_events_count": len(timeline), "hits_count": sum(1 for row in timeline if row["event_type"] == "hit"), "bounces_count": sum(1 for row in timeline if row["event_type"] == "bounce"), "positions_resolved_count": resolution_summary["positions_resolved"], "positions_unresolved_count": resolution_summary["positions_unresolved"], "projected_positions_count": resolution_summary["projected_positions"], "shot_types_found": sorted({row["shot_type"] for row in timeline if row["shot_type"]}), "top_view_generated": False, "side_view_generated": False, "curved_side_view_enabled": True, "straight_side_view_segments_used": 0, "curve_segments_count": 0, "net_clearance_adjustments_count": 0, "unresolved_event_list": [], "warnings": [], "errors": [], "output_paths": {"schema": str(output_dir / "replay_schema.json")}}), encoding="utf-8")
+    (output_dir / "replay_schema_pretty.md").write_text(
+        f"""# Manual Full-Rally Replay Schema
+
+Source annotation:
+  {annotation_path}
+
+Manual events:
+  {len(timeline)}
+
+Physical anchors:
+  {sum(1 for row in timeline if row["should_render_as_physical_event"] == "yes")}
+
+Schema:
+  {output_dir / "replay_schema.json"}
+
+Safety rule:
+  Only events with position_trust=valid render as physical replay anchors.
+""",
+        encoding="utf-8",
+    )
     top_result = render_top_view(timeline, output_dir, args.fps)
     side_result = render_side_view(timeline, output_dir, args.fps)
     write_json(output_dir / "replay_manifest.json", {"generated_at": datetime.now(timezone.utc).isoformat(), "manual_annotation": str(annotation_path), "resolution_summary": resolution_summary, "top_view": top_result, "side_view": side_result})

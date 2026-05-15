@@ -296,6 +296,11 @@ def write_resolved_manual_events(path: Path, rows: list[dict[str, Any]]) -> None
         "event_position_confidence",
         "detection_score",
         "projection_status",
+        "position_trust",
+        "position_validation_status",
+        "sequence_validation_reason",
+        "should_render_as_physical_event",
+        "should_render_as_annotation",
         "position_notes",
     ]
     path.parent.mkdir(parents=True, exist_ok=True)

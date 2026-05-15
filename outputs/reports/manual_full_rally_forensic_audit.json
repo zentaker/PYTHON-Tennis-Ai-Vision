@@ -1,0 +1,39 @@
+{
+  "answers": {
+    "fallback_used": 0,
+    "h1_wrong_position_reason": "H1 used local_ball_detection at frame 100 and projected to near_deep_left, which contradicts the Product Owner's serve-side observation and serve plausibility.",
+    "homography_projection_applied": 16,
+    "invented_or_reused": 0,
+    "local_ball_detection_used": 16,
+    "position_source": "event_position_audit.csv lists the exact source for each event.",
+    "projection_failed": 0,
+    "serve_direction_reason": "The audit found hit-to-bounce side-order violations; timing alone did not enforce tennis rally geometry.",
+    "unresolved_rendered_reason": "Suspicious/untrusted events should have should_render_as_physical_event=no; physical_render_mismatches records any safety gate failure."
+  },
+  "manual_full_rally_replay_trustworthy": false,
+  "output_paths": {
+    "event_position_audit_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\manual_full_rally\\event_position_audit.csv",
+    "forensic_audit_json": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\manual_full_rally_forensic_audit.json",
+    "forensic_audit_md": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\manual_full_rally_forensic_audit.md"
+  },
+  "root_causes": [
+    "Manual event timing was used correctly, but local candidate scoring can treat high-scoring color/motion blobs as reliable ball positions unless tennis-sequence validation is applied.",
+    "The resolver can mark local_ball_detection candidates as resolved/projected even when the resulting court side contradicts serve and hit-to-bounce geometry.",
+    "Current render safety flags prevent suspicious validator failures from rendering as physical anchors.",
+    "H1 was the critical failure case: the local detector selected a frame-100 blob at image (1467,1461), projected to near_deep_left, which is implausible for the serve side.",
+    "Serve/bounce direction must be validated separately from timing because timing alone does not enforce tennis rally geometry."
+  ],
+  "stage": "manual_full_rally_forensic_audit",
+  "summary": {
+    "fallback_positions": 0,
+    "invented_or_default_positions": 0,
+    "physical_render_mismatches": 0,
+    "projection_failures": 0,
+    "suspicious_positions": 6,
+    "total_events": 16,
+    "unresolved_but_rendered": 0,
+    "valid_positions": 6,
+    "wrong_side_likely_events": 4
+  },
+  "timestamp": "2026-05-15T05:06:25.116052+00:00"
+}

@@ -1,13 +1,15 @@
 {
+  "annotations_rendered_count": 16,
   "bounces_count": 8,
-  "curve_segments_count": 15,
+  "curve_segments_count": 5,
   "curved_side_view_enabled": true,
   "errors": [],
-  "final_verdict": "ready_for_review",
+  "final_verdict": "needs_better_ball_position_resolution",
   "hits_count": 8,
+  "invalid_positions_count": 1,
   "manual_annotation_source": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\configs\\manual_annotations\\video_01_full_rally.json",
   "manual_events_count": 16,
-  "net_clearance_adjustments_count": 2,
+  "net_clearance_adjustments_count": 0,
   "output_folder": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\manual_full_rally",
   "output_paths": {
     "full_rally_event_timeline_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\manual_full_rally\\full_rally_event_timeline.csv",
@@ -15,14 +17,19 @@
     "report_json": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\manual_full_rally_replay_report.json",
     "report_md": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\reports\\manual_full_rally_replay_report.md",
     "resolved_manual_events_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\manual_full_rally\\resolved_manual_events.csv",
+    "sequence_validation_audit_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\manual_full_rally\\sequence_validation_audit.csv",
     "side_view_curve_segments_csv": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\manual_full_rally\\side_view_curve_segments.csv",
     "side_view_replay": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\manual_full_rally\\side_view_replay.mp4",
     "top_view_replay": "C:\\Users\\MSI\\Desktop\\TennisAiVision\\outputs\\replay\\manual_full_rally\\top_view_replay.mp4"
   },
+  "physical_anchors_rendered_count": 6,
   "positions_resolved_count": 16,
   "positions_unresolved_count": 0,
   "projected_positions_count": 16,
-  "recommended_next_step": "Review manual full-rally top-view and curved side-view replay outputs.",
+  "recommended_next_step": "Improve ball position resolution before trusting full-rally spatial replay.",
+  "replay_trust_reason": "One or more resolved local detections failed tennis-sequence validation and were blocked from physical rendering.",
+  "replay_trustworthy": false,
+  "sequence_valid_positions_count": 6,
   "shot_types_found": [
     "backhand_slice",
     "backhand_topspin",
@@ -38,8 +45,13 @@
   "source_video": "samples/video_01.mov",
   "stage": "manual_full_rally_replay",
   "straight_side_view_segments_used": 0,
-  "timestamp": "2026-05-15T04:47:37.858360+00:00",
+  "suspicious_positions_count": 9,
+  "timestamp": "2026-05-15T05:06:12.407353+00:00",
   "top_view_generated": true,
   "unresolved_event_list": [],
-  "warnings": []
+  "unresolved_positions_count": 0,
+  "warnings": [
+    "Suspicious positions blocked from physical rendering: manual_full_rally_002, manual_full_rally_005, manual_full_rally_006, manual_full_rally_007, manual_full_rally_008, manual_full_rally_013, manual_full_rally_014, manual_full_rally_015, manual_full_rally_016",
+    "Invalid positions blocked from physical rendering: manual_full_rally_001"
+  ]
 }

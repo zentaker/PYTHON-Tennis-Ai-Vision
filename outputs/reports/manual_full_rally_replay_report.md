@@ -1,7 +1,7 @@
 # Manual Full-Rally Replay Report
 
 VERDICT
-  Final verdict: ready_for_review
+  Final verdict: needs_better_ball_position_resolution
   Source video: samples/video_01.mov
   Manual annotation: C:\Users\MSI\Desktop\TennisAiVision\configs\manual_annotations\video_01_full_rally.json
 
@@ -12,6 +12,13 @@ SUMMARY
   Positions resolved: 16
   Positions unresolved: 0
   Projected positions: 16
+  Sequence-valid positions: 6
+  Suspicious positions: 9
+  Invalid positions: 1
+  Physical anchors rendered: 6
+  Annotation events rendered: 16
+  Replay trustworthy: False
+  Trust reason: One or more resolved local detections failed tennis-sequence validation and were blocked from physical rendering.
 
 SHOT TYPES
   - backhand_slice
@@ -28,14 +35,15 @@ REPLAY OUTPUTS
   Side-view generated: True
   Curved side-view enabled: True
   Straight side-view segments used: 0
-  Curve segments: 15
-  Net clearance adjustments: 2
+  Curve segments: 5
+  Net clearance adjustments: 0
 
 UNRESOLVED EVENTS
   None
 
 WARNINGS
-  None
+  - Suspicious positions blocked from physical rendering: manual_full_rally_002, manual_full_rally_005, manual_full_rally_006, manual_full_rally_007, manual_full_rally_008, manual_full_rally_013, manual_full_rally_014, manual_full_rally_015, manual_full_rally_016
+  - Invalid positions blocked from physical rendering: manual_full_rally_001
 
 ERRORS
   None
@@ -50,6 +58,7 @@ LIMITATIONS
 OUTPUTS
   - C:\Users\MSI\Desktop\TennisAiVision\outputs\replay\manual_full_rally\resolved_manual_events.csv
   - C:\Users\MSI\Desktop\TennisAiVision\outputs\replay\manual_full_rally\full_rally_event_timeline.csv
+  - C:\Users\MSI\Desktop\TennisAiVision\outputs\replay\manual_full_rally\sequence_validation_audit.csv
   - C:\Users\MSI\Desktop\TennisAiVision\outputs\replay\manual_full_rally\replay_schema.json
   - C:\Users\MSI\Desktop\TennisAiVision\outputs\replay\manual_full_rally\top_view_replay.mp4
   - C:\Users\MSI\Desktop\TennisAiVision\outputs\replay\manual_full_rally\side_view_replay.mp4
